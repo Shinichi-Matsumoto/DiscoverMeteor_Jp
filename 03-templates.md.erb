@@ -57,11 +57,14 @@ Meteorはファイルを見つけることに優れています。
 /clientディレクトリにコードを入れれば、Meteorはそれを見つけて正確にコンパイルしてくれます。
 つまり、JavaScriptやCSSへのインクルードパスを手動で書く必要がなくなるということです。
 
-////
+それはまた、同じディレクトリに全てのファイルを置くことができるということでもあります。
+さらには、同じファイルに全てのコードを置くこともできます。
+Meteorは全てを１つのファイルにコンパイルしてしまうため、ファイル内はきちんと整理してきれいなファイル構造にした方が良いでしょう。
 
 <% end %>
 
-////
+これから２つのテンプレートを作っていきます。
+client/views/postsの中にposts_list.htmlを作ります。
 
 ~~~html
 <template name="postsList">
@@ -74,7 +77,7 @@ Meteorはファイルを見つけることに優れています。
 ~~~
 <%= caption "client/views/posts/posts_list.html" %>
 
-////
+次にpost_item.htmlを作ります。
 
 ~~~html
 <template name="postItem">
@@ -87,15 +90,20 @@ Meteorはファイルを見つけることに優れています。
 ~~~
 <%= caption "client/views/posts/post_item.html" %>
 
-////
+テンプレート要素の name="postsList"属性を書き込みます。
 
-////
+テンプレートがどこに行くのか　（？？？）
 
-////
+ここでMeteorのテンプレートシステム、Spacebarsについて紹介します。
+SpacebarsではHTMLにpartialsとexpressionsとblock helpersの３つを付け加えます。
 
-////
+Partialsでは{{> templateName}}構文を使い、partialを同じ名前のテンプレートに置き換えるようMeteorに命令します。
+（ここではpostItem）←（？？？）
 
-////
+{{title}}のようなExpressionsは、オブジェクトのプロパティを呼び出すか、テンプレートマージャーで定義されているtemplate helperの値を返します。
+（そのことについては後で述べます。）
+
+最後に、block helpersは{{#each}}…{{/each}} や {{#if}}…{{/if}}のようなテンプレートを制御する特別なタグです。
 
 <% note do %>
 
