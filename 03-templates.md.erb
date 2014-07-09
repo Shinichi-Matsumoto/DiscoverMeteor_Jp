@@ -7,11 +7,13 @@ contents: Learn about Meteor's templating language, Handlebars.|Create your firs
 paragraphs: 46
 ---
 
-////
+Meteorでの開発を簡単にするため、私たちはアウトサイドインアプローチをとることになります。
+つまり、私たちは最初に　「」　HTMLとJavaScriptで外側の骨組みを作り、それからアプリが内側で動くように繋いでいきます。
 
-////
+この章では、 /clientディレクトリの内側で何が起きているのか　気にかけるだけとなります。
 
-////
+/clientディレクトリの中に main.htmlという新しいファイルを作りましょう。
+そして次のようなコードを書き込みましょう。
 
 ~~~html
 <head>
@@ -32,9 +34,12 @@ paragraphs: 46
 ~~~
 <%= caption "client/main.html" %>
 
-////
+これがアプリのメインテンプレートとなります。
+ご覧のように、{{> postsList}}タグ以外は全てHTMLです。
+{{> postsList}}タグはpostsListテンプレートの挿入場所となります。
+では、テンプレートを作っていきましょう。
 
-### Meteor Templates
+### Meteorテンプレート
 
 ////
 
