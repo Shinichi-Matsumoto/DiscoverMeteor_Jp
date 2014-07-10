@@ -155,7 +155,8 @@ webフレームワークに関係したことでマネージャーという言�
 
 <% end %>
 
-////
+  .js拡張子　（？？？）
+  では早速　/client/views/postsの中にposts_list.jsを作って、最初のマネージャーを作っていきましょう。
 
 ~~~js
 var postsData = [
@@ -181,17 +182,21 @@ Template.postsList.helpers({
 ~~~
 <%= caption "client/views/posts/posts_list.js" %>
 
-////
+正しくできたなら、ブラウザでは次のように表示されているでしょう。
 
 <%= screenshot "3-1", "Our first templates with static data" %>
 
 <%= commit "3-1", "Added basic posts list template and static data." %>
 
-////
+私たちはここで２つのことをしています。
+まず１つ目に　postsData配列の中にダミープロトタイプデータを構成しています。
+通常、データはデータベースからやって来ます。
+この点は次の章で学びますので、静的データを使って「ごまかして」います。
 
-////
+２つ目に postsをテンプレートヘルパーに定義するため、Meteorの Template.myTemplate.helpers()関数を使っています。
+postsは、postsData配列を返します。
 
-////
+postsヘルパーを定義するということは、テンプレートでも使うことができるということです。
 
 ~~~html
 <template name="postsList">
@@ -204,11 +209,11 @@ Template.postsList.helpers({
 ~~~
 <%= caption "client/views/posts/posts_list.html" %>
 
-////
+そのため、このテンプレートではpostsData配列を繰り返し処理ができる　　postItemテンプレート内で　（？？？）
 
-### The Value of "this"
+### "this"の値
 
-////
+私たちは今post_item.jsマネージャーを作りました。
 
 ~~~js
 Template.postItem.helpers({
@@ -223,40 +228,53 @@ Template.postItem.helpers({
 
 <%= commit "3-2", "Setup a `domain` helper on the `postItem`." %>
 
-////
+今回のdomainヘルパーの値は配列ではなく、無名関数です。
+このパターンは先ほどのダミーデータの例と比べて、より一般的で役立ちます。
 
-<%= screenshot "3-2", "Displaying domains for each links." %>
 
-////
+<%= screenshot "3-2", "それぞれのリンクにドメインを表示する" %>
 
-////
+domainヘルパーはURLを取ってきて、ちょっとしたJavaScriptのマジックによってドメインを返します。
+ですが、そもそもURLはどこから取ってきたのでしょうか？
 
-////
+この疑問に答えるには、 posts_list.htmlテンプレートまで戻る必要があります。
+{{#each}}ブロックヘルパーは配列を繰り返し処理するだけではありません。
+ブロックの中のthisの値を繰り返し処理されたオブジェクトに設定するのです。
 
-////
+////（？？？）
+
+ここまでで、なぜthis.urlがpostのURLを返すのか理解できるでしょう。
+また、post_item.html テンプレートの中の{{title}} と {{url}}を使う場合、　
+Meteorはそれがthis.titleとthis.urlであることを認識し、正しい値を返します。
 
 <% note do %>
 
-### JavaScript Magic
+### JavaScriptマジック
 
-////
+Meteorに限ったことではないのですが、ここで先ほどの「JavaScriptマジック」について解説しましょう。
+まず、HTMLで空のアンカー要素(a)を作り、メモリに記憶します。
 
-////
+その時に　 postのURLと等しくなるようにhref属性を設定しています。
+（このように、ヘルパーにおいて　this　は現在動作しているオブジェクトのことです。）・・・（？？？）
 
-////
+最後に、　　残りのURLがなくてもリンクのドメイン名を返すので、a要素のhostnameプロパティを使用しています。
 
 <% end %>
 
-////
+ここまで理解ができたら、ブラウザでpostのリストを見ることができるでしょう。
+そのリストは単なる静的データです。
+そのため、まだMeteorのリアルタイムに関する特徴ついて使っていません。
+次の章ではその点について見て行きましょう！
 
 <% note do %>
 
-### Hot Code Reload
+### Hot Code Reload　・・（？？？）
 
-////
+ファイルを変えた際に手動でブラウザをリロードをする必要がないことにお気づきでしょうか。
 
-////
 
-////
+これはMeteorがプロジェクトディレクトリ内で全てのファイルを読み込み、変更点を見つけると自動的にブラウザを更新するためです。
+
+Meteorのホットコードリロードはとてもスマートであり、  アプリの状態を保存する　（？？？）
 
 <% end %>
