@@ -100,9 +100,13 @@ Meteorでは、　varというキーワードは現在のファイルで（？�
 
 サーバーでは、　コレクションは　MongoDB （？？？） APIとしての役割を果たします。
 サーバーサイドのコードで　Posts.insert() や Posts.update() のようなMongoコマンドを書くことができます。
-　MongoDB内に格納されているpostsコレクション　
+（？？？）　MongoDB内に格納されているpostsコレクションが変化します
 
-////
+MongoDB内を見るために、２つ目のターミナルウィンドウをを開きます。（１つ目のターミナルではまだmeteorが動いています。）
+そうしたら、アプリのディレクトリへ行きましょう。
+　 Mongoコマンドを入力する　Mongoシェルを起動
+では、新しい投稿を書き込みましょう。　 
+　 
 
 ~~~bash
 > db.posts.insert({title: "A new post"});
@@ -114,19 +118,21 @@ Meteorでは、　varというキーワードは現在のファイルで（？�
 
 <% note do %>
 
-### Mongo on Meteor.com
+### Mongo on Meteor.com　（？？？）
 
-////
+meteor.comにアプリをホスティングする際は、meteor mongo myAppと入力して（？？？）デプロイされたアプリのMongoシェルにアクセスできることに
 
-////
+（？？？）、meteor logs myAppと入力することで、アプリのログを見ることができます。
 
 <% end %>
 
-////
+MongoDBの構文は、JavaScriptインターフェースを使っているため、親しみやすくなっています。
+ 私たちは　Mongoシェルで　データ操作をしませんが　（？？？）、　そこに（？？？）何があるのか確認するために　時々のぞき見するかもしれません。
 
-### Client-Side Collections
+### クライアントサイドのコレクション
 
-////
+コレクションはクライアントサイドでは、より面白くなってきます。
+クライアントでPosts = new Meteor.Collection('posts');と宣言すると（？？？）、作っている、 Mongoコレクションの　ブラウザーのキャッシュ（？？？）　ローカルなのです。
 
 ////
 
