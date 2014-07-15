@@ -4,39 +4,91 @@ slug: publications-and-subscriptions
 date: 0004/01/02
 number: 4.5
 sidebar: true
-contents: Understand how publications and subscriptions work.|Learn what the default Autopublish package does.|See a few more examples of publication patterns.
+contents: どのように publications と subscriptions （？？？）が動くのか理解します。|デフォルトでの Autopublish パッケージがどんなことをするのか学びます|パターンの例をいくつか見ていきます。
 paragraphs: 52
 ---
 
-////
+Publications and subscriptions are one of the most fundamental and important concepts in Meteor, 
+Publications と subscriptions はMeteorにおいて、最も基本的で重要なコンセプトの１つです。（？？？）
+but can be hard to wrap your head around when you're just getting started
+しかし、 まだ始めたばかりのころは理解することは難しいものです。
 
-////
+This has led to a lot of misunderstandings, such as the belief that Meteor is insecure, 
+そのため多くの誤解の原因ともなっています。  その誤解の中には Meteorは安全でないといった意見や
+or that Meteor apps can't deal with large amount of data.
+Meteorのアプリは大量のデータを扱えないといたものがあります。
 
-////
+A big part of the reason people find these concepts a bit confusing initially is the "magic" that Meteor does for us.
+最初にこうしたコンセプトに困惑してしまう多くの理由は、Meteorがもたらす「マジック」によるものです。
+Although this magic is ultimately very useful, it can obscure what's really going on behind the scenes (as magic tends to do). 
+Meteorのマジックは最終的にはとても役立つものですが、水面下で（？？？）何が起きているのかわかりません。（マジックってそういうものですからね）
+So let's strip away the layers of magic to try and understand what's happening.
+　、何か起きているのか理解するために、マジックの皮を剥ぎ取りましょう。（？？？）
 
-### The Olden Days
+### The Olden Days　昔々
 
-////
+But first, let's take a look back at the good old days of 2011 when Meteor wasn't yet around. 
+しかしはじめに（？？？）、 Meteorが存在しなかった2011年の古き良き時代を振り返ってみましょう。
+Let's say you're building a simple Rails app.
+例えば、あなたがRailsでアプリを作っていたとしましょう。
+When a user hits your site, the client (i.e. your browser) sends a request to your app, which is living on the server.
+ユーザーがサイトにやってくると、クライアントでは（つまり、あなたのブラウザーでは）、リクエストをサーバーにあるアプリに送ります。
 
-////
+The app's first job is to figure out what data the user needs to see. 
+アプリの最初の仕事は、ユーザーが見る必要のあるデータが何であるか理解することです。
+This could be page 12 of search results, Mary's user profile information, Bob's 20 latest tweets, and so on.
+これはメアリーのユーザープロフィールの情報や、ボブの最近の20個の（？？？）ツイートといった、検索結果の１２ページであると考えられます（？？？）
+You can basically think of it as a bookstore clerk browsing through the aisles for the book you asked for.
+これは基本的にあなた要求した本を探すために、本屋の店員さんが通路を歩いて見て回ることのように考えることができます。
 
-////
+Once the right data has been selected, the app's second job is translating that data into nice,
+正しいデータを選び出すと、アプリの２つ目の仕事はデータを　素晴らしく（？？？）人間が読むことのできるHTMLに変換することです。
+human-readable HTML (or JSON in the case of an API).
+（APIの場合はJSONに変換します。）
 
-////
+In the bookstore metaphor, that would be wrapping up the book you just bought and putting it in a nice bag. 
+本屋でのたとえ　、　購入した本を本をラッピングしてバックの中にしまうでしょう　。（？？？）
+This is the "View" part of the famous Model-View-Controller model.
+これが有名なModel-View-Controllerモデルでの"View"の部分です。
 
-////
+Finally, the app takes that HTML code and sends it over to the browser.
+最終的に、アプリはHTMLコードを取ってブラウザーへ送信します。
+The app's job is done
+Railsで作られたアプリの仕事は終わりました。
+, and now that the whole thing is out of its virtual hands 
+今や全てのことは手から離れたので、
+it can just kick back with a beer while waiting for the next request.
+次のリクエストが来るまで待っている間にビールを飲んでくつろぐことができます。（？？？）
 
-### The Meteor Way
+### The Meteor Way　
 
-////
+Let's  what makes Meteor so special in comparison.
+Meteorがなぜ特別なのか比較して おさらいをしましょう（？？？）
+
+As we've seen, the key innovation of Meteor is that where a Rails app only lives on the server,
+これまで見てきたように、Meteorの鍵となるイノベーションは　Railsのアプリがサーバーでのみ動いている（？？？）ということです。
+a Meteor app also includes a client-side component that will run on the client (the browser).
+Meteorアプリは　クライアント（ブラウザー）でも動くクライアントサイドのコンポーネント（？？？）があります。　
 
 <%= diagram "client-server", "Pushing a subset of the database to the client.", "pull-right" %>
 
-////
+This is like a store clerk who not only finds the right book for you, 
+これはまるで店員さんがあなたの欲しい本を見つけるだけでなく、家までついて来て夜中に読んでくれるようなものです。
+but also follows you home to read it to you at night (which we'll admit does sound a bit creepy).
+（ゾッとする話ですけどね。）
 
-////
+This architecture lets Meteor do many cool things, chief among them what Meteor calls database everywhere. 
+この構造はMeteorをクールなものにしています。Meteorがデータベースをどこからでも呼び出すという　（？？？）
+Simply put, Meteor will take a subset of your database and copy it to the client.
+簡単に言うと、 Meteorは　あなたのデータベースを取ってきて（？？？）、クライアントにコビーをします。
 
-////
+This has two big implications: first, instead of sending HTML code to the client, 
+これは２つの大きな意味合いがあります。１つ目は、クライントにHTMLコードを送る代わりに、
+a Meteor app will send the actual, raw data and let the client deal with it (data on the wire). 
+Meteorアプリが 実際の生データを送って、クライアントが対処するようにします。（data on the wire）？？？
+Second, you'll be able to access that data instantaneously without having to wait for a round-trip to the server 
+２つ目は　サーバーへのラウンドトリップを待つ必要がなく、すぐにデータにアクセスできます。
+(latency compensation).
 
 ### Publishing
 
