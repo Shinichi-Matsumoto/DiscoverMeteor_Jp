@@ -208,7 +208,7 @@ Maybe we still want to load all of Bob's posts in memory,
 but we only want to display those from the “JavaScript" category right now.
 今現在は“JavaScript"のカテゴリーでの投稿だけを表示したいとします。
 This is where “finding” comes in.
-ここから“finding”が登場します。
+ここから“finding”の登場です。
 
 <%= diagram "collections-4", "クライアントでドキュメントの一部分を選び出す。", "pull-center" %>
 
@@ -264,9 +264,14 @@ Of course, there are obvious problems with having a complete copy of your app's 
 For this reason, autopublish is only appropriate when you are starting out, and haven't yet thought about publications.
 この理由から、autopublishは開発をし始めたときだけに適しています。　その時はパブリケーションについて検討しないで良いからです。
 
-### Publishing Full Collections
+### 全ての（？？？）コレクションをパブリッシュする。
 
-////
+Once you remove autopublish, you'll quickly realize that all your data has vanished from the client. 
+autopublishを削除したら、　クライアントから全てのデータが消去されたことがすぐにわかるでしょう。
+An easy way to get it back is to simply duplicate what autopublish does, and publish a collection in its entirety.
+元に戻す簡単な方法は、autopublishが行うことを複製して（？？？）、コレクションを丸ごとパブリッシュすることです。
+For example:
+たとえば、
 
 ~~~js 
 Meteor.publish('allPosts', function(){
@@ -274,13 +279,19 @@ Meteor.publish('allPosts', function(){
 });
 ~~~
 
-<%= diagram "fullcollection", "Publishing a full collection", "pull-center" %>
+<%= diagram "fullcollection", "全ての（？？？）コレクションをパブリッシュする", "pull-center" %>
 
-////
+We're still publishing full collections, but at least we now have control over which collections we publish or not.
+全てのコレクションをパブリッシュしているわけですが、少なくともどのコレクションをパブリッシュするかを制御（？？？）しています。
+In this case, we're publishing the Posts collection but not Comments.
+この場合は、Commentコレクションではなく、Postsコレクションをパブリッシュしています。
 
-### Publishing Partial Collections
+### コレクションの一部分をパブリッシュする
 
-////
+The next level of control is publishing only part of a collection. 
+次の制御のレベルでは、コレクションの一部分だけをパブリッシュします。
+For example only the posts that belong to a certain author:
+たとえば、ある著者に関連したpostsだけなら、（？？？）
 
 ~~~js 
 Meteor.publish('somePosts', function(){
@@ -294,19 +305,46 @@ Meteor.publish('somePosts', function(){
 
 ### Behind The Scenes
 
-////
+If you've read the Meteor publication documentation, 
+もしあなたがMeteorのパブリケーションに関する公式資料を（？？？）読んだら、
+you were perhaps overwhelmed by talk of using added() and ready() to set attributes of records on the client, 
+クライアント上で属性の記録を設定するための added() と ready()　を使った話に圧倒されるでしょう。（？？？）
+and struggled to square that with the Meteor apps that you've seen that never use those methods.
+一度も使わないこれらのメソッドを見るMeteorアプリと折り合いをつけるのに四苦八苦することでしょう。（？？？）
+　
+The reason is that Meteor provides a very important convenience:the _publishCursor() method.
+その理由はMeteorがとても重要な _publishCursor()メソッドを提供しているからです。（？？？）
+You've never seen that used either? Perhaps not directly,
+これまでにこれが使われているのを見ましたか？
+but if you return a cursor (i.e. Posts.find({'author':'Tom'})) in a publish function, 
+おそらく直接は見ていませんが、あなたはパブリッシュ関数でカーソルを返しています。（言い換えると、Posts.find({'author':'Tom'})）
+that's exactly what Meteor is using.
+まさにこれをMeteorが使っているのです。
 
-////
+When Meteor sees that the somePosts publication has returned a cursor, 
+MeteorがsomePostsパブリケーションがカーソルを返したところを見かけたら、
+it calls _publishCursor() to -- you guessed it -- publish that cursor automatically.
+お気づきのように、 _publishCursor()を呼び出して自動的にカーソルをパブリッシュします。（？？？）
 
-////
+Here's what _publishCursor() does:
+ _publishCursor()が行うことは次のようなことです。
 
-////
+It checks the name of the server-side collection.
+It pulls all matching documents from the cursor and sends it into a client-side collection of the same name.
+(It uses .added() to do this).
+Whenever a document is added, removed or changed, it sends those changes down to the client-side collection. 
+(It uses .observe() on the cursor and .added(), .changed() and removed() to do this).
 
-- ////
-- ////
-- ////
+-サーバーサイドのコレクションの名前をチェックします。 
+- カーソルからマッチするドキュメントを呼び出して、それを同じ名前のクライアントサイドのコレクションに送ります。（？？？）（これをするために.added()を使います。）
+- ドキュメントが加えられたり、削除されたり、変更したときは、クライアントサイドのコレクションにその変更をおくります。
+（カーソルでは.observe() を使い、.added()や.changed() 、 removed()を使います。）（？？？）
 
-////
+So in the example above, 
+we are able to make sure that the user only has the posts that they are interested in 
+(the ones written by Tom) available to them in their client side cache.
+そのため、上記の例では、
+クライアントサイドのキャッシュでユーザーの興味のある投稿（トムが書いたもの）だけが見れるようにすることができます　（？？？）
 
 <% end %>
 
