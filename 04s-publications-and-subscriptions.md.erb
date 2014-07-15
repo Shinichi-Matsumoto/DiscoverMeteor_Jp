@@ -92,21 +92,35 @@ Second, you'll be able to access that data instantaneously without having to wai
 
 ### Publishing
 
-////
+An app's database can contain tens of thousands of documents, some of which might even be private or sensitive. 
+アプリのデータベースはプライベートや機密データも含んだ何万ものドキュメントを保存しています。　
+So we obviously shouldn't just mirror our whole database on the client, for security and scalability reasons.
+そのため、セキュリティやスケーラビリティの観点からもクライント上でデータベースの全てを映し出すわけにはいきません。（？？？）
 
-////
+So we'll need a way to tell Meteor which subset of data can be sent to the client, 
+　Meteor　 クライントに送るデータ　（？？？）　Meteorに命令する方法が必要です。
+and we'll accomplish this through a publication.
+私たちはpublicationを使ってこれを行います。（？？？）
 
-////
+Let's go back to Microscope. Here are all of our app's posts sitting in the database:
+Microscopeにもどりましょう。　これがデータベースに入っているアプリの投稿の全てです。（？？？）
 
-<%= diagram "collections-1", "All the posts contained in our database.", "pull-center" %>
+<%= diagram "collections-1", "データベースに保存されている全ての投稿。", "pull-center" %>
 
-////
+Although that feature admittedly does not actually exist in Microscope, we'll imagine that some of our posts have been flagged for abusive language. 
+Microscopeにはそのような特徴はありませんが、 罵り言葉にフラグを立てることを想像します。（？？？）
+Although we want to keep them in our database, they should not be made available to users (i.e. sent to a client).
+データベースで保存したいのですが、（？？？）
 
-////
+Our first task will be telling Meteor what data we do want to send to the client.
+最初のタスクは　クライントにどんなデータを送りたいのかMeteorに指示を与えることです。
+We'll tell Meteor we only want to publish unflagged posts:
+　　　フラグが立っていない投稿だけをpublishしたいということをMeteorに指示します。　
 
-<%= diagram "collections-2", "Excluding flagged posts.", "pull-center" %>
+<%= diagram "collections-2", "フラグが立っている投稿を除外する", "pull-center" %>
 
-////
+Here's' the corresponding code, which would reside on the server:
+これが対応するコードで、サーバー内にあります。
 
 ~~~js
 // on the server
@@ -115,29 +129,51 @@ Meteor.publish('posts', function() {
 });
 ~~~
 
-////
+This ensures there is no possible way that a client will be able to access a flagged post.
+こうすることで、クライントはフラグのたった投稿にアクセスできることはありません。
+This is exactly how you'd make a Meteor app secure: 
+これがMeteorアプリをセキュアにする方法です。
+just ensure you're only publishing data you want the current client to have access to.
+単にクライアントにアクセスしてほしいデータをpublishするだけです。
 
 <% note do %>
 
 ### DDP
 
-////
+Fundamentally, you can think of the publication/subscription system as a funnel that transfers data
+基本的に、publication/subscriptionシステムは
+from a server-side (source) collection to a client-side (target) collection.
+サーバーサイドのコレクション（源）をクライアントサイドのコレクション（的）に移動させるじょうごのようなものと考えることができます。（？？？）
 
-////
+The protocol that is spoken over that funnel is called DDP (which stands for Distributed Data Protocol). 
+　じょうごに（？？？）プロトコルはDDPと呼ばれます。（ Distributed Data Protocolといいます。）
+To learn more about DDP, you can watch this talk from The Real-time Conference by Matt DeBergalis (one of the founders of Meteor), 
+DDPについてさらに学習するには、　リアルタイムカンファレンスでの Matt DeBergalis（Meteor発起人の一人）の講演を見ることができます。
+or this screencast by Chris Mather that walks you through this concept in a little more detail.
+ もしくはChris Matherによる 動画で もう少し詳細にこのコンセプトを理解することができます。（？？？）
 
 <% end %>
 
 ### Subscribing
 
-////
+Even though we want to make any non-flagged post available to clients, we can't just send thousands of posts at once.
+フラグの立っていない投稿をクライアントでも閲覧できるようにしたい場合、一度に幾千もの投稿を送ることはできません。（？？？）
+We need a way for clients to specify which subset of that data they need at any particular moment,
+　（？？？）
+and that's exactly where subscriptions come in.
+　　（？？？）
 
-////
+Any data you subscribe to will be mirrored on the client thanks to Minimongo, 
+subscribeしているデータはMongoDBのMeteorのクライアントサイドの実行である（？？？）Minimongoによってクライアントに映しだされています。
+Meteor's client-side implementation of MongoDB.
 
-////
+For example, let's say we're currently browsing Bob Smith's profile page, and only want to display his posts.
+たとえば、　ボブ・スミスのプロフィールのページを見ているとしましょう。そして、彼の投稿だけを表示したいとします。
 
-<%= diagram "collections-3", "Subscribing to Bob's posts will mirror them on the client.", "pull-center" %>
+<%= diagram "collections-3", "ボブの投稿をサブスクライブすることはクライアントに反映される。", "pull-center" %>
 
-////
+First, we would amend our publication to take a parameter:
+最初に、引数（？？？）を取ってくるパブリケーションを改良します。
 
 ~~~js
 // on the server
@@ -146,22 +182,38 @@ Meteor.publish('posts', function(author) {
 });
 ~~~
 
-////
+And we would then define that parameter when we subscribe to that publication in our app's client-side code:
+　アプリのクライアントサイドのコード内でパブリケーションにサブスクライブするときに引数を定義します。（？？？）
 
 ~~~js
 // on the client
 Meteor.subscribe('posts', 'bob-smith');
 ~~~
 
-////
+This is how you make a Meteor app scalable client-side:
+これがMeteorアプリを　スケーラブル　クライアントサイド　にする方法です。（？？？）
+instead of subscribing to all available data, just pick and choose the parts that you currently need. 
+使用可能な全てのデータにサブスクライブする代わりに、　今必要な部分だけを選び出します。
+This way, you'll avoid overloading the browser's memory no matter how big your server-side database is.
+このように、どれだけサーバーサイドのデータベースが大きいとしても、　ブラウザーのメモリのオーバーロードを回避します。
 
 ### Finding
 
-////
+Now Bob's posts happen to be spread across multiple categories 
+　ボブの投稿は多数のカテゴリーに散在しています。
+(for example: “JavaScript”, ”Ruby”, and ”Python”). 
+（たとえば、“JavaScript”や ”Ruby”、”Python”など）
+Maybe we still want to load all of Bob's posts in memory, 
+記念にボブの全ての投稿を読み込みたい（？？？）かもしれませんが、
+but we only want to display those from the “JavaScript" category right now.
+今現在は“JavaScript"のカテゴリーでの投稿だけを表示したいとします。
+This is where “finding” comes in.
+ここから“finding”が登場します。
 
-<%= diagram "collections-4", "Selecting a subset of documents on the client.", "pull-center" %>
+<%= diagram "collections-4", "クライアントでドキュメントの一部分を選び出す。", "pull-center" %>
 
-////
+Just like we did on the server, we'll use the Posts.find() function to select a subset of our data:
+サーバーで行ったのと同様に、 データの一部分を選択するためPosts.find() 関数を使います。
 
 ~~~js
 // on the client
@@ -172,21 +224,45 @@ Template.posts.helpers({
 });
 ~~~
 
-////
+Now that we have a good grasp of what role publications and subscriptions play,
+　パブリケーションとサブスクリプションの役割が何であるか把握しているので、
+let's dig in deeper and review a few common implementation patterns.
+　より深く掘り下げて、共通する実行パターンを見なおしてみましょう。
 
 ### Autopublish
 
-////
+If you create a Meteor project from scratch (i.e using meteor create), 
+　Meteorのプロジェクトをゼロから（つまり、meteor createを使って）作っているとしたら、
+it will automatically have the autopublish package enabled.
+　自動的にautopublishパッケージが有効となっています。
+As a starting point, let's talk about what that does exactly.
+出発点として、autopublisが実際に何をしているのか、お話しましょう。（？？？）
 
-////
+The goal of autopublish is to make it very easy to get started coding your Meteor app, 
+autopublishの目的は、Meteorアプリをコーディングし始めることを超簡単にすることです（？？？）
+and it does this by automatically mirroring all data from the server on the client,
+　　クライアント上でサーバーから全てのデータを自動的に反映します。
+thus taking care of publications and subscriptions for you.
+このようにして、パブリケーションとサブスクリプションを処理します。
 
 <%= diagram "autopublish", "Autopublish", "pull-center"%>
 
-////
+How does this work? Suppose you have a collection called 'posts' on the server.
+どうやって動いているのでしょうか？　サーバー上に'posts'という名前のコレクションがあるとします。
+Then autopublish will automatically send every post that 
+autopublishは自動的にMongoDB内のpostsコレクションを見つけた全ての投稿を　　
+it finds in the Mongo posts collection into a collection called 'posts' on the client (assuming there is one).
+　 　　　クライアント上で'posts'という名前のコレクションに送ります（１つだと想定します。（？？？））
 
-////
+So if you are using autopublish, you don't need to think about publications.
+そのため、autopublishを使うなら、パブリケーションについて考える必要はありません。
+Data is ubiquitous, and things are simple. 
+当然のことながら、データは誰からでもアクセスできます。
+Of course, there are obvious problems with having a complete copy of your app's database cached on every user's machine.
+もちろん、全てのユーザーマシンにキャッシュしたアプリのデータベースをまるごとコピーされてしまう問題があります。
 
-////
+For this reason, autopublish is only appropriate when you are starting out, and haven't yet thought about publications.
+この理由から、autopublishは開発をし始めたときだけに適しています。　その時はパブリケーションについて検討しないで良いからです。
 
 ### Publishing Full Collections
 
