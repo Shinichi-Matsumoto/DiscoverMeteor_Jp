@@ -350,9 +350,15 @@ we are able to make sure that the user only has the posts that they are interest
 
 ### Publishing Partial Properties
 
-////
+We've seen how to only publish some of our posts,
+どのように投稿の一部分だけをパブリッシュするのか見てきました。
+but we can keep slicing thinner! Let's see how to only publish specific properties.
+（？？？）、　どのようにして特定のプロパティだけをパブリッシュするのか見ていきましょう。
 
-////
+Just like before, 
+先ほどのように、
+we'll use find() to return a cursor, but this time we'll exclude certain fields:
+ find()を使って、カーソルを返しますが、今回は特定の領域（？？？）を除外します。
 
 ~~~js
 Meteor.publish('allPosts', function(){
@@ -362,9 +368,12 @@ Meteor.publish('allPosts', function(){
 });
 ~~~
 
-<%= diagram "partialproperties", "Publishing partial properties", "pull-center" %>
+<%= diagram "partialproperties", "プロパティの一部分だけをパブリッシュする", "pull-center" %>
 
-////
+Of course, we can also combine both techniques. 
+もちろん、２つのテクニックを併用することもできます。
+For example, if we wanted to return all posts by Tom while leaving aside their dates, we would write:
+たとえば、　（？？？）　はさておいて、トムの全ての投稿を返したいときは、このように書きます。
 
 ~~~js
 Meteor.publish('allPosts', function(){
@@ -374,10 +383,19 @@ Meteor.publish('allPosts', function(){
 });
 ~~~
 
-### Summing Up
+### まとめ
 
-////
+So we've seen how to go from publishing every property of all documents of every collection
+(with autopublish) to publishing only some properties of some documents of some collections.
+あらゆるコレクションの全てのドキュメントのあらゆるプロパティをパブリッシュすることから始まって（autopublishも含めて）、
+コレクションの一部のドキュメントの一部のプロパティの一部だけをパブリッシュする方法を見ていきました。
 
-////
+This covers the basics of what you can do with Meteor publications, 
+　どのようにMeteorでのパブリケーション処理の基本をカバーします。
+and these simple techniques should take care of the vast majority of use cases.
+このシンプルなテクニックは　大部分のユースケースで対処できます。
 
-////
+Sometimes, you'll need to go further by combining, linking, or merging publications. 
+時々、パブリケーションを　　融合させて　さらに踏み込む必要があります。（？？？）
+We will cover these in a later chapter!
+こうしたことは後の　章でカバーします。（？？？）
