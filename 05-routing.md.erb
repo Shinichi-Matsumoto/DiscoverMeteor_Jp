@@ -3,38 +3,68 @@ title: Routing
 slug: routing
 date: 0005/01/01
 number: 5
-contents: Learn about routing in Meteor.|Create post discussion pages, with unique URLs.|Learn how to link to those URLs properly.
+contents: Meteorでのルーティングを学びます。.| ユニークなURLで投稿ディスカッションページを作ります。（？？？）|どうやって適切にURLをリンクするのか学習します。
 paragraphs: 72
 ---
 
-////
+Now that we have a list of posts (which will eventually be user-submitted),
+今のところ、投稿の一覧表があります（最終的にはユーザーが投稿するようにします）
+we need an individual post page where our users will be able to discuss each post.
+　ユーザーがお互いの投稿を議論できるように個別の投稿ページが必要です。（？？？）
 
-////
+We'd like these pages to be accessible via a permalink, 
+このページをパーマリンクを通じて、　アクセスできるようにしたい　
+a URL of the form http://myapp.com/posts/xyz (where xyz is a MongoDB _id identifier) that is unique to each post.
+パーマリンクとはhttp://myapp.com/posts/xyz の形をしたURLで、 それぞれの投稿を独自のものにします（？？？）　　（xyzの部分はMongoDBの_id識別子です）
 
-////
+This means we'll need some kind of routing to look at what's inside the browser's URL bar
+これは　　ブラウザーのURLバーの中に何があるのか調べてそれに応じて正しい中身を表示する何らかのルーティングが必要であるということです
+and display the right content accordingly.
 
-### Adding the Iron Router Package
 
-////
+### Iron Routerパッケージを入れる
 
-////
+Iron Router is a routing package that was conceived specifically for Meteor apps.
+Iron Router 特にMeteorアプリでのルーティングのパッケージです。
 
-////
+Not only does it help with routing (setting up paths), 
+Iron Routerはルーティング（パスの設定）に役立つだけではなく、
+but it can also take care of filters (assigning actions to some of these paths) 
+パスに処理を割り当てるフィルターも処理します。
+and even manage subscriptions (control which path has access to what data).
+また、どのパスがどんなデータにアクセスするのか制御するサブスクリプションも　操ります（？？？）　
+
+(Note: Iron Router was developed in part by Discover Meteor co-author Tom Coleman.)
+
+First, let's install the package from Atmosphere:
+最初に、Atmosphereからパッケージをインストールしましょう。
 
 ~~~bash
 $ mrt add iron-router
 ~~~
 <%= caption "Terminal" %>
 
-////
+This command downloads and installs the iron-router package into our app, ready to use. 
+このコマンドでiron-routerパッケージをアプリにインストールします。　すぐ使える（？？？）
+Note that you might sometimes need to restart your Meteor app 
+パッケージを使う前にMeteorアプリを再起動する必要があるかもしれません　（？？？）
+(with ctrl+c to kill the process, then meteor to start it again) before a package can be used.
+（ctrl+cでプロセスを中止して、再び起動するためにmeteorを入力します。）
 
-////
+Note that the Iron Router is a third-party package,
+Iron Routerはサードパーティのパッケージですので、
+meaning that you'll need Meteorite to install it (meteor add iron-router won't work).
+インストールするにはMeteoriteが必要です。(meteor add iron-router ではインストールできません).
 
 <% note do %>
 
-### Router Vocabulary
+### Router Vocabulary　ルーティング用語集
 
-////
+We'll be touching on a lot of different features of the router in this chapter. 
+この章で、る
+If you have some experience with a framework such as Rails, 
+you'll already be familiar with most of these concepts.
+But if not, here's a quick glossary to bring you up to speed
 
 - ////
 - ////
