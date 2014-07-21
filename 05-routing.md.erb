@@ -61,37 +61,80 @@ meaning that you'll need Meteorite to install it (meteor add iron-router won't w
 ### Router Vocabulary　ルーティング用語集
 
 We'll be touching on a lot of different features of the router in this chapter. 
-この章で、る
+この章では、ルーティングに関する様々な特徴に触れることになります。
 If you have some experience with a framework such as Rails, 
+もしあなたがRailsなどのフレームワークの経験があるなら、
 you'll already be familiar with most of these concepts.
+このコンセプトについてすでに知っていることでしょう。
 But if not, here's a quick glossary to bring you up to speed
+もしそうでなければ、ここでちょっとした用語集を用意しました。
 
-- ////
-- ////
-- ////
-- ////
-- ////
-- ////
-- ////
-- ////
+Routes: A route is the basic building block of routing.
+It's basically the set of instructions that tell the app where to go and what to do when it encounters a URL.
+Paths: A path is a URL within your app. 
+It can be static (/terms_of_service) or dynamic (/posts/xyz), 
+and even include query parameters (/search?keyword=meteor).
+Segments: The different parts of a path, delimited by forward slashes (/).
+Hooks: Hooks are actions that you'd like to perform before, after, or even during the routing process. 
+A typical example would be checking if the user has the proper rights before displaying a page.
+Filters: Filters are simply hooks that you define globally for one or more routes.
+Route Templates: Each route needs to point to a template. 
+If you don't specify one, the router will look for a template with the same name as the route by default.
+Layouts: You can think of layouts as one of those digital photo frames. 
+They contain all the HTML code that wraps the current template, and will remain the same even if the template changes.
+Controllers: Sometimes, you'll realize that a lot of your templates are reusing the same parameters. 
+Rather than duplicate your code, 
+you can let all these routes inherit from a single routing controller which will contain all the routing logic.
 
-////
+- ルート：ルートとは、ルーティングの基本的な構成要素です。
+　　　　アプリがURLと遭遇した際に（？？？）どこに行ったらよいか、何をしたらよいかといった基本的な命令のセットがルートです。
+- パス：パスとはアプリ内でのURLのことです。　パスは静的な(/terms_of_service) や動的な(/posts/xyz)、質問パラメーターでもあります。
+- セグメント：パスの様々なパーツのことで、前のスラッシュ（/）で区切れています。
+- フック：フックとは、　（？？？）
+　　　　　代表的な例は、　ユーザーがページを表示する前に適切な権利を持っているか調べます。（？？？）
+- フィルター：フィルターとは、一個以上のルートをグローバルに定義するシンプルなフックです。（？？？）　　
+- ルートテンプレート： 各ルートはテンプレートを指し示します。
+　　　　　　　　　　　　（？？？）、デフォルトでのルーターは、ルートとしての同じ名前のテンプレートを探します。（？？？）
+- レイアウト：レイアウトとは、デジタルフォトフレームのようなものだと捉えることができます。
+　　　　　　　レイアウトは　　現在のテンプレートをラップする（？？？）　全てのHTMLコードのことで、テンプレートが変化しても同じ状態を保ちます。　　
+- コントローラー：時々、　多くのテンプレートが同じパラメーターで（？？？）再利用できることに気づくでしょう。
+　　　　　　　　　コードを繰り返すよりも（？？？）、　　１つのルーティングコントローラーで　ルートを継承することができます。（？？？）
+
+For more information about Iron Router, check out the full documentation on GitHub.
+Iron Routerに関する情報は、GitHub上でドキュメンテーションの全文を見ることができます。
 
 <% end %>
 
 ### Routing: Mapping URLs To Templates
 
-////
+So far, we've built our layout using hard-coded template includes (such as {{>postsList}}). 
+So although the content of our app can change,the page's basic structure is always the same:
+ a header, with a list of posts below it.
+今まで、{{>postsList}}のようにハードコードされたテンプレートのインクードを使ってレイアウトを作ってきました。（？？？）
+そのため、アプリの内容は変化しましたが、ページの基本的な構造は常に同じです。
+ヘッダーと投稿の一覧表です。（？？？）
 
-////
+The Iron Router lets us break out of this mold by taking over what renders inside the HTML <body> tag.
+So we won't define that tag's content ourselves, as we would with a regular HTML page. 
+Instead, we will point the router to a special layout template that contains a {{> yield}} template helper.
+Iron Routerは　HTMLの<body>タグの中をレンダリングしたものを（？？？）引き継ぐことで、この型から抜け出します。（？？？）
+そのため、通常のHTMLページのようにタグの中を定義しません。（？？？）
+その代わりに、　{{> yield}}テンプレートヘルパーを含んだ特別なレイアウトテンプレートをルーターに指定します（？？？）
 
-////
+This {{> yield}} helper will define a special dynamic zone that
+will automatically render whichever template corresponds to the current route
+(as a convention, we'll designate this special template as the “route template” from now on):
+この{{> yield}}ヘルパーは　現在のルートに対応するどんなテンプレートでも自動的にレンダリングする特別な動的な区間を定義します（？？？）
 
-<%= diagram "router-diagram", "Layouts and templates.", "pull-center" %>
+<%= diagram "router-diagram", "レイアウトとテンプレート.", "pull-center" %>
 
-////
+We'll start by creating our layout and adding the {{> yield}} helper. 
+First, we'll remove our HTML <body> tag from main.html, and move its contents to their own template, layout.html.
+ではレイアウトを作って{{> yield}}ヘルパーを追加してみましょう。
+はじめに、main.htmlからHTMLの<body>タグを削除して、その中身をlayout.htmlの中のテンプレートに移動させます。（？？？）
 
-////
+So our slimmed down main.html now looks like this:
+すると、スリムになったmain.htmlは現在このようになっています。
 
 ~~~html
 <head>
@@ -100,7 +143,8 @@ But if not, here's a quick glossary to bring you up to speed
 ~~~
 <%= caption "client/main.html" %>
 
-////
+While the newly created layout.html will now contain the app's outer layout:
+新しく作ったlayout.htmlは現在、アプリの外側のレイアウトを含んでいます。（？？？）
 
 ~~~html
 <template name="layout">
@@ -118,7 +162,11 @@ But if not, here's a quick glossary to bring you up to speed
 ~~~
 <%= caption "client/views/application/layout.html" %>
 
-////
+You'll notice we've replaced the inclusion of the postsList template with a call to yield helper. 
+You'll notice that after this change, we see nothing on the screen. 
+This is because we haven't told the router what to do with the / URL yet, so it simply serves up an empty template.
+postsListテンプレートをyield ヘルパーの呼び出しに交換したことに　（？？？）
+
 
 ////
 
