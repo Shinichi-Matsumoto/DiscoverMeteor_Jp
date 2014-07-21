@@ -166,9 +166,14 @@ You'll notice we've replaced the inclusion of the postsList template with a call
 You'll notice that after this change, we see nothing on the screen. 
 This is because we haven't told the router what to do with the / URL yet, so it simply serves up an empty template.
 postsListテンプレートをyield ヘルパーの呼び出しに交換したことに　（？？？）
+また、その変化の後にスクリーン上になにもないことにお気づきかと思います。
+これはまだ　ルーターに/ URLで何を処理するか命令していないためです。
+そのため空のテンプレートを出しています。
 
-
-////
+To begin, we can regain our old behavior by mapping the root / URL to the postsList template.
+We'll create a /lib directory at our project's root, and inside it create router.js :
+はじめに、　　postsListテンプレートに/ URLルートを割り当てて、（？？？）を
+　ルートのプロジェクトで/lib directoryを作って、その中にrouter.jsを作ります。
 
 ~~~js
 Router.configure({
@@ -181,27 +186,64 @@ Router.map(function() {
 ~~~
 <%= caption "lib/router.js"%>
 
-////
+We've done two important things. 
+First, we've told the router to use the layout we just created as the default layout for all routes.
+Second, we've defined a new route called postsList and mapped it to the / path.
+これで２つの大事なことが終わりました。
+１つめは、ルーターに　（？？？）　　レイアウトを使うことを命令しました。
+２つめは、postsListという名前の新しいルートを定義して、/ パスを割り当てました。
 
 <% note do %>
 
 ### The `/lib` folder
 
-////
+Anything you put inside the /lib folder is guaranteed to load first before anything else in your app
+(with the possible exception of smart packages).
+This makes it a great place to put any helper code that needs to be available at all times.
+ /libフォルダ内に置いたものは、　何よりも前に最初に読み込まれることを保証します。（？？？）
+（スマートパッケージは例外ですが）。
+そのため、/libフォルダはいつも利用する必要のあるヘルパーコードを置く最適な場所となります。
 
-////
+A bit of warning though: note that since the /lib folder is neither inside /client or /server,
+this means its contents will be available to both environments.
+しかし、注意点が１つあります。 /libフォルダは/client 、/server内のどちらにもないので、（？？？）
+/libフォルダの内容がどちらの環境でも有効化されるということに気をつけます。
 
 <% end %>
 
 ### Named Routes
 
-////
+Let's clear up a bit of ambiguity here. 
+We named our route postsList, but we also have a template called postsList. So what's going on here?
+ここで少しあいまいな点をクリアにしましょう。
+私たちはルートにpostsListと名付けましたが、postsListという名前のテンプレートもあります。
+すると、ここではどんなことが起こるのでしょうか。
 
-////
+By default, Iron Router will look for a template with the same name as the route. 
+In fact, it will even look for a path based on the route name, 
+meaning that if we hadn't defined a custom path (which we did by providing a path option in our route definition), 
+our template would've been accessible at URL /postsList by default.
+デフォルトの状態だと、 Iron Router はルートで同じ名前のテンプレートを探します。（？？？）
+実際には、カスタムパス（？？？）を定義していなくても　ルートの名前に基づいたパスを探します。
+（つまり、　ルートの定義にパスの選択肢を与えました。）（？？？）
+テンプレートはデフォルト状態では　/postsListのURLでアクセスできます。（？？？）
 
-////
+You may be wondering why we even need to name our routes in the first place.
+Naming routes lets us use a few Iron Router features that make it easier to build links inside our app.
+The most useful one is the {{pathFor}} Spacebars helper, which returns the URL path component of any route.
+なぜ最初の段階でルートに名前をつける必要があるのか不思議に思う読者の方もいるかもしれません。
+ルートを名付けることでアプリ内で簡単にリンクを作るIron Router の特徴を使うことができます。　
+最も役立つ特徴は{{pathFor}}というSpacebarsヘルパーです。これはどんなルートでもURLパスの構成要素を返します。（？？？）
 
-////
+We want our main home link to point us back to the posts list, 
+so instead of specifying a static / URL, we can also use the Spacebars helper.
+The end result will be the same,
+but this gives us more flexibility since the helper will always output the right URL even if 
+we change the route's path in the router.
+メインのホームのリンクが（？？？）投稿の一覧を返すようにしたいので、（？？？）
+静的な / URL を指定する代わりに、Spacebarsヘルパを使います。
+最終的な結果は同じとなりますが、ルーターでルートのパスを変えたとしてもヘルパーは常に正しいURLを出力するため、
+私たちはフレキシビリティを得ることができます。
 
 ~~~html
 <header class="navbar">
@@ -219,11 +261,21 @@ Router.map(function() {
 
 ### Waiting on Data
 
-////
+If you deploy the current version of the app (or launch the instance using the link above), 
+you'll notice that the list appears empty for a few moments before the posts appear. 
+This is because when the page first loads, 
+there are no posts to display until the posts subscription is done grabbing the post data from the server.
+もし現在の状態のアプリをデプロイしたら、（あるいは上記のリンクを使ってインスタンスをローンチしたら）
+投稿が現れる前のわずかな間はリストの中身がないことに気づくことだと思います。
+これはページが最初に読み込まれるときはpostsサブスクリプションがサーバーから投稿データを取ってくるまで表示する投稿がないからです。（？？？）
 
-////
+It would be a much better user experience to provide some visual feedback that something is happening, 
+and that the user should wait a moment.
+何が起きているのかという視覚的なフィードバックを与えるので（？？？）　よりよいユーザーエクスペリエンスとなります。
+そのためユーザーは少しの間待ってくれるでしょう。（？？？）
 
-////
+Luckily, Iron Router gives us an easy way to do that -- we'll waitOn the subscription:
+幸運なことに、Iron Routerにはそうするための簡単な方法があります。　waitOnサブスクリプションです。
 
 ~~~js
 Router.configure({
@@ -239,17 +291,51 @@ Router.map(function() {
 <%= caption "lib/router.js" %>
 <%= highlight "3,4" %>
 
-////
+Let's break things down. First, we've modified the Router.configure() block to provide the router
+with the name of a loading template (which we'll create soon) 
+to redirect to while our app is waiting for data.
+ひとつひとつ見ていきましょう。
+最初に、私たちはRouter.configure()ブロックを修正しました。
+ルーターに 読み込まれるテンプレート（これからすぐに作ります。）の名前を与えるために
+アプリがデータを待っている間にリダイレクトする　　　（？？？？？？）
 
-////
+Second, we've also added a waitOn function, which returns our posts subscription.
+Finally, we enabled a built in loading hook. 
+What this means is that the router will ensure that the posts subscription is loaded 
+before sending the user through to the route they requested.
+次に、waitOn関数を加えました。waitOn関数はpostsサブスクリプションを返します。
+最後に、ローディングする（？？？）フックを作ることができました。
+これは　ルーターは　ルートを通じてユーザーに送る前に　postsサブスクリプションが読み込まれることを確かにします。（？？？）
 
-////
+Note that since we're defining our waitOn function globally at the router level,
+this sequence will only happen once when a user first accesses your app. 
+After that, the data will already be loaded in the browser's memory and the router won't need to wait for it again.
+私たちはwaitOn関数をルーターレベルでグローバルに定義しているため、
+この（？？？）は、ユーザーが初めてアプリにアクセスした際に一度だけ起こります。（？？？）
+その後、データは　ブラウザーのメモリにすでに読み込まれ、ルータはは再び待つ必要がなくなります。
 
-////
+And since we are now letting the router handle our subscription, 
+you can now safely remove it from main.js (which should now be empty).
+これでルーターがサブスクリプションを処理するようにしたので、
+main.jsから（？？？）を安全に削除することができます。
 
-////
+It's usually a good idea to wait on your subscriptions, not just for the user experience, 
+but also because it means you can safely assume that data will always be available from within a template. 
+This eliminates the need to deal with templates being rendered before their underlying data is available,
+which often requires tricky workarounds.
+サブスクリプションを待つことはユーザーエクスペリエンスのためだけではなく、良いアイデアです　（？？？）
+その理由は、データは常にテンプレート内から利用できるようにするためです。
+基礎的な情報が利用できる前にレンダリングしたテンプレートを処理する必要がなくなります。（？？？）
+扱いにくい回避方法が必要です。（？？？）
 
-////
+We'll also add an onBeforeAction filter to trigger Iron Router's built-in loading hook 
+and make sure we're showing the loading template while we wait.
+ また、onBeforeActionフィルターを加えます。Iron Routerに組み込まれたloadingフックを動作させます。
+ そして、読み込まれるテンプレートを表示しています。（？？？）
+
+The final piece of the puzzle is the actual loading template. 
+We'll use the spin package to create a nice animated loading spinner.
+Add it with mrt add spin, and then create the loading template as follows:
 
 ~~~html
 <template name="loading">
