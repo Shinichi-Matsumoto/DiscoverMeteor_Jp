@@ -8,17 +8,35 @@ contents: Learn about the Meteor Session|Learn about the autorun function|Learn 
 paragraphs: 33
 ---
 
-////
+Meteor is a reactive framework. 
+What this means is that as data changes, 
+things in your application change without you having to explicitly do anything.
+Meteorはリアクティブなフレームワークです。
+つまり、データが変化すると、何もしなくても確実にアプリケーション内のデータも変化するということです。　（？？？）
 
-////
+We've already seen this in action in how our templates change as the data and the route changes.
+私たちはすでに作業を 見てきました。　 どのようにテンプレートが変化するのか　（？？？？？？）
 
-////
+We'll dive deeper into how this works in later chapters, 
+but for now, we'd like to introduce some basic reactive features that are extremely useful in general apps.
+ これがどのように動いているのかは後の章でじっくり見ていきます。
+ ここでは、私たちは一般的なアプリでとても役立つ　基本的なリアクティブの特徴を　紹介したいと思います。　
 
 ### The Meteor Session
 
-////
+Right now in Microscope, 
+the current state of the user's application is completely contained in the URL that they are looking at 
+(and the database).
+現在のMicroscopeでは　ユーザーのアプリケーションの現在の状態は（？？？）　ユーザーが見ているURLが含まれています。（？？データベース）
 
-////
+But in many cases, you'll need to store some ephemeral state 
+that is only relevant to the current user's version of the application 
+(for example, if an element is shown or hidden).
+The Session is a convienent way to do this.
+しかし、多くの場合、　一時的な状態を保存する必要があります。　
+現在のユーザーの　アプリケーションの（？？？）にだけ関係しています。
+（たとえば、要素が現れるか隠れるかどうか）。
+セッションはこうするための便利な方法です。
 
 ////
 
