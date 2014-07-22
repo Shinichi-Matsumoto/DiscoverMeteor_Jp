@@ -336,6 +336,9 @@ and make sure we're showing the loading template while we wait.
 The final piece of the puzzle is the actual loading template. 
 We'll use the spin package to create a nice animated loading spinner.
 Add it with mrt add spin, and then create the loading template as follows:
+パズルの最後のピースは実際の読み込むテンプレートです。（？？？）
+ナイスなローディングスピナーのアニメーションを作ってspinパッケージを使います。（？？？）
+mrt add spinでspinを入れて（？？？）、loadingテンプレートを次のように作ります。
 
 ~~~html
 <template name="loading">
@@ -344,29 +347,55 @@ Add it with mrt add spin, and then create the loading template as follows:
 ~~~
 <%= caption "client/views/includes/loading.html" %>
 
-////
+Note that {{>spinner}} is a partial contained in the spin package.
+Even though this partial comes from “outside” our app, we can include it just like any other template.
+{{>spinner}}　spinパッケージに含まれている部分です（？？？）。
+この部分はプリの「外側」から来ているわけですが（？？？）、　普通のテンプレートと同様にインクルードすることができます。
 
 <%= commit "5-2", "Wait on the post subscription." %>
 
 <% note do %>
 
+A First Glance At Reactivity
+
+Reactivity is a core part of Meteor, and although we've yet to really touch on it,
+our loading template gives us a first glance at this concept.
+
+Redirecting to a loading template if data isn't loaded yet is all well and good, 
+but how does the router know when to redirect the user back to the right page once the data comes through?
+
+For now, let's just say that this is exactly where reactivity comes in, and leave it at this.
+But don't worry, you'll learn more about it very soon!
+
 ### A First Glance At Reactivity
 
-////
+リアクティビリティはMeteorの根幹をなす部分ですが、ここまで触れてきませんでした。（？？？）
+ローディングテンプレートは（？？？）このコンセプトについて少しだけ見せてくれることになりました。（？？？）
 
-////
+データがロードされていないかどうか　ローディングテンプレートにリダイレクトすることは良いことですが、
+いつ ユーザーが正しいページに リダイレクトするのか　ルーターはどのように知ることになるのでしょうか。（？？？）　
 
-////
+今のところはとりあえず　リアクティビリティがその役割をしている　　とだけ言っておきましょう。
+このことについてはこの後すぐに学びますので、心配は無用ですよ！（？？？）
 
 <% end %>
 
-### Routing To A Specific Post
+###　特定の投稿にルーティングする
 
-////
+Now that we've seen how to route to the postsList template,
+let's set up a route to display the details of a single post.
+ここまでで、どのようにpostsListテンプレートにルーティングするのか見てきました。
+ここでは１つ１つの投稿の詳細を表示するためのルートをセットアップしましょう。　（？？？）
 
-////
+There's just one catch: we can't go ahead and define one route per post, since there might be hundreds of them.
+So we'll need to set up a single dynamic route, and make that route display any post we want.
+（？？？）：　　１つの投稿ごとにルートの定義をするとなると、数百の投稿に対して同じことをすることになり、先に進めなくなってしまいます。
+そのため、１つの動的なルートをセットアップして、ルートに私たちが見たい投稿を表示させる必要があります。
 
-////
+To start with, 
+we'll create a new template that simply renders the same post template 
+that we used earlier in the list of posts.
+まず初めに、。私たちが以前使った同じ投稿テンプレートを（？？？）　投稿のリスト内でレンダリングする　　新しいテンプレートを作ります。
 
 ~~~html
 <template name="postPage">
@@ -375,9 +404,14 @@ Add it with mrt add spin, and then create the loading template as follows:
 ~~~
 <%= caption "client/views/posts/post_page.html" %>
 
-////
+We'll add more elements to this template later on (such as comments),
+but for now it'll simply serve as a shell for our {{> postItem}} include.
+後でこのテンプレートにはコメントなどの要素を入れていきますが、今のところ{{> postItem}}インクルードのシェルのような役目を果たしています。
 
-////
+We are going to create another named route,
+this time mapping URL paths of the form /posts/<ID> to the postPage template:
+また違う名前でルートを作っていきましょう。
+今回は、/posts/<ID>の形の（？？？） URLパスをpostPageテンプレートに割り当てます。
 
 ~~~js
 Router.map(function() {
@@ -392,7 +426,11 @@ Router.map(function() {
 <%= caption "lib/router.js" %>
 <%= highlight "4~6" %>
 
-////
+The special :_id syntax tells the router two things:
+first, to match any route of the form /posts/xyz/, where “xyz” can be anything at all.
+Second, to put whatever it finds in this “xyz” spot inside an _id property in the router's params array.
+特別な:_id構文はルーターに２つのことを命令しています：
+１つは、　/posts/xyz/の形のルートをマッチさせて、　“xyz”は何にもなりません。（？？？）
 
 ////
 
