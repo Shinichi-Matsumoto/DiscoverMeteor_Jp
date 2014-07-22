@@ -431,16 +431,33 @@ first, to match any route of the form /posts/xyz/, where “xyz” can be anythi
 Second, to put whatever it finds in this “xyz” spot inside an _id property in the router's params array.
 特別な:_id構文はルーターに２つのことを命令しています：
 １つは、　/posts/xyz/の形のルートをマッチさせて、　“xyz”は何にもなりません。（？？？）
+２つは、　ルーターのparams配列で_idプロパティ内の “xyz”地点を見つけたものはなんでも中に入れます。（？？？）
 
-////
+Note that we're only using _id for convenience's sake here. 
+The router has no way of knowing if you're passing it an actual _id, or just some random string of characters.
+ ここでは便宜上のために_idだけを使っていることに
+ このルーター　あなたが実際の_idを押しているのか（？？？）、ランダムの文字列なのかは識別することはできません。（？？？）
 
-////
+We're now routing to the correct template, but we're still missing something: 
+the router knows the _id of the post we'd like to display,
+but the template still has no clue. So how do we bridge that gap?
+私たちは今、正しいテンプレートにルーティングしていますが、まだ何かミスをしています：
+ルーターは私たちが表示したい投稿の_idを識別します。
+しかし、そのテンプレートはまだ何もわからない状態です。では、どのようにしてこのギャップを埋めるのでしょうか。
 
-////
+Thankfully, the router has a clever built-in solution: 
+it lets you specify a template's data context. 
+You can think of the data context as the filling inside a delicious cake made of templates and layouts. 
+Simply put, it's what you fill up your template with:
+ありがたいことに、このルーターには組み込まれた解決策があります：
+（？？？）は、テンプレートのデータ内容を特定できます。
+このデータコンテキストはテンプレートとレイアウトで作られたおいしいケーキの中を満たしているものようなものだと考えることができます。（？？？）
+簡単に言いますと、 テンプレートの中をいっぱいに満たしているものがデータコンテキストです。（？？？）
 
-<%= diagram "router-diagram-2", "The data context.", "pull-center" %>
+<%= diagram "router-diagram-2", "データコンテキスト", "pull-center" %>
 
-////
+In our case, we can get the proper data context by looking for our post based on the _id we got from the URL:
+この場合、私たちはURLから得た_idを基にした投稿を探して正しいデータコンテキストを得ています
 
 ~~~js
 Router.map(function() {
@@ -456,17 +473,34 @@ Router.map(function() {
 <%= caption "lib/router.js" %>
 <%= highlight "4~7" %>
 
-////
+So every time a user accesses this route, 
+we'll find the appropriate post and pass it to the template.
+Remember that findOne returns a single post that matches a query, 
+and that providing just an id as an argument is a shorthand for {_id: id}.
+そのため、ユーザーがこのルートにアクセスするたびに、
+私たちは　適切な投稿を見つけて その情報テンプレートに引き渡しています。（？？？）
+findOneがクエリにマッチした１つの投稿を返して、
+　　idが{_id: id}を略した表現であることに（？？？）
 
-////
+
+Within the data function for a route, this corresponds to the currently matched route, 
+and we can use this.params to access the named parts of the route 
+(which we indicated by prefixing them with : inside our path).
+ルートのdata関数内で、thisは現在マッチしたルートに対応しています。
+私たちは名前がついたルートの部分にアクセスするためにthis.paramsを使うことができます。
+（そのことを、私たちはpathの中で：を前に置くことで表現しています。）（？？？）
 
 <% note do %>
 
 ### More About Data Contexts
 
-////
+By setting a template's data context, you can control the value of this inside template helpers.
+テンプレートのデータコンテキストを設定することで、テンプレートヘルパー内でのthisの値をコントロールすることができます。
 
-////
+This is usually done implicitly with the {{#each}} iterator, 
+which automatically sets the data context of each iteration to the item currently being iterated on:
+これは{{#each}}イテレータで間接的に処理されます。
+こうして　自動的に　それぞれの繰り返し処理の データコンテキストを　（？？？）に設定します。 　（？？？？？？）
 
 ~~~html
 {{#each widgets}}
@@ -474,7 +508,12 @@ Router.map(function() {
 {{/each}}
 ~~~
 
-////
+But we can also do it explicitly using {{#with}}, 
+which simply says "take this object, and apply the following template to it". 
+For example, we can write:
+しかし、　{{#with}}を使うことでも間接的に同じことができます。（？？？）
+これは単純に「このオブジェクトを取ってきて、次のテンプレートにそれを適用しろ」と命令しています。
+例えば、このように書くことができます。
 
 ~~~html
 {{#with myWidget}}
@@ -482,7 +521,10 @@ Router.map(function() {
 {{/with}}
 ~~~
 
-////
+It turns out you can achieve the same result by passing the context as an argument to the template call. 
+So the previous block of code can be rewritten as:
+テンプレート（？？？）に、コンテキストを引数として引き渡すことで　同じ結果を得ることができることがわかりました。　
+そのため以前のコードのブロックはこのように書きなおすことができます：
 
 ~~~js
 {{> widgetPage myWidget}}
@@ -492,9 +534,13 @@ Router.map(function() {
 
 ### Using a Dynamic Named Route Helper
 
-////
+Finally, we need to make sure that we're pointing to the right place whenever we want to link to an individual post.
+Again, we could do something like <a href="/posts/{{_id}}">, but using a route helper is just more reliable.
+最終的に、私たちは個別の投稿にリンクをしたい時はいつでも正しい場所を指し示す必要があります。（？？？）
+再び、私たちは　<a href="/posts/{{_id}}">のようにしてすることができますが（？？？）、ルートヘルパーを使った方がより確実です。
 
-////
+We've named the post route postPage, so we can use a {{pathFor 'postPage'}} helper:
+私たちは投稿ルートをpostPageと名付けました。そのため、{{pathFor 'postPage'}}ヘルパーを使います。
 
 ~~~html
 <template name="postItem">
@@ -510,15 +556,37 @@ Router.map(function() {
 <%= highlight "6" %>
 <%= commit "5-3", "Routing to a single post page." %>
 
-////
+But wait, how exactly does the router know where to get the xyz part in /posts/xyz?
+After all, we're not passing it any _id.
+でも待ってください。　　/posts/xyzの中のどこでxyz部分を得るのか（？？？）ルーターはどれだけ正確に識別するのでしょうか。
+結局、私たちは_idを引き渡していません。（？？？）
 
-////
+It turns out that Iron Router is smart enough to figure it out by itself. 
+We're telling the router to use the postPage route,
+and the router knows that this route requires an _id of some kind (since that's how we defined our path) .
+Iron Routerは自分自身でそれを判断できるほど頭が良いことがわかりました。
+私たちは　ルーターに　postPageルートを使うように命令しています。　
+ルーターはルートがどこの_idを要求するのか　識別します。　（そのため、私たちはpathを適宜しました。）
 
-////
+So the router will look for this _id in the most logical place available: 
+the data context of the {{pathFor 'postPage'}} helper, in other words this. 
+And it so happens that our this corresponds to a post, which (surprise!) does possess an _id property.
+そのため、ルーターは最もロジカルな場所で利用できる_idを探します：（？？？）
+{{pathFor 'postPage'}} ヘルパーのデータコンテキスト、つまりはthisです。
+thisは投稿に対応するため、（驚くことに！）_idプロパティも内包しているのです。（？？？）
 
-////
+Alternatively, you can also explicitely tell the router where you'd like it to look for the _id property, 
+by passing a second argument to the helper (i.e. {{pathFor 'postPage' someOtherPost}}).
+A practical use of this pattern would be getting the link to the previous or next posts in a list, for example.
+その代わりに、ヘルパーに２つの引数を渡すことで（つまり、 {{pathFor 'postPage' someOtherPost}}として）
+ルーターがどこで_idプロパティを探したいかを間接的に命令することもできます。（？？？）
+たとえば、このパターンの実践的な使い方は 前や次の投稿へのリンクを一覧表として得ています。（？？？）
 
-////
+To see if it works correctly,
+browse to the post list and click on one of the 'Discuss' links. You should see something like this:
+正しく動作しているか確かめるために、
+　投稿リストを（？？？）して、'Discuss' ボタンをクリックしてみます。
+　きっとこのように表示されるはずです。
 
 <%= screenshot "5-2", "A single post page." %>
 
