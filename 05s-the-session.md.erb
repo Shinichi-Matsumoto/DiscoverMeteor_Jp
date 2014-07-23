@@ -167,8 +167,15 @@ Value is: Yet another value
 
 Magic! As the session value changed, 
 the autorun knew it had to run its contents all over again, re-outputting the new value to the console.
+魔法のようだ！セッションの値が変化すると、　
+　コンソールに新しい値を再出力することで　もう一度内容を動かす必要があると　（？？？）　　autorunは　識別しました。　
 
-////
+So going back to our previous example, 
+if we want to trigger a new alert every time our Session variable changes, 
+all we need to do is wrap our code in an autorun block:
+そこで、先ほどの例に戻りましょう。
+私たちが　セッション変数が変わる度に　新しいアラートを動作させたい場合に、
+autorunブロックにコードをラップする必要があります。
 
 ~~~js
 Deps.autorun(function() {
@@ -176,15 +183,26 @@ Deps.autorun(function() {
 });
 ~~~
 
-////
+As we've just seen, autoruns can be very useful to track reactive datasources and react imperatively to them.
+これまで見てきたように、autorunはリアクティブデータソースをトラッキング（？？？）して、（？？？）に反応することにとても役立ちます。　
 
 ### Hot Code Reload
 
-////
+During our development of Microscope, we've been taking advantage of one of Meteor's time-saving features: 
+hot code reload (HCR). 
+Whenever we save one of our source code files, 
+Meteor detects the changes and transparently restarts the running Meteor server, 
+informing each client to reload the page.
+Microscopeの開発を通して、私たちはMeteorの時間節約する機能を利用してきていました：
+ホットコードリロード（HCR）です。
+私たちははソースコードファイルを保存する時はいつでも、
+Meteorは変化を見つけて、各クライアントにページをリロードすることを伝えて瞬時に　Meteorサーバーを動かすように再起動します。
 
-////
+This is similar to an automatic reload of the page, but with an important difference.
+これは自動的にページがリロードすることに似ていますが、重要な違いがあります。
 
-////
+To find out what that is, start by resetting the session variable we've been using:
+どういうことか理解するために、私たちが使ってきたセッション変数を再設定することから始めます。
 
 ~~~js
 ❯ Session.set('pageTitle', 'A brand new title');
@@ -193,7 +211,15 @@ Deps.autorun(function() {
 ~~~
 <%= caption "Browser console" %>
 
-////
+If we were to reload our browser window manually, 
+our Session variables would naturally be lost (since this would create a new session).
+On the other hand, if we trigger a hot code reload (for example, by saving one of our source files)
+the page will reload,
+but the session variable will still be set. Try it now!
+ブラウザーウィンドウを手動でリロードすると、
+セッショ変数は　当然ながらなくなります。（？？？）　（これは新しいセッションが作られたからです。）
+一方で、たとえば、ソースファイルを保存することでホットコードリロードを動作させると、ページはリロードしますが、
+セッション変数もまだ設定されています。試してみましょう！
 
 ~~~js
 ❯ Session.get('pageTitle');
@@ -201,11 +227,24 @@ Deps.autorun(function() {
 ~~~
 <%= caption "Browser console" %>
 
-////
+So if we're using session variables to keep track of exactly what the user is doing,
+the HCR should be almost transparent to the user, as it will preserve the value of all session variables.
+This enables us to deploy new production versions of our Meteor application with the confidence
+that our users will be minimally disrupted.
+そのため、ユーザーが何をしているのか正確に把握するためにセッション変数を使います。
+HCRは　ユーザーに見えないところで実行されます。　全てのセッション変数の値を保存する
+こうすることで、ユーザーの混乱を最小限にするという確証を得て　Meteorアプリケーションの新製品のバージョン（？？？）をデプロイすることができます。
+　　　
+Consider this for a moment. 
+If we can manage to keep all of our state in the URL and the session, 
+we can transparently change the running source code of each client's application 
+underneath them with minimal disruption.
+この点について少し考えてみましょう。
+もし私たちが　URLやセッションの全ての状態を保持できるとしたら、
+私たちは　各クライアントのアプリケーションのソースコードの動作を混乱を最小限にしてユーザーが気づくことなく変えることができます。
 
-////
-
-////
+Let's now check what happens when we refresh the page manually:
+では、ページを手動で更新した際にどんなことが起きているのかチェックしていきましょう。
 
 ~~~js
 ❯ Session.get('pageTitle');
@@ -213,7 +252,13 @@ null
 ~~~
 <%= caption "Browser console" %>
 
-////
+When we reloaded the page, we lost the session. On an HCR,
+Meteor saves the session to local storage in your browser and loads it in again after the reload. 
+However, the alternate behaviour on explicit reload makes sense: 
+if a user reloads the page, it's as if they've browsed to the same URL again,
+and they should be reset to the starting state that any user would see when they visit that URL.
+ページをリロードすると、セッションがなくなります。
+HCR（？？？）、Meteorは　セッションを保存します。　ブラウザー内のローカルストレージに　
 
 ////
 
