@@ -38,20 +38,33 @@ The Session is a convienent way to do this.
 （たとえば、要素が現れるか隠れるかどうか）。
 セッションはこうするための便利な方法です。
 
-////
+The Session is a global reactive data store. 
+It's global in the sense of a global singleton object: there's one session, and it's accessible everywhere. 
+Global variables are usually seen as a bad thing,
+but in this case the session is used as a central communication bus for different parts of the application.
+セッションはグローバルのリアクティブデータストアです。（？？？）
+グローバルシングルトンオブジェクトという意味のグローバルです。（？？？）１つのセッションはどこからでもアクセスできます。
+グローバル変数はよく悪いものだと見られますが、この場合セッションはアプリケーションの違う部分への中央　コミュニケーションバスとして使われます。（？？？）
 
 ### Changing the Session
 
-////
+The Session is available everywhere as Session. To set a session value, you can call:
+セッションは、Sessionでどこからでも使うことができます。セッションの値をセットするには、次のようにやります。（？？？）
 
 ~~~js
 ❯ Session.set('pageTitle', 'A different title');
 ~~~
 <%= caption "Browser console" %>
 
-////
+You can read the data back out again with Session.get('mySessionProperty');. 
+This is a reactive data source, which means that if you were to put it in a helper, 
+you would see the helper's output change reactively as the Session variable is changed.
+ Session.get('mySessionProperty');を使うことで、（？？？）　　データを読むことができます。
+これはリアクティブなデータソースです。
+つまり、ヘルパー内にこれを入れると　セッション変数が変化した時に　反動的に　ヘルパーの出力が変化するという意味です。（？？？）
 
-////
+To try this, add the following code to the layout template:
+これを試してみるために、レイアウトテンプレートに次のようなコードを追加しましょう。
 
 ~~~html
 <header class="navbar">
@@ -69,30 +82,50 @@ Template.layout.helpers({
 ~~~
 <%= caption "client/views/application/layout.js"%>
 
-////
+Meteor's automatic reload (know as the “hot code reload” or HCR) preserves Session variables,
+so we should now see "A different title" displayed in the nav bar. 
+If not, just type the previous Session.set() command again.
+Meteorの自動リロード（つまり「ホットコードリロード」）はセッション変数を保存します。（？？？）
+そのため、私たちは今「違ったタイトル」がナビゲーションバーに表示されているのがわかると思います。
+そうでなかったら、もう一度先ほどのSession.set()コマンドを入力してください。
 
-////
+Moreover if we change the value once more (again in the browser console), we should see yet another title displayed:
+さらにもう一度、ブラウザーコンソール上で値が変化したら、また違ったタイトルが表示されます。
 
 ~~~js
 ❯ Session.set('pageTitle', 'A brand new title');
 ~~~
 <%= caption "Browser console" %>
 
-////
+The Session is globally available, so such changes can be made anywhere in the application.
+This gives us a lot of power, but can also be a trap if used too much.
+セッションはグローバルに使うことができるので、アプリケーション内のどこでもこうした変化をさせることができます。
+こうすることで私たちは多くの力を得られますが（？？？）、使いすぎてしまうと罠にはまります。
 
 <% note do %>
 
 ### Identical Changes
 
-////
+Identical Changes
+
+If you modify a Session variable with Session.set() but set it to an identical value,
+Meteor is smart enough to bypass the reactive chain, and avoid unnecessary method calls.
+Session.set()でセッション変数を変更すると、全く同じ値をセットします。
+Meteorは　リアクティブチェーン（？？？）を回避できるほど頭が良いので、不必要なメソッドコールを回避します。
 
 <% end %>
 
 ### Introducing Autorun
 
-////
+We've looked at an example of a reactive data source, and watched it in action inside a template helper. 
+But while some contexts in Meteor (such as template helpers) are inherently reactive,
+the majority of a Meteor's app code is still plain old non-reactive JavaScript.
+私たちはリアクティブデータストアの例で、テンプレートヘルパー内で（？？？）、を見てきました。
+しかし、Meteorでのコンテキストの多く（テンプレートヘルパーなど）は本質的にリアクティブです。
+Meteorのアプリのコードの多くはまだ素のリアクティブではないJavaScriptです。
 
-////
+Let's suppose we have the following code snippet somewhere in our app:
+　次のようなコードをアプリのどこかにあるとします。
 
 ~~~js
 helloWorld = function() {
@@ -100,11 +133,20 @@ helloWorld = function() {
 }
 ~~~
 
-////
+Even though we're calling a Session variable, the context in which it's called is not reactive, 
+meaning that we won't get new alerts every time we change the variable.
+私たちはセッション変数と呼んできましたが、このコンテキストはリアクティブではないと呼んでいないのは、
+私たちが変数を変えるたびに新しいalertを取得しないという意味です。　（？？？）
 
-////
+This is where Autorun comes in. As the name implies, 
+the code inside an autorun block will automatically run and keep running each 
+and every time the reactive data sources used inside it change.
+ここでAutorunが登場します。その名前の通り、
+autorunブロックの中に入れたコードは自動的に動きます。（？？？）
+　また、リアクティブデータストアが使われる度に変化します。動き続けます　（？？？）
 
-////
+Try typing this into the browser console:
+ブラウザーコンソールでこのようにタイピングしてみてください。
 
 ~~~js
 ❯ Deps.autorun( function() { console.log('Value is: ' + Session.get('pageTitle')); } );
@@ -112,7 +154,10 @@ Value is: A brand new title
 ~~~
 <%= caption "Browser console" %>
 
-////
+As you might expect, the block of code provided inside the autorun runs once,
+outputting its data to the console. Now, let's try changing the title:
+　ご推察の通り、このコードのブロックは autorunが一度動くと　　（？？？）
+　データをコンソールに出力します。　では、タイトルを変化させてみましょう。
 
 ~~~js
 ❯ Session.set('pageTitle', 'Yet another value');
@@ -120,7 +165,8 @@ Value is: Yet another value
 ~~~
 <%= caption "Browser console" %>
 
-////
+Magic! As the session value changed, 
+the autorun knew it had to run its contents all over again, re-outputting the new value to the console.
 
 ////
 
