@@ -258,9 +258,15 @@ However, the alternate behaviour on explicit reload makes sense:
 if a user reloads the page, it's as if they've browsed to the same URL again,
 and they should be reset to the starting state that any user would see when they visit that URL.
 ページをリロードすると、セッションがなくなります。
-HCR（？？？）、Meteorは　セッションを保存します。　ブラウザー内のローカルストレージに　
+HCR（？？？）、Meteorは　ブラウザー内のローカルストレージに　セッションを保存します。そしてリロードした後に再び読み込みます。
+しかし、交互に起こるリロードの動作は理に適っています：（？？？）
+ユーザーがページをリロードすると、同じURLを再び見るようなものです。
+いつユーザーがそのURLを訪れたのかを理解する　　状態が始まることを　リセットするべきです。（？？？）
 
-////
+The important lessons in all this are:
+重要なレッスンはこうしたことです：
 
-1. ////
-2. ////
+Always store user state in the Session or the URL so that users are minimally disrupted when a hot code reload happens.
+Store any state that you want to be shareable between users within the URL itself.
+1. ユーザーの状態を常にセッションやURLで保存しているので、ユーザーはホットコードリロード時に混乱を最小限にすることができます。
+2. URLの（？？？）ユーザー間で共有したいどんな状態でも保存します。　　
