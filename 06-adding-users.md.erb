@@ -165,7 +165,7 @@ Now log out and sign up again with a different username.
 Meteor.user() should now return a second user. But wait, let's run:
 それではログアウトをして次は違うユーザーネームでサインアップしてみます。
 Meteor.user()は現在では２人のユーザーを返すことでしょう。
-しかし、少し待って実行しましょう：
+実行してみます：
 
 ~~~js
 ❯ Meteor.users.find().count();
@@ -201,17 +201,32 @@ we stopped collections from automatically sending all the data
 from the server into each connected client's local version of the collection.
 We needed to create a publication and subscription pair to channel the data across.
 ４章を振り返ると、 autopublishを停止させたことを思えているでしょう。
-　　　コレクションを止めました　　　自動的に
+コレクションが　クライアントの（local version of the collection？）とつながって
+サーバーから　自動的に全てのデータを送信することを阻止しました。
+私たちは　（pair to channel the data across？）するパブリケーションとサブスクリプションを　作る必要がありました。（？？？）　　
 
-////
+Yet we never set up any kind of user publication. So how come we can even see any user data at all?
+私たちはまだユーザーパブリケーションについて何も設定していません。ではどうして私たちは　ユーザーデータ　を見ることができるのでしょうか。
 
-////
+The answer is that the accounts package 
+actually does "auto-publish" the currently logged in user's basic account details no matter what. 
+If it didn't, then that user could never log in to the site!
+その答えはアカウントパッケージが　現在ログインしているユーザーの基本的なアカウントの詳細を　"auto-publish"をするからです。（？？？）
+そうでないとしたら、ユーザーは　このサイトにログインすることができなくなります！（？？？）
 
-////
+The accounts package only publishes the current user though.
+This explains why one user can't see another's account details.
+しかし、アカウントパッケージは現在のユーザーだけをパブリッシュします。
+これが　あるユーザーがほかのアカウントの詳細を見ることができない理由です。（？？？）
 
-////
+So the publication is only publishing one user object per logged-in user (and none when you are not logged in).
+　パブリケーションは　ログインユーザーごとに　一人のユーザーオブジェクトをパブリッシュしています。
+　（ログインしていない時はこれをしません。）（？？？）
 
-////
+What's more, documents in our user collection don't seem to contain the same fields on the server and on the client.
+In Mongo, a user has a lot of data in it. To see it, just go back to your Mongo terminal and type:
+さらには　ユーザーコレクション内のドキュメントは　　サーバーとクライアントで　同じフィールドを　含んでいないようです。　
+MongoDBでは、ユーザーは多くのデータを（has？）します。それを見るために、Mongoターミナルに戻って、このように入力します：
 
 ~~~bash
 > db.users.findOne()
@@ -240,7 +255,10 @@ We needed to create a publication and subscription pair to channel the data acro
 ~~~
 <%= caption "Mongo console" %>
 
-////
+On the other hand, in the browser the user object is much more pared down,
+as you can see by typing the equivalent command:
+一方で、ブラウザーでユーザーオブジェクトはかなり少なくなっています。
+同じコマンドを入力して見ることができます。
 
 ~~~js
 ❯ Meteor.users.findOne();
@@ -248,7 +266,9 @@ Object {_id: "kYdBd9hr3fWPGPcii", username: "tmeasday"}
 ~~~
 <%= caption "Browser console" %>
 
-////
+This example shows us how a local collection can be a secure subset of the real database. 
+The logged-in user only sees enough of the real dataset to get the job done (in this case, signing in).
+This is a useful pattern to learn from, as you'll see later on.
 
 ////
 
