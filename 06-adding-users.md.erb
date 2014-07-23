@@ -7,19 +7,49 @@ contents: Learn about user accounts in Meteor.|Add all the authentication we'll 
 paragraphs: 27
 ---
 
-////
+So far, we've managed to create and display some static fixture data in a sensible fashion
+and wire it together into a simple prototype. 
+ここまでで、私たちは（sensible fashion？）　で静的な固定データを作って表示しました。
+そして、（ simple prototype？）に結びつけました。（？？？）
 
-////
+We've even seen how our UI is responsive to changes in the data, and inserted or changed data appears immediately.
+Still, our site is hamstrung by the fact that we can't enter data. In fact, we don't even have users yet!
+また、どのようにUIがデータの変化に反応するのかを見て、（？？？）
+しかし、　このサイトは　　データを入力できないことに　落胆してしまいます。　実はまだユーザーもいないのです。
 
-////
+Let's see how we can fix that.
+では、どのようにこの点を修正していくのか見ていきましょう。
 
-### Accounts: users made simple
+### Accounts: users made simple 
 
-////
+In most web frameworks, adding user accounts is a familiar drag. 
+Sure, you have to do it on almost every project, 
+but it's never as easy as it could be.
+What's more, as soon as you have to deal with OAuth or other 3rd party authentication schemes, 
+things tend to get ugly fast.
+ほとんどのウェブフレームワークでは、ユーザーアカウントを付け加えることは（familiar drag？）です。
+たしかに、全てのプロジェクトでやらなければなりませんが、簡単なことではありません。
+さらには、OAuthやサードパーティの認証スキームを出来る限り早く使えるようにならなくてはなりません。
+物事は煩わしいほど速く進む傾向があります。（？？？）
 
-////
+Luckily, Meteor has you covered. 
+Thanks to the way Meteor packages can contribute code on both the server (JavaScript) and client 
+(JavaScript, HTML, and CSS) side, 
+we can get an accounts system almost for free.
+幸運なことに、Meteorは（has you covered？）
+Meteor packageが　コードがサーバー（JavaScript）とクライアント（JavaScriptとHTMLとCSS）の両方で（contribute code）できるおかげで、
+私たちはほぼ無料でアカウントシステムを使うことができます。（？？？）
 
-////
+We could just use Meteor's built-in UI for accounts (with mrt add accounts-ui) 
+but since we've built our whole app with Bootstrap, 
+we'll use the accounts-ui-bootstrap-dropdown package instead
+(don't worry, the only difference is the styling). 
+On the command line, we type:
+私たちはmrt add accounts-uiでMeteorに組み込まれたアカウントのUIを使うことができますが、
+Bootstrapを使ってアプリを作るので、
+accounts-ui-bootstrap-dropdownを使います。
+（違いはスタイリングだけなのでご心配なく）
+コマンドライン上で、このようにタイピングしてください。
 
 ~~~bash
 $ mrt add accounts-ui-bootstrap-dropdown
@@ -27,9 +57,22 @@ $ mrt add accounts-password
 ~~~
 <%= caption "Terminal" %>
 
-////
+Those two commands make the special accounts templates available to us;
+we can include them in our site using the {{> loginButtons}} helper. 
+A handy tip: you can control on which side your log-in dropdown shows up using the align attribute 
+(for example: {{> loginButtons align="right"}}).
+この２つのコマンドで私たちは特別な（？？？）アカウントテンプレートを使うことができます；
+{{> loginButtons}}ヘルパーを使うことで、サイト（？？？）にインクルードすることができます。
+（A handy tip？）：　　align属性を使うことでログインのドロップダウンの表示をコントロールすることができます。
 
-////
+We'll add the buttons to our header.
+And since that header is starting to grow larger,
+let's give it more room in its own template (we'll put it in client/views/includes/).
+We're also using some extra markup and Bootstrap classes to make sure everything looks nice:
+では、ヘッダーにボタンを付け加えるましょう。
+ヘッダーが　大きくなってきているので、　
+テンプレート内に（give it more room？）しましょう。（client/views/includes/の中に入れます。）
+私たちは（extra？）マークアップや Bootstrap クラスをサイトの外観を良くするために使っていきます。
 
 ~~~html
 <template name="layout">
@@ -65,13 +108,20 @@ $ mrt add accounts-password
 ~~~
 <%= caption "client/views/includes/header.html" %>
 
-////
+Now, when we browse to our app, we see the accounts login buttons in the top right hand corner of our site.
+さて、アプリを見てみるとサイトの右上にアカウントログインボタンがあるのがわかります。
 
 <%= screenshot "6-1", "Meteor's built-in accounts UI" %>
 
-////
+We can use these to sign up, log in, request a change of password, 
+and everything else that a simple site needs for password-based accounts.
+これでサインアップやログイン、パスワード変更のリクエストなどパスワードをベースにした
+アカウントが必要なサイトの全てを使うことができます。
 
-////
+To tell our accounts system that we want users to log-in via a username, 
+we simply add an Accounts.ui config block in a new config.js file inside client/helpers/:
+アカウントシステムに　ユーザーがユーザーネームを使ってログインさせたいと命令するために、
+　 client/helpers/の中のconfig.jsファイルに　Accounts.ui コンフィグブロックを入れます。
 
 ~~~js
 Accounts.ui.config({
@@ -84,18 +134,38 @@ Accounts.ui.config({
 
 ### Creating Our First User
 
-////
+Go ahead and sign up for an account: 
+the "Sign in" button will change to show your username. 
+This confirms that a user account has been created for you. 
+But where is that user account data coming from?
+先に進んでアカウントのサインアップをします：
+「サインイン」ボタンは　ユーザーネームを表示するために　変化します。（？？？）
+これで　ユーザーアカウントが（ for you？）作られたことが確認できます。
+しかし、ユーザーアカウントのデータはどこから来たのでしょうか。
 
-////
+By adding the accounts package, Meteor has created a special new collection,
+which can be accessed at Meteor.users.
+To see it, open your browser console and type:
+アカウントパッケージを入れたことで、Meteorは新たにMeteor.usersでアクセスできる特別なコレクションを作りました。
+これを見るために、プラウザコンソールでこのように入力しましょう。
 
 ~~~js
 ❯ Meteor.users.findOne();
 ~~~
 <%= caption "Browser console" %>
 
-////
+The console should return an object representing your user object;
+if you take a look, you can see that your username is in there, as well as an _id that uniquely identifies you. 
+Note that you can also get the currently logged-in user with Meteor.user().
+コンソールはユーザーオブジェクトに（representing？）しているオブジェクトを返すことでしょう。
+見てみると、　ユーザーネームとあなただけを識別する_id　がそこにあるのがわかります。　
+また、Meteor.user()を使って、現在ログインしているユーザー情報を得ることができます。
 
-////
+Now log out and sign up again with a different username. 
+Meteor.user() should now return a second user. But wait, let's run:
+それではログアウトをして次は違うユーザーネームでサインアップしてみます。
+Meteor.user()は現在では２人のユーザーを返すことでしょう。
+しかし、少し待って実行しましょう：
 
 ~~~js
 ❯ Meteor.users.find().count();
@@ -103,9 +173,17 @@ Accounts.ui.config({
 ~~~
 <%= caption "Browser console" %>
 
-////
+The console returns 1. Hold on, shouldn't that be 2? 
+Has the first user been deleted? 
+If you try logging in as that first user again, you'll see that's not the case.
+コンソールは１を返しました。ちょっと待って、２じゃないの？（？？？）
+最初のユーザーは削除されたのでしょうか？
+再び最初のユーザーでログインしてみると、事実と異なることがわかるでしょう。
 
-////
+Let's make sure and check in the canonical data-store, the Mongo database.
+We'll log into Mongo (meteor mongo in your terminal) and check:
+（canonical？）なデータストア、MongoDBの中をチェックしていきましょう。
+ターミナルでmeteor mongoと入力してMongoDBにログインして、チェックしましょう。
 
 ~~~bash
 > db.users.count()
@@ -113,11 +191,17 @@ Accounts.ui.config({
 ~~~
 <%= caption "Mongo console" %>
 
-////
+There are definitely two users. So why can we only see a single one at a time in the browser?
+異なる２人のユーザーがいます。ではなぜブラウザーでは１人だけしかいなかったのでしょうか？（？？？）
 
 ### A Mystery Publication!
 
-////
+If you think back to Chapter 4, you might remember that by turning off autopublish, 
+we stopped collections from automatically sending all the data
+from the server into each connected client's local version of the collection.
+We needed to create a publication and subscription pair to channel the data across.
+４章を振り返ると、 autopublishを停止させたことを思えているでしょう。
+　　　コレクションを止めました　　　自動的に
 
 ////
 
