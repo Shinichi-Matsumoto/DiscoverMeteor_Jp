@@ -8,13 +8,29 @@ contents: Learn about Meteor's reactive code dependency system.|Understand the m
 paragraphs: 20
 ---
 
-////
+If collections are Meteor's core feature, then reactivity is the shell that makes that core useful.
+コレクションがMeteorのコアな機能だとすると、リアクティビリティは　そのコアを　便利にする（ shell？）です。
 
-////
+Collections radically transform the way your application deals with data changes.
+Rather than having to check for data changes manually (e.g. through an AJAX call)
+and then patch those changes into your HTML,
+data changes can instead come in at any time and get applied to your user interface seamlessly by Meteor.
+コレクションは　データの変化を処理するアプリケーションの（ way？）を　（radically？）に　（transform？）します。
+たとえば、AJAXなどで人力でデータの変化をチェックして、
+HTMLにその変化をパッチするよりも、
+Meteorによって、データの変化がどんなときでも（ come in？）して、シームレスにユーザーインターフェースに適用することができます。
 
-////
+Take a moment to think it through: behind the scenes, 
+Meteor is able to change any part of your user interface when an underlying collection is updated.
+少し時間をとってこの点を考えてみます：
+（underlying？）なコレクションが更新されると、Meteorは裏側でどんなユーザーインターフェースのパーツでも変化させます。　
 
-////
+The imperative way to do this would be to use .observe(),
+a cursor function that fires callbacks when documents matching that cursor change. 
+We could then make changes to the DOM (the rendered HTML of our webpage) through those callbacks. 
+The resulting code would look something like this:
+これをするために必須な（way?）は、 .observe()を使うことです。
+.observe()はドキュメントがカーソルの変化にマッチした時に　コールバックを（fiew?）する　カーソル関数です。　
 
 ~~~js
 Posts.find().observe({
@@ -33,21 +49,39 @@ Posts.find().observe({
 });
 ~~~
 
-////
+You can probably already see how such code is going to get complex pretty quickly.
+Imagine dealing with changes to each attribute of the post, and having to change complex HTML within the post's <li>.
+Not to mention all the complicated edge cases that can come out 
+when we start relying on multiple sources of information that can all change in realtime.
+こうしたコードが　どのようにして　（pretty quickly？）に　複雑化するのか　すでに分かっているかもしれません。
+投稿ごとの属性の変化を処理すると想定すると、投稿の <li>内の複雑なHTMLを変化する必要があります。
+（？？？）、（？？？？？？）
 
 <% note do %>
 
 ### When *Should* We Use `observe()`?
 
-////
+Using the above pattern is sometimes necessary, especially when dealing with third-party widgets.
+For example, let's imagine we want to add or remove pins on a map in real time based on Collection data
+(say, to show the locations of currently logged in users).
+上記のパターンを使うことは特に、サードパーティーのウィジットを(dealing with？)する時に必要となります。
+たとえば、コレクションデータに基づいたリアルタイムなマップのピンを加えるか削除すると考えてみましょう。　　
 
-////
+In such cases, you'll need to use observe() callbacks in order to get the map to "talk" with
+the Meteor collection and know how to react to data changes.
+For example, you would rely on the added and removed callbacks to call the map API's own dropPin()
+or removePin() methods.
+その場合、Meteorコレクションと（ get the map to "talk" with？）して、
+データの変化の反応を見分けるために、　observe()コールバックを使う必要があります。 
+一例をあげると、マップ API のdropPin() や removePin()メソッドを呼び出すために　addedとremoved コールバックを使うことになります。
 
 <% end %>
 
 ### A Declarative Approach
 
-////
+Meteor provides us with a better way: reactivity, which is at its core a declarative approach. 
+Being declarative lets us define the relationship between objects once and know they'll be kept in sync,
+instead of having to specify behaviors for every possible change.
 
 ////
 
