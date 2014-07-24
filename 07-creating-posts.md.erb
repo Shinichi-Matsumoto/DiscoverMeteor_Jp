@@ -14,11 +14,12 @@ but we can't expect our users to open the console to create a new post.
 しかし私たちはユーザーがコンソールを開いて新しい投稿をすることを見込むことはできません。
 
 Eventually, we'll need to build some kind of user interface to let our users post new stories to our app.
-
+最終的に、私たちは　ユーザーがアプリに新しい（ stories？）を投稿できるように　ある種のユーザーインターフェースを作る必要があります。
 
 ### Building The New Post Page
 
-////
+We begin by defining a route for our new page:
+新しいページにルートを定義する（？？？）ことから始めていきます。
 
 ~~~js
 Router.configure({
@@ -43,11 +44,15 @@ Router.map(function() {
 <%= caption "lib/router.js" %>
 <%= highlight "13~15" %>
 
-////
+We're using the router's data function to set the postPage template's data context. 
+Remember that whatever we put into the data context will be available as this inside the template helpers.
+私たちはpostPageテンプレートのデータコンテキストを設定するために　ルーターのdata関数を使っています。
+私たちがデータコンテキストに入れるものは　テンプレートヘルパー内で　使うことができることを覚えておきましょう。（？？？）　
 
 ### Adding A Link To The Header
 
-////
+With that route defined, we can now add a link to our submit page in our header:
+ルートが定義されると、私たちは　ヘッダーにページを（submit？）するための　リンクを入れることができます。
 
 ~~~html
 <template name="header">
@@ -74,7 +79,10 @@ Router.map(function() {
 <%= caption "client/views/includes/header.html" %>
 <%= highlight "11~16" %>
 
-////
+Setting up our route means that if a user browses to the /submit URL,
+Meteor will display the postSubmit template. So let's write that template:
+ルートを設定するということは　ユーザーが　 /submit URLのウェブページを見るなら
+Meteorが　postSubmitテンプレートを表示するということを意味しています。では、テンプレートを書いていきましょう。
 
 ~~~html
 <template name="postSubmit">
@@ -111,15 +119,32 @@ Router.map(function() {
 ~~~
 <%= caption "client/views/posts/post_submit.html" %>
 
-////
+Note: that’s a lot of markup, but it simply comes from using Twitter Bootstrap. 
+While only the form elements are essential, 
+the extra markup will help make our app look a little bit nicer. It should now look similar to this:
+注意：かなりマークアップしましたが、　これはTwitter Bootstrapによるものです。
+form要素だけは必要ですが、
+残りのマークアップは　アプリの見た目を若干良くするために行っています。今はこのようになっているはずです。
 
 <%= screenshot "7-1", "The post submit form" %>
 
-////
+This is a simple form. We don't need to worry about an action for it,
+as we'll be intercepting submit events on the form and updating data via JavaScript. 
+(It doesn't make sense to provide a non-JS fallback when you consider 
+that a Meteor app is completely non-functional with JavaScript disabled).
+これはシンプルなフォームです。私たちは　（action for it？）について心配する必要はありません。
+これは（form？）で（submit events ？）を（intercepting？）して、JavaScriptでデータを更新するためです。
+（？？？？？？？）
 
 ### Creating Posts
 
-////
+Let's bind an event handler to the form submit event.
+It's best to use the submit event (rather than say a click event on the button),
+as that will cover all possible ways of submitting (such as hitting enter in URL field for instance).
+formのsubmit イベントに　イベントハンドラをバインドしていきましょう。
+clickイベント（on the button？）よりもsubmitイベントを使うのがベストです。
+それはsubmitイベントは　どのような投稿方法でもカバーするためです。
+（たとえば、URLフィールドに（ hitting enter？）するようなものでも）
 
 ~~~js
 Template.postSubmit.events({
@@ -141,11 +166,26 @@ Template.postSubmit.events({
 
 <%= commit "7-1", "Added a submit post page and linked to it in the header." %>
 
-////
+This function uses jQuery to parse out the values of our various form fields,
+and populate a new post object from the results. 
+We need to ensure we preventDefault on the event argument to our handler
+to make sure the browser doesn't go ahead and try to submit the form.
+この関数はさまざまな（form?）フィールドの値をはっきりさせるために　jQueryを使っています。　
+また、その結果から新しい投稿オブジェクトを追加します（populate？）。
+私たちは　ブラウザが　（doesn't go ahead and try to submit the form？）ための
+イベントハンドラへの（event argument？）でpreventDefault　する必要があります。
 
-////
+Finally, we can route to our new post's page. 
+The insert() function on a collection returns the generated id for the object that has been inserted into the database,
+which the Router's go() function will use to construct a URL for us to browse to.
+最終的に、私たちは新しい投稿ページにルーティングすることができました。
+コレクションの　insert()関数 データベースに挿入されたオブジェクトに　生成されたidを返します。
+（,which？）　ルーターの　go()関数は　　私たちがウェブで見るためのURLを構築します。（？？？）
 
-////
+The net result is the user hits submit, a post is created,
+and the user is instantly taken to the discussion page for that new post.
+その結果、　ユーザーは(submit？)にヒットして、投稿が作られて、
+ユーザーは瞬時に　新しい投稿の　ディスカッションページ　に連れていきます。
 
 ### Adding Some Security
 
