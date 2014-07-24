@@ -159,11 +159,17 @@ and this is what happens to the template computations
 (although template computations also do some magic to try and redraw the page more efficiently).
 Although you can have more control on what your computation does on invalidation if you need to,
 in practice this is almost always the behavior you'll be using.
-コンピュテーションは　
+コンピュテーションは通常、無効化（on？）　再評価する内容　を設定します。（？？？）
+そしてこれが　テンプレートコンピュテーションに　何が起きているかということです。　
+（テンプレートコンピュテーションは　ページをより効率的に（try and redraw？）するマジックを使います。）
+必要であれば　　（？？？）　無効化　コンピュテーションがすることを　さらにコントロールできますが、
+実際これは　ほとんどの場合で　　あなたが使っている行動です。（？？？）
 
 ### Setting Up a Computation
 
-////
+Now that we understand the theory behind computations, actually setting one up will seem disproportionately easy. 
+We simply use the Deps.autorun function to enclose a block of code in a computation and make it reactive:
+私たちはコンピュテーションの裏側の仕組みを理解したので、　実際に（one？）を設定することは 不相応なほど（？？？）簡単そうです。
 
 ~~~js
 Deps.autorun(function() {
@@ -171,11 +177,28 @@ Deps.autorun(function() {
 });
 ~~~
 
-////
+Note that we need to wrap the Deps block inside a Meteor.startup() block to ensure
+that it only runs once Meteor has finished loading the Posts collection.
+私たちは　Meteor.startup()ブロック内の Depsブロックをラップする必要があります。　
+　Meteorが　Postsコレクションを　（loading？）終えた時に　（it ？）が実行します。（？？？）
+
+Behind the scenes, autorun then creates a computation,
+and wires it up to re-evaluate whenever the data sources it depends on change. 
+We've set up a very simple computation that simply logs the number of posts to the console.
+Since Posts.find() is a reactive data source,
+it will take care of telling the computation to re-evaluate every time the number of posts changes.
+その結果、裏側でautorunがコンピュテーションを作ります。
+そして　変化によってデータが（sources？）する時はいつでも　再評価に　つなぎます。　（？？？）　　
+私たちは　コンソールへの投稿の数を記録する　とてもシンプルなコンピュテーションを設定しました。　
+Posts.find()はリアクティブデータソースなので、
+コンピュテーションに　投稿の数が変化する度に再評価する　ように命令する処理をします。　
 
 ~~~js
 > Posts.insert({title: 'New Post'});
 There are 4 posts.
 ~~~
 
-////
+The net result of all this is that we can write code that uses reactive data in a very natural way, 
+knowing that behind the scenes the dependency system will take care of re-running it at just the right times.
+すべての結果として、　　　私たちは　とても自然な方法で　リアクティブデータを使う　コードを書くことができます。
+　依存システムは　裏側で　適切な時点で　再評価する　処理をします。　（？？？）
