@@ -45,18 +45,30 @@ and then follow along with the book again starting from the "Creating a Simple A
  
 ### Meteorite
 
-////
+Due to the fact that Meteor doesn't yet support third-party packages out of the box,
+Tom Coleman (one of this book's authors) and some members of the community have created Meteorite, a wrapper for Meteor. 
+Meteorite also takes care of installing Meteor for you and hooking it together with any packages you might find.
+Meteorは　まだ　（out of the box？）サードパーティーのパッケージをサポートしていないため、
+本書の著者の一人であるTom Colemanとコミュニティの数人のメンバーは MeteorのためのラッパーであるMeteoriteを作りました。
+MeteoriteはMeteorをインストールしてどんなパッケージにもMeteorとつなぎ合わせる処理をします。
 
-////
+Since we'll be relying on third-party packages for some of Microscope's features, let's install Meteorite.
+Microscopeのいくつかの機能はサードパーティーのパッケージに依存しているので、Meteoriteをインストールしましょう。
 
 ### Installing Meteorite
 
-////
+You'll need to ensure node and git are installed on your machine.
+Install them in the standard way for your OS, or try these links:
+あなたのPCにnode.jsとgitをインストールする必要があります。
+スタンダードな方法でインストールする　これらのリンクをクリックしてください。
  
 - [Node download site](http://nodejs.org/download/)
 - [Git download site](http://git-scm.com/downloads)
 
-////
+Second, let's install Meteorite. 
+As it's a npm executable (Node Packaged Module, Node's standard module format), we install it with:
+次にMeteoriteをインストールしましょう。
+これは　npm（Node Packaged Module）の実行ファイルなので、私たちは次のようにしてインストールします。
 
 ~~~bash
 $ npm install -g meteorite
@@ -66,19 +78,24 @@ $ npm install -g meteorite
 
 ### Permission errors?
 
-////
+On some machines you may need root permission to install Meteorite. To avoid problems, make sure you use sudo -H:
+あるPCではMeteoriteをインストールするためにroot権限が必要かもしれません。
+この問題を回避するために、sudo -Hを使うと良いです。（？？？）
 
 ~~~bash
 $ sudo -H npm install -g meteorite
 ~~~
 
-////
+You can read more about this issue in the Meteorite documentation.
+Meteorite documentationでこの問題について読むことができます。
 
 <% end %>
 
-////
+That's it! Meteorite will handle things from here.
+その調子です！Meteoriteはここから物事を処理できるようになりました。
 
-////
+Note: there is no Windows support for Meteorite yet, but you can take a look at our windows tutorial instead.
+注意：MeteoriteはまだWindowsへのサポートがありませんが、その代わりにwindows tutorialを読むことができます。
 
 <% note do %>
 
