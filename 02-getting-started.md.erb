@@ -157,7 +157,8 @@ By the way, to stop the app all you need to do is bring up the terminal tab wher
 
 ### Adding a Package
 
-////
+We will now use Meteorite to add a smart package that will let us include Bootstrap in our project:
+私たちはこのプロジェクトでBootstrapを含めた　スマートパッケージを入れるために　Meteoriteを使いましょう。　　 
 
 ~~~bash
 $ mrt add bootstrap
@@ -169,42 +170,93 @@ $ mrt add bootstrap
 
 ### A Note on Packages
 
-////
+When speaking about packages in the context of Meteor, it pays to be specific. 
+Meteor uses five basic types of packages:
+Meteorの文脈でパッケージについて話す時は、　（it pays to be specific？）
+というのは、Meteorは５つのタイプのパッケージを使うからです。
 
-- ////
-- ////
-- ////
-- ////
-- ////
+The Meteor core itself is split into different core packages.
+They are included with every Meteor app, and you will pretty much never need to worry about these.
 
+Meteor smart packages are a group of about 37 packages (you can get the full list with meteor list)
+that come bundled with Meteor and that you can optionally import into your own app.
+You can add them even when you're not using Meteorite, with meteor add packagename.
+
+Atmosphere smart packages are third-party Meteor packages listed on Atmosphere.
+Meteorite is needed to import and use them.
+
+- Meteorのコアは　違ったコアパッケージに分かれています。
+　（They ？）はすべてのMeteorアプリに含まれているので、（ these？）について心配する必要はありません。
+- Meteorスマートパッケージは37個のパッケージが１つになったものです。（meteor listを使うことで全部見ることができます。）
+　Meteorとセットになっていて　アプリに任意でインポートすることができます。
+　Meteoriteを使っていなくても、meteor add packagenameと入力することで入れることができます。
+- Local packages are custom packages you can create yourself and put in the /packages directory.
+　You don't need Meteorite to use them either.
+　ローカルパッケージは自分で作って、/packagesディレクトリの中に入れることができる　カスタムパッケージです。
+　これを使うときはMeteoriteを使う必要はありません。
+- AtmosphereスマートパッケージはAtmosphereにリストアップされているサードパーティーのMeteorパッケージです。
+　これを使ってインポートするためには、Meteoriteが必要となります。
+- NPM packages (Node Packaged Modules) are Node.js packages.
+　Although they don't work out of the box with Meteor, they can be used by the previous types of packages.
+　NPMパッケージ(Node Packaged Modules)は Node.jsのパッケージです。
+　これは（out of the box？）なことにMeteorでは使うことができません。　これは（previous types of packages？）に使われます。
 <% end %>
 
 ### The File Structure of a Meteor App
 
-////
+Before we begin coding, we must set up our project properly. 
+To ensure we have a clean build,
+open up the microscope directory and delete microscope.html, microscope.js, and microscope.css.
+コーディングを始める前に、私たちは　正しくプロジェクトを設定する必要があります。
+きれいに作るために、microscopeディレクトリを開いて、microscope.htmlとmicroscope.jsとmicroscope.cssを削除します。
 
-////
+Next, create five root directories inside /microscope: /client, /server, /public, /lib, and /collections, 
+and we'll also create empty main.html and main.js files inside /client.
+Don't worry if this breaks the app for now, we'll start filling in these files in the next chapter.
+次に、 /microscopeの中に５つのrootディレクトリを作ります：/clientと/serverと /publicと /libと/collectionsを作りましょう。
+さらに/client内に空っぽのmain.html とmain.jsを作ります。
+これで今のアプリが壊れることに心配しないでください。次の章でこのファイルの中を書き始めます。
 
-////
+We should mention that some of these directories are special. When it comes to files, Meteor has a few rules:
+　いつかのディレクトリは特別であるということについて述べておきましょう。ファイルに関しては、Meteorにはいくつかのルールがあります。
 
-- ////
-- ////
-- ////
-- ////
-- ////
-- ////
+Code in the /server directory only runs on the server.
+Code in the /client directory only runs on the client.
+Everything else runs on both the client and server.
+Files in /lib are loaded before anything else.
+Any main.* file is loaded after everything else.
+Your static assets (fonts, images, etc.) go in the /public directory.
+- /server ディレクトリ内のコードはサーバーのみで動きます。
+- /clientディレクトリ内のコードはクライアントのみで動きます。
+- その他のすべてのものは、クライアントとサーバーの両方で動きます。
+- /lib 内のファイルは　他のコードの前に読み込まれます。
+- main.*ファイルはどんなものでも他のすべてのコードの後で読み込まれます。
+- フォントや画像などの静的なアセットは/publicディレクトリの中に入れます。
 
-////
+Note that although Meteor has these rules,
+it doesn't really force you to use any predefined file structure for your app if you don't want to. 
+So the structure we suggest is just our way of doing things, not a rule set in stone.
+Meteorにはこうしたルールがありますが、（if you don't want to？）なら、
+アプリでの（any predefined？）なファイル構造を使うことを強制しているわけではありません。
 
-////
+We encourage you to check out the official Meteor docs if you want more details on this.
+さらに詳細を知りたい場合は、公式のMeteor docs をチェックすることをおすすめします。　
 
 <% note do %>
 
 ### Is Meteor MVC?
 
-////
+If you're coming to Meteor from other frameworks such as Ruby on Rails,
+you might be wondering if Meteor apps adopt the MVC (Model View Controller) pattern.
+もしあなたがRuby on Railsのようなフレームワークから　Meteorにやって来たとすると、
+Meteorアプリが　MVC (Model View Controller)パターンを採用しているか知りたいと思うことでしょう。
 
-////
+The short answer is no. Unlike Rails, Meteor doesn't impose any predefined structure to your app. 
+So in this book we'll simply lay out code in the way that makes the most sense to us, 
+without worrying too much about acronyms.
+手短に答えると、MVCではありません。Railsと違って、Meteorは　定義済みの構造をアプリに（impose？）しません。
+そのため、本書では頭字語に悩まされずに　私たちにとって最もわかりやすい方法で　コードをレイアウトしています。　
+
 
 <% end %>
 
