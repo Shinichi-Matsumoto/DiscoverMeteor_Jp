@@ -262,27 +262,63 @@ without worrying too much about acronyms.
 
 ### No public?
 
-////
+OK, we lied. We don't actually need the public/ directory for the simple reason 
+that Microscope doesn't use any static assets! But since most other Meteor apps are going to include 
+at least a couple images, 
+we thought it was important to cover it too.
+オッケー、（we lied？）。　私たちはpublic/ ディレクトリの必要がありません。
+というのは、Microscopeは静的なアセットを全く使わないからです！
+しかし、ほとんどのMeteorアプリは画像などを含むので、私たちはその点もカバーすることが重要だと考えました。
 
-////
+By the way, you might also notice a hidden .meteor directory.
+This is where Meteor stores its own code, and modifying things in there is usually a very bad idea.
+In fact, you don't really ever need to look in this directory at all.
+The only exceptions to this are the .meteor/packages and .meteor/release files,
+which are respectively used to list your smart packages and the version of Meteor to use.
+When you add packages and change Meteor releases, it can be helpful to check the changes to these files.
+ところで、あなたは隠れた.meteorディレクトリにお気づきかもしれません。
+これは　Meteor自身のコードが保存されている場所で、この中のコードを変更することは　（ very bad idea？）です。
+実のところ、このディレクトリの中を見る必要は全くありません。
+この例外は　.meteor/packages と.meteor/releaseファイルです。
+これはスマートパッケージと使っているMeteorのバージョンを　一覧にするために　それぞれ　使われます。　
+あなたがパッケージを入れたり　Meteorの（release？）を変える時は、こうしたファイルの変化を　チェックするために　役立ちます。　
 
 <% note do %>
 
 ### Underscores vs CamelCase
 
-////
+The only thing we'll say about the age-old underscore (my_variable) vs camelCase (myVariable) debate is 
+that it doesn't really matter which one you pick as long as you stick to it.
+アンダースコア (my_variable) vsキャメルケース(myVariable)の昔からの議論について私たちが述べることは
+あなたにこだわりがあるなら、どちらを使っても何も問題はないということです。
 
-////
+In this book, we're using camelCase 
+because it's the usual JavaScript way of doing things (after all, it's JavaScript, not java_script!).
+本書で、私たちはキャメルケースを使っていきます。
+なぜなら、キャメルケースが通常のJavaScriptの（ doing things？）だからです。（結局はJavaScriptであって、java_scriptではないからね！）
 
-////
+The only exceptions to this rule are file names, 
+which will use underscores (my_file.js), and CSS classes, which use hyphens (.my-class). 
+The reason for this is that in the filesystem, underscores are most common, 
+while the CSS syntax itself already uses hyphens (font-family, text-align, etc.).
+このルールの例外はファイルの名前だけです。
+ファイルの名前ではアンダースコア(my_file.js)を使います。またCSSのクラスはハイフン(.my-class)を使います。
+この理由はCSS構文はハイフン(font-family, text-alignなど)を使うので、
+ファイルシステムではアンダースコアが最も普通な方法だからです。
 
 <% end %>
 
 ### Taking Care of CSS
 
-////
+This book is not about CSS. So to avoid slowing you down with styling details,
+we've decided to make the whole stylesheet available from the start, so you don't need to worry about it ever again.
+この本はCSSについての本ではありません。そのため　スタイリングの細かいことで（slowing down？）することを避けるために、
+私たちは最初からすべてのスタイルシートを使えるように　決めました。そのため、もうスタイリングについて悩む必要はありません。
 
-////
+CSS automatically gets loaded and minified by Meteor, so unlike other static assets it goes into /client, not /public.
+Go ahead and create a client/stylesheets/ directory now, and put this style.css file inside it:
+CSSはMeteorによって　自動的に　読み込まれて、縮小されます。そのため、他の静的なアセットとは違って、/publicではなく、/clientに入れます。
+さあ、client/stylesheets/ディレクトリを作って　その中に　 style.cssファイルを入れていきましょう。
 
 ~~~css
 .grid-block, .main, .post, .comments li, .comment-form {
@@ -388,7 +424,14 @@ body {
 
 ### A Note on CoffeeScript
 
-////
+In this book we'll be writing in pure JavaScript.
+But if you prefer CoffeeScript, Meteor has you covered. 
+Simply add the CoffeeScript package and you'll be good to go:
+本書では、私たちたちは素のJavaScriptで記述してきます。
+しかし、もしあなたがCoffeeScriptを嗜んでいるなら、Meteorでも使うことができます。
+CoffeeScriptパッケージを入れて、mrt add coffeescriptと入力するだけです。（？？？）
+
+mrt add coffeescript
 
 `mrt add coffeescript`
 
