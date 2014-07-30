@@ -67,86 +67,143 @@ And if all goes well, after a few seconds you'll be able to access your app at h
 　すべてがうまくいくと、数秒後にhttp://myapp.meteor.comであなたのアプリにアクセスすることができるようになります。
 
 
-////
+You can refer to the official documentation for more information 
+on things like accessing your hosted instance's database directly, or configuring a custom domain for your app.
+　ホスティングしたインスタンスのデータベースを直接アクセスすることやアプリにカスタムドメインを設定するといったことについて
+　さらに情報を求める場合は、公式ドキュメンテーションを参照できます。
+　　　　
 
 ### Password Protection
 
-////
+////？？？
 
 ~~~~bash
 $ meteor deploy myapp.meteor.com -p
 ~~~~
 
-////
+////？？？
 
-////
+////？？？
 
 ### Deploying On Modulus
 
-////
-
+Modulus is a great option for deploying NodeJS apps.
+It's one of the few PaaS (platform-as-a-service) provider that officially support Meteor, 
+and there are already quite a few people running production Meteor apps on it.
+　ModulusはNode.jsアプリをデプロイする上で素晴らしいオプションです。
+　Modulusは公式でMeteorをサポートしているPaaS (platform-as-a-service)プロバイダで、
+　すでに多くの人がMeteorのアプリをModulusで動かしています。
+　
 <% note do %>
 
 ### Demeteorizer
 
-////
+Modulus open-sourced a tool called demeteorizer which converts your Meteor app into a standard NodeJS app.
+　ModulusでMeteorアプリを（standard？）なNode.jsアプリに変換するオープンソースのツールに demeteorizerがあります。
 
 <% end %>
 
-////
+Start by creating an account. To deploy our app on Modulus, we'll then need to install the Modulus command line tool:
+　アカウントを作ることから始めましょう。Modulusにアプリをデプロイするために、私たちは Modulusコマンドラインツールをインストールする必要があります。
 
 ~~~bash
 $ npm install -g modulus
 ~~~
 
-////
+And then authenticate with
+　それから証明確認をします。
 
 ~~~bash
 $ modulus login
 ~~~
 
-////
+We'll now create a Modulus project (note that you can also do this via Modulus' web dashboard):
+　今からModulusプロジェクトを作っていきます。（ Modulusのウェブダッシュボードでも同じことができます。）
 
 ~~~bash
 $ modulus project create
 ~~~
 
-////
+The next step will be creating a MongoDB database for our app.
+We can create a MongoDB database with Modulus itself, MongoHQ or with any other cloud MongoDB provider.
+　次はアプリのためのMongoDBのデータベースを作ります。
+  ModulusやMongoHQなどクラウドMongoDBプロバイダを使って、MongoDBデータベースを作ることができます。(???)
 
-////
+Once we've created our MongoDB database, we can get the MONGO_URL for our database from Modulus' web UI
+(got to Dashboard > Databases > Select your database > Administration),
+then use it to configure our app like so:
+　一度MongoDBデータベースを作ると、　M
+/
+odulusウェブUIから　MONGO_URLを得ることができます。
+　(（got to？) Dashboard > Databases > Select your database > Administration)
+　それからこのように　アプリを設定をするために（use it？）します。
 
 ~~~bash
 $ modulus env set MONGO_URL "mongodb://<user>:<pass>@mongo.onmodulus.net:27017/<database_name>"
 ~~~
 
-////
+It's now time to deploy our app. It's as simple as typing:
+　アプリをデプロイする時間です。シンプルにこのようにタイピングします。
 
 ~~~bash
 $ modulus deploy
 ~~~
 
-////
+We've now successfully deployed our app to Modulus.
+Refer to the Modulus documentation for more information about accessing logs, custom domain setup, and SSL.
+　これでModulusにアプリをデプロイできました。
+　ログへのアクセスやカスタムドメインの設定やSSLといったより多くの情報はModulusドキュメンテーションを参照しましょう。　
 
 ### Meteor Up
 
-////
+Although new cloud solutions are appearing every day, 
+they often come with their own share of problems and limitations. 
+So as of today, deploying on your own server remains the best way to put a Meteor application in production. 
+The only thing is,
+deploying yourself is not that simple, especially if you're looking for production-quality deployment.
+　新しいクラウドソリューションは毎日のように現れていますが、
+　問題や制限も一緒に備えているものです。
+　現在、自分のサーバーにデプロイすることは（in production）なMeteorアプリケーションを置くベストな方法となっています。　
+　唯一の問題は　自分のサーバーでデプロイすることはそれほど簡単ではないということです。
+　特に製品としてのクォリティのデプロイを（ looking for？）する場合は簡単ではありません。（？？？）
 
-////
+Meteor Up (or mup for short) is another attempt at fixing that issue, with a command-line utility that takes care of setup and deployment for you. 
+So let's see how to deploy Microscope using Meteor Up.
+　Meteor Upはセットアップとデプロイを処理するコマンドライン（utility ？）で　この問題を修正しようとする試みです。
+　では、 Meteor Upを使ってMicroscopeをデプロイする方法を見ていきましょう。
 
-////
+Before anything else, we'll need a server to push to.
+We recommend either Digital Ocean,which starts at $5 per month, or AWS, which provides Micro instances for free 
+(you'll quickly run into scaling problems, but if you're just looking to play around with Meteor Up it should be enough).
+  何よりも先に、私たちは　（push to？）するサーバーが必要となります。
+  私たちは　月に5ドルから始められるDigital Oceanか、無料でマイクロインスタンスを提供しているAWSのどちらかを推奨しています。
+  （すぐにスケーリングの問題に出くわしますが、Meteor Upで（play around with？）する場合は、これで十分です。）
+  
 
-////
+Whichever service you choose, you should end up with three things: 
+your server's IP address,a login (usually root or ubuntu), and a password. 
+Keep those somewhere safe, we'll need them soon!
+　どのサービスを選んだとしても、（end up with three things？）です：
+　サーバーのIPアドレスとログイン（通常はroot や ubuntu）、パスワードです。
+　（Keep those somewhere safe？）して、すぐに必要になります！
 
 ### Initializing Meteor Up
 
-////
-
+To start out, we'll need to install Meteor Up via npm as follows:
+　取り掛かるために、私たちは　次のように　npmを通じて　Meteor Upインストールする必要があります。
+　
 ~~~bash
 $ npm install -g mup
 ~~~
 
-////
-
+We'll then create a special, separate directory that will hold our Meteor Up settings for a particular deployment.
+We're using a separate directory for two reasons:
+first, it's usually best to avoid including any private credentials in your Git repo,
+especially if you're working on a public codebase.
+　それから、（particular？）なデプロイのMeteor Upの設定を(hold?)する特別で分離したディレクトリを作ります。　（？？？）
+　分離したディレクトリを使う理由は2つあります：
+　１つは
+　
 ////
 
 ////
