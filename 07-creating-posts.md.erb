@@ -597,17 +597,35 @@ The first one (error) is an error code of your choice (in this case we're pickin
 the second one (reason) is a short human-readable explanation of the error,
 and the last one (details) can be any useful additional information.
 MeteorのErrorクラスは３つの引数をとります。
+１つめのerrorは選択したエラーコードです。（この場合では302）
+２つめのreasonは人間が読み取れるエラーの説明です。
+３つめのdetailsは、　役立つ追加情報となります。
 
+In our case, we'll use this third argument to pass the ID of the post that we just found.
+Spoiler alert: we'll use this later on to redirect the user to the pre-existing post.
+この場合、私たちは　見つけた投稿のIDを渡すために　３つの引数を使います。
+ネタバレ注意：以前から存在している投稿にユーザーをリダイレクトするために、私たちは後でこれを使います。　
 
-////
+If all those checks pass, we grab the fields that we want to insert 
+(to ensure a user calling this Method in browser console can't put spurious data into our database), 
+and include some information about the submitting user -- as well as the current time -- into the post.
+すべてのチェックが終わると、私たちは　　挿入したいフィールドを(grab?)します。
+（　ユーザーがブラウザーコンソールでこのメソッドを呼び出す（ensure？）　は（spurious？）データをデータベースに入れることができません。　）
+投稿に（submit？）ユーザーについての情報と現在の時間を（include ？）します。
 
-////
-
-////
+Finally, we insert the post, and return the new post's id to the user.
+最後に、私たちは投稿を挿入して、ユーザーに新しい投稿のidを返します。
 
 ### Sorting Posts
 
-////
+Now that we have a submitted date on all our posts, 
+it makes sense to ensure that they are sorted using this attribute.
+To do so, we can just use Mongo's sort operator, which expects an object consisting of the keys to sort by,
+and a sign indicating whether they are ascending or descending.
+これで私たちは　すべての投稿に（submitted？）した日時があるので、
+　この属性を使うことで（？？？？？？）。
+そうするために、私たちはソートするためのキーを構成するオブジェクトを（expect？）するMongoDBの sort演算子を使うことができます。　
+（and a sign indicating whether they are ascending or descending？？？）
 
 ~~~js
 Template.postsList.helpers({
@@ -621,6 +639,10 @@ Template.postsList.helpers({
 
 <%= commit "7-7", "Sort posts by submitted timestamp." %>
 
-////
+It took a bit of work, but we finally have a user interface to let users securely enter content in our app!
+ちょっとした労力がいりましたが、私たちは最終的に　アプリ内でユーザーが安全に内容を入力できるユーザーインターフェースを（have？）　　　
 
-////
+But any app that lets users create content also needs to give them a way to edit or delete it.
+That's what the Editing Posts chapter will be all about.
+しかし　ユーザーが　内容を作ることができるすべてのアプリは　編集したり削除する方法を（ give？）する必要があります。
+この点は　 Editing Postsの章で学ぶことになります。
