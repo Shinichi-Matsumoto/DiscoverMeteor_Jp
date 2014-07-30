@@ -8,33 +8,64 @@ contents: Learn how to deploy on Meteor.com.|Learn how to deploy on Modulus.|Lea
 paragraphs: 46
 ---
 
-////
+Some people like to work quietly on a project until it's perfect, 
+while others can't wait to show the world as soon as possible.
+　完成するまで黙々とプロジェクトに取り組むことが好きな人もいれば、
+　（as soon as possible？）　世界に示すことを　待てない人もいます。　
 
-////
+If you're the first kind of person and would rather develop locally for now, feel free to skip this chapter. 
+On the other hand, if you'd rather take the time to learn how to deploy your Meteor app online, we've got you covered.
+　もしあなたが前者であり、今はローカルで開発をしていく場合は、この章を飛ばして読んでも大丈夫です。
+　一方で　Meteorアプリをオンラインでデプロイする方法を学ぶ時間がある場合は、( we've got you covered?)
 
-////
+We will be learning how to deploy a Meteor app in few different ways.
+Feel free to use each of them at any stage of your development process,
+whether you're working on Microscope or any other Meteor app. 
+Let's get started!
+　私たちは　いくつかの方法で　Meteorアプリをデプロイする方法を　学びます。
+　　デプロイのプロセスの段階で　（？？？）
+  MicroscopeやそのほかのMeteorアプリに取り組　（？？？）。
+  さあ、始めましょう！
 
 <% note do %>
 
 ### Introducing Sidebars
 
-////
+This is a sidebar chapter.
+Sidebars take a deeper look at more general Meteor topics independantly of the rest of the book.
+これは補足事項の章です。
+補足事項では、一般的なMeteorのトピックよりも深く見ていきます。（ independantly of the rest of the book？）
 
-////
+So if you'd rather go on with building Microscope, you can safely skip it for now and come back to it later.
+そのため、あなたがMicroscopeをどんどん作っていきたいという場合は、今は補足事項を飛ばして後で戻って読むことも可能です。
 
 <% end %>
 
 ### Deploying On Meteor
 
-////
+Deploying on a Meteor subdomain (i.e. http://myapp.meteor.com) is the easiest option, 
+and the first one we'll try. 
+This can be useful to showcase your app to others in its early days, or to quickly set up a staging server.
+Meteorサブドメイン(たとえば http://myapp.meteor.com)でデプロイすることは最も簡単な選択肢です。
+(???)
+これは（ in its early day？）にあなたのアプリを他の人に見せて　（ staging ？）すぐにサーバーを設定することに役立ちます。
 
-////
+Deploying on Meteor is pretty simple. Just open up your terminal, go to to your Meteor app's directory, and type:
+Meteorをデプロイすることは至ってシンプルです。ターミナルを開いて、Meteorアプリのディレクトリへ行って、次のようにタイピングするだけです。
 
 ~~~bash
 $ meteor deploy myapp.meteor.com
 ~~~
 
-////
+Of course, you'll have to take care to replace "myapp" with a name of your choice,
+preferably one that isn't already in use.
+If this is your first time deploying an app, you'll be prompted to create a Meteor account.
+And if all goes well, after a few seconds you'll be able to access your app at http://myapp.meteor.com.
+　もちろん、"myapp"を（name of your choice？）と取り替えることに注意する必要があります。
+　できれば、まだ使われていない名前を付けましょう。
+　もしこれが初めてのアプリのデプロイだとしたら、Meteorアカウントを作ることを（be prompted？）
+　すべてがうまくいくと、数秒後にhttp://myapp.meteor.comであなたのアプリにアクセスすることができるようになります。
+
 
 ////
 
