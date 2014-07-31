@@ -3,13 +3,21 @@ title: Editing Posts
 slug: editing-posts
 date: 0008/01/01
 number: 8
-contents: Add a form for editing your posts.|Set up edit permissions.|Restrict which properties can be edited.
+contents: 投稿を編集するフォームを加えます。| 編集（permissions？＝権限？）をセットアップする。|（Restrict which properties can be edited？）
 paragraphs: 29
 ---
 
-////
+Now that we can create posts, the next step is being able to edit and delete them. 
+While the UI code to do so is fairly simple, this is a good time to talk about how Meteor manages user permissions.
+　私たちは投稿を作ることができるので、次のステップは投稿の編集と削除をできるようにすることです。
+　そうするためのUIのコードはとてもシンプルですが、
+　ここでMeteorがどのようにしてユーザーパーミッションを（ manage？）するのか話すのも良い時期でしょう。
 
-////
+
+Let's first hook up our router.
+We'll add a route to access the post edit page and set its data context:
+　はじめに、ルーターを（hook up？＝つなぎ？）ましましょう。
+　私たちは投稿編集ページアクセスするためにルートを加えて、（set its data context？＝データコンテキストを設定します？）：
 
 ~~~js
 Router.configure({
@@ -50,9 +58,12 @@ Router.before(requireLogin, {only: 'postSubmit'});
 <%= caption "lib/router.js" %>
 <%= highlight "12~15" %>
 
-### The Post Edit Template
+### The Post Edit Template　　Post Editテンプレート
 
-////
+We can now focus on the template. 
+Our postEdit template will be a fairly standard form:
+　これで私たちはテンプレートに集中することができます。
+　postEditテンプレートは　（fairly standard form？＝かなりスタンダードなフォーム？）です。
 
 ~~~html
 <template name="postEdit">
@@ -87,7 +98,8 @@ Router.before(requireLogin, {only: 'postSubmit'});
 ~~~
 <%= caption "client/views/posts/post_edit.html" %>
 
-////
+And here's the post_edit.js manager that goes with it:
+　そしてこれが（goes with it？）するpost_edit.jsマネージャーです。
 
 ~~~js
 Template.postEdit.events({
@@ -124,19 +136,38 @@ Template.postEdit.events({
 ~~~
 <%= caption "client/views/posts/post_edit.js" %>
 
-////
+By now most of that code should be familiar to you.
+　（By now？＝そろそろ？）ほとんどのコードは　（should be familiar to？＝なじみのあるようにすべき？）です。
 
-////
+We have two template event callbacks: 
+one for the form's submit event, and one for the delete link's click event.
+　私たちは２つのテンプレート（event callbacks？＝イベントコールバック？）があります：
+　ひとつはフォームのsubmitイベントで、もうひとつはリンクを削除するclickイベントです。
 
-////
+The delete callback is extremely simple: 
+suppress the default click event, then ask for confirmation.
+If you get it, obtain the current post ID from the Template's data context, delete it, and finally redirect the user to the homepage.
+　（delete callback？＝デリートコールバック？）は、かなりシンプルです：
+　デフォルトクリックイベントを（suppress？＝抑制？）して、（ask for confirmation？＝確認を求め？）ます。
+　（get it？＝これを理解すると）、テンプレートデータコンテキストから　（current？＝現在の？）投稿IDを取得して、
+　（ it？）を削除して、最終的にユーザーをホームページにリダイレクトしましょう。
 
-////
+The update callback is a little longer, but not much more complicated.
+After suppressing the default event and getting the current post,
+we get the new form field values from the page and store them in a postProperties object.
+　（update？）コールバックは少し長いですが、（ not much more？＝たいして？）複雑ではありません。
+　デフォルトイベントを（suppress？＝抑制？）して、現在の投稿を（get？）した後で、
+　私たちは　ページから新しい（form field value？）を（get？）して、postPropertiesオブジェクトに（them？）を格納します。
 
-////
+We then pass this object to Meteor's Collection.update() Method, and use a callback that either displays an error if the update failed,
+or sends the user back to the post's page if the update succeeded.
+　これで私たちは　オブジェクトを　MeteorのCollection.update()メソッドに渡して、もしアップデートが失敗したら、（ either？＝どちらかの？）エラーを表示するコールバックを使います。
+　あるいは、アップデートに成功するとユーザーを投稿ページに送ります。
 
 ### Adding Links
 
-////
+We should also add edit links to our posts so that users have a way to access the post edit page:
+　ユーザーが　（ post edit page？＝編集ページの投稿？）にアクセスする方法（have？）できるように、私たちは投稿に（add edit links？＝編集リンクを加えます？）　　
 
 ~~~html
 <template name="postItem">
@@ -155,7 +186,10 @@ Template.postEdit.events({
 <%= caption "client/views/posts/post_item.html" %>
 <%= highlight "5~8" %>
 
-////
+Of course, we don't want to show you an edit link to somebody else's form. 
+This is where the ownPost helper comes in:
+　もちろん、私たちは　（somebody else's form？＝誰かのフォーム）に編集リンクを　表示したくありません。
+　これは ownPostヘルパーが　（comes in？）する場所です。
 
 ~~~js
 Template.postItem.helpers({
@@ -176,11 +210,14 @@ Template.postItem.helpers({
 
 <%= commit "8-1", "Added edit posts form." %>
 
-////
+
+Our post edit form is looking good, but you won't be able to actually edit anything right now. What's going on?
+　投稿編集フォームは　良さそうに見えますが、　今は何も編集することはできません。　（What's going on?＝どういうことでしょうか？）
 
 ### Setting Up Permissions
 
-////
+Since we've previously removed the insecure package, all client-side modifications are currently being denied.
+　私たちは　以前にinsecureパッケージを削除したので、　すべてのクライアントサイドの（modification？＝変更？）は現在　（deny？）されます。
 
 ////
 
