@@ -275,48 +275,90 @@ Let's walk through each of these settings.
 
 **Server Authentication**
 
-////
+You'll notice that Meteor Up supports password based and private key (PEM) based authentication, 
+so it can be used with almost any cloud provider.
+　Meteor Upは　パスワードとプライベートキー（PEM）に基づいた認証であることに気づくことでしょう。
+　そのため、これはどのようなクラウドプロバイダでも使うことができます。
 
-////
+Important note: if you choose to use password-based authentication,
+make sure you've installed sshpass first (refer to this guide).
+　重要なポイント：もしパスワードベースの認証を使うとしたら、
+　まずは sshpassを最初にインストールしましょう。（このガイドを参照）
+　
 
 **MongoDB Configuration**
 
-////
+The next step is to configure a MongoDB database for your app. 
+We recommend using MongoHQ or any other cloud MongoDB provider,
+since they offer professional support and better management tools.
+　次のステップはアプリにMongoDBの設定をすることです。
+　私たちは　 MongoHQやそのほかのクラウドMongoDBプロバイダを使うことを推奨しています。
+　というのも、そうしたサービスはプロフェッショナルサポートなどより良いマネジメントツールを提供しているからです。
 
-////
+If you've decided to use MongoHQ, set setupMongo as false and add the MONGO_URL environmental
+variable in mup.json's env block. 
+If you decided to host MongoDB with Meteor Up, just set setupMongo as true and Meteor Up will take care of the rest.
+　MongoHQを使うとしたら、setupMongoをfalsesとセットして、mup.jsonの envブロックに　MONGO_URL　環境変数　を（add？）します。
+　Meteor UpでMongoDBをホスティングするとしたら、setupMongoをtrueとセットして、 Meteor Up が残りを引き受けます。（？？？）
 
 **Meteor App Path**
 
-////
+Since our Meteor Up configuration lives in a different directory,
+we'll need to point Meteor Up back to our app using the app property.
+Just input your full local path,which you can get using the pwd command from the terminal 
+when located inside your app's directory.
+　 Meteor Upの設定は別々のディレクトリに（live in）しているので、
+　 私たちは　appプロバティを使って、　Meteor Upをアプリに　　（point  back to？）する必要があります。
+　 アプリディレクトリ内に置いた時に　ターミナルでpwdコマンドを使って（get？）する　（full local path？）を（input？）します。　
 
 **Environment Variables**
 
-////
+You can specify all of your app's environment variables 
+(such as ROOT_URL, MAIL_URL, MONGO_URL, etc.) inside the env block.
+　envブロック内では、すべてのアプリの環境変数を規定することができます。(たとえば、ROOT_URLや MAIL_URL、MONGO_URLなど) 
 
 ### Setting Up and Deploying
 
-////
+Before we can deploy, we'll need to set up the server so it's ready to host Meteor apps.
+The magic of Meteor Up encapsulates this complex process in a single command!
+　デプロイの前に　Meteorのアプリを(ready to host?)なので 私たちは　サーバーをセットアップする必要があります。
+　Meteor Upの（magic？）はこの複雑なプロセスを１つのコマンドでカプセル化することです。
 
 ~~~bash
 $ mup setup
 ~~~
 
-////
+This will take few minutes depending on the server's performance and the network connectivity.
+After the setup is successful, we can finally deploy our app with:
+　これは　サーバーのパフォーマンスやネットワークの接続　によっては数分かかることがあります。
+　セットアップに成功すると、私たちはこのようにしてアプリをデプロイすることができます。
 
 ~~~bash
 $ mup deploy
 ~~~
 
-////
+This will bundle the meteor app, and deploy to the server we just set up.
+　これでMeteorアプリを（bundle？」）して、セットアップしたサーバーにデプロイします。
 
 ### Displaying Logs
 
-////
-
+Logs are pretty important and Meteor Up provides a very easy way to handle them 
+by emulating the tail -f command. Just type:
+　ログは　とても重要です　　Meteor Upは　tail -fコマンドをエミュレートすることで　ログを扱うためのとても簡単な方法を提供しています　
+　このようにタイピングするだけです。
+　
 ~~~bash
 $ mup logs -f
 ~~~
 
-////
+This wraps up our overview of what Meteor Up can do.
+For more infomation, we suggest visiting Meteor Up's GitHub repository.
+　これは　Meteor Upができることを要約です。
+　より多くの情報に関しては、Meteor Upの GitHub リポジトリにアクセスすると良いでしょう。
 
-////
+These three ways of deploying Meteor apps should be enough for most use cases.
+Of course, we know some of you would prefer to be in complete control and set up their Meteor server from scratch.
+But that's a topic for another day… or maybe another book!
+　Meteorアプリをデプロイする３つの方法は　ほとんどのユースケースで十分役立つでしょう。
+　もちろん、　ゼロからMeteorサーバーを立ち上げて、（complete control？）を好む人もいると思いますが、
+　それは別の日に…、（or？）別の本のトピックにします！
