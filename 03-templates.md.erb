@@ -7,13 +7,18 @@ contents: Learn about Meteor's templating language, Handlebars.|Create your firs
 paragraphs: 46
 ---
 
-Meteorでの開発を簡単にするため、私たちはアウトサイドインアプローチをとることになります。
-つまり、私たちは最初に　「」　HTMLとJavaScriptで外側の骨組みを作り、それからアプリが内側で動くように繋いでいきます。
+To ease into Meteor development, we'll adopt an outside-in approach. 
+In other words we'll build a "dumb" HTML/JavaScript outer shell first, 
+and then hook it up to our app's inner workings later on.
+　Meteorでの開発を簡単にするため、私たちはアウトサイドインアプローチを用いることになります。
+　要するに、私たちは最初に（"dumb"？）なHTMLとJavaScriptで外側の骨組みを作り、
+　それから後でアプリが内側で動くように繋いでいきます。
 
-この章では、 /clientディレクトリの内側で何が起きているのか　気にかけるだけとなります。
+This means that in this chapter we'll only concern ourselves with what's happening inside the /client directory.
+　つまり、この章では /clientディレクトリの内側で何が起きるのか懸念するだけとなります。
 
-/clientディレクトリの中に main.htmlという新しいファイルを作りましょう。
-そして次のようなコードを書き込みましょう。
+Let's create a new file named main.html inside our /client directory, and fill it with the following code:
+　では、/clientディレクトリの中に main.htmlという新しいファイルを作って、次のようなコードを書き込みましょう：
 
 ~~~html
 <head>
@@ -34,37 +39,56 @@ Meteorでの開発を簡単にするため、私たちはアウトサイドイ�
 ~~~
 <%= caption "client/main.html" %>
 
-これがアプリのメインテンプレートとなります。
-ご覧のように、{{> postsList}}タグ以外は全てHTMLです。
-{{> postsList}}タグはpostsListテンプレートの挿入場所となります。
-では、テンプレートを作っていきましょう。
+This will be our main app template. 
+As you can see it's all HTML except for a single {{> postsList}} tag, 
+which is an insertion point for the postsList template as we'll soon see. 
+For now, let's create a couple more templates.
+　これは（main app template？）となります。
+　ご覧のように、{{> postsList}}タグ以外はすべてHTMLです。
+　{{> postsList}}タグは、これから見ていくpostsListテンプレートの挿入場所となります。
+　では、いくつかテンプレートを作っていきましょう。
 
 ### Meteorテンプレート
 
-ソーシャルニュースサイトは一覧表となった投稿によって作られています。
-そうなるようにテンプレートを作っていきす。
+At its core, a social news site is composed of posts organized in lists,
+and that's exactly how we'll organize our templates.
+　根本的には、ソーシャルニュースサイトは一覧表となった投稿によって構成されています。
+　私たちはまさにそうなるようにテンプレートを作っていきす。
 
- /clientの中に/viewsディレクトリを作りましょう。
- /viewsディレクトリの中に全てのテンプレートを置くことになります。
- /viewsの中を整理するため、投稿に関連したテンプレートはviews内に/postsを作ります。
+Let's create a /views directory inside /client. 
+This will be where we put all our templates, 
+and to keep things tidy we'll also create /posts inside /views just for our post-related templates.
+　では、/clientの中に/viewsディレクトリを作りましょう。
+　私たちは/viewsディレクトリの中にすべてのテンプレートを置くことになります。
+　/viewsディレクトリ内を整理したいので、投稿に関連したテンプレートのために、/views内に/postsを作ります。（？？？）
  
 
 <% note do %>
 
 ### ファイルを見つける
 
-Meteorはファイルを見つけることに優れています。
-/clientディレクトリにコードを入れれば、Meteorはそれを見つけて正確にコンパイルしてくれます。
-つまり、JavaScriptやCSSへのインクルードパスを手動で書く必要がなくなるということです。
+Meteor is great at finding files.
+No matter where you put your code in the /client directory, Meteor will find it and compile it properly.
+This means you never need to manually write include paths for JavaScript or CSS files.
+　Meteorはファイルを見つけることが得意です。
+　/clientディレクトリ内のどこにコードを入れようと、Meteorはコードを見つけてきて正確にコンパイルします。
+　つまり、JavaScriptやCSSへのインクルードパスを手で書く必要がありません。
 
-それはまた、同じディレクトリに全てのファイルを置くことができるということでもあります。
-さらには、同じファイルに全てのコードを置くこともできます。
-Meteorは全てを１つのファイルにコンパイルしてしまうため、ファイル内はきちんと整理してきれいなファイル構造にした方が良いでしょう。
+It also means you could very well put all your files in the same directory, 
+or even all your code in the same file.
+But since Meteor will compile everything to a single minified file anyway,
+we'd rather keep things well-organized and use a cleaner file structure.
+　また、同じディレクトリにすべてのファイルを置くことができるということでもあります。
+　さらには、同じファイルにすべてのコードを置くこともできます。
+　しかし、Meteorはすべてのコードを小さくした１つのファイルにコンパイルしてしまうので、
+　ファイル内をきちんと整理して、きれいなファイル構造にすると良いでしょう。
 
 <% end %>
 
-これから２つのテンプレートを作っていきます。
-client/views/postsの中にposts_list.htmlを作ります。
+We're finally ready to create our second template.
+Inside client/views/posts, create posts_list.html:
+　これから２つのテンプレートを作っていきます。
+　client/views/postsの中にposts_list.htmlを作ります。
 
 ~~~html
 <template name="postsList">
@@ -77,7 +101,8 @@ client/views/postsの中にposts_list.htmlを作ります。
 ~~~
 <%= caption "client/views/posts/posts_list.html" %>
 
-次にpost_item.htmlを作ります。
+And post_item.html:
+　次にpost_item.htmlを作ります。
 
 ~~~html
 <template name="postItem">
@@ -90,20 +115,31 @@ client/views/postsの中にposts_list.htmlを作ります。
 ~~~
 <%= caption "client/views/posts/post_item.html" %>
 
-テンプレート要素の name="postsList"属性を書き込みます。
+Note the name="postsList" attribute of the template element.
+This is the name that will be used by Meteor to keep track of what template goes where.
+　テンプレート要素の name="postsList"属性を書き込みます。
+　これはどのテンプレートがどこに行くのか　（ keep track of？）するために、Meteorで使われている（ name？）です。
 
-テンプレートがどこに行くのか　（？？？）
+It's time to introduce Meteor's templating system, Spacebars. 
+Spacebars is simply HTML, with the addition of three things: partials, expressions and block helpers.
+　ここでMeteorのテンプレートシステム、Spacebarsについて紹介します。
+　SpacebarsではHTMLに３つのものを付け加えます：partialsとexpressionsとblock helpersです。
 
-ここでMeteorのテンプレートシステム、Spacebarsについて紹介します。
-SpacebarsではHTMLにpartialsとexpressionsとblock helpersの３つを付け加えます。
+Partials use the {{> templateName}} syntax, 
+and simply tell Meteor to replace the partial with the template of the same name (in our case postItem).
+　Partialsでは{{> templateName}}構文を使い、
+　partialを同じ名前（ここではpostItem）のテンプレートに置き換えるようMeteorに命令します。
+　
 
-Partialsでは{{> templateName}}構文を使い、partialを同じ名前のテンプレートに置き換えるようMeteorに命令します。
-（ここではpostItem）←（？？？）
+Expressions such as {{title}} either call a property of the current object, 
+or the return value of a template helper as defined in the current template's manager (more on this later).
+　{{title}}のようなExpressionsは、カレントオブジェクトのプロパティを呼び出すか、
+　テンプレートマージャーで定義されている　テンプレートヘルパーの値を返します。（そのことについては後で述べます。）
 
-{{title}}のようなExpressionsは、オブジェクトのプロパティを呼び出すか、テンプレートマージャーで定義されているtemplate helperの値を返します。
-（そのことについては後で述べます。）
-
-最後に、block helpersは{{#each}}…{{/each}} や {{#if}}…{{/if}}のようなテンプレートを制御する特別なタグです。
+Finally, block helpers are special tags that control the flow of the template, 
+such as {{#each}}…{{/each}} or {{#if}}…{{/if}}.
+　最後に、block helpersはテンプレートのフローを制御する特別なタグで、
+　たとえば、{{#each}}…{{/each}} や {{#if}}…{{/if}}があります。
 
 <% note do %>
 
