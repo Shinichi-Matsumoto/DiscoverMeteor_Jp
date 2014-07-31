@@ -7,42 +7,79 @@ contents: Meteorのどこが特別なのか|この本について|この本の�
 paragraphs: 35
 ---
 
-まず、少し想像してみてください。ＰＣ上の2つウィンドウで、同じフォルダーを開いているとしましょう。
+Do a little mental experiment for me.
+Imagine you're opening the same folder in two different windows on your computer.
+　ちょっとだけ、頭の中での実験を思い描いてください。（？？？）
+　あなたはＰＣ上の2つウィンドウで、同じフォルダーを開いているとします。
 
-ここで、１つのウィンドウ上でファイルを一つ削除します。そのファイルは、もう一つのウィンドウからも、削除されましたか？
+Now click inside one of the two windows and delete a file. 
+Did the file disappear from the other window as well?
+　ここで、１つのウィンドウ上でファイルを１つ削除します。
+　そのファイルはもう１つのウィンドウからも削除されましたか？
 
-実際に、この作業をする必要はありませんが、私たちがローカルでのファイルシステムを変更すると、
-更新やコールバックをするまでもなく、変更は有効になることは分かるかと思います。
+You don't need to actually do these steps to know that it did. 
+When we modify something on our local filesystems,
+the change is applied everywhere without the need for refreshes or callbacks. It just happens.
+　実際にこの作業をする必要はありません。
+　私たちがローカルのファイルシステムを変更すると、
+　更新やコールバックをするまでもなく、変更はどこでも有効になります。ローカルではデータの変化が瞬時に反映されます。（？？？）
 
-一方で、ウェブでも同じことが起こるかどうか考えてみましょう。
-たとえば、WordPressの管理画面を２つのブラウザウィンドウを開いていて、その１つで投稿を行ったとします。
-デスクトップ上とは違い、どれだけあなたが待っていようとも、ブラウザを更新しない限り、もう一方のウィンドウは変更を反映させません。
+However, let's think about how the same scenario would play out on the web.
+For example, let's say you opened the same WordPress site admin in two browser windows
+and then created a new post in one of them.
+Unlike on the desktop, no matter how long you wait, the other window won't reflect the change unless you refresh it.
+　一方で、ウェブでも同じシナリオが（play out？＝起こる？）かどうか考えてみましょう。
+　たとえば、WordPressの管理画面を２つのブラウザウィンドウを開いて、その１つで投稿を行ったとします。
+　デスクトップ上とは違い、どれだけあなたが待っていても、ブラウザを更新しない限り、もう一方のウィンドウは変更を反映させません。
 
-長い間、私たちはウェブサイトとは  ...  と考えるようになってしまいました。
+Over the years, we've gotten used to the idea 
+that a website is something that you only communicate with in short, separate bursts.
+　長い間、私たちはウェブサイトとは要するに（separate bursts？）とコミュニケーションするものと考えるようになってしまいました。
 
-しかし、Meteorはウェブをリアルタイムに反応させることでこの状況を打破しようとするテクノロジーであり、新しいフレームワークなのです。
+But Meteor is part of a new wave of frameworks and technologies 
+that are looking to challenge the status quo by making the web real-time and reactive.
+　しかし、Meteorはウェブをリアルタイムとリアクティブにすることでこの状況を打破しようとする
+　新しいフレームワークであり、新しいテクノロジーです。（？？？）
 
 ### Meteorとは?
 
-Meteorはリアルタイムウェブアプリケーションを開発するために、Node.jsで作られたプラットフォームです。
-Meteorはアプリケーションのデータベースとユーザーインターフェースを同期した状態にします。
+Meteor is a platform built on top of Node.js for building real-time web apps.
+It's what sits between your app's database and its user interface and makes sure that both are kept in sync.
+　Meteorはリアルタイムウェブアプリケーションを開発するために、（top of？）Node.jsで作られたプラットフォームです。
+　Meteorはアプリケーションのデータベースとユーザーインターフェースを同期した状態にします。
 
-MeteorはNode.jsで作られているため、MeteorではクライアントとサーバーではJavaScriptを使います。
-さらに、Meteorではクライアントとサーバーでコードを共有することができます。
+Since it's built on Node.js, Meteor uses JavaScript on both the client and on the server. 
+What's more, Meteor is also able to share code between both environments.
+　MeteorはNode.jsで作られているため、MeteorではクライアントとサーバーではJavaScriptを使います。
+　さらに、Meteorではクライアントとサーバーでコードを共有することもできます。
 
-こうした結果、Meteorは通常のアプリ開発でのイライラや落とし穴の多くを取り除く、パワフルでシンプルなプラットフォームなのです。
+The result of all this is a platform that manages to be very powerful 
+and very simple by abstracting away many of the usual hassles and pitfalls of web app development.
+　こうした結果、Meteorは通常のアプリ開発で多くのイライラや落とし穴を取り除くことで、
+　パワフルでシンプルなプラットフォームとなっています。（？？？）
 
 ### なぜMeteorなのか?
 
-では、なぜあなたは他のフレームワークではなく、Meteorを学ぶ時間をかけるべきなのでしょうか？
-Meteorの様々な特徴はともかく、それは１つの理由に集約できると私たちは確信しています：
+So why should you spend your time learning Meteor rather than another web framework? 
+Leaving aside all the various features of Meteor, we believe it boils down to one thing:
 Meteor is easy to learn.
+　では、なぜあなたは他のフレームワークではなく、Meteorを学ぶ時間をかけるべきなのでしょうか？
+　Meteorの様々な機能はともかく、それは１つの理由に集約できると私たちは確信しています：
+　Meteor は簡単に学べるから。
 
-他のフレームワークよりも、Meteorでは数時間でリアルタイムウェブアプリを作り、ウェブ上で動かすことができます。
-それと、もしあなたが以前にフロントエンドの開発をしたことがあれば、あなたはJavaScriptに馴染みがあり、新たに言語を学ぶ必要はありません。
+More so than any other framework, Meteor makes it possible to get a real-time web app up 
+and running on the web in a matter of hours. 
+And if you've ever done front-end development before,
+you'll already be familiar with JavaScript and won't even need to learn a new language.
+　他のフレームワークよりも、Meteorではほんの数時間でリアルタイムウェブアプリを作り、ウェブ上で動かすことができます。
+　それと、もしあなたが以前にフロントエンドの開発をしたことがあれば、
+　あなたはすでにJavaScriptに馴染みがあり、新しい言語を学ぶ必要はありません。
 
-Meteorはあなたが求める理想的なフレームワークであるかもしれませんし、そうではないかもしれません。
-ともかく、夕方の間や週末で始めることができるのだから、実際に試して自分で確かめてみてはいかがでしょう？
+Meteor might be the ideal framework for your needs, or then again it might not. 
+But since you can get started over the course of a few evenings or a week-end,
+why not try it and find out for yourself?
+　Meteorはあなたが求める理想的なフレームワークであるかもしれませんし、そうではないかもしれません。
+　ともかく、夕方の時間や週末で始めることができるのだから、実際に試して自分で確かめてみてはいかがでしょう？
 
 ### なぜこの本なのか?
 
