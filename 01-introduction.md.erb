@@ -65,7 +65,7 @@ Leaving aside all the various features of Meteor, we believe it boils down to on
 Meteor is easy to learn.
 　では、なぜあなたは他のフレームワークではなく、Meteorを学ぶ時間をかけるべきなのでしょうか？
 　Meteorの様々な機能はともかく、それは１つの理由に集約できると私たちは確信しています：
-　Meteor は簡単に学べるから。
+　Meteor は簡単に学べるからです。
 
 More so than any other framework, Meteor makes it possible to get a real-time web app up 
 and running on the web in a matter of hours. 
@@ -83,119 +83,147 @@ why not try it and find out for yourself?
 
 ### なぜこの本なのか?
 
-この6ヶ月間、私たちはTelescopeの開発に取り組んできました。
-TelescopeはMeteorで作られたオープンソースのアプリで、RedditやHacker Newsのようなリンクを投稿できて投票できるソーシャルニュースサイトを、だれでも作ることができます。
+For the past 6 months, we've been working on Telescope, an open-source Meteor app 
+that lets anybody create their own social news site (think Reddit or Hacker news), 
+where people can submit links and vote on them.
+　この6ヶ月間、私たちはTelescopeの開発に取り組んできました。
+　TelescopeはMeteorで作られたオープンソースのアプリで、
+　RedditやHacker Newsのようにリンクを投稿できて投票できるソーシャルニュースサイトをだれでも作ることができます。
 
-アプリを作りながら私たちは多くのことを学びましたが、私たちの疑問に対して答えを見つけることは常に容易ではありませんでした。
-私たちは様々な情報源をつなぎ合わせなければなりませんでした。そして多くの場合、自分たちで解決策を見つけました。
+We learned a ton building the app, but it wasn't always easy to find the answers to our questions. 
+We had to piece things together from many different sources, and in many cases even invent our own solutions. 
+So with this book, we wanted to share all those lessons, 
+and create a simple step-by-step guide that will walk you through building a full-fledged Meteor app from scratch.
+　アプリを作りながら私たちは多くのことを学びましたが、私たちの疑問について答えを見つけることはいつもに簡単ではありませんでした。
+　私たちは様々な情報源をつなぎ合わせなければなりませんでした。そして多くの場合、自分たちで解決策を見つけました。
+　そのため、本書では、私たちは　こうした経験上の知識を共有して、
+　ゼロから本格的なMeteorアプリを順を追って作るための段階的なガイドラインを作りたいと考えました。　　
 
-この本で開発するアプリは、Telescopeを少し単純化させたMicroscopeというものです。
-Microscopeを開発しながら、私たちはユーザーアカウントやMeteorコレクション、ルーティングなどに取り組んでいくことになります。
+The app we're building is a slightly simplified version of Telescope, which we call Microscope.
+While building it, we'll address all the different elements that go into building a Meteor app,
+such as user accounts, Meteor collections, routing, and more.
+　この本で開発するアプリは、Telescopeを少し単純化させたMicroscopeというものです。
+　Microscopeを開発しながら、私たちはユーザーアカウントやMeteorコレクション、ルーティングなどに取り組んでいくことになります。
 
-この本を読み終えて、もしあなたがTelescopeについて学びたいとしたら、あなたはTelescopeのコードを簡単に理解できることでしょう。
-MicroscopeはTelescopeと同じパターンをしているからです。
+And after you're done reading the book, if you want to go further 
+you'll be able to easily understand the code of Telescope, since it follows the same patterns.
+　この本を読み終えて、さらにTelescopeについて学びたいとしたら、あなたはTelescopeのコードを簡単に理解できることでしょう。
+　というのも、MicroscopeはTelescopeと同じパターンをしているからです。
 
 ### この本の対象者は？
-この本を書く上での私たちの目標というは、Meteorでアプリを作ることをなるべく親しみやすく、理解しやすくすることでした。
-そのため、あなたがMeteorやNode.js、MVCフレームワーク、サーバーサイドのコーディングの経験がなかったとしても、理解できることでしょう。
 
-ですが、私たちはこの本の読者についてJavaScriptの基本的な構文やコンセプトについてよく知っているものであると想定しています。
-ただ、もしJQueryを使ったことがあったり、ブラウザでデベロッパーツールのコンソールでJavaScriptをいじったことがあれば、大丈夫です。
+One of our goals while writing the book was to keep things approachable and easy to understand. 
+So you should be able to follow along 
+even if you have no experience with Meteor, Node, MVC frameworks, or even server-side coding in general.
+　この本を書く上での私たちの目標というは、Meteorでアプリを作ることをなるべく親しみやすく、理解しやすくすることでした。
+　そのため、あなたがMeteorやNode.js、MVCフレームワーク、サーバーサイドのコーディングの経験が全くなかったとしても、
+　理解してくことができることでしょう。
+
+On the other hand, we do assume familiarity with basic JavaScript syntax and concepts.
+But if you've ever hacked together some jQuery code or played around with the browser's developer console,
+you should be OK.
+　ですが、私たちはこの本の読者についてJavaScriptの基本的な（ syntax？＝構文？）やコンセプトについてよく知っているものであると想定しています。
+　ただ、もしJQueryを使ったことがあったり、ブラウザでデベロッパーツールのコンソールでJavaScriptをいじったことがあれば、問題ありません。
 
 ### 著者について
 
-私たちが何者なのか、信頼できる人物なのか心配しないように、ここで私たち二人について紹介します。
+In case you're wondering who we are and why you should trust us, here is a little more background on both of us.
+　私たちが何者なのか、信頼できる人物なのか読者の方が心配しないように、ここで私たち二人について紹介します。
 
 <%= image "tom-photo.jpg", "portrait" %>
 
-トム・コールマンはクォリティとユーザー・エクスペリエンスに焦点を置いたWeb開発スタジオであるPercolate Studioの一人です。
-トムはMeteoriteとAtmosphereパッケージレポジトリの共同制作者であり、 Iron Routerなど多くのMeteorオープンソースプロジェクトに貢献しています。
+Tom Coleman is one part of Percolate Studio, a web development shop with a focus on quality and user experience.
+He's the co-creator of Meteorite and the Atmosphere package repository, 
+and is also one of the brains behind many other Meteor open-source projects (such as Iron Router).
+　トム・コールマンはクォリティとユーザー・エクスペリエンスに焦点を置いたウェブ開発スタジオであるPercolate Studioの一人です。
+　トムはMeteoriteとAtmosphereパッケージレポジトリの共同制作者であり、Iron Routerなど多くのMeteorオープンソースプロジェクトに貢献しています。
 
 <%= image "sacha-photo.jpg", "portrait" %>
 
-サシャ・グリーフはHipmunkやRubyMotionといったスタートアップ企業で商品とWebのデザイナーとして働いてきました。
-サシャはTelescopeとTelescopeを基にしたSidebarの制作者であり、Folyoの設立者です。
+Sacha Greif has worked with startups such as Hipmunk and RubyMotion as a product and web designer. 
+He's the creator of Telescope and Sidebar (which is based on Telescope), and is also the founder of Folyo.
+　サシャ・グリーフはHipmunkやRubyMotionといったスタートアップ企業で商品とウェブのデザイナーとして働いてきました。
+　サシャはTelescopeとTelescopeを基にしたSidebarの制作者であり、Folyoの設立者です。
 
 ### Chapters & Sidebars
 
 We wanted this book to be useful both for the novice Meteor user and the advanced programmer, 
 so we split the chapters into two categories: regular chapters (numbered 1 through 14) and sidebars (.5 numbers).
-Meteorの初心者ユーザーと熟練のプログラマーのどちらでもこの本が役立つものにしたいと思っています。　　
-そのため、私たちは通常の章と補足記事の２つのカテゴリーに章を分割しました。
-
+　私たちはこの本がMeteorの初心者ユーザーと熟練のプログラマーのどちらでも役立つものにしたいと思っています。　　
+　そのため、私たちは１から14の通常の章と.5がついている補足事項の２つのカテゴリーに章を分割しました。
 
 Regular chapters will walk you through building the app,
 and will try to get you operational as soon as possible 
 by explaining the most important steps without bogging you down with too much detail.
-通常の章では、１つ１つ段階的にアプリを作っていきます。
-詳細すぎて読者の方が泥沼にはまることがないように最も重要なステップを説明することで、
-とりあえず　できる限り早く操作ができるようにします。（？？？）
+　通常の章では、１つ１つ段階的にアプリを作っていきます。
+　詳細すぎて読者の方が泥沼にはまることがないように最も重要なステップを説明することで、
+　ずできる限り早くアプリを作れるようにします。（？？？）
 
 On the other hand, sidebars will go deeper into Meteor's intricacies,
 and will help you get a better understanding of what's really going on behind the scenes.
-他方で、補足記事では　Meteorの複雑な部分に深く入り込んでいきます。
-そのため、スクリーンの裏側で何が実際に起きているのか理解する上で役立ちます。
+　一方で、補足事項ではMeteorの複雑な部分に深く入り込んでいきます。
+　そのため、裏側で何が実際に起きているのか理解する上で役立ちます。
 
 So if you're a beginner, feel free to skip the sidebars on your first read,
 and come back to them later on once you've played around with Meteor.
-初心者の方が最初に読む際は、補足記事を飛ばしてMeteorをひと通り動かした後で戻って読むのも良いでしょう。（？？？）
+　初心者の方が最初に読む際は、補足事項を飛ばしてMeteorをひと通り動かした後で戻って読むのも良いでしょう。（？？？）
 
-### Commits & Live Instances
+### Commits & Live Instances　コミットとライブインスタンス
 
 There's nothing worse than following along in a programming book 
 and suddenly realizing your code has gotten out of sync with the examples 
 and that nothing works like it should anymore.
-プログラミングの本で（？？？）するほど最悪なことはない。
-（？？？？？？）
-
+　プログラミングの本を読み進めて、急にコードが例題と一致していないことに気づいて、
+　これ以上何をやっても無駄になってしまうことほど最悪なことはありません。
 
 To prevent this, we've set up a GitHub repository for Microscope, 
 and we'll also provide direct links to git commits every few code changes. 
 Additionally, each commit also links to a live instance of the app at this particular commit, 
 so you can compare it with your local copy. Here's an example of what that will look like:
-こうしたことを防ぐために、Microscope用のGitHubレポジトリを（？？？）しました。
-また、私たちは　いくつかコードが変わる度に　gitコミットへのダイレクトリンクを作りました。
-さらに、各コミットはそのコミット時点でのアプリの（？？？）インスタンスにリンクしてあります。　
-そのため、　あなたがローカルで作ったものと比べることができます。　どのようになっているかがこちらの例です。
+　こうしたことを防ぐために、私たちはMicroscope用のGitHubレポジトリを作りました。
+　また、いくつかコードが変わる度にgitコミットへのダイレクトリンクを作りました。
+　さらに、各コミットはそのコミット時点でのアプリの（live instance？＝ライブインスタンス？）にリンクしてあります。　
+　そのため、あなたがローカルで作ったものと比べることができます。どのようになっているかがこちらの例です。
 
 <%= commit "11-2", "ヘッダーで通知を表示する" %>
 
 But note that just because we provide these commits doesn't mean you should just go from one git checkout to the next.
 You will learn much better if you take the time to manually type out your app's code!
-私たちはこうしたコミットを　読者の方が１つのgitを見ただけで次へいくように作ったのではないことに留意してください。
-そうではなく、もし時間をとって手入力でアプリのコードを打ち込むのなら、より多くのことを学ぶことができます！（？？？）
+　しかし、私たちはこうしたコミットを読者の方が１つのgitを見ただけで次へ行くように作ったのではないことに留意してください。
+　時間をとって手入力でアプリのコードを打ち込めば、より多くのことを学ぶことができます！（？？？）
 
 ### A Few Other Resources
 
 If you ever want to learn more about a particular aspect of Meteor, 
 the official Meteor documentation is the best place to start.
-Meteorのある特定の部分についてさらに学びたいという場合は、
-公式のMeteorドキュメンテーションが最良の場所です。
+　Meteorの特定の部分についてさらに学びたいという場合は、
+　公式のMeteorドキュメンテーションが最良の場所です。
 
 We also recommend Stack Overflow for troubleshooting and questions, 
 and the #meteor IRC channel if you need live help.
-私たちは、トラブルシューティングや質問をする場所としてStack Overflowをおすすめしています。
-また、即座にヘルプがほしい場合は#meteor IRCチャンネルをおすすめしています。
+　私たちは、トラブルシューティングや質問をする場所としてStack Overflowを推奨しています。
+　また、即座にヘルプがほしい場合は#meteor IRCチャンネルを推奨しています。
 
 <% note do %>
 
-### Do I Need Git?
+### Do I Need Git?　Gitは必要？
 
 While being familiar with Git version control 
 is not strictly necessary to follow along with this book, we strongly recommend it.
-Gitのバージョン管理に（？？？）であることは、本書を読み進める上で厳密には必要ではありませんが、私たちはGitに慣れ親しむことをおすすめします。
+　Gitのバージョン管理に（？？？）であることは、本書を読み進める上で厳密には必要ではありませんが、
+　私たちはGitに慣れ親しむことをおすすめします。
 
 If you want to get up to speed, we recommend Nick Farina's Git Is Simpler Than You Think.
-もしスピードを上げたいという場合（？？？）、私たちはNick FarinaのGit Is Simpler Than You Thinkを一読することをおすすめします。
+　すぐに身につけたいという場合（？？？）、私たちはNick FarinaのGit Is Simpler Than You Thinkを一読することをおすすめします。
 
 If you're a Git novice, we also recommend the GitHub for Mac app, 
 which lets you clone and manage repos without using the command line.
-もしGitの初心者の場合、私たちは GitHub for Macアプリをおすすめしています。
-GitHub for Macアプリでは、コマンドラインを使わなくてもクローンやレポジトリを管理することができるからです。（？？？）
+　もしGitの初心者の場合は、私たちは GitHub for Macアプリをおすすめしています。
+　GitHub for Macアプリでは、コマンドラインを使わずにクローンやレポジトリを管理することができるからです。（？？？）
 
 <% end %>
 
-### Getting in Touch
+### Getting in Touch　連絡先
 
 If you'd like to get in touch with us, you can email us at hello@discovermeteor.com.
 Additionally, if you find a typo or another mistake in the book's contents,
@@ -206,4 +234,4 @@ Finally, for every other question you can also just leave us a comment in this a
 - 私たちとコンタクトをとりたい場合、emailではhello@discovermeteor.comでご連絡ください。
 - また、本書の内容で誤植やミスを見つけた際は、このGitHubレポジトリでバグを投稿してお知らせください。
 - もしMicroscopeのコードに間違いがあった場合は、Microscopeのレポジトリでバグを投稿してください。
-- 最後に、その他の質問はこのアプリのサイドパネルでコメントを残すこともできます。（？？？）
+- 最後に、その他の質問はこのアプリのサイドパネルでコメントを残すこともできます。
