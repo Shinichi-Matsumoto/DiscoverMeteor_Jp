@@ -145,54 +145,88 @@ such as {{#each}}…{{/each}} or {{#if}}…{{/if}}.
 
 ### Going Further
 
-もしSpacebarsについてさらに学びたいという場合は、 Spacebars documentationを参照することができます。
+You can refer to the Spacebars documentation if you'd like to learn more about Spacebars.
+　Spacebarsについてさらに学びたいという場合は、Spacebarsドキュメンテーションを参照できます。
 
 <% end %>
 
-この知識があると、ここでどんなことが起こっているのか簡単に理解することができます。
+Armed with this knowledge, we can easily understand what's going on here.
+　この知識が備わると、ここでどんなことが起こっているのか簡単に理解することができます。
 
-最初にpostsListテンプレートの中で、{{#each}}…{{/each}} block helperを使ってpostsオブジェクトに繰り返し処理を行っています。
+First, in the postsList template, we're iterating over a posts object with the {{#each}}…{{/each}} block helper.
+Then, for each iteration we're including the postItem template.
+　最初にpostsListテンプレートの中で、{{#each}}…{{/each}} block helperを使ってpostsオブジェクトに繰り返し処理を行っています。
+　eachイテレーションで、私たちはpostItemテンプレートを（including ？＝インクルード？）しています。
 
-postsオブジェクトがどこからやって来たのでしょうか？
-それは実際のところ、テンプレートヘルパーから
+Where is this posts object coming from? Good question. 
+It's actually a template helper, and we'll define it when we look at template managers.
+　postsオブジェクトがどこからやって来たのでしょうか？　（Good question.？＝いいところに気がつきましたね。）
+　それは実際のところ、テンプレートヘルパーからで、私たちはテンプレートマネージャーを見ているときにpostsオブジェクトを定義しました。
 
-////
+The postItem template itself is fairly straightforward. It only uses three expressions: 
+{{url}} and {{title}} both return the document's properties, and {{domain}} calls a template helper.
+　postItemテンプレート自体はかなり単純で、３つのexpressionしか使っていません：
+　{{url}} と {{title}}は両方ともドキュメントのプロパティを返して、{{domain}}はテンプレートヘルパーを呼び出します。
 
-////
+We've mentioned "template helpers" a lot throughout this chapter without really explaining what they do. 
+But in order to fix this, we must first talk about managers.
+　私たちはこの章を通して「テンプレートヘルパー」がどんなことをしているか説明せずに多くのことを話してきました。
+　しかし、この点を（fix？＝解決？）するためには、最初にマネージャーについて話さなければなりません。
 
-### Template Managers
+### テンプレート Managers
 
-ここまでSpacebarsについて取り組んできました。
-Spacebarsはいくつかのタグを散りばめたHTMLです。
-PHPのような他の言語と違い、Meteorがテンプレートと他のロジックを分離した状態にします。
-テンプレートそれ自体が分離させるわけではありません。
+Up to now we've been dealing with Spacebars, 
+which is little more than HTML with a few tags sprinkled in. 
+Unlike other languages like PHP (or even regular HTML pages, which can include JavaScript),
+Meteor keeps templates and their logic separated, and these templates don't do much by themselves.
+　ここまで私たちはSpacebarsについて取り組んできました。
+　Spacebarsはいくつかのタグを散りばめたHTMLです。
+　PHPのような他の言語と違って（あるいは、JavaScriptが含まれた通常のHTMLページでさえ）、
+　Meteorはテンプレートと他のロジックを分離した状態にします。
+　テンプレートそれ自体が分離させるわけではありません。（？？？）
 
-（？？？）　ためには、テンプレートにマネージャーが必要です。
-　このマネージャーは　生の食材（データ）をとってきて準備をするシェフのようなものと見なすことができます。
-（？？？）
+In order to come to life, a template needs a manager.
+You can think of the manager as the chef that takes raw ingredients (your data) and prepares them,
+before handing out the finished dish to the waiter (the template) who then presents it to you.
+　（ come to life？）するためには、テンプレートにマネージャーが必要です。
+　　このマネージャーは　（finished dish？＝完成した料理を）をウェイター（テンプレート）に渡す前に
+　　生の食材（データ）をとってきて、調理をするシェフのようなものと見なすことができます。
 
-言い換えれば、テンプレートの役割は表示をすることと変数をループすることに限定されます。
-マネージャーが　値を変数に割り当て　（？？？）
+In other words, while the template's role is limited to displaying or looping over variables, 
+the manager is the one who actually does the heavy lifting by assigning a value to each variable.
+　言い換えれると、テンプレートの役割は表示をすることと変数をループすることに限定されまが、（？？？）
+　マネージャーは　それぞれの変数に値を割り当てることで、重労働をしています。（？？？）　
 
 <% note do %>
 
 ### Managers?
 
-私たちがMeteor開発者たちにテンプレートマネージャーを何と呼んでいるのか聞いて回ったところ、
-半分の人が「コントローラー」だと言い、もう半分の人は「JavaScriptのコードを置くファイル」だと言いました。
+When we asked around to see what other Meteor developers called template managers, half said "controllers",
+and half said "those files where I put my JavaScript code".
+　私たちがMeteor開発者たちにテンプレートマネージャーを何と呼んでいるのか聞いて回ったところ、
+　半分の人は「コントローラー」だと言い、もう半分の人は「JavaScriptのコードを置くファイル」だと言いました。
 
-実際のところ、マネージャーはコントローラーではありません。
-少なくともMVCでの意味のコントローラーではありません。
-「JavaScriptのコードを置くファイル」と呼ぶのも受けが良さそうではありません。
-そのため、どちらの意見も却下しました。
+Managers aren't really controllers (at least, not in the sense of MVC controllers) 
+and "TFWIPMJSC" isn't really that catchy, so we rejected both propositions.
+　実際のところ、マネージャーはコントローラーではありません。
+　（少なくとも、MVCでの意味のコントローラーではありません。）
+　「JavaScriptのコードを置くファイル」と呼ぶのも受けが良さそうではありません。
+　そのため、どちらの意見も却下しました。
 
-私たちは何と呼べばよいのかを決めたかったため、「マネージャー」という言葉を考えだしました。
-webフレームワークに関係したことでマネージャーという言葉は（？？？）　以前から存在する意味ではありませんでした。
+Since we still wanted a way to indicate what we were talking about, 
+we came up with the term "manager" as a handy shortcut 
+that didn't have any pre-existing meaning as far as web frameworks are concerned.
+　私たちは何と呼べばよいのかを決めたかったため、「マネージャー」という言葉を思いつきました。
+　また、マネージャーという言葉はwebフレームワークに関係したこと以前から存在する意味がありませんでした。
 
 <% end %>
 
-  .js拡張子　（？？？）
-  では早速　/client/views/postsの中にposts_list.jsを作って、最初のマネージャーを作っていきましょう。
+To keep things simple, we'll adopt the convention of naming the manager after the template, 
+except with a .js extension. 
+So let's create posts_list.js inside /client/views/posts right away and start building our first manager:
+  シンプルにするために、私たちはテンプレートに（after？＝ちなんだ？）マネージャーという名前の　（convention？）を採用しました。
+  ただし、.js拡張子を省いています。（？？？）
+  では早速、/client/views/postsの中にposts_list.jsを作って、最初のマネージャーを作っていきましょう。
 
 ~~~js
 var postsData = [
@@ -218,16 +252,22 @@ Template.postsList.helpers({
 ~~~
 <%= caption "client/views/posts/posts_list.js" %>
 
-正しくできたなら、ブラウザでは次のように表示されているでしょう。
+If you've done it right, you should now be seeing something similar to this in your browser:
+　正しくできたら、ブラウザでは次のように表示されているでしょう。
 
-<%= screenshot "3-1", "Our first templates with static data" %>
+Our first templates with static data
+<%= screenshot "3-1", "静的データでの最初のテンプレート" %>
 
-<%= commit "3-1", "Added basic posts list template and static data." %>
+Added basic posts list template and static data
+<%= commit "3-1", "基本的な（posts list template？）と静的なデータを（Added？＝組み込みました？）" %>
 
-私たちはここで２つのことをしています。
-まず１つ目に　postsData配列の中にダミープロトタイプデータを構成しています。
-通常、データはデータベースからやって来ます。
-この点は次の章で学びますので、静的データを使って「ごまかして」います。
+We're doing two things here. First we're setting up some dummy prototype data in the postsData array.
+That data would normally come from the database, 
+but since we haven't seen how to do that yet (wait for the next chapter) we're "cheating" by using static data.
+　私たちはここで２つのことをしています。
+　まず１つ目に　postsData配列の中でダミープロトタイプデータを構成しています。
+　通常、データはデータベースからやって来ます。
+　この点は次の章で学びますので、静的データを使って「ごまかして」います。
 
 ２つ目に postsをテンプレートヘルパーに定義するため、Meteorの Template.myTemplate.helpers()関数を使っています。
 postsは、postsData配列を返します。
