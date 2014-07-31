@@ -4,87 +4,134 @@ slug: github
 date: 0003/01/02
 number: 3.5
 sidebar: true
-contents: 本書を理解する上でのGitHubの使い方を学びます。
+contents: 本書を理解する上で、GitHubの使い方を学びます。
 paragraphs: 32
 ---
 
-GitHubはGitというバージョン管理システムを基にした、オープンソースプロジェクト向けのソーシャルレポジトリです。（？？？）
-GitHubの基本的な機能は、コードを共有してプロジェクトのコラボレーションをしやすくすることです。
-また、GitHubは素晴らしい学習ツールでもあります。
-この補足説明では、Discover Meteorを理解する上でのGitHubの使い方を学びます。
+GitHub is a social repository for open-source projects based around the Git version control system,
+and its primary function is to make it easy to share code and collaborate on projects. 
+But it's also a great learning tool. 
+In this sidebar,we'll quickly go over a few ways you can use GitHub to follow along with Discover Meteor.
+　GitHubはGitというバージョン管理システムを基にした、オープンソースプロジェクト向けのソーシャルレポジトリです。（？？？）
+　GitHubの基本的な機能は、コードを共有してプロジェクトのコラボレーションをしやすくすることです。
+　また、GitHubは素晴らしい学習ツールでもあります。
+　この補足事項では、Discover Meteorを理解する上でのGitHubの使い方を学びます。
 
-この補足説明では、GitやGitHubについて知らない読者の方を想定しています。
-もしあなたがどちらも使いこなせるのなら、この章まで飛ばしても大丈夫です。
+This sidebar assumes you're not that familiar with Git and GitHub.
+If you're already comfortable with both, feel free to skip on to the next chapter!
+　この補足事項では、GitやGitHubについて知らない読者の方を想定しています。
+　もしあなたがどちらも使いこなせるのなら、この章まで飛ばしても大丈夫です。
 
 ### コミットをする
 
-gitレポジトリの基本的なワーキングブロック（？？？）は、コミットです。
-コミットとは、定められた時間内のコード（？？？）の状態のスナップショットのようなものです。（？？？）
+The basic working block of a git repository is a commit. 
+You can think of a commit as a snapshot of your codebase's state at a given moment in time.
+　gitレポジトリの基本的なワーキングブロック（？？？）は、コミットです。
+　コミットとは、定められた時間内のコード（？？？）の状態のスナップショットと考えることができます。
 
-Microscopeの完成したコードを　の代わりに（？？？）
-あらゆる面でスナップショットを撮って、オンラインのGitHub上で見ることができます。（？？？）
-　
-たとえば、前章でのコミットは次のようになります：
+Instead of simply giving you the finished code for Microscope, we've taken these snapshots every step of the way,
+and you can see all of them online on GitHub.
+　Microscopeの完成したコードを（give？）　の代わりに
+　あらゆる面でスナップショットを撮って、オンラインのGitHub上で見ることができます。（？？？）
+
+For example, this is what the last commit of the previous chapter looks like:
+ たとえば、前章でのコミットは次のようになります：
 
 <%= screenshot "s3-1", "GitHubで表示されるGitコミット" %>
 
-ここで見ているのは、post_item.jsファイルの“diff”(“difference”)です。
-これはコミットによって取り込まれた変化です。
-この場合、ゼロからpost_item.jsファイルを作ったため、背景が緑色に表示されています。
+What you see here is the “diff” (for “difference”) of the post_item.js file,
+in other words the changes introduced by this commit. 
+In this case, we created the post_item.js file from scratch, so all its contents are highlighted in green.
+ ここで見ているのは、post_item.jsファイルの“diff”(“difference”)です。
+ これはコミットによって取り込まれた変化です。
+ この場合、ゼロからpost_item.jsファイルを作ったため、背景が緑色に表示されています。
 
-後々本書で出てくる例を見比べてみましょう
+Let's compare with an example from later on in the book:
+ 後々本書で出てくる例を見比べてみましょう
 
 <%= screenshot "s3-2", "コードの修正" %>
 
-今回は、修正した行の背景だけが緑色になっています。
+This time, only the modified lines are highlighted in green.
+ 今回は修正した行の背景だけが緑色になっています。
 
-コードを加えたり修正するだけでなく、コードを削除することもありますね。
+And of course, sometimes you're not adding or modifying lines of code, but deleting them:
+　もちろん、コードを加えたり修正するだけでなく、コードを削除することもあります。
 
 <%= screenshot "s3-3", "コードの削除" %>
 
-これがGitHubの最初の使い方です。何か変更されたのか、一目瞭然でしょう。
+So we've seen the first use of GitHub: seeing what's changed at a glance.
+　これがGitHubの最初の使い方です。何か変更されたのか、一目瞭然でしょう。
 
 ### コミットされたコードを見る
 
-Gitのコミット表示は
-（？？？）
-
-////（？？？）
-コミットページにいる際に、Browse codeボタンをクリックしましょう。
+Git's commit view shows us the changes included in this commit,
+but sometimes you might want to look at files that haven't changed, 
+just to make sure what their code is supposed to look like at this stage of the process.
+　Gitのコミット表示は　このコミットに（include？）された変化を表示していますが、
+　変化していないファイルを見たいという時は、
+　コードが（at this stage of the process？）で（？？？）
+　
+Once again GitHub comes through for us. When you're on a commit page, click the Browse code button:
+　またしてもGitHubが（comes through？）します。
+　コミットページで、Browse codeボタンをクリックしましょう。
 
 <%= screenshot "s3-5", "Browse codeボタン" %>
 
-////（？？？）
+You'll now have access to the repo as it stands at a specific commit:
+　これで（specific？＝特定の？）コミットを示すリポジトリにアクセスしました。　
 
 <%= screenshot "s3-6", "The repository at commit 3-2." %>
 
-////
-
+GitHub doesn't give us a lot of visual clues that we're looking at a commit,
+but you can compare with the “normal” master view and see at a glance that the file structure is different:
+　GitHubは私たちがGitHubを見ている時に、多くの視覚的なヒントを伝えません。
+　しかし、「普通」の（master view？）を比較して、ファイル構造が違っていることが一目でわかります。
+　
 <%= screenshot "s3-7", "The repository at commit 14-2." %>
 
 ### Accessing A Commit Locally
 
-これまでオンラインのGitHubでは、どのようにコミットされたコードを見るのかを学習しました。
-一方で、ローカル環境で同じことしたいときはどうしたらよいのでしょうか？
-たとえば、ローカル環境でアプリを動かす　現時点で　その過程で　（？？？）
+We've just seen how to browse a commit's entire code online on GitHub. 
+But what if you want to do the same thing locally? For example, you might want to run the app locally 
+at a specific commit to see how it's supposed to behave at this point in the process.
+　これまでオンラインのGitHubでは、どのようにコミットされたコードを見るのかを学習しました。
+　一方で、ローカル環境で同じことしたいときはどうしたらよいのでしょうか？
+　たとえば、ローカル環境でアプリを動かす　現時点で　その過程で　（？？？）
 
-////
-
+To do this, we'll take our first steps (well, in this book at least) with the git command line utility.
+For starters, make sure you have Git installed. 
+Then clone (in other words, download a copy locally) the Microscope repository with:
+　これをするために、gitコマンドライン（utility？）を使って最初の一歩（そう、少なくとも本書では）を進みましょう。　
+　まず第一に、Gitがインストールされているか確認します。
+　それから次のようにしてMicroscopeリポジトリをクローン（言い換えると、ローカルにコピーをダウンロード）します。
+　
 ~~~bash
 $ git clone git@github.com:DiscoverMeteor/Microscope.git github_microscope
 ~~~
 
-////
-
-////
+That github_microscope at the end is simply the name of the local directory you'll be cloning the app into.
+Assuming you already have a pre-existing microscope directory,
+just pick any different name (it doesn't need to have the same name as the GitHub repo).
+　このgithub_microscopeは（at the end？）では、アプリをクローンして入れておくローカルディレクトリの名前です。　
+　すでにmicroscopeディレクトリが存在している（Assuming？＝場合は？）、
+　他の名前を（pick？＝選びます？）（GitHubリポジトリと同じ名前を使う必要はありません）。
+　
+Let's cd into the repository so that we can start using the git command line utility:
+　　gitコマンドライン（utility？）を使い始めるために、リポジトリ（into？）cdしましょう。
 
 ~~~bash
 $ cd github_microscope
 ~~~
 
-////
+Now when we cloned the repository from GitHub,
+we downloaded all the code of the app, which means we're looking at the code for the last ever commit.
+　私たちは　GitHubからリポジトリをクローンしたので、
+　アプリのすべてのコードをダウンロードしました。つまり、私たちは（ last ever？＝最後に？）コミットされたコードを見ています。
 
-////
+Thankfully, there is a way to go back in time and “check out” a specific commit 
+without affecting the other ones. Let's try it out:
+　ありがたいことに、（ other ones？）に影響を及ぼさずに　時間の流れをさかのぼって
+　特定のコミットを（“check out” ？）する方法があります。では、試してみましょう。
 
 ~~~bash
 $ git checkout chapter3-1
@@ -102,15 +149,33 @@ do so (now or later) by using -b with the checkout command again. Example:
 HEAD is now at a004b56... Added basic posts list template and static data.
 ~~~
 
-////
+Git informs us that we are in “detached HEAD” state, 
+which means that as far as Git is concerned, we can observe past commits but we can't modify them. 
+You can think of it as a wizard inspecting the past through a crystal ball.
+　私たちは　Gitによって（“detached HEAD”？）状態を知ることができます。
+　Gitが関係する限り、私たちは過去のコミットを見れるだけで、修正することはできません。
+　これは水晶の玉で過去を調べる魔法使いのようなものだと考えることができます。
 
-////
+(Note that Git also has commands that let you change past commits. 
+This would be more like a time traveller going back in time and possibly stepping on a butterfly, 
+but it's outside the scope of this brief introduction.)
+　（Gitには　過去のコミットを変えるコマンドがあります。
+　　これは時間の流れをさかのぼって、蝶を踏みつけるタイムトラベラーのようなものです。
+　　しかし、この点はこの短い紹介の範囲を超えてしまいます。）
 
-////
+The reason why you were able to simply type chapter3-1 is 
+that we've pre-tagged all of Microscope's commits with the correct chapter marker. 
+If this weren't the case, you'd need to first find out the commit's hash, or unique identifier.
+　なぜ（chapter3-1？）をタイピングできるのかというと、
+　私たちは（correct chapter marker？）でMicroscopeのすべてのコミットを（ pre-tagged？）したからです。
+　（this weren't the case？）、最初にコミットのハッシュか（unique identifier？）を見つける必要があります。　
 
-////
+Once again, GitHub makes our life easier.
+You can find a commit's hash in the bottom right corner of the blue commit header box, as shown here:
+　またしても、 GitHub は私たちの生活を（？？？）しやすくしてくれました。
+　（as shown here？＝この図のように？）、青いコミットヘッダーボックスの右下の隅にコミットハッシュを見つけることができます。　　
 
-<%= screenshot "s3-4", "Finding a commit hash." %>
+<%= screenshot "s3-4", "コミットハッシュを探す." %>
 
 ////
 
