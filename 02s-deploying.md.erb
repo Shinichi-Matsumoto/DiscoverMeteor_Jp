@@ -4,8 +4,7 @@ slug: deploying
 date: 0002/01/02
 number: 2.5
 sidebar: true
-contents: Learn how to deploy on Meteor.com.|Learn how to deploy on Modulus.|Learn how to deploy on your own server using Meteor Up.
-paragraphs: 46
+contents: Meteor.comにデプロイする方法を学ぶ。|Modulusにデプロイする方法を学ぶ。|Meteor Upを使って自分のサーバーにデプロイする方法を学ぶ。
 ---
 
 Some people like to work quietly on a project until it's perfect, 
@@ -33,15 +32,15 @@ Let's get started!
 
 This is a sidebar chapter.
 Sidebars take a deeper look at more general Meteor topics independantly of the rest of the book.
-これは補足事項の章です。
-補足事項では、一般的なMeteorのトピックよりも深く見ていきます。（ independantly of the rest of the book？）
+　これは補足事項の章です。
+　補足事項では、（ independantly of the rest of the book？＝通常の部分とは独立させて？）一般的なMeteorのトピックよりも深く見ていきます。
 
 So if you'd rather go on with building Microscope, you can safely skip it for now and come back to it later.
-そのため、あなたがMicroscopeをどんどん作っていきたいという場合は、今は補足事項を飛ばして後で戻って読むことも可能です。
+　そのため、あなたがMicroscopeをどんどん作っていきたいという場合は、今は補足事項を飛ばして後で戻って読むことも可能です。
 
 <% end %>
 
-### Deploying On Meteor
+### Deploying On Meteor　　 Meteorにデプロイする
 
 Deploying on a Meteor subdomain (i.e. http://myapp.meteor.com) is the easiest option, 
 and the first one we'll try. 
@@ -73,19 +72,19 @@ on things like accessing your hosted instance's database directly, or configurin
 　さらに情報を求める場合は、公式ドキュメンテーションを参照できます。
 　　　　
 
-### Password Protection
+### Password Protection（＝ない？）
 
-////？？？
+////？？？ない？？？
 
 ~~~~bash
 $ meteor deploy myapp.meteor.com -p
 ~~~~
 
-////？？？
+////？？？ない？？？
 
-////？？？
+////？？？ない？？？
 
-### Deploying On Modulus
+### Deploying On Modulus　　Modulusにデプロイする
 
 Modulus is a great option for deploying NodeJS apps.
 It's one of the few PaaS (platform-as-a-service) provider that officially support Meteor, 
@@ -118,7 +117,7 @@ $ modulus login
 ~~~
 
 We'll now create a Modulus project (note that you can also do this via Modulus' web dashboard):
-　今からModulusプロジェクトを作っていきます。（ Modulusのウェブダッシュボードでも同じことができます。）
+　今からModulusプロジェクトを作っていきます。（Modulusのウェブダッシュボードでも同じことができます。）
 
 ~~~bash
 $ modulus project create
@@ -317,7 +316,7 @@ You can specify all of your app's environment variables
 (such as ROOT_URL, MAIL_URL, MONGO_URL, etc.) inside the env block.
 　envブロック内では、すべてのアプリの環境変数を規定することができます。(たとえば、ROOT_URLや MAIL_URL、MONGO_URLなど) 
 
-### Setting Up and Deploying
+### Setting Up and Deploying　設定とデプロイ
 
 Before we can deploy, we'll need to set up the server so it's ready to host Meteor apps.
 The magic of Meteor Up encapsulates this complex process in a single command!
