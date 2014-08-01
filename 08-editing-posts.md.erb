@@ -16,7 +16,7 @@ While the UI code to do so is fairly simple, this is a good time to talk about h
 
 Let's first hook up our router.
 We'll add a route to access the post edit page and set its data context:
-　はじめに、ルーターを（hook up？＝つなぎ？）ましましょう。
+　はじめに、ルーターを（hook up？＝つなぎ？）ましょう。
 　私たちは投稿編集ページアクセスするためにルートを加えて、（set its data context？＝データコンテキストを設定します？）：
 
 ~~~js
@@ -219,7 +219,12 @@ Our post edit form is looking good, but you won't be able to actually edit anyth
 Since we've previously removed the insecure package, all client-side modifications are currently being denied.
 　私たちは　以前にinsecureパッケージを削除したので、　すべてのクライアントサイドの（modification？＝変更？）は現在　（deny？）されます。
 
-////
+To fix this, we'll set up some permission rules. 
+First, create a new permissions.js file inside lib.
+This loads our permissions logic first (and is available in both environments):
+　これを修正するために、　私たちは　パーミッションルールを設定します。
+　最初に、lib内に　新しく　permissions.js　ファイルを作ります。
+　これは最初にパーミッションロジックを（load？＝読み込み）ます。（そして、両方の環境で使うことができます。）
 
 ~~~js
 // check that the userId specified owns the documents
@@ -229,9 +234,15 @@ ownsDocument = function(userId, doc) {
 ~~~
 <%= caption "lib/permissions.js" %>
 
-////
-
-////
+In the Creating Posts chapter, we got rid of the allow() Methods 
+because we were only inserting new posts via a server Method (which bypasses allow() anyway).
+　投稿をつくるの章で、　allow()を回避するサーバーメソッドを使って　新しい投稿を挿入するために
+　私たちは allow()メソッドを取り除きました。
+　
+But now that we're editing and deleting posts from the client, 
+let's go back to posts.js and add this allow() block:
+　しかし、今はクライアントから投稿を編集したり削除したりするので、
+　posts.jsに戻って、allow() ブロックを加えましょう。
 
 ~~~js
 Posts = new Meteor.Collection('posts');
@@ -251,9 +262,13 @@ Meteor.methods({
 
 ### Limiting Edits
 
-////
+Just because you can edit your own posts, doesn't mean you should be able to edit every property.
+For example, we don't want users to be able to create a post and then assign it to somebody else.
+　（own？＝自分が作った？）投稿を編集できるからといって、あなたがすべてのプロパティを編集できるという意味ことではありません。
+　たとえば、　私たちは　ユーザーが　投稿を作って、（somebody else？＝だれかに？）投稿を（assign？）できるようにしたくありません。
 
-////
+We use Meteor's deny() callback to ensure users can only edit specific fields:
+　ユーザーが　特定のフィールドだけを編集できるようにするために、私たちは　Meteor's deny()コールバックを使います。　
 
 ~~~js
 Posts = new Meteor.Collection('posts');
@@ -275,29 +290,57 @@ Posts.deny({
 
 <%= commit "8-3", "Only allow changing certain fields of posts." %>
 
-////
+We're taking the fieldNames array that contains a list of the fields being modified, 
+and using Underscore's without() Method to return a sub-array containing the fields that are not url or title.
+　私たちは　（ modified？＝変更された）フィールドのリストを含んだ　fieldNames配列を　（take？）しています。　
 
-////
+If everything's normal, that array should be empty and its length should be 0.
+If someone is trying anything funky, that array's length will be 1 or more,
+and the callback will return true (thus denying the update).
+　すべての（normal？）だと、この配列は　空っぽで、長さは0になります。
+　だれかが　何か　（funky？＝ファンキー？）なことをしたら、　この配列の長さは１かそれ以上になって
+　コールバックは true を返します。（このようにアップデートを(deny？)します）
 
 <% note do %>
 
 ### Method Calls vs Client-side Data Manipulation
 
-////
+To create posts, we are using a post Method, whereas to edit and delete them,
+we are calling update and remove directly on the client and limiting access via allow and deny.
+　投稿を作るために、私たちは　（post？）メソッドを使います。（whereas？）　（them？＝投稿？）を編集したり削除したりするために（？？？）、
+　私たちは　アップデートを呼び出して　クライアントで　直接　削除して、　（allow とdeny？）でアクセスを制限しています。
 
-////
+When is it appropriate to do one and not the other?
+　いつ（ one？）を適切にして、（not the other？）　でしょうか？（？？？）
 
-////
+When things are relatively straightforward and you can adequately express your rules via allow and deny,
+it's usually simpler to do things directly from the client.
+　物事が　比較的　（ straightforward ？）で、あなたが　（adequately ？）に　（ allow とdeny？）を　（express ？）できます。
 
-////
+Directly manipulating the database from the client creates the perception of immediacy, 
+and can make for a better user experience as long as you remember to handle failure cases gracefully
+ (i.e. when the server comes back saying the change didn't succeed after all).
+　クライアントから　直接　データベースを（manipulate？）することで、（perception of immediacy？）を作って、
+　あなたが　（handle failure cases gracefully？）を（remember？＝覚えている？）限り、より良いユーザーエクスペリエンスを（make for ？）できます。　
+　（つまり、結局はサーバーが　変更を（comes back saying？）する時は、うまくいきませんでした。）（？？？）
 
-////
+However, as soon as you start needing to do things that should be outside the user's control 
+(such as timestamping a new post or assigning it to the correct user),
+it's probably better to use a Method.
+　しかし、　（？？？？？？）、
+　（たとえば、新しい投稿にタイムスタンプをしたり、正しいユーザーんに（it？）を割り当てるなど）、
+　おそらく、メソッドを使うのが良いでしょう。
 
-////
+Method calls are also more appropriate in a few other scenarios:
+　メソッドコールは　（ a few other？）シナリオで　適切です　。
 
+When you need to know or return values via callback rather than waiting for the reactivity and synchronization to propagate.
+For heavy database functions that would be too expensive to ship a large collection over.
+To summarize or aggregate data (e.g. count, average, sum).
+
+- コールバックから値を返す　　リアクティビリティを待って、（ synchronization to propagate？）
 - ////
-- ////
-- ////
+- （？？？？？？）
 
 <% end %>
 
