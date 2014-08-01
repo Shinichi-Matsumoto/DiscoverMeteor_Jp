@@ -177,7 +177,9 @@ You can find a commit's hash in the bottom right corner of the blue commit heade
 
 <%= screenshot "s3-4", "コミットハッシュを探す." %>
 
-////
+So let's try it with the hash instead of a tag:
+　タグの代わりに　ハッシュを使ってみましょう。
+ 
 
 ~~~bash
 $ git checkout c7af59e425cd4e17c20cf99e51c8cd78f82c9932
@@ -185,32 +187,62 @@ Previous HEAD position was a004b56... Added basic posts list template and static
 HEAD is now at c7af59e... Augmented the postsList route to take a limit
 ~~~
 
-////
+And finally, what if we want to stop looking into our magic crystal ball and come back to the present? 
+We tell Git that we want to check out the master branch:
+　最後に、水晶の玉を　見るのをやめたくなって、現在に戻っりたくなったらどうするのでしょうか？
+　私たちはGitに（master branch？）をチェックしたいと伝えます。
 
 ~~~bash
 $ git checkout master
 ~~~
 
+Note that you can also run the app with the meteor command at any point in the process,
+even when in “detached HEAD” state.
+You might need to run a quick mrt update first if Meteor complains about missing packages,
+since package code is not included in Microscope's Git repo.
+　（“detached HEAD” ？）状態の時でも　どの時点でも　そのプロセスで　Meteorコマンドで　アプリを動かすこともできます。（？？？）
+　　Meteorが　（missing？）パッケージに文句を言ってきたら　mrt updateを動かす必要があるかもしれません。　
+　　というのも、パッケージコードは　 MicroscopeのGit repo に入っていないからです。
+
 ### Historical Perspective
 
-////
+Here's another common scenario: you're looking at a file and notice some changes you hadn't seen before. 
+The thing is, you can't remember when the file changed. 
+You could just look at each commit one by one until you find the right one, 
+but there's an easier way thanks to GitHub's History feature.
+　これはもうひとつのよくある状況です：　あなたがファイルを見ていると、今まで見たことのない変化に気づきました。
+　（The thing is,？＝要するに？）、あなたはいつファイルを変更させたか覚えていません。
+　（right one？）を見つけるまで、　一つ一つコミットを見ていく　（？？？）
+　しかし、　GitHubのHistory機能でもっと簡単に　する方法があります。
 
-////
+First, access one of your repository's files on GitHub, then locate the “History” button:
+　最初に、GitHubでリポジトリの　ファイルにアクセスして、　“History”ボタンを見つけます。
 
-<%= screenshot "s3-8", "GitHub's History button." %>
+<%= screenshot "s3-8", "GitHubの History ボタン." %>
 
-////
+You now have a neat list of all the commits that affected this particular file:
+　このファイルに影響を与えたすべてのコミットを整ったリストで（have？）します。
 
-<%= screenshot "s3-9", "Displaying a file's history." %>
+<%= screenshot "s3-9", "ファイルの historyを表示する。" %>
 
 ### The Blame Game
 
-////
-
+To wrap things up, let's take a look at Blame:
+　締めくくりに、Blameを見ていきましょう。
+　
 <%= screenshot "s3-10", "GitHub's Blame button." %>
 
-////
+This neat view shows us line by line who modified a file,
+and in which commit (in other words, who's to blame when things aren't working anymore):
+　（neat view？）は　誰がファイルとコミットを変更したのか行ごとに、表示します。
+　（言い換えると、うまくいかなくなった時に誰のせいかということがわかります。）
+　
 
 <%= screenshot "s3-11", "GitHub's Blame view." %>
 
-////
+Now Git is a fairly complex tool – and so is GitHub –, so we can't hope to cover everything in a single chapter. 
+In fact, we've barely scratched the surface of what is possible with these tools.
+But hopefully, even that tiny bit will prove helpful as you follow along the rest of the book.
+　GitとGitHubはかなり複雑なツールです。そのため、１つの章ですべてのことをカバーすることは見込めません。
+　実際に　（？？？）
+　しかし、本書の残りを理解していく上で　ほんのすこしでも　役立つとわかるでしょう。（？？？）
