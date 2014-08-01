@@ -13,20 +13,20 @@ paragraphs: 24
 #### クライント
 
 When we talk about the Client, we are referring to code running in the user's web browser,
-本書でのクライントというの時は、ユーザーのウェブブラウザで動いているコードのことを指しています。
 whether that is a traditional browser like Firefox or Safari, 
-ブラウザーがFirefox や Safariであろうと、
 or something as complex as a UIWebView in a native iPhone application.
-iPhoneのネイティブアプリ　　UIWebViewのような　もの　（？？？）
+　本書でのクライントというの時は、ユーザーのウェブブラウザで動いているコードのことを指しています。
+　ブラウザーが伝統的なFirefox や Safariであろうと、
+　iPhoneのネイティブアプリでのUIWebViewのような複雑なものもクライアントです。
 
 #### Collection
 
 A Meteor Collection is the data store that automatically synchronizes between client and server.
-Meteorコレクションは　クライントとサーバーで自動同期して　保存されているデータです。　（？？？）
 Collections have a name (such as posts), and usually exist both on client and server.
-コレクションはpostsなどの名前があり、クライントとサーバーに存在しています。
 Although they behave differently, they have a common API based on Mongo's API.
-クライントとサーバーにあるコレクションは違った行動を起こしますが、 MongoDBのAPIに基いた同じAPIがあります。（？？？）
+　Meteorコレクションは　クライントとサーバーで自動同期して　保存されているデータです。　（？？？）
+　コレクションはpostsなどの名前があり、クライントとサーバーに存在しています。
+　クライントとサーバーにあるコレクションは違った行動を起こしますが、 MongoDBのAPIに基いた同じAPIがあります。（？？？）
 
 #### Computation
 
@@ -34,8 +34,13 @@ Although they behave differently, they have a common API based on Mongo's API.
 
 #### Cursor
 
-////
- 
+A cursor is the result of running a query on a Mongo collection.
+On the client side, a cursor isn't just an array of results, 
+but a reactive object that can be observed as objects in the relevant collection are added, removed and updated.
+　カーソルはMongoDBのコレクションでクエリを動かした結果のことです。
+　クライアントサイドでは、カーソルは　（an array of？）結果ではありませんが、
+　リアクティブなオブジェクトです。として（observe？）される　　関係のあるコレクションでオブジェクト1（？？？）
+
 #### DDP
 
 ////
@@ -50,7 +55,11 @@ Although they behave differently, they have a common API based on Mongo's API.
 
 #### Helpers
 
-////
+When a template needs to render something more complex than a document property it can call a helper, 
+a function that is used to aid rendering.
+　テンプレートが（document property？）より複雑なものをレンダリングする必要がある時に、
+　テンプレートはヘルパーを呼び出します。
+　ヘルパーはレンダリングを手助けする関数です。
 
 #### Latency Compensation
 
@@ -77,7 +86,10 @@ Although they behave differently, they have a common API based on Mongo's API.
 
 #### Publication
 
-////
+A publication is a named set of data that is customized for each user that subscribes to it.
+You set up a publication on the server.
+　（？？？）
+　パブリケーションはサーバーでセットアップします。
 
 #### Server
 
