@@ -9,118 +9,118 @@ paragraphs: 52
 ---
 
 Publications and subscriptions are one of the most fundamental and important concepts in Meteor, 
-Publications と subscriptions はMeteorにおいて、最も基本的で重要なコンセプトの１つです。（？？？）
 but can be hard to wrap your head around when you're just getting started
-しかし、 まだ始めたばかりのころは理解することは難しいものです。
+　Publications と subscriptions はMeteorにおいて、最も基本的で重要なコンセプトの１つです。（？？？）
+　しかし、 まだ始めたばかりのころは理解することは難しいものです。
 
 This has led to a lot of misunderstandings, such as the belief that Meteor is insecure, 
-そのため多くの誤解の原因ともなっています。  その誤解の中には Meteorは安全でないといった意見や
 or that Meteor apps can't deal with large amount of data.
-Meteorのアプリは大量のデータを扱えないといたものがあります。
+　そのため多くの誤解の原因ともなっています。  その誤解の中には Meteorは安全でないといったものや
+　Meteorのアプリは大量のデータを扱えないといたものがあります。
 
 A big part of the reason people find these concepts a bit confusing initially is the "magic" that Meteor does for us.
-最初にこうしたコンセプトに困惑してしまう多くの理由は、Meteorがもたらす「マジック」によるものです。
 Although this magic is ultimately very useful, it can obscure what's really going on behind the scenes (as magic tends to do). 
-Meteorのマジックは最終的にはとても役立つものですが、水面下で（？？？）何が起きているのかわかりません。（マジックってそういうものですからね）
 So let's strip away the layers of magic to try and understand what's happening.
-　、何か起きているのか理解するために、マジックの皮を剥ぎ取りましょう。（？？？）
+　最初にこうしたコンセプトに困惑してしまう理由の多くは、Meteorがもたらす「マジック」によるものです。
+　Meteorのマジックは最終的にはとても役立つものですが、裏側で何をしているのかわかりません。（マジックってそういうものですからね）
+　何か起きているのか理解するために、化けの皮を剥ぎ取りましょう。（？？？）
 
 ### The Olden Days　昔々
 
 But first, let's take a look back at the good old days of 2011 when Meteor wasn't yet around. 
-しかしはじめに（？？？）、 Meteorが存在しなかった2011年の古き良き時代を振り返ってみましょう。
 Let's say you're building a simple Rails app.
-例えば、あなたがRailsでアプリを作っていたとしましょう。
 When a user hits your site, the client (i.e. your browser) sends a request to your app, which is living on the server.
-ユーザーがサイトにやってくると、クライアントでは（つまり、あなたのブラウザーでは）、リクエストをサーバーにあるアプリに送ります。
+　しかしはじめに（？？？）、 Meteorが存在しなかった2011年の古き良き時代を振り返ってみましょう。
+　例えば、あなたがRailsでアプリを作っていたとしましょう。
+　ユーザーがサイトにやってくると、クライアントでは（つまり、あなたのブラウザーでは）、リクエストをサーバーにあるアプリに送ります。
 
 The app's first job is to figure out what data the user needs to see. 
-アプリの最初の仕事は、ユーザーが見る必要のあるデータが何であるか理解することです。
 This could be page 12 of search results, Mary's user profile information, Bob's 20 latest tweets, and so on.
-これはメアリーのユーザープロフィールの情報や、ボブの最近の20個の（？？？）ツイートといった、検索結果の１２ページであると考えられます（？？？）
 You can basically think of it as a bookstore clerk browsing through the aisles for the book you asked for.
-これは基本的にあなた要求した本を探すために、本屋の店員さんが通路を歩いて見て回ることのように考えることができます。
+　このアプリの最初の仕事はユーザーが見る必要のあるデータが何であるか理解することです。
+　これは検索結果の１２ページであったり、メアリーのユーザープロフィール情報や、ボブの最近の20個の（？？？）ツイートといったものかもしれません。
+　これは基本的にあなた要求した本を探すために、本屋の店員さんが通路を歩いて見て回ることのように考えることができます。
 
 Once the right data has been selected, the app's second job is translating that data into nice,
-正しいデータを選び出すと、アプリの２つ目の仕事はデータを　素晴らしく（？？？）人間が読むことのできるHTMLに変換することです。
 human-readable HTML (or JSON in the case of an API).
-（APIの場合はJSONに変換します。）
+　正しいデータを選び出したら、アプリの２つ目の仕事はデータを　
+　（nice？＝素晴らしく？）人間が読むことのできるHTMLに（translate？＝変換する？）ことです。
+　（APIの場合はJSONに変換します。）
 
 In the bookstore metaphor, that would be wrapping up the book you just bought and putting it in a nice bag. 
-本屋でのたとえ　、　購入した本を本をラッピングしてバックの中にしまうでしょう　。（？？？）
 This is the "View" part of the famous Model-View-Controller model.
-これが有名なModel-View-Controllerモデルでの"View"の部分です。
+　本屋でたとえると、購入した本を本をラッピングしてバックの中にしまうでしょう。（？？？）
+　これが有名なModel-View-Controllerモデルでの"View"の部分です。
 
 Finally, the app takes that HTML code and sends it over to the browser.
-最終的に、アプリはHTMLコードを取ってブラウザーへ送信します。
 The app's job is done
-Railsで作られたアプリの仕事は終わりました。
 , and now that the whole thing is out of its virtual hands 
-今や全てのことは手から離れたので、
 it can just kick back with a beer while waiting for the next request.
-次のリクエストが来るまで待っている間にビールを飲んでくつろぐことができます。（？？？）
+　最終的に、アプリはHTMLコードを取ってブラウザーへ送信します。
+　これでRailsで作られたアプリの仕事は終わってすべてのことが手から離れたので、
+　次のリクエストが来るまで待っている間にビールを飲んでくつろぐことができます。（？？？）
 
-### The Meteor Way　
+### The Meteor Way　　Meteorのやり方
 
-Let's  what makes Meteor so special in comparison.
-Meteorがなぜ特別なのか比較して おさらいをしましょう（？？？）
-
+Let's review what makes Meteor so special in comparison.
 As we've seen, the key innovation of Meteor is that where a Rails app only lives on the server,
-これまで見てきたように、Meteorの鍵となるイノベーションは　Railsのアプリがサーバーでのみ動いている（？？？）ということです。
-a Meteor app also includes a client-side component that will run on the client (the browser).
-Meteorアプリは　クライアント（ブラウザー）でも動くクライアントサイドのコンポーネント（？？？）があります。　
+a Meteor app also includes a client-side  that will run on the client (the browser).
+　Meteorがなぜ特別なのか比較して おさらいをしましょう（？？？）
+　これまで見てきたように、Meteorの鍵となるイノベーションはRailsのアプリがサーバーでのみ動いているのに対して、
+　Meteorアプリはクライアント（ブラウザー）でも動くクライアントサイドのコンポーネント（？？？）があります。　
 
-<%= diagram "client-server", "Pushing a subset of the database to the client.", "pull-right" %>
+<%= diagram "client-server", "クライアントにデータベースの一部を（Push？＝プッシュ？）する。", "pull-right" %>
 
 This is like a store clerk who not only finds the right book for you, 
-これはまるで店員さんがあなたの欲しい本を見つけるだけでなく、家までついて来て夜中に読んでくれるようなものです。
 but also follows you home to read it to you at night (which we'll admit does sound a bit creepy).
-（ゾッとする話ですけどね。）
+　これはまるで本屋の店員さんがあなたの欲しい本を見つけるだけでなく、
+　家までついて来て夜中に読んでくれるようなものです。
+　（ゾッとする話ですけどね。）
 
 This architecture lets Meteor do many cool things, chief among them what Meteor calls database everywhere. 
-この構造はMeteorをクールなものにしています。Meteorがデータベースをどこからでも呼び出すという　（？？？）
 Simply put, Meteor will take a subset of your database and copy it to the client.
-簡単に言うと、 Meteorは　あなたのデータベースを取ってきて（？？？）、クライアントにコビーをします。
+　この構造はMeteorをクールなものにしています。Meteorがデータベースをどこからでも呼び出すという（chief among them？）
+　簡単に言うと、 Meteorは　あなたのデータベースの一部を取ってきて（？？？）、クライアントにコピーをします。
 
 This has two big implications: first, instead of sending HTML code to the client, 
-これは２つの大きな意味合いがあります。１つ目は、クライントにHTMLコードを送る代わりに、
 a Meteor app will send the actual, raw data and let the client deal with it (data on the wire). 
-Meteorアプリが 実際の生データを送って、クライアントが対処するようにします。（data on the wire）？？？
 Second, you'll be able to access that data instantaneously without having to wait for a round-trip to the server 
-２つ目は　サーバーへのラウンドトリップを待つ必要がなく、すぐにデータにアクセスできます。
 (latency compensation).
+An app's database can contain tens of thousands of documents, some of which might even be private or sensitive. 
+So we obviously shouldn't just mirror our whole database on the client, for security and scalability reasons.
+　アプリのデータベースはプライベートや機密データに至る何万ものドキュメントが入
+　これには２つの大きな意味合いがあります。１つ目は、クライントにHTMLコードを送る代わりに、
+　Meteorアプリが 実際の生データを送って、クライアントが対処するようにします。（data on the wire）？？？
+　２つ目は　サーバーへの往復を待つ必要がなく、すぐにデータにアクセスできます。(latency compensation)
 
 ### Publishing
-
-An app's database can contain tens of thousands of documents, some of which might even be private or sensitive. 
-アプリのデータベースはプライベートや機密データも含んだ何万ものドキュメントを保存しています。　
-So we obviously shouldn't just mirror our whole database on the client, for security and scalability reasons.
-そのため、セキュリティやスケーラビリティの観点からもクライント上でデータベースの全てを映し出すわけにはいきません。（？？？）
+っています。　
+　そのため、セキュリティやスケーラビリティの観点からもクライント上でデータベースのすべてを映し出すわけにはいきません。（？？？）
 
 So we'll need a way to tell Meteor which subset of data can be sent to the client, 
-　Meteor　 クライントに送るデータ　（？？？）　Meteorに命令する方法が必要です。
 and we'll accomplish this through a publication.
-私たちはpublicationを使ってこれを行います。（？？？）
+　どのデータをクライントに送るかMeteorに命令する方法が必要で、publicationがこの役目を果たします。（？？？）
 
 Let's go back to Microscope. Here are all of our app's posts sitting in the database:
-Microscopeにもどりましょう。　これがデータベースに入っているアプリの投稿の全てです。（？？？）
+　Microscopeにもどりましょう。　これがデータベースに入っているアプリの投稿のすべてです。（？？？）
 
 <%= diagram "collections-1", "データベースに保存されている全ての投稿。", "pull-center" %>
 
-Although that feature admittedly does not actually exist in Microscope, we'll imagine that some of our posts have been flagged for abusive language. 
-Microscopeにはそのような特徴はありませんが、 罵り言葉にフラグを立てることを想像します。（？？？）
+Although that feature admittedly does not actually exist in Microscope, 
+we'll imagine that some of our posts have been flagged for abusive language. 
 Although we want to keep them in our database, they should not be made available to users (i.e. sent to a client).
-データベースで保存したいのですが、（？？？）
+　Microscopeにはそのような機能はないのですが、罵詈雑言にフラグを立てることを想定します。（？？？）
+　データベースで保存したいのですが、ユーザーが使えないようにすべきでしょう。（すなわち、クライアントに送った）（？？？）
 
 Our first task will be telling Meteor what data we do want to send to the client.
-最初のタスクは　クライントにどんなデータを送りたいのかMeteorに指示を与えることです。
 We'll tell Meteor we only want to publish unflagged posts:
-　　　フラグが立っていない投稿だけをpublishしたいということをMeteorに指示します。　
+　私たちの最初のタスクは　クライントにどんなデータを送りたいのかMeteorに指示を与えることです。
+　フラグが立っていない投稿だけをpublishしたいということをMeteorに指示します。　
 
 <%= diagram "collections-2", "フラグが立っている投稿を除外する", "pull-center" %>
 
 Here's' the corresponding code, which would reside on the server:
-これが対応するコードで、サーバー内にあります。
+　これが対応するコードで、サーバー内にあります。
 
 ~~~js
 // on the server
@@ -130,50 +130,51 @@ Meteor.publish('posts', function() {
 ~~~
 
 This ensures there is no possible way that a client will be able to access a flagged post.
-こうすることで、クライントはフラグのたった投稿にアクセスできることはありません。
 This is exactly how you'd make a Meteor app secure: 
-これがMeteorアプリをセキュアにする方法です。
 just ensure you're only publishing data you want the current client to have access to.
-単にクライアントにアクセスしてほしいデータをpublishするだけです。
+　こうすることで、クライントはフラグを立てた投稿にアクセスできないようにします。
+　まさにこれがMeteorアプリをセキュアにする方法です：
+　単にクライアントにアクセスしてほしいデータをpublishするだけです。
 
 <% note do %>
 
 ### DDP
 
 Fundamentally, you can think of the publication/subscription system as a funnel that transfers data
-基本的に、publication/subscriptionシステムは
 from a server-side (source) collection to a client-side (target) collection.
-サーバーサイドのコレクション（源）をクライアントサイドのコレクション（的）に移動させるじょうごのようなものと考えることができます。（？？？）
+　基本的に、publication/subscriptionシステムについては
+　サーバーサイドのコレクション（源）をクライアントサイドのコレクション（target？＝目的地？）に移動させるじょうごのようなものだと考えることができます。（？？？）
 
 The protocol that is spoken over that funnel is called DDP (which stands for Distributed Data Protocol). 
-　じょうごに（？？？）プロトコルはDDPと呼ばれます。（ Distributed Data Protocolといいます。）
 To learn more about DDP, you can watch this talk from The Real-time Conference by Matt DeBergalis (one of the founders of Meteor), 
-DDPについてさらに学習するには、　リアルタイムカンファレンスでの Matt DeBergalis（Meteor発起人の一人）の講演を見ることができます。
 or this screencast by Chris Mather that walks you through this concept in a little more detail.
- もしくはChris Matherによる 動画で もう少し詳細にこのコンセプトを理解することができます。（？？？）
+　じょうごに（spoken over ？）するプロトコルはDDPと呼ばれます。（ Distributed Data Protocolといいます。）
+　DDPについてさらに学習するには　リアルタイムカンファレンスでの Matt DeBergalis（Meteor発起人の一人）の講演を見ることができます。
+　あるいは、Cris Matherの動画でもう少し詳細にこのコンセプトを理解することができます。（？？？）
 
 <% end %>
 
 ### Subscribing
 
 Even though we want to make any non-flagged post available to clients, we can't just send thousands of posts at once.
-フラグの立っていない投稿をクライアントでも閲覧できるようにしたい場合、一度に幾千もの投稿を送ることはできません。（？？？）
 We need a way for clients to specify which subset of that data they need at any particular moment,
-　（？？？）
 and that's exactly where subscriptions come in.
-　　（？？？）
+　フラグの立っていない投稿をクライアントでも閲覧できるようにしたい場合、一度に幾千もの投稿を送ることはできません。（？？？）
+　私たちは　クライアントが　今にもユーザーが必要としているデータの部分はどこなのか　規定する方法が必要であり、（？？？） 
+　まさにその場所に subscriptionを入れます。（？？？）
 
-Any data you subscribe to will be mirrored on the client thanks to Minimongo, 
-subscribeしているデータはMongoDBのMeteorのクライアントサイドの実行である（？？？）Minimongoによってクライアントに映しだされています。
+Any data you subscribe to will be mirrored on the client thanks to Minimongo,
 Meteor's client-side implementation of MongoDB.
+　subscribeしているすべてのデータはMinimongoによってクライアントに反映されます。（？？？）
+　MinimongoはMeteorのクライアントサイドでMongoDBを実行します。（？？？）
 
 For example, let's say we're currently browsing Bob Smith's profile page, and only want to display his posts.
-たとえば、　ボブ・スミスのプロフィールのページを見ているとしましょう。そして、彼の投稿だけを表示したいとします。
+　たとえば、私たちはボブ・スミスのプロフィールのページを見ているとしましょう。そして、彼の投稿だけを表示したいとします。
 
 <%= diagram "collections-3", "ボブの投稿をサブスクライブすることはクライアントに反映される。", "pull-center" %>
 
 First, we would amend our publication to take a parameter:
-最初に、引数（？？？）を取ってくるパブリケーションを改良します。
+　最初に、（parameter？＝引数？）を取るパブリケーションを改良します。
 
 ~~~js
 // on the server
@@ -183,7 +184,7 @@ Meteor.publish('posts', function(author) {
 ~~~
 
 And we would then define that parameter when we subscribe to that publication in our app's client-side code:
-　アプリのクライアントサイドのコード内でパブリケーションにサブスクライブするときに引数を定義します。（？？？）
+　私たちはアプリのクライアントサイドのコード内でパブリケーションにサブスクライブするときに引数を定義します。（？？？）
 
 ~~~js
 // on the client
@@ -191,29 +192,30 @@ Meteor.subscribe('posts', 'bob-smith');
 ~~~
 
 This is how you make a Meteor app scalable client-side:
-これがMeteorアプリを　スケーラブル　クライアントサイド　にする方法です。（？？？）
 instead of subscribing to all available data, just pick and choose the parts that you currently need. 
-使用可能な全てのデータにサブスクライブする代わりに、　今必要な部分だけを選び出します。
 This way, you'll avoid overloading the browser's memory no matter how big your server-side database is.
-このように、どれだけサーバーサイドのデータベースが大きいとしても、　ブラウザーのメモリのオーバーロードを回避します。
+　これがMeteorアプリをスケーラブルなクライアントサイドにする方法です。（？？？）
+　使用可能なすべてのデータにサブスクライブする代わりに、今必要な部分だけを選び出します。
+　このように、どれだけサーバーサイドのデータベースが大きいとしても、　ブラウザーのメモリのオーバーロードを回避します。
 
 ### Finding
 
 Now Bob's posts happen to be spread across multiple categories 
-　ボブの投稿は多数のカテゴリーに散在しています。
-(for example: “JavaScript”, ”Ruby”, and ”Python”). 
-（たとえば、“JavaScript”や ”Ruby”、”Python”など）
+(for example: “JavaScript”, ”Ruby”, and ”Python”).
 Maybe we still want to load all of Bob's posts in memory, 
-記念にボブの全ての投稿を読み込みたい（？？？）かもしれませんが、
 but we only want to display those from the “JavaScript" category right now.
-今現在は“JavaScript"のカテゴリーでの投稿だけを表示したいとします。
 This is where “finding” comes in.
-ここから“finding”の登場です。
 
-<%= diagram "collections-4", "クライアントでドキュメントの一部分を選び出す。", "pull-center" %>
+　ボブの投稿は多数のカテゴリーに散在しています。
+　（たとえば、“JavaScript”や ”Ruby”、”Python”など）
+　記念にボブの全ての投稿を読み込みたい（？？？）かもしれませんが、
+　今現在は“JavaScriptしますテゴリーでの投稿だけを表示したいとします。
+　ここから“finding”が登場です。
+
+<%= diagram "collections-4", "クライアントでドキュメントの一部を選ぶ。", "pull-center" %>
 
 Just like we did on the server, we'll use the Posts.find() function to select a subset of our data:
-サーバーで行ったのと同様に、 データの一部分を選択するためPosts.find() 関数を使います。
+　サーバーで行ったのと同様に、 データの一部分を選択するためPosts.find() 関数を使います。
 
 ~~~js
 // on the client
@@ -225,53 +227,53 @@ Template.posts.helpers({
 ~~~
 
 Now that we have a good grasp of what role publications and subscriptions play,
-　パブリケーションとサブスクリプションの役割が何であるか把握しているので、
 let's dig in deeper and review a few common implementation patterns.
+　パブリケーションとサブスクリプションの役割が何であるか把握しているので、
 　より深く掘り下げて、共通する実行パターンを見なおしてみましょう。
 
 ### Autopublish
 
 If you create a Meteor project from scratch (i.e using meteor create), 
-　Meteorのプロジェクトをゼロから（つまり、meteor createを使って）作っているとしたら、
 it will automatically have the autopublish package enabled.
-　自動的にautopublishパッケージが有効となっています。
 As a starting point, let's talk about what that does exactly.
-出発点として、autopublisが実際に何をしているのか、お話しましょう。（？？？）
+　Meteorのプロジェクトをゼロから（つまり、meteor createを使って）作っているとしたら、
+　自動的にautopublishパッケージが有効となっています。
+　出発点として、autopublisが実際に何をしているのか、お話しましょう。（？？？）
 
 The goal of autopublish is to make it very easy to get started coding your Meteor app, 
-autopublishの目的は、Meteorアプリをコーディングし始めることを超簡単にすることです（？？？）
 and it does this by automatically mirroring all data from the server on the client,
-　　クライアント上でサーバーから全てのデータを自動的に反映します。
 thus taking care of publications and subscriptions for you.
-このようにして、パブリケーションとサブスクリプションを処理します。
+　autopublishの目的は、Meteorアプリをコーディングし始めることを超簡単にすることです（？？？）
+　クライアント上でサーバーから全てのデータを自動的に反映します。
+　このようにして、パブリケーションとサブスクリプションを処理します。
 
 <%= diagram "autopublish", "Autopublish", "pull-center"%>
 
 How does this work? Suppose you have a collection called 'posts' on the server.
-どうやって動いているのでしょうか？　サーバー上に'posts'という名前のコレクションがあるとします。
 Then autopublish will automatically send every post that 
-autopublishは自動的にMongoDB内のpostsコレクションを見つけた全ての投稿を　　
 it finds in the Mongo posts collection into a collection called 'posts' on the client (assuming there is one).
-　 　　　クライアント上で'posts'という名前のコレクションに送ります（１つだと想定します。（？？？））
+　どうやって動いているのでしょうか？　サーバー上に'posts'という名前のコレクションがあるとします。
+　autopublishは自動的にMongoDB内のpostsコレクションを見つけた全ての投稿を　　
+　クライアント上で'posts'という名前のコレクションに送ります（１つだと想定します。（？？？））
 
 So if you are using autopublish, you don't need to think about publications.
-そのため、autopublishを使うなら、パブリケーションについて考える必要はありません。
 Data is ubiquitous, and things are simple. 
-当然のことながら、データは誰からでもアクセスできます。
 Of course, there are obvious problems with having a complete copy of your app's database cached on every user's machine.
-もちろん、全てのユーザーマシンにキャッシュしたアプリのデータベースをまるごとコピーされてしまう問題があります。
+　そのため、autopublishを使うなら、パブリケーションについて考える必要はありません。
+　当然のことながら、データは誰からでもアクセスできます。
+　もちろん、全てのユーザーマシンにキャッシュしたアプリのデータベースをまるごとコピーされてしまう問題があります。
 
 For this reason, autopublish is only appropriate when you are starting out, and haven't yet thought about publications.
-この理由から、autopublishは開発をし始めたときだけに適しています。　その時はパブリケーションについて検討しないで良いからです。
+　こうした理由から、autopublishは開発を始めたときだけに適しています。　その時はまだパブリケーションについて検討しないで良いからです。
 
-### 全ての（？？？）コレクションをパブリッシュする。
+### すべての（？？？）コレクションをパブリッシュする。
 
 Once you remove autopublish, you'll quickly realize that all your data has vanished from the client. 
-autopublishを削除したら、　クライアントから全てのデータが消去されたことがすぐにわかるでしょう。
 An easy way to get it back is to simply duplicate what autopublish does, and publish a collection in its entirety.
-元に戻す簡単な方法は、autopublishが行うことを複製して（？？？）、コレクションを丸ごとパブリッシュすることです。
 For example:
-たとえば、
+　autopublishを削除したら、　クライアントから全てのデータが消去されたことがすぐにわかるでしょう。
+　元に戻す簡単な方法は、autopublishが行うことを複製して（？？？）、コレクションを丸ごとパブリッシュすることです。
+　たとえば、
 
 ~~~js 
 Meteor.publish('allPosts', function(){
@@ -282,16 +284,16 @@ Meteor.publish('allPosts', function(){
 <%= diagram "fullcollection", "全ての（？？？）コレクションをパブリッシュする", "pull-center" %>
 
 We're still publishing full collections, but at least we now have control over which collections we publish or not.
-全てのコレクションをパブリッシュしているわけですが、少なくともどのコレクションをパブリッシュするかを制御（？？？）しています。
 In this case, we're publishing the Posts collection but not Comments.
-この場合は、Commentコレクションではなく、Postsコレクションをパブリッシュしています。
+　すべてのコレクションをパブリッシュしているわけですが、少なくともどのコレクションをパブリッシュするかを制御（？？？）しています。
+　この場合は、Commentコレクションではなく、Postsコレクションをパブリッシュしています。
 
 ### コレクションの一部分をパブリッシュする
 
 The next level of control is publishing only part of a collection. 
-次の制御のレベルでは、コレクションの一部分だけをパブリッシュします。
 For example only the posts that belong to a certain author:
-たとえば、ある著者に関連したpostsだけなら、（？？？）
+　次の制御のレベルでは、コレクションの一部分だけをパブリッシュします。
+　たとえば、ある著者に関連したpostsだけなら、（？？？）
 
 ~~~js 
 Meteor.publish('somePosts', function(){
@@ -306,25 +308,25 @@ Meteor.publish('somePosts', function(){
 ### Behind The Scenes
 
 If you've read the Meteor publication documentation, 
-もしあなたがMeteorのパブリケーションに関する公式資料を（？？？）読んだら、
 you were perhaps overwhelmed by talk of using added() and ready() to set attributes of records on the client, 
-クライアント上で属性の記録を設定するための added() と ready()　を使った話に圧倒されるでしょう。（？？？）
 and struggled to square that with the Meteor apps that you've seen that never use those methods.
-一度も使わないこれらのメソッドを見るMeteorアプリと折り合いをつけるのに四苦八苦することでしょう。（？？？）
+　もしあなたがMeteorのパブリケーションに関する公式資料を（？？？）読んだら、
+　クライアント上で属性の記録を設定するための added() と ready()　を使った話に圧倒されるでしょう。（？？？）
+　一度も使わないこれらのメソッドを見るMeteorアプリと折り合いをつけるのに四苦八苦することでしょう。（？？？）
 　
 The reason is that Meteor provides a very important convenience:the _publishCursor() method.
-その理由はMeteorがとても重要な _publishCursor()メソッドを提供しているからです。（？？？）
 You've never seen that used either? Perhaps not directly,
-これまでにこれが使われているのを見ましたか？
 but if you return a cursor (i.e. Posts.find({'author':'Tom'})) in a publish function, 
-おそらく直接は見ていませんが、あなたはパブリッシュ関数でカーソルを返しています。（言い換えると、Posts.find({'author':'Tom'})）
 that's exactly what Meteor is using.
-まさにこれをMeteorが使っているのです。
+　その理由はMeteorがとても重要な _publishCursor()メソッドを提供しているからです。（？？？）
+　これまでにこれが使われているのを見ましたか？
+　おそらく直接は見ていませんが、あなたはパブリッシュ関数でカーソルを返しています。（言い換えると、Posts.find({'author':'Tom'})）
+　まさにこれをMeteorが使っているのです。
 
 When Meteor sees that the somePosts publication has returned a cursor, 
-MeteorがsomePostsパブリケーションがカーソルを返したところを見かけたら、
 it calls _publishCursor() to -- you guessed it -- publish that cursor automatically.
-お気づきのように、 _publishCursor()を呼び出して自動的にカーソルをパブリッシュします。（？？？）
+　MeteorがsomePostsパブリケーションがカーソルを返したところを見かけたら、
+　お気づきのように、 _publishCursor()を呼び出して自動的にカーソルをパブリッシュします。（？？？）
 
 Here's what _publishCursor() does:
  _publishCursor()が行うことは次のようなことです。
@@ -336,29 +338,29 @@ Whenever a document is added, removed or changed, it sends those changes down to
 (It uses .observe() on the cursor and .added(), .changed() and removed() to do this).
 
 -サーバーサイドのコレクションの名前をチェックします。 
-- カーソルからマッチするドキュメントを呼び出して、それを同じ名前のクライアントサイドのコレクションに送ります。（？？？）（これをするために.added()を使います。）
-- ドキュメントが加えられたり、削除されたり、変更したときは、クライアントサイドのコレクションにその変更をおくります。
+-カーソルからマッチするドキュメントを呼び出して、それを同じ名前のクライアントサイドのコレクションに送ります。（？？？）（これをするために.added()を使います。）
+-ドキュメントが加えられたり、削除されたり、変更したときは、クライアントサイドのコレクションにその変更をおくります。
 （カーソルでは.observe() を使い、.added()や.changed() 、 removed()を使います。）（？？？）
 
 So in the example above, 
 we are able to make sure that the user only has the posts that they are interested in 
 (the ones written by Tom) available to them in their client side cache.
-そのため、上記の例では、
-クライアントサイドのキャッシュでユーザーの興味のある投稿（トムが書いたもの）だけが見れるようにすることができます　（？？？）
+ そのため、上記の例では、
+ クライアントサイドのキャッシュでユーザーの興味のある投稿（トムが書いたもの）だけが見れるようにすることができます　（？？？）
 
 <% end %>
 
 ### Publishing Partial Properties
 
 We've seen how to only publish some of our posts,
-どのように投稿の一部分だけをパブリッシュするのか見てきました。
 but we can keep slicing thinner! Let's see how to only publish specific properties.
-（？？？）、　どのようにして特定のプロパティだけをパブリッシュするのか見ていきましょう。
+ どのように投稿の一部分だけをパブリッシュするのか見てきました。
+ （？？？）、　どのようにして特定のプロパティだけをパブリッシュするのか見ていきましょう。
 
 Just like before, 
-先ほどのように、
 we'll use find() to return a cursor, but this time we'll exclude certain fields:
- find()を使って、カーソルを返しますが、今回は特定の領域（？？？）を除外します。
+　先ほどのように、
+　find()を使って、カーソルを返しますが、今回は特定の領域（？？？）を除外します。
 
 ~~~js
 Meteor.publish('allPosts', function(){
@@ -371,9 +373,9 @@ Meteor.publish('allPosts', function(){
 <%= diagram "partialproperties", "プロパティの一部分だけをパブリッシュする", "pull-center" %>
 
 Of course, we can also combine both techniques. 
-もちろん、２つのテクニックを併用することもできます。
 For example, if we wanted to return all posts by Tom while leaving aside their dates, we would write:
-たとえば、　（？？？）　はさておいて、トムの全ての投稿を返したいときは、このように書きます。
+　もちろん、２つのテクニックを併用することもできます。
+　たとえば、　（？？？）　はさておいて、トムの全ての投稿を返したいときは、このように書きます。
 
 ~~~js
 Meteor.publish('allPosts', function(){
@@ -387,15 +389,15 @@ Meteor.publish('allPosts', function(){
 
 So we've seen how to go from publishing every property of all documents of every collection
 (with autopublish) to publishing only some properties of some documents of some collections.
-あらゆるコレクションの全てのドキュメントのあらゆるプロパティをパブリッシュすることから始まって（autopublishも含めて）、
-コレクションの一部のドキュメントの一部のプロパティの一部だけをパブリッシュする方法を見ていきました。
+　あらゆるコレクションの全てのドキュメントのあらゆるプロパティをパブリッシュすることから始まって（autopublishも含めて）、
+　コレクションの一部のドキュメントの一部のプロパティの一部だけをパブリッシュする方法を見ていきました。
 
 This covers the basics of what you can do with Meteor publications, 
-　どのようにMeteorでのパブリケーション処理の基本をカバーします。
 and these simple techniques should take care of the vast majority of use cases.
-このシンプルなテクニックは　大部分のユースケースで対処できます。
+　どのようにMeteorでのパブリケーション処理の基本をカバーします。
+　このシンプルなテクニックは　大部分のユースケースで対処できます。
 
 Sometimes, you'll need to go further by combining, linking, or merging publications. 
-時々、パブリケーションを　　融合させて　さらに踏み込む必要があります。（？？？）
 We will cover these in a later chapter!
-こうしたことは後の　章でカバーします。（？？？）
+　時々、パブリケーションを　　融合させて　さらに踏み込む必要があります。（？？？）
+　こうしたことは後の章でカバーしていきます。（？？？）
