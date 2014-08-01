@@ -283,15 +283,9 @@ If it helps, you can consider that defer() is like telling the browser to wait 1
 　（If it helps？）、defer()は　ブラウザーに　（ proceeding？）する前に、（1 millisecond？）待つように命令している　と考えることができます。
 
 
-What we're doing is telling Meteor to set seen to true 1 millisecond after the errors template has been rendered.
-But remember how we said that redirection happens instantly?
-This means that the redirection will kick in before the defer callback, 
-which will never have a chance to be executed.
 
-This is exactly what we want: 
-if it's not executed our error will not be marked as seen, 
-which means it won't be cleared, 
-which means it'll appear on the page our user is redirected to just like we wanted!
+
+
 
 Template.errors.helpers({
 
@@ -315,15 +309,26 @@ Template.error.rendered = function() {
 <%= commit "9-3", "Monitor which errors have been seen, and clear on routing." %>
 
 
+
 What we're doing is telling Meteor to set seen to true 1 millisecond after the errors template has been rendered.
 But remember how we said that redirection happens instantly?
 This means that the redirection will kick in before the defer callback, 
 which will never have a chance to be executed.
+　私たちがしていることは、errorsテンプレートがレンダリングされた後で
+　（set seen to true 1 millisecond ？＝seenを1秒間にtrueとセットする？）
+　ことを　Meteorに指示を出しています。
+　しかし、　私たちはどのように（redirection？）が瞬時に起こすと言ったのか（？？？）思い出して下さい。
+　これは　deferコールバックの後で（ redirection？）が（ kick in ）するということで、
+　実行されることはありません。
 
 This is exactly what we want: 
 if it's not executed our error will not be marked as seen, 
 which means it won't be cleared, 
 which means it'll appear on the page our user is redirected to just like we wanted!
+ 　これはまさに私たちが望んだことです。
+　（it？）が実行されない場合、エラーは（ seen？）とマークされません。
+　これは（it？）がクリアされないということで、
+　ユーザーがリダイレクトされたページに現れる　　私たちが望んでいたように　（？？？）
 
 <% note do %>
 
@@ -333,8 +338,12 @@ which means it'll appear on the page our user is redirected to just like we want
 The rendered callback triggers once our template has been rendered in the browser. 
 Inside the callback, this refers to the current template instance, 
 and this.data lets us access the data of the object that is currently being rendered (in our case, an error).
-
+　レンダリングされたコールバックはブラウザーでレンダリングされたテンプレートを
+（ trigger？）します。
+　コールバックの中で、　this　は現在のテンプレートインスタンスを参照するので、
+　私たちは　this.data　で現在レンダリングされているオブジェクトのデータに　アクセスすることができます。　
 
 Whew! That was a lot of work for something users will hopefully never see!
+　ふう！　ユーザーが　見ないようにするのは　大仕事でしたね！
 
 <% end %>
