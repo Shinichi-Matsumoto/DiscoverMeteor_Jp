@@ -260,9 +260,11 @@ You should see something like this:
 
 ### Controlling access to notifications
 
-////
+Notifications are working well. However there's just a small problem: our notifications are public.
+　通知はうまく動いています。　しかし、少し問題があります：　この通知は（public？＝公開されている？）のです。
 
-////
+If you still have your second browser open, try running the following code in the browser console:
+　２つめのブラウザーを開いたままだとしたら、　ブラウザーコンソールで次のようなコードを動かしてみましょう。
 
 ~~~js
 ❯ Notifications.find().count();
@@ -270,15 +272,34 @@ You should see something like this:
 ~~~
 <%= caption "Browser console" %>
 
-////
+This new user (the one that commented) shouldn't have any notifications. 
+The notification they can see in the Notifications collection actually belongs to our original user.
+　コメントをされたこの新しいユーザーは　どんな通知も（ have？）するべきではありません。
+　ユーザーが　 Notifications コレクションで見ることができる通知は　（our original？）ユーザーに属しています。
 
-////
+Aside from potential privacy issues, 
+we simply can't afford to have every user's notifications loaded in every other user's browser. 
+On a big enough site,
+this could overload the browser's available memory and start causing serious performance problems.
+　潜在的なプライベートの問題はさておき、
+　私たちはすべてのユーザーがブラウザーで読み込まれるすべてのユーザーの通知を（have？＝持つ？）余裕はありません。　
+　十分に大きなサイトでは、
+　これは　ブラウザーが使用できるメモリをオーバーローンして、深刻なパフォーマンスの問題をもたらすことになります。
 
-////
+We solve this issue with publications. 
+We can use our publications to specify precisely which part of our collection we want to share with each browser.
+　この問題は publications で解決します。
+　各ブラウザーで共有させたいコレクションの部分を正確に規定するために、私たちはpublications を使います。
 
-////
+To accomplish this, we need to return a different cursor in our publication than Notifications.find().
+Namely, we want to return a cursor that corresponds to the current user's notifications.
+　これをするために、私たちはNotifications.find()よりも　publication で違ったカーソルを返す必要があります。（？？？）　
+　つまり、私たちは　現在のユーザーの通知に対応するカーソルを返したいのです。　
 
-////
+Doing so is straightforward enough, 
+as a publish function has the current user's _id available at this.userId:
+　そうすることは、十分に簡単です。
+　publish 関数はthis.userId で使うことができる現在のユーザーの _id を持つためです。　
 
 ~~~js
 Meteor.publish('notifications', function() {
@@ -289,7 +310,9 @@ Meteor.publish('notifications', function() {
 
 <%= commit "11-3", "Only sync notifications that are relevant to the user." %>
 
-////
+Now if we check in our two browser windows, we should see two different notifications collections:
+　私たちが　２つのブラウザーウィンドウをチェックすると、
+　２つの異なる（ notifications ？）コレクションを見ることができます。　
 
 ~~~js
 ❯ Notifications.find().count();
@@ -303,6 +326,8 @@ Meteor.publish('notifications', function() {
 ~~~
 <%= caption "Browser console (user 2)" %>
 
-////
+In fact, the list of Notifications should even change as you log in and out of the app. 
+This is because publications automatically re-publish whenever the user account changes.
+　実際には、アプリにログインしたりログアウトした時に、通知のリストが変化するべきです。　
 
-////
+それはユーザーアカウントが変化するたびに、 publications が自動的に再 publish  するためです。　
