@@ -7,17 +7,33 @@ contents: Add a notifications collection to notify users of other user's actions
 paragraphs: 25
 ---
 
-////
+Now that users can comment on each other's posts, it'd be good to let them know that a conversation has begun.
+　ユーザーは　お互いの投稿にコメントできるようになったので、　会話が始まったことを知らせると良いでしょう。　
 
-////
+To do so, we'll notify the post's owner that there's been a comment on their post, and provide them with a link to view that comment.
+　そのようにするために、投稿にコメントが付いたことを投稿者に知らせて、そのコメントを見るためのリンクを提供します。
 
-////
-
+This is the kind of feature where Meteor really shines:
+because Meteor is realtime by default, we'll be displaying those notifications instantly. 
+We don't need to wait for the user to refresh the page or check in any way, 
+we can simply pop new notifications up without ever writing any special code.
+　これは Meteor の機能がよく輝くところです：
+　Meteorはデフォルトでリアルタイムなので、そうした通知が瞬時に表示されます。
+　ユーザーがページを再読み込みしたり、多少なりともチェックしたりすることを私たちは待つ必要はありません。
+　特別なコードを書くことなく、新しい通知をポップアップできるからです。　
+　
 ### Creating notifications
 
-////
+We'll create a notification when someone comments on your posts.
+In the future, notifications could be extended to cover many other scenarios, 
+but for now this will be enough to keep users informed of what's going on.
+　投稿に誰かがコメントをした時に、通知を作っていきます。（？？？）
+　将来的には、通知を多くのシナリオをカバーするために拡張できますが、
+　今のところは　　ユーザーに　何が起きているか知らせる状態にすることで十分でしょう。
 
-////
+Let's create our Notifications collection, as well as a createCommentNotification function that will insert a matching notification for each new comment on one of your own posts:
+　では、Notificationsコレクションを作っていきましょう。
+　同様に、自分で作った投稿で（ for each new comment ？＝新しいコメントに？）マッチする通知を　挿入するcreateCommentNotification関数を作っていきます。
 
 ~~~js
 Notifications = new Meteor.Collection('notifications');
@@ -41,11 +57,26 @@ createCommentNotification = function(comment) {
 ~~~
 <%= caption "collections/notifications.js" %>
 
-////
+Just like posts or comments, this Notifications collection will be shared by both client and server. 
+As we need to update notifications once a user has seen them, 
+we also enable updates, ensuring as usual that we restrict update permissions to a user's own data.
+　（ posts や comments？）と同じように、Notificationsコレクションはクライアントとサーバーの両方で共有されます。
+　一度ユーザーが（them？）を見た時に、私たちは通知をアップデートする必要があるので、　アップデートをできるようにします。　いつものように、アップデート（ permission？）をユーザーの（own？）データにリダイレクトするようにします。
 
-////
+We've also created a simple function that looks at the post that the user is commenting on, discovers who should be notified from there, and inserts a new notification.
+　私たちは　ユーザーがコメントしている投稿を（looks at？＝調べる？）　シンプルな関数を作りました。　誰がそこから通知されるべきか見つけて、新しい通知を挿入します。
 
-////
+We are already creating comments in a server-side Method,
+so we can just augment that Method to call our function. 
+We'll replace return Comments.insert(comment); 
+by comment._id = Comments.insert(comment) 
+in order to save the _id of the newly created comment in a variable, 
+then call our createCommentNotification function:
+　私たちはすでに　サーバーサイドのメソッドでコメントを作っているので、
+　関数を呼び出すために、このメソッドを（augment？＝拡大させる？）ことができます。
+　変数で新しく作ったコメントの _id を保存するために、comment._id = Comments.insert(comment)によって、　return Comments.insert(comment)を
+（replace？＝取り替え？）ます。
+　それから、 createCommentNotification関数を呼び出します。
 
 ~~~js
 Comments = new Meteor.Collection('comments');
@@ -68,7 +99,8 @@ Meteor.methods({
 <%= caption "collections/comments.js" %>
 <%= highlight "8~14" %>
 
-////
+Let's also publish the notifications, and subscribe on the client:
+　通知も publish して、クライアントに subscribe  しましょう：
 
 ~~~js
 // [...]
@@ -95,7 +127,8 @@ Router.configure({
 
 ### Displaying Notifications
 
-////
+Now we can go ahead and add a list of notifications to the header.
+　これで私たちは前に進むことができるようになり、ヘッダーに通知のリストを追加できます。
 
 ~~~html
 <template name="header">
@@ -129,7 +162,8 @@ Router.configure({
 <%= caption "client/views/includes/header.html" %>
 <%= highlight "12~19" %>
 
-////
+And create the notifications and notification templates (they'll share a single notifications.html file):
+　そして、notificationsテンプレートとnotificationテンプレートをつくります。（この２つは１つのnotifications.htmlファイルを共同利用します。）
 
 ~~~html
 <template name="notifications">
@@ -161,9 +195,13 @@ Router.configure({
 ~~~
 <%= caption "client/views/notifications/notifications.html" %>
 
-////
-
-////
+We can see that the plan is for each notification to contain a link
+to the post that was commented on, 
+and the name of the user that commented on it.
+　私たちは　　コメントされた投稿へのリンクがあるそれぞれの通知のための（plan？）　とコメントされた投稿のユーザーの名前を見ることができます。（？？？？？？）
+　
+Next, we need to make sure we select the right list of notifications in our manager, and update the notifications as "read" when the user clicks on the link to which they point.
+　次に、私たちはマネージャーで、通知の正しいリストを選んで、ユーザーが（point？）するリンクをクリックした時に、通知を"read"としてアップデートする必要があります。
 
 ~~~js
 Template.notifications.helpers({
@@ -191,9 +229,32 @@ Template.notification.events({
 
 <%= commit "11-2", "Display notifications in the header." %>
 
-////
+You may think that the notifications are not too different from the errors, 
+and it's true that their structure is very similar. 
+There is one key difference though: 
+we've created a proper client-server synchronised collection. 
+This means that our notifications are persistent and, 
+as long as we use the same user account, 
+will exist across browser refreshes and different devices.
+　通知はエラーと違って、それほど難しくないと思うかもしれません。
+　確かにこの２つはとても似ている構造をしています。
+　しかし、１つだけキーとなる違いがあります：
+　私たちはクライアント-サーバー間を同期した適切なコレクションを作りました。
+　これは通知が永続的であるという意味であり、
+　私たちが同じユーザーアカウントを使う限り、
+　再読み込みするブラウザーでも違うデバイスでも（exist？＝使うことができます？）
 
-////
+Give it a try: 
+open up a second browser (let's say Firefox), 
+create a new user account, and comment on a post
+ that you've created with your main account (which you've left open in Chrome). 
+You should see something like this:
+　試しにやってみます：
+　２つめのブラウザーを開きます。（Firefoxだとしましょう）
+　新しいユーザーアカウントを作って、
+　あなたのメインアカウントで作った投稿にコメントします。
+　（Chromeを開いたままで）
+　すると、このようになっているはずです。
 
 <%= screenshot "11-1", "Displaying notifications." %>
 
