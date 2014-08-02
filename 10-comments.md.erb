@@ -8,9 +8,17 @@ contents: Display existing comments.|Add a comment posting form.|Learn how to lo
 paragraphs: 34
 ---
 
-////
+The goal of a social news site is to create a community of users, and it will be hard to do that 
+without providing a way for people to talk to each other. 
+So in this chapter, let's add comments!
+ ソーシャルニュースサイトの目的は　ユーザーのコミュニティを作ることであり、
+ ユーザー同士が話し合える方法を提供しなければ、ユーザーコミュニティを作ることは難しいでしょう。
+ この章では、コメントを加えていきます！（？？？）
 
-////
+We'll begin by creating a new collection to store comments in, 
+and adding some basic fixture data into that collection.
+　では、コメントを保存するための新しいコレクションを作って、
+　基本的な（fixture？）データをコレクションに入れることから始めていきましょう。
 
 ~~~js
 Comments = new Meteor.Collection('comments');
@@ -75,7 +83,8 @@ if (Posts.find().count() === 0) {
 ~~~
 <%= caption "server/fixtures.js" %>
 
-////
+Let's not forget to publish and subscribe to our new collection:
+　新しく作ったコレクションに（publish と subscribe？）することを忘れずに。
 
 ~~~js
 Meteor.publish('posts', function() {
@@ -103,15 +112,33 @@ Router.configure({
 
 <%= commit "10-1", "Added comments collection, pub/sub and fixtures." %>
 
-////
+Note that to trigger this fixture code, you'll need to meteor reset to clear your database.
+After resetting, don't forget to create a new account and log back in!
+　この（fixture ？）データを（trigger？＝トリガー）するために、データベースをクリアするmeteor resetを使う必要があります。
+　リセット後に、新しいアカウントと（log back in？）を作ることを忘れずに。
 
-////
+First, we created a couple of (completely fake) users, 
+inserting them into the database and using their ids to select them out of the database afterwards. 
+Then we added a comment for each user on the first post, linking the comment to the post (with postId), 
+and the user (with userId). 
+We also added a submission date and body to each comment, along with author, a denormalized field.
+　最初に、私たちは　完全に偽物の二人のユーザーを作りました。
+　その時には、データベースに二人のデータを挿入して、あとでデータベースからデータを選択するためにidを使っています。
+　それから私たちは　最初の投稿に　ユーザーがお互いにコメントを追加しました。（？？？）
+　この時は、postIdを使って投稿とuserIdを使ってユーザーへのコメントにリンクしています。
+　私たちは　　（a denormalized field？＝非正規化したフィールドである？）authorと一緒に
+　（submission date and body？）を各コメントに追加しました。　
 
-////
+Also, we augmented our router to wait on both the comments and the posts.
+　また、私たちは　ルーターにコメントと投稿を（wait on？＝待つ？）ように　（augment？＝補強？）しました。
 
-### Displaying comments
+### Displaying comments　　コメントを表示する
 
-////
+It's all very well putting comments into the database, but we also need to show them on the discussion page. 
+Hopefully this process should be familiar to you by now, and you have an idea of the steps involved:
+　データベースにコメントを入れるのは良いのですが、私たちはディスカッションページにコメントを表示する必要があります。
+　そろそろこのプロセスに慣れてきているころでしょうか。
+　というのも、あなたはこのステップに関連したアイデアをすでに持っているからです。（？？？）
 
 ~~~html
 <template name="postPage">
@@ -137,9 +164,19 @@ Template.postPage.helpers({
 <%= caption "client/views/posts/post_page.js" %>
 <%= highlight "2~4" %>
 
-////
-
-////
+We put the {{#each comments}} block inside the post template, 
+so this is a post within the comments helper.
+To find the relevant comments, 
+we check those that are linked to that post via the postId attribute.
+　私たちは（ post？）テンプレート内に　{{#each comments}}ブロックを置いたので、
+　thisは　commentsヘルパー内の（post？）です。
+　関連するコメントを見つけるために、
+　私たちは　　postId属性を使って投稿にリンクされた（those？）を　チェックします。 
+　
+Given what we've learnt about helpers and Spacebars, rendering a comment is fairly straightforward.
+We'll create a new comments directory inside views to store all our comment information:
+　ヘルパーとSpacebarsを学習したことに（Given？＝比べると？）、コメントをレンダリングすることはかなり単純です。
+　すべてのコメントの情報を格納するために、私たちはviews内に新しくcomments ディレクトリを作りました。　　　
 
 ~~~html
 <template name="comment">
@@ -154,8 +191,12 @@ Template.postPage.helpers({
 ~~~
 <%= caption "client/views/comments/comment.html" %>
 
-////
-
+Let's set up a quick template helper to format our submitted date in a human-readable format 
+(unless you're one of those people who can understand UNIX timestamps and hexadecimal color codes fluently?)
+　（あなたがUNIX のタイムスタンプと16進数のカラーコードをやすやすと理解できる人間でない場合は、）
+　データが（submitted？）されたフォーマットに　人間が読むことができるフォーマットの（in？＝中で？）　（？？？）
+　テンプレートヘルパーをセットアップしましょう。
+　
 ~~~js
 Template.comment.helpers({
   submittedText: function() {
