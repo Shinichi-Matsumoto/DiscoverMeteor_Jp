@@ -420,8 +420,13 @@ This means that you'll now get loading times while browsing within the app,
 but it's an unavoidable downside unless you intend to front-load the entirety of your data set forever.
 　これは別の結果です：　アプリを初期化する時にデータをロードするかわりに、
 　今の私たちは　ルートにヒットした時はいつもで　（ it？）をロードしています。
+　これは　アプリ内を見ている間に（get loading times？）します、
+　しかし、　これはあなたが永遠にすべてのデータセットを（front-load？）するつもりでない限り、　
+　やむを得ない（downside？＝マイナス面？）です。
 
-////
+First, we'll stop preloading all comments in the configure block by removing Meteor.subscribe('comments'):
+　最初に、私たちは configureブロックで Meteor.subscribe('comments')を削除して　
+　コメントをあらかじめ読み込むことをストップします：
 
 ~~~js
 Router.map(function() {
@@ -443,7 +448,8 @@ Router.map(function() {
 <%= caption "lib/router.js" %>
 <%= highlight "7~9" %>
 
-////
+And we'll add a new route-level waitOn function:
+　それから、新たにルートレベルの waitOn 関数を追加します。
 
 ~~~js
 Meteor.publish('posts', function() {
@@ -459,17 +465,46 @@ Meteor.publish('comments', function(postId) {
 
 <%= commit "10-4", "Made a simple publication/subscription for comments." %>
 
-////
+You'll notice we're passing this.params._id as an argument to the subscription. 
+So let's use that new information to make sure we restrict our data set to comments belonging to the current post:
+　私たちは　this.params._idを　subscriptionへの引数として渡していることにお気づきかと思います。
+　そのため、　（ to make sure we restrict our data set to comments belonging to the current post？＝現在の投稿に帰属しているコメントにセットされたデータにリダイレクトするための？）新しい情報を　使いましょう。　
 
 <%= screenshot "10-3", "Our comments are gone!" %>
 
 ### Counting Comments
 
-////
+There's only one problem: when we return to the homepage, it claims that all our posts have 0 comments:
+　１つだけ問題があります：　ホームページに戻るときに、（it？）はすべての投稿でコメントは0だと言っています。
 
-////
+The reason for this will quickly become clear: 
+we only ever have at most one of our post's comments loaded, 
+so when we call Comments.find({postId: this._id}) in the commentsCount helper in the post_item manager, 
+Meteor can't find the necessary client-side data to provide us with a result.
+　この理由は　すぐに理解できます：
+　私たちは　（only ever have at most one of our post's comments loaded？＝
+　多くても読み込まれた投稿のコメントのひとつを持っているにすぎません？）
+　そのため、私たちは　post_itemマネージャー内のcommentsCountヘルパーで、
+　Comments.find({postId: this._id})を呼び出す時に、（？？？）
+　Meteor は結果を（provide？）するための必要なクライアントサイドデータを　見つけることができません。
 
-////
+The best way to deal with this is to denormalize the number of comments onto the post
+ (if you're not sure what that means don't worry, the next sidebar has got you covered!).
+ Although as we'll see, there's a minor addition of complexity in our code, 
+ the performance benefit we gain from not having to publish all the comments to display the post list is worth it.
+　この問題に対処する最も良い方法は、（onto the post？＝投稿に？）コメントの数を（denormalize？）することです。
+　（これが何を意味しているのか自信がなくでも、問題ありません。次の補足事項でカバーしますからね！）
+　　　（as we'll see？）、コードにちょっとだけ複雑なものが追加していますが、
+　　投稿リストを表示する上で、すべてのコメントにpublishする必要がなくなったことで
+　　私たちが得るパフォーマンスベネフィットには、それだけの価値があります。
+
+We'll achieve this by adding a commentsCount property to the post data structure. 
+To begin with, we update our post fixtures
+(and meteor reset to reload them -- don't forget to recreate your user account after):
+　私たちはpostデータ構造に commentsCountを追加することで　これをやり遂げます。（？？？）
+　はじめに、私たちは（ post fixtures？）をアップデートします。
+　（さらに、（them？）をリロードするためにmeteor resetをします。
+　後でユーザーアカウントを作り直すことを忘れずに。）：
 
 ~~~js
 var telescopeId = Posts.insert({
@@ -492,7 +527,8 @@ Posts.insert({
 ~~~
 <%= caption "server/fixtures.js" %>
 
-////
+Then, we make sure that all new posts start with 0 comments:
+　そうしたら、すべての新しい投稿が0コメントからスタートするようにします。（？？？）：　
 
 ~~~js
 // pick out the whitelisted keys
@@ -507,7 +543,10 @@ var postId = Posts.insert(post);
 ~~~
 <%= caption "collections/posts.js" %>
 
-////
+And then we update the relevant commentsCount 
+when we make a new comment using Mongo's $inc operator (which increments a numeric field by one):
+　それから、　MongoDBの $inc （operator ？＝演算子？）を使うことで新しいコメントを作る時に、
+　関係するcommentsCountアップデートします。（（ by one？）インクリメントで数値に関するフィールドです）（？？？）：　
 
 ~~~js
 // update the post with the number of comments
@@ -517,8 +556,14 @@ return Comments.insert(comment);
 ~~~
 <%= caption "collections/comments.js "%>
 
-////
+Finally, we can just simply remove the commentsCount helper 
+from client/views/posts/post_item.js, as the field is now directly available on the post.
+　最後に、（ the field？）は今、投稿から直接使うことができるので、
+　client/views/posts/post_item.jsから　commentsCountヘルパーを削除するだけとなります。　
 
 <%= commit "10-5", "Denormalized the number of comments into the post." %>
 
-////
+Now that users can talk to each other, it would be a shame if they missed out on new comments. 
+And what do you know, the next chapter will show you how to implement notifications to prevent just this!
+　これでユーザー同士で話合えるようになったので、ユーザーが新たにコメントするチャンスを逃したら、
+　（it would be a shame？＝悔しくなることでしょう？）！
