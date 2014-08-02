@@ -206,7 +206,8 @@ Template.comment.helpers({
 ~~~
 <%= caption "client/views/comments/comment.js" %>
 
-////
+Then, we'll show the number of comments on each post:
+　それから、それぞれの投稿にコメントの数を表示します。
 
 ~~~html
 <template name="postItem">
@@ -226,7 +227,8 @@ Template.comment.helpers({
 <%= caption "client/views/posts/post_item.html" %>
 <%= highlight "6,7" %>
 
-////
+And add the commentsCount helper to our postItem manager:
+　（And ？）postItemマネージャーに　commentsCount helperを追加します。
 
 ~~~js
 Template.postItem.helpers({
@@ -248,15 +250,20 @@ Template.postItem.helpers({
 
 <%= commit "10-2", "Display comments on `postPage`." %>
 
-////
+You should now be able to display our fixture comments and see something like this:
+　これで（fixture？）コメントが表示され、このようになっているはずです。
 
 <%= screenshot "10-1", "Displaying comments" %>
 
 ### Submitting Comments
 
-////
+Let's add a way for our users to create new comments.
+The process we'll follow will be pretty similar to how we've already allowed users to create new posts.
+　　ユーザーが　新しいコメント作るための方法を　追加します。
+　　私たちが（follow？）するプロセスは　　ユーザーが新しい投稿を作るようにした方法に　とても似ています。　
 
-////
+We'll start by adding a submit box at the bottom of each post:
+　私たちは　各投稿の下に（a submit box ？）を作ることから始めていきましょう。　
 
 ~~~html
 <template name="postPage">
@@ -278,7 +285,8 @@ Template.postItem.helpers({
 <%= caption "client/views/posts/post_page.html" %>
 <%= highlight "11~15" %>
 
-////
+And then create the comment form template:
+　それから　コメントフォームテンプレートを作ります。
 
 ~~~html
 <template name="commentSubmit">
@@ -301,7 +309,10 @@ Template.postItem.helpers({
 
 <%= screenshot "10-2", "The comment submit form" %>
 
-////
+To submit our comments,
+we call a comment Method in the commentSubmit manager that operates in a similar way to the postSubmit manager:
+　コメントを（submit？）するために、
+　　私たちはpostSubmitマネージャーと同じような方法でcommentSubmitマネージャー内でcommentメソッドを呼び出します。　　
 
 ~~~js
 Template.commentSubmit.events({
