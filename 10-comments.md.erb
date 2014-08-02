@@ -337,7 +337,12 @@ Template.commentSubmit.events({
 ~~~
 <%= caption "client/views/comments/comment_submit.js" %>
 
-////
+Just like we previously set up a post server-side Meteor Method, 
+we'll set up a comment Meteor Method to create our comments, 
+check that everything is legit, and finally insert the new comment into the comments collection.
+　以前　 postサーバーサイドMeteorメソッドをセットアップしたように、
+　コメントを作るためにcomment Meteor メソッドをセットアップして、
+　すべてが（legit？）かチェックして、最後に　新しいコメントを（comments？）コレクションに挿入します。
 
 ~~~js
 Comments = new Meteor.Collection('comments');
@@ -371,19 +376,50 @@ Meteor.methods({
 
 <%= commit "10-3", "Created a form to submit comments." %>
 
-////
+This is not doing anything too fancy, just checking that the user is logged in,
+that the comment has a body, and that it's linked to a post.
+　これは（fancy？＝意匠を凝らした？）ことは何もしていません。
+　ただユーザーがログインしているか、コメントに（body？＝中身？）があるか、
+　（it？）が投稿にリンクされているかチェックしています。
 
 ### Controlling the Comments Subscription
 
-////
+As things stand, we are publishing all comments across all posts to all connected clients. 
+That seems a little wasteful. 
+After all, we're only actually using a small subset of this data at any given time.
+So let's improve our publication and subscription to control exactly which comments are published.
+　今のところ、私たちは　すべてのコメントを（across？）するすべての投稿に publishしています。
+　これは　ちょっと　無駄が多いように見えます。
+　結局、　私たちは　どんなときでも　（ this data？）の小さな部分を使っているだけです。
+　どのコメントをpublishさせるかコントロールするためにpublication と subscription を改善していきましょう。　　
 
-////
+If we think about it, the only time we need to subscribe to our comments publication is 
+when a user accesses a post's individual page, 
+and we only need to load the subset of comments related to that particular post.
+　この点を考えると、　comments publicationにsubscribeする必要のある時というのは、
+　ユーザーが投稿の個別ページにアクセスする時と、
+　私たちが　特定の投稿に関係するコメント部分を　読み込む必要のある時だけです。（？？？）
 
-////
+The first step will be changing the way we subscribe to comments. 
+Up to now,we've been subscribing at the router level,
+which means we load all our data once when the router is initialized.
+　最初のステップとして、私たちはコメントに　subscribeする　方法を変えていきます。
+　今まで私たちは　ルーターレベルで　subscribe していました。
+　つまり、私たちは　ルーターが初期化するときにすべてのデータを一度に読み込んでいます。（？？？）　
 
-////
+But we now want our subscription to depend on a path parameter, 
+and that parameter can obviously change at any point. 
+So we'll need to move our subscription code from the router level to the route level.
+　しかし、私たちは　subscriptionが　（path parameter？）に（depend on？）するようにしたいのです。
+　（parameter ？）は（at any point？＝いつでも？）はっきりと変えることができます。
+　そのため、私たちは　subscription を（）　ルーターレベルから　ルートレベルに 移行する必要があります。
 
-////
+This has another consequence: instead of loading our data when we initialize our app,
+we'll now be loading it whenever we hit our route. 
+This means that you'll now get loading times while browsing within the app,
+but it's an unavoidable downside unless you intend to front-load the entirety of your data set forever.
+　これは別の結果です：　アプリを初期化する時にデータをロードするかわりに、
+　今の私たちは　ルートにヒットした時はいつもで　（ it？）をロードしています。
 
 ////
 
