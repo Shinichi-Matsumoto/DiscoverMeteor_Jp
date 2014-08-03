@@ -267,12 +267,23 @@ Meteor.publish('posts', function(sort, limit) {
 Now that we're subscribing at the route level, 
 it would also make sense to set the data context in the same place. 
 We'll deviate a bit from our previous pattern 
-and make the data function return a JavaScript object instead of simply returning a cursor. 
+and make the data function return a JavaScript object
+instead of simply returning a cursor. 
 This lets us create a named data context, which we'll call posts.
+　これでルートレベルで  subscribe しているので、
+　同じ場所でデータコンテキストをセットする（ make sense？）します。
+　私たちは　以前のパターンからそれて、
+　シンプルにカーソルを返す代わりに
+　データ関数に　JavaScript オブジェクトを返すようにします。　
+　これで　（we'll call posts？）（named？）データコンテキストを作ることができます。
 
-What this means is simply that instead of being implicitely available as this inside the template, 
+What this means is simply that
+instead of being implicitely available as this inside the template, 
 our data context will be available at posts. 
 Apart from this small element, the code should feel familiar:
+　これは　単純に
+　テンプレートの中で（ this？）として　間接的に利用できる　代わりに、
+　データコンテキストが（ posts？）で利用できるということです。
 
 ~~~js
 Router.map(function() {
@@ -298,10 +309,18 @@ Router.map(function() {
 
 Now that we're setting the data context at the router level 
 we can safely get rid of the posts template helper inside the posts_list.js file. 
-And since we named our data context posts (the same name as the helper), 
+And since we named our data context posts
+ (the same name as the helper), 
 we don't even need to touch our postsList template!
+　ルートレベルで　データコンテキスト　　をセットしたので、
+　posts_list.jsファイル内の（posts？）テンプレートヘルパーを安全に取り除くことができます。　
+　私たちは　データコンテキスト（posts？）を（named ？＝指定した？）ので、
+　（(the same name as the helper),？）
+　私たちは　postsList テンプレートに触る必要がありません。　　
 
 Let's recap. Here's what our new and improved router.js code should look like:
+　（Let's recap？）
+　新しく改良した router.js コードはこのようになっています：
 
 ~~~js
 Router.configure({
@@ -340,40 +359,72 @@ We now have the ability to display an arbitrary number of posts
 on the homepage simply by changing the URL parameter.
 For example, try accessing http://localhost:3000/3. 
 You should now see something like this:
-
+　（give our brand？）　で新しいページネーションシステムを試してみましょう。
+　ホームページで　　URLの（ parameter？＝引数？）を変えることで
+　（arbitrary？）の投稿数を表示することができます。
+　例として、http://localhost:3000/3 にアクセスしてみましょう。
+　このように見えているはずです：
+　
 <%= screenshot "12-2", "Controlling the number of posts on the homepage. " %>
 
 <% note do %>
 
 ### Why Not Pages?
 
-Why are we using an “infinite pagination” approach instead of showing successive pages with 10 posts each, 
-like what Google does for search results? This is actually due to the real-time paradigm embraced by Meteor.
+Why are we using an “infinite pagination” approach 
+instead of showing successive pages with 10 posts each, 
+like what Google does for search results? 
+This is actually due to the real-time paradigm embraced by Meteor.
+　なぜ私たちはGoogleの検索結果ページのように
+　10個の投稿ごとに　次のページを表示するのではなく、
+　 “infinite pagination”アプローチを使っているのでしょうか。
 
-Let's imagine we are paginating our Posts collection using the Google results pagination pattern, 
+Let's imagine we are paginating our Posts collection 
+using the Google results pagination pattern, 
 and that we're currently on page 2, 
 which shows posts 10 to 20. 
 What happens if another users deletes any of the previous 10 posts?
-
+　
+　　Googleの検索結果ページネーションパターンを使って、Posts コレクションを（paginating？＝ページを作成する？）ことを想像しましょう。
+　そして、10番目から20番目の投稿を表示する2ページ目にいるとします。
+　もし他のユーザーが　（ any of the previous 10 posts？＝1ページ目の10個の投稿のどれかを）削除したとしたら、どうなるのでしょうか？
+　
 Since our app is real-time, our dataset would change. 
 Post 10 would now become post 9, and drop out of our view, 
 while post 11 would now be in range. 
 The end result would be that the user would suddenly see their posts change for no apparent reason!
+　このアプリはリアルタイムなので、データセットが変化します。
+　（Post 10 ？）は今、（ post 9？）になり、（drop out of our view？）します。
+　（post 11？）が（in range？＝範囲内？）となります。
+　最終的に、　ユーザーは
+　（no apparent reason？＝目に見えない理由で？）
+　　急に　投稿の変化を見ることになります。
 
 Even if we tolerated this UX quirk, 
 traditional pagination is also hard to implement for technical reasons.
+　たとえ私たちが　このUX の（quirk？＝特異な行動）を我慢したとしても、
+　従来のページネーションは　技術的な理由で　実行することが難しいです。
 
 Let's go back to our previous example. 
 We're publishing posts 10 to 20 from the Posts collection, 
 but how would you find those posts on the client? 
 You can't pick posts 10 to 20, 
 as there are only ten posts altogether in the client-side data set.
+　先ほどの例に戻りましょう。
+　私たちは　10 から 20 の投稿を Posts コレクションから publish しています。　
+　しかし、クライアントでのこうした投稿を、あなたはどのようにして見つけるのでしょうか？（？？？）
+　クライアントサイドのデータセット（in？＝の中に？）全体で10個の投稿しかないので、あなたは10から20の投稿を（pick？）することはできません。
 
 One solution would simply be to publish those 10 posts on the server, 
 and then do a Posts.find() client-side to pick up all published posts.
+　１つの解決策は　サーバーで10個の投稿を publish することで、
+　そのときに　 publish されたすべての投稿を取り出すためにPosts.find() クライアントサイドを行います。（？？？）
 
 This works if you only have a single subscription. 
 But what if you start to have more than one post subscription, as we'll do soon?
+　もしあなたが　１つだけの subscription を（have？＝する？）としたら、
+　これはうまくいきます。　
+　しかし、（as we'll do soon？）、もし　１つの投稿 subscriptionをより多く（have？）するとしたら、どうなるのでしょうか？
 
 Let's say one subscription asks for posts 10 to 20, 
 and another one for posts 30 to 40. 
