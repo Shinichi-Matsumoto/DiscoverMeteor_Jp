@@ -538,13 +538,22 @@ which will increment the number of posts currently displayed by 5 every time it'
 So if I'm currently on the URL http://localhost:3000/5, 
 clicking “load more” should bring me to http://localhost:3000/10. 
 If you've made it this far in the book, we trust you can handle a little arithmetic!
-　　
+　私たちがやりたいことは　簡単なことです。
+　投稿リストの下に“load more” ボタンを追加して　
+　クリックされて（by 5 every time？）ごとに、
+　現在表示されている投稿の数値をインクリメントします。
+　　つまり、 私が現在 http://localhost:3000/5 にいるとしたら、
+　　“load more”ボタンを押すと、私は　http://localhost:3000/10 に（bring？）します。
+　　ここまで読み進めた方だったら、ちょっとした算数ができるはずです！
 
 As before, we'll add our pagination logic in our route. 
 Remember when we explicitely named our data context rather than just use an anonymous cursor? 
 Well, there's no rule that says the data function can only pass cursors, 
 so we'll use the same technique to generate the URL of our “load more” button.
-
+　すでに述べたように、ルートに　ページネーションロジックを追加します。
+ 　無名のカーソルを使うのではく、はっきりとデータコンテキストを（named？）した時（Remember when？）？
+（Well）、　　data 関数だけがカーソルを渡すことができる　（says？）するルールはないので、“load more” ボタンのURLを作るための同じ技術を使います。（？？？）
+　
 ~~~js
 PostsListController = RouteController.extend({
   template: 'postsList',
@@ -578,15 +587,19 @@ Let's take a deeper look at this bit of router magic.
 Remember that the postsList route 
 (which will inherit from the PostsListController controller we're currently working on) 
 takes a postsLimit parameter.
+　このルーターマジックについて、さらに深く見ていきましょう。
+　 私たちが現在取り組んでいる PostsListController コントローラーから引き継がれたpostsList ルートがpostsLimit 引数をとることを思い出しましょう。
 
 So when we feed
  {postsLimit: this.limit() + this.increment} to this.route.path(), 
 we're telling the postsList route 
 to build its own path using that JavaScript object as data context.
-
-
+　{postsLimit: this.limit() + this.increment} to this.route.path()を入力した時、
+　私たちは データコンテキストとしての JavaScript のオブジェクトを使って、postsList ルートに　（ its own ？）パスを作るように命令しています。
+　
 In other words, this is exactly the same thing as using the {{pathFor 'postsList'}} Spacebars helper,
  except we're replacing the implicit this by our own custom-made data context.
+　言い換えると、これはまさに{{pathFor 'postsList'}} ヘルパーを使うことと同じことです。 ただし、（ custom-made？＝オーダーメイドの？）データコンテキストによって、（implicit ？）な this を取り替えるところは違います。
 
 We're taking that path and adding it to the data context for our template, 
 but only if there are more posts to display. The way we do that is a bit tricky.
