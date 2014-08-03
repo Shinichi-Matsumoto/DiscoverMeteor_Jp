@@ -430,8 +430,14 @@ Let's say one subscription asks for posts 10 to 20,
 and another one for posts 30 to 40. 
 You now have 20 posts loaded client-side in total, 
 with no way of knowing which ones belong to which subscription.
+　仮に　１つの subscription が posts 10から 20 に （ asks for？）
+　（and another one for posts 30 to 40. ？）
+　　今は　どの（ones？＝投稿？）がどの subscriptionに属しているか識別せずに
+　　全体で20個の投稿がクライアントサイドで読み込まれました。
+　
 
 For all these reasons, traditional pagination just doesn't make much sense when working with Meteor.
+　以上のような理由から、　Meteorと連携している時に従来のページネーションはあまり意味をなさないのです。
 
 <% end %>
 
@@ -442,12 +448,21 @@ You might have noticed that we're repeating the var limit = parseInt(this.params
 This is not the end of the world, 
 but since it's always better to follow the DRY (Don't Repeat Yourself) principle if you can, 
 let's see how we can refactor things a bit.
+　 var limit = parseInt(this.params.postsLimit) || 5;（ line？）を2度繰り返していることにお気づきかもしれません。
+　さらに、数字の “5” を ハードコーディングすることは　理想的ではありません。
+　これはそれほど深刻なことではありませんが、
+　　できればDRY (Don't Repeat Yourself) 原則に従うのがよいので、
+　どのように　（things？）をリファクタリングするのか少し見ていきましょう。
 
 We'll introduce a new aspect of Iron Router, Route Controllers. 
 A route controller is simply a way to group routing features together 
 in a nifty reusable package that any route can inherit from. 
 Right now we'll only use it for a single route, 
 but you'll see in the next chapter how this feature will come in handy.
+　ここで、Iron Router の新しい機能、 ルートコントローラーを紹介します。
+　ルートコントローラーはルーティング機能をどんなルートでも引き継ぐ（ nifty ？）で再利用可能なパッケージにまとめるためのシンプルな方法です。
+　ここでは１つのルートにルートコントローラーを使い、
+　次の章ではこの機能がいかに役立つのか見ていきます。
 
 ~~~js
 PostsListController = RouteController.extend({
@@ -482,16 +497,26 @@ Let's go through step.
 First, we're creating our controller by extending RouteController. 
 We then set the template property just like we did before, 
 and then a new increment property.
+　一つ一つ見ていきましょう。
+　最初に、RouteController を拡張してコントローラーを作ります。
+　それから以前行ったように、template プロパティをセットして、
+　その次に新たに increment プロパティをセットします。
 
 We then define a new limit function which will return the current limit, 
 and a findOptions function which will return an options object. 
 This might seem like an extra step, but we'll make use of it later on.
+　新たに（current limit？）を返す limit 関数と
+　（ options ？）オブジェクトを返す findOptions 関数を定義します。
+　これは余分なステップのように見えるかもしれませんが、後々これを利用します。
 
 Next, we define our waitOn and data functions just like before, 
 except they're now making use of our new findOptions function.
+　次に以前と同じように　 waitOn関数 と data 関数を定義します。
+　ただし、（ they？）が新しく利用している findOptions 関数は除きます。
 
 The last thing to do is to tell the postsList route to route to our brand new controller, 
 with the controller property.
+　最後にすることは、　postsList ルートに（ brand ？）新しいコントローラーを送るための指示をします。
 
 <%= commit "12-3", "Refactored postsLists route into a RouteController." %>
 
@@ -501,6 +526,11 @@ We have a working pagination, and our code is looking good.
 There's just one problem: 
 there's no way to actually use that pagination except by changing the URL manually. 
 This definitely doesn't make for great user experience, so let's get to work on fixing this.
+　ページネーションを動かして、コードは良さそうに見えます。（？？？）
+　１つだけ問題があります：
+　ページネーションを実際に使う方法は、URLを手動で変えるしかありません。
+　これではユーザーエクスペリエンスに全く役立ちません。
+　そのため、この修正に取り掛かりましょう。
 
 What we want to do is simple enough. 
 We'll add a “load more” button at the bottom of our posts list, 
@@ -508,6 +538,7 @@ which will increment the number of posts currently displayed by 5 every time it'
 So if I'm currently on the URL http://localhost:3000/5, 
 clicking “load more” should bring me to http://localhost:3000/10. 
 If you've made it this far in the book, we trust you can handle a little arithmetic!
+　　
 
 As before, we'll add our pagination logic in our route. 
 Remember when we explicitely named our data context rather than just use an anonymous cursor? 
