@@ -3,33 +3,33 @@ title: Getting Started
 slug: getting-started
 date: 0002/01/01
 number: 2
-contents: Meteor と Meteoriteをインストールする。|Meteorパッケージの５タイプを学ぶ。|Meteorアプリのファイル構造を設定する。
+contents: Meteor と Meteorite  をインストールする。|Meteor パッケージの５タイプを学ぶ。|Meteor アプリのファイル構造を設定する。
 paragraphs: 49
 ---
 
 First impressions are important, and Meteor's install process should be relatively painless. 
 In most cases, you'll be up and running in less than five minutes.
 　第一印象は重要です。
-　Meteorをインストールするプロセスは比較的痛みが少ないものです。（？？？）
+　Meteor をインストールするプロセスは比較的痛みを伴いません。（？？？）
 　ほとんどの場合、５分以内で動かすことができるようになります。（？？？）
 
 To begin with, we can install Meteor by opening a terminal window and typing:
-　最初に、ターミナルウィンドウを開いて次のようにタイピングしてMeteorをインストールできます。
+　最初に、ターミナルウィンドウを開いて次のようにタイピングすると Meteor をインストールできます。
 
 ~~~bash
 $ curl https://install.meteor.com | sh
 ~~~
 
 This will install the meteor executable onto your system and have you ready to use Meteor.
-　PCにmeteor実行ファイルをインストールしてMeteorを使う準備ができます。
+　 PC に meteor 実行ファイルをインストールすることで Meteor を使う準備ができます。
 
 <% note do %>
 
 ### *Not* Installing Meteor
 
 If you can't (or don't want to) install Meteor locally, we recommend checking out Nitrous.io.
-　もしローカルでMeteorをインストールできない（もしくはしたくない）場合、
-　私たちはNitrous.ioについて調べてみることをおすすめしています。
+　もしローカルで Meteor をインストールできない（もしくはしたくない）場合、
+　私たちは Nitrous.io について調べてみることをおすすめしています。
 
 Nitrous.io is a service that lets you run apps and edit their code right in your browser,
 and we've written a short guide to help you get set up.
@@ -49,17 +49,17 @@ Due to the fact that Meteor doesn't yet support third-party packages out of the 
 Tom Coleman (one of this book's authors) and some members of the community have created Meteorite, a wrapper for Meteor. 
 Meteorite also takes care of installing Meteor for you and hooking it together with any packages you might find.
 　Meteorはまだ（out of the box？＝残念ながら？）サードパーティーのパッケージをサポートしていないため、
-　本書の著者の一人であるトム・コールマンとコミュニティの数人のメンバーは MeteorのためのラッパーであるMeteoriteを作りました。
-　MeteoriteはMeteorをインストールしてどのようなパッケージにもMeteorとつなぎ合わせる処理をします。
+　本書の著者の一人であるトム・コールマンとコミュニティの数人のメンバーは Meteor のためのラッパーである Meteorite を作りました。
+　Meteorite は Meteor をインストールしてどのようなパッケージにも Meteor とつなぎ合わせる処理をします。
 
 Since we'll be relying on third-party packages for some of Microscope's features, let's install Meteorite.
-　Microscopeのいくつかの機能はサードパーティーのパッケージに依存しているため、Meteoriteをインストールしましょう。
+　Microscope のいくつかの機能はサードパーティーのパッケージに依存しているため、Meteorite をインストールしましょう。
 
 ### Installing Meteorite　Meteoriteをインストールする
 
 You'll need to ensure node and git are installed on your machine.
 Install them in the standard way for your OS, or try these links:
-　あなたのPCにnode.jsとgitをインストールする必要があります。
+　まず、あなたのPCに node.js と git をインストールする必要があります。
 　スタンダードな方法でインストールするには、こちらのリンクをクリックしてください。
  
 - [Node download site](http://nodejs.org/download/)
@@ -67,8 +67,8 @@ Install them in the standard way for your OS, or try these links:
 
 Second, let's install Meteorite. 
 As it's a npm executable (Node Packaged Module, Node's standard module format), we install it with:
-　次にMeteoriteをインストールしましょう。
-　Meteoriteはnpm（Node Packaged Module）の実行ファイルなので、次のようにしてインストールします。
+　次に Meteorite をインストールしましょう。
+　Meteorite は npm（Node Packaged Module）の実行ファイルなので、次のようにしてインストールします。
 
 ~~~bash
 $ npm install -g meteorite
@@ -79,23 +79,23 @@ $ npm install -g meteorite
 ### Permission errors?　パーミッションエラー？
 
 On some machines you may need root permission to install Meteorite. To avoid problems, make sure you use sudo -H:
-　あるPCではMeteoriteをインストールするためにroot権限が必要かもしれません。
-　この問題を回避するために、sudo -Hを使いましょう。
+　あるPCでは Meteorite をインストールするために root 権限が必要かもしれません。
+　この問題を回避するために、sudo -H を使いましょう。
 
 ~~~bash
 $ sudo -H npm install -g meteorite
 ~~~
 
 You can read more about this issue in the Meteorite documentation.
-　Meteorite documentationでこの問題について読むことができます。
+　Meteorite documentation でこの問題について読むことができます。
 
 <% end %>
 
 That's it! Meteorite will handle things from here.
-　その調子です！これでMeteoriteは物事を処理できるようになりました。
+　その調子です！これで Meteorite は物事を処理できるようになりました。
 
 Note: there is no Windows support for Meteorite yet, but you can take a look at our windows tutorial instead.
-　メモ：MeteoriteはまだWindowsへのサポートがありませんが、その代わりにwindows tutorialを読むことができます。
+　メモ：Meteorite はまだ Windows へのサポートがありませんが、その代わりに windows tutorial を読むことができます。
 
 <% note do %>
 
@@ -103,16 +103,16 @@ Note: there is no Windows support for Meteorite yet, but you can take a look at 
  
 Meteorite installs the mrt executable, which we'll use to install packages into our application.
 When we want to run our server, however, we use the meteor executable.
-　Meteoriteはmrt実行ファイルをインストールします。これはパッケージをアプリにインストールするために使います。
-　しかしサーバーを動かしたい時は、meteor実行ファイルを使います。
+　Meteorite は mrt 実行ファイルをインストールします。これはパッケージをアプリにインストールするために使います。
+　しかしサーバーを動かしたい時は、meteor 実行ファイルを使います。
 
 <% end %>
 
 ### Creating a Simple App
 
 Now that we have installed Meteorite, let's create an app. To do this, we use Meteorite's command line tool mrt:
-　これでMeteoriteをインストールしたので、アプリを作りましょう。
-　そのためにはMeteoriteのコマンドラインツールmrtを使います。
+　これで Meteorite をインストールしたので、アプリを作りましょう。
+　そのためには Meteorite のコマンドラインツール mrt を使います。
 
 ~~~bash
 $ mrt create microscope
@@ -120,8 +120,8 @@ $ mrt create microscope
 
 This command will download Meteor, and set up a basic, ready to use Meteor project for you.
 When it's done, you should see a directory, microscope/, containing the following:
-　このコマンドでMeteorをダウンロードして、（set up a basic？＝基本設定？）をして、Meteorプロジェクトを使えるようにします。
-　これが終わると、下記のものが入っているmicroscope/ディレクトリが見つかるはずです。　
+　このコマンドで Meteor をダウンロードして、（set up a basic？＝基本設定？）をして、Meteor プロジェクトを使えるようにします。
+　これが終わると、下記のものが入っている microscope/ ディレクトリが見つかるはずです。　
 
 ~~~bash
 microscope.css  
@@ -131,10 +131,10 @@ smart.json
 ~~~
 
 The app that Meteor has created for you is a simple boilerplate application demonstrating a few simple patterns.
-　Meteorで作られたこのアプリは　いくつかのパターンを実際に行っているシンプルな（boilerplate？）なアプリケーションです。
+　Meteor で作られたこのアプリはいくつかのパターンを実際に行っているシンプルな（boilerplate？）なアプリケーションです。
 
 Even though our app doesn't do much, we can still run it. To run the app, go back to your terminal and type:
-　このアプリは多くのことはできませんが、私たちは動かすことができます。ターミナルに戻って、このようにタイピングしましょう。
+　このアプリは多くのことはできませんが、動かすことならできます。ターミナルに戻って、このようにタイピングしましょう。
 
 ~~~bash
 $ cd microscope
@@ -148,23 +148,23 @@ Now point your browser to http://localhost:3000/
 
 <%= screenshot "2-1", "Meteor's Hello World." %>
 
-<%= commit "2-1", "基本的なMicroscopeプロジェクトを作りました。" %>
+<%= commit "2-1", "基本的な Microscope プロジェクトを作りました。" %>
 
 Congratulations! You've got your first Meteor app running. 
 By the way, to stop the app all you need to do is bring up the terminal tab where the app is running, and press ctrl+c.
-　おめでとう！初めてのMeteorアプリを動かすことができました。
-　ちなみに、アプリを停止するにはアプリが動いているターミナルのタブで、ctrl+cを入力する必要があります。
+　おめでとう！初めての Meteor アプリを動かすことができました。
+　ちなみに、アプリを停止するにはアプリが動いているターミナルのタブで、ctrl+c を入力する必要があります。
 
 ### Adding a Package　パッケージを入れる
 
 We will now use Meteorite to add a smart package that will let us include Bootstrap in our project:
-　私たちはこのプロジェクトでBootstrapなどの（smart package？＝スマートパッケージ）を入れるためにMeteoriteを使いましょう。　　 
+　私たちはこのプロジェクトで Bootstrap などの（smart package？＝スマートパッケージ）を入れるために Meteorite を使いましょう。　　 
 
 ~~~bash
 $ mrt add bootstrap
 ~~~
 
-<%= commit "2-2", "bootstrapパッケージを入れる。" %>
+<%= commit "2-2", "bootstrap パッケージを入れる。" %>
 
 <% note do %>
 
@@ -172,8 +172,8 @@ $ mrt add bootstrap
 
 When speaking about packages in the context of Meteor, it pays to be specific. 
 Meteor uses five basic types of packages:
-　Meteorの文脈でパッケージについて話す時は、（it pays to be specific？＝具体的に話すようにしましょう？）
-　というのは、Meteorは５つのタイプのパッケージを使うからです。
+　Meteor の文脈でパッケージについて話す時は、（it pays to be specific？＝具体的に話すようにしましょう？）
+　というのは、Meteor は５つのタイプのパッケージを使うからです。
 
 The Meteor core itself is split into different core packages.
 They are included with every Meteor app, and you will pretty much never need to worry about these.
@@ -182,46 +182,45 @@ Meteor smart packages are a group of about 37 packages (you can get the full lis
 that come bundled with Meteor and that you can optionally import into your own app.
 You can add them even when you're not using Meteorite, with meteor add packagename.
 
+Local packages are custom packages you can create yourself and put in the /packages directory.
+　You don't need Meteorite to use them either.
+
 Atmosphere smart packages are third-party Meteor packages listed on Atmosphere.
 Meteorite is needed to import and use them.
 
 NPM packages (Node Packaged Modules) are Node.js packages.
 Although they don't work out of the box with Meteor, they can be used by the previous types of packages.
 
-- Meteorのコアには様々なコアパッケージに分かれています。
-　（They ？＝Meteorのコアパッケージ）はすべてのMeteorアプリに入っているので、（ these？＝パッケージの問題？）について心配する必要はありません。
-- Meteorスマートパッケージは37個のパッケージが１つになったものです。（meteor listを使うことですべて見ることができます。）
-　Meteorとセットになっていて、アプリに任意でインポートすることができます。
-　Meteoriteを使っていなくても、meteor add packagenameと入力することで入れることができます。
-- Local packages are custom packages you can create yourself and put in the /packages directory.
-　You don't need Meteorite to use them either.
-　ローカルパッケージは自分で作って、/packagesディレクトリの中に入れることができる　カスタムパッケージです。
+- Meteor のコアには様々なコアパッケージに分かれています。
+　（They ？＝Meteorのコアパッケージ）はすべての Meteor アプリに入っているので、（ these？＝パッケージの問題？）について心配する必要はありません。
+- Meteor スマートパッケージは37個のパッケージが１つになったものです。（meteor listを使うことですべて見ることができます。）
+　Meteor とセットになっていて、アプリに任意でインポートすることができます。
+　Meteorite を使っていなくても、meteor add packagename と入力することで入れることができます。
+- ローカルパッケージは自分で作って、/packages ディレクトリの中に入れることができる　カスタムパッケージです。
 　これを使うときはMeteoriteを使う必要はありません。
-- AtmosphereスマートパッケージはAtmosphereにリストアップされているサードパーティーのMeteorパッケージです。
+- Atmosphere スマートパッケージは Atmosphere にリストアップされているサードパーティーの Meteor パッケージです。
 　これを使ってインポートするためには、Meteoriteが必要となります。
-- NPM packages (Node Packaged Modules) are Node.js packages.
-　Although they don't work out of the box with Meteor, they can be used by the previous types of packages.
-　NPMパッケージ(Node Packaged Modules)は Node.jsのパッケージです。
-　これは（out of the box？＝残念）なことにMeteorでは使うことができません。これは（previous types of packages？）に使われます。
+- NPMパッケージ(Node Packaged Modules)は Node.jsのパッケージです。
+　これは（out of the box？＝残念）なことに Meteor では使うことができません。これは（previous types of packages？）に使われます。
 <% end %>
 
-### The File Structure of a Meteor App　　Meteorアプリのファイル構造
+### The File Structure of a Meteor App　　Meteor アプリのファイル構造
 
 Before we begin coding, we must set up our project properly. 
 To ensure we have a clean build,
 open up the microscope directory and delete microscope.html, microscope.js, and microscope.css.
 　コーディングを始める前に、私たちは正しくプロジェクトを設定する必要があります。
-　きれいに作るために、microscopeディレクトリを開いて、microscope.htmlとmicroscope.jsとmicroscope.cssを削除します。
+　きれいに作るために、microscope ディレクトリを開いて、microscope.html と microscope.js と microscope.css を削除します。
 
 Next, create five root directories inside /microscope: /client, /server, /public, /lib, and /collections, 
 and we'll also create empty main.html and main.js files inside /client.
 Don't worry if this breaks the app for now, we'll start filling in these files in the next chapter.
-　次に、 /microscopeの中に５つのrootディレクトリを作ります：/clientと/serverと /publicと /libと/collectionsを作りましょう。
-　さらに/client内に空っぽのmain.html とmain.jsを作ります。
+　次に、 /microscope の中に５つの root ディレクトリを作ります：/clientと/server と /public と /lib と/collections を作りましょう。
+　さらに/client 内に空っぽの main.html と main.js を作ります。
 　これで今のアプリが壊れることに心配しないでください。次の章でこのファイルの中を書き始めます。
 
 We should mention that some of these directories are special. When it comes to files, Meteor has a few rules:
-　いつかのディレクトリは特別であるということについて述べておきましょう。ファイルに関して、Meteorにはいくつかのルールがあります。
+　いつかのディレクトリは特別であるということについて述べておきましょう。ファイルに関して、Meteor にはいくつかのルールがあります。
 
 Code in the /server directory only runs on the server.
 Code in the /client directory only runs on the client.
@@ -231,20 +230,20 @@ Any main.* file is loaded after everything else.
 Your static assets (fonts, images, etc.) go in the /public directory.
 
 - /server ディレクトリ内のコードはサーバーのみで動きます。
-- /clientディレクトリ内のコードはクライアントのみで動きます。
+- /client ディレクトリ内のコードはクライアントのみで動きます。
 - その他のすべてのものは、クライアントとサーバーの両方で動きます。
 - /lib 内のファイルは　他のコードの前に読み込まれます。
 - main.*ファイルはどんなものでも他のすべてのコードの後で読み込まれます。
-- フォントや画像などの静的なアセットは/publicディレクトリの中に入れます。
+- フォントや画像などの静的なアセットは/public ディレクトリの中に入れます。
 
 Note that although Meteor has these rules,
 it doesn't really force you to use any predefined file structure for your app if you don't want to. 
 So the structure we suggest is just our way of doing things, not a rule set in stone.
-　Meteorにはこうしたルールがありますが、（if you don't want to？＝このように作りたくない場合は？）、
+　Meteor にはこうしたルールがありますが、（if you don't want to？＝このように作りたくない場合は？）、
 　アプリで（any predefined？＝すで定義されている？）なファイル構造を使うことを強制しているわけではありません。
 
 We encourage you to check out the official Meteor docs if you want more details on this.
-　さらに詳細を知りたい場合は、公式のMeteor docs をチェックすることをおすすめします。　
+　さらに詳細を知りたい場合は、公式の Meteor docs をチェックすることをおすすめします。　
 
 <% note do %>
 
@@ -252,13 +251,13 @@ We encourage you to check out the official Meteor docs if you want more details 
 
 If you're coming to Meteor from other frameworks such as Ruby on Rails,
 you might be wondering if Meteor apps adopt the MVC (Model View Controller) pattern.
-　もしあなたがRuby on RailsのようなフレームワークからMeteorにやって来たとすると、
-　MeteorアプリがMVC (Model View Controller)パターンを採用しているか知りたいと思うことでしょう。
+　もしあなたが Ruby on Rails のようなフレームワークから Meteor にやって来たとすると、
+　Meteor アプリが MVC (Model View Controller)パターンを採用しているか知りたいと思うことでしょう。
 
 The short answer is no. Unlike Rails, Meteor doesn't impose any predefined structure to your app. 
 So in this book we'll simply lay out code in the way that makes the most sense to us, 
 without worrying too much about acronyms.
-　手短に答えると、MeteorはMVCではありません。Railsと違って、Meteorは定義済みの構造をアプリに（impose？）しません。
+　手短に答えると、Meteor は MVC ではありません。Rails と違って、Meteor は定義済みの構造をアプリに（impose？）しません。
 　そのため、本書では頭字語に悩まされずに私たちにとって最もわかりやすい方法でコードをレイアウトしています。　
 
 
@@ -270,9 +269,9 @@ OK, we lied. We don't actually need the public/ directory for the simple reason
 that Microscope doesn't use any static assets! But since most other Meteor apps are going to include 
 at least a couple images, 
 we thought it was important to cover it too.
-　オッケー、（we lied？）。　私たちはpublic/ ディレクトリの必要がありません。
-　というのは、Microscopeは静的なアセットを全く使わないからです！
-　しかし、ほとんどのMeteorアプリは画像などを含むので、私たちはその点もカバーすることが重要だと考えました。
+　オッケー、（we lied？）。　ここでは public/ ディレクトリは必要ではありません。
+　というのは、Microscope は静的なアセットを全く使わないからです！
+　しかし、ほとんどの Meteor アプリは画像などを含むので、私たちはその点もカバーすることが重要だと考えました。
 
 By the way, you might also notice a hidden .meteor directory.
 This is where Meteor stores its own code, and modifying things in there is usually a very bad idea.
@@ -280,12 +279,12 @@ In fact, you don't really ever need to look in this directory at all.
 The only exceptions to this are the .meteor/packages and .meteor/release files,
 which are respectively used to list your smart packages and the version of Meteor to use.
 When you add packages and change Meteor releases, it can be helpful to check the changes to these files.
-　ところで、あなたは隠れた.meteorディレクトリにお気づきかもしれません。
-　これは　Meteor自身のコードが保存されている場所で、この中のコードを変更することは（very bad idea？）です。
+　ところで、あなたは隠れた .meteor ディレクトリにお気づきかもしれません。
+　これは　Meteor 自身のコードが保存されている場所で、この中のコードを変更することは（very bad idea？）です。
 　実のところ、このディレクトリの中を見る必要は全くありません。
-　この例外は　.meteor/packages と.meteor/releaseファイルです。
-　これはスマートパッケージと使っているMeteorのバージョンを　一覧にするために使われます。　
-　あなたがパッケージを入れたり　eteorの（release？）を変える時は、こうしたファイルの変化をチェックする時に役立ちます。　
+　この例外は　.meteor/packages と.meteor/release ファイルです。
+　これはスマートパッケージと使っている Meteor のバージョンを　一覧にするために使われます。　
+　あなたがパッケージを入れたり Meteor の（release？）を変える時は、こうしたファイルの変化をチェックする時に役立ちます。　
 
 <% note do %>
 
@@ -293,13 +292,13 @@ When you add packages and change Meteor releases, it can be helpful to check the
 
 The only thing we'll say about the age-old underscore (my_variable) vs camelCase (myVariable) debate is 
 that it doesn't really matter which one you pick as long as you stick to it.
-　昔から続いているアンダースコア (my_variable) vsキャメルケース(myVariable)の議論について私たちが述べることは
+　昔から続いているアンダースコア (my_variable) とキャメルケース(myVariable)の議論について私たちが述べることは
 　あなたにこだわりがあるなら、どちらを使っても何も問題はないということです。
 
 In this book, we're using camelCase 
 because it's the usual JavaScript way of doing things (after all, it's JavaScript, not java_script!).
 　本書では、私たちはキャメルケースを使っていきます。
-　なぜなら、キャメルケースが通常のJavaScriptの（ doing things？）だからです。（結局はJavaScriptであって、java_scriptではないのです！）
+　なぜなら、キャメルケースが通常の JavaScript の（ doing things？）だからです。（結局は JavaScript であって、java_script ではないのです！）
 
 The only exceptions to this rule are file names, 
 which will use underscores (my_file.js), and CSS classes, which use hyphens (.my-class). 
@@ -316,13 +315,13 @@ while the CSS syntax itself already uses hyphens (font-family, text-align, etc.)
 
 This book is not about CSS. So to avoid slowing you down with styling details,
 we've decided to make the whole stylesheet available from the start, so you don't need to worry about it ever again.
-　この本はCSSについての本ではありません。そのため　スタイリングの細かいことで（slowing down？）することを避けるために、
+　この本は CSS についての本ではありません。そのためスタイリングの細かいことで（slowing down？）することを避けるために、
 　私たちは最初からすべてのスタイルシートを使えるように決めました。そのため、もうスタイリングについて悩む必要はありません。
 
 CSS automatically gets loaded and minified by Meteor, so unlike other static assets it goes into /client, not /public.
 Go ahead and create a client/stylesheets/ directory now, and put this style.css file inside it:
-　CSSはMeteorによって　自動的に　読み込まれて、縮小されます。そのため、他の静的なアセットとは違って、/publicではなく、/clientに入れます。
-　さあ、client/stylesheets/ディレクトリを作って　その中に　 style.cssファイルを入れていきましょう。
+　CSS は Meteor によって自動的に読み込まれて、縮小されます。そのため、他の静的なアセットとは違って、/public ではなく、/client に入れます。
+　さあ、client/stylesheets/ディレクトリを作って　その中に style.cssファイルを入れていきましょう：
 
 ~~~css
 .grid-block, .main, .post, .comments li, .comment-form {
@@ -426,14 +425,14 @@ body {
 
 <% note do %>
 
-### A Note on CoffeeScript　　CoffeeScriptについて
+### A Note on CoffeeScript　　CoffeeScript について
 
 In this book we'll be writing in pure JavaScript.
 But if you prefer CoffeeScript, Meteor has you covered. 
 Simply add the CoffeeScript package and you'll be good to go:
-　本書では、私たちたちは素のJavaScriptで記述してきます。
-　しかし、もしあなたがCoffeeScriptを嗜んでいるなら、Meteorでも使うことができます。
-　CoffeeScriptパッケージを入れて、mrt add coffeescriptと入力するだけです。（？？？）
+　本書では、私たちたちは素の JavaScript で記述してきます。
+　しかし、もしあなたが CoffeeScript を嗜んでいるなら、Meteor でも使うことができます。
+　CoffeeScript パッケージを入れて、mrt add coffeescript と入力するだけです。（？？？）
 
 mrt add coffeescript
 
