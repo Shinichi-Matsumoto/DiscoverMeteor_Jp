@@ -4,26 +4,26 @@ slug: deploying
 date: 0002/01/02
 number: 2.5
 sidebar: true
-contents: Meteor.comにデプロイする方法を学ぶ。|Modulusにデプロイする方法を学ぶ。|Meteor Upを使って自分のサーバーにデプロイする方法を学ぶ。
+contents: Meteor.com にデプロイする方法を学ぶ。|Modulus にデプロイする方法を学ぶ。|Meteor Up を使って自分のサーバーにデプロイする方法を学ぶ。
 ---
 
 Some people like to work quietly on a project until it's perfect, 
 while others can't wait to show the world as soon as possible.
 　完成するまで黙々とプロジェクトに取り組むことが好きな人もいれば、
-　（as soon as possible？）　世界に示すことを　待てない人もいます。　
+　できるだけ早く世界に公開したいと思う人もいます。
 
 If you're the first kind of person and would rather develop locally for now, feel free to skip this chapter. 
 On the other hand, if you'd rather take the time to learn how to deploy your Meteor app online, we've got you covered.
 　もしあなたが前者であり、今はローカルで開発をしていく場合は、この章を飛ばして読んでも大丈夫です。
-　一方で　Meteorアプリをオンラインでデプロイする方法を学ぶ時間がある場合は、( we've got you covered?)
+　一方で　Meteor アプリをオンラインでデプロイする方法を学ぶ時間がある場合は、( we've got you covered?)
 
 We will be learning how to deploy a Meteor app in few different ways.
 Feel free to use each of them at any stage of your development process,
 whether you're working on Microscope or any other Meteor app. 
 Let's get started!
-　私たちは　いくつかの方法で　Meteorアプリをデプロイする方法を　学びます。
+　私たちは Meteor アプリをデプロイするための方法を何種類か学びます。
 　　デプロイのプロセスの段階で　（？？？）
-  MicroscopeやそのほかのMeteorアプリに取り組　（？？？）。
+  Microscope やそのほかの Meteor アプリに取り組　（？？？）。
   さあ、始めましょう！
 
 <% note do %>
@@ -32,11 +32,12 @@ Let's get started!
 
 This is a sidebar chapter.
 Sidebars take a deeper look at more general Meteor topics independantly of the rest of the book.
-　これは補足事項の章です。
-　補足事項では、（ independantly of the rest of the book？＝通常の部分とは独立させて？）一般的なMeteorのトピックよりも深く見ていきます。
+　この章は補足事項です。
+　補足事項では、（ independantly of the rest of the book？＝通常の部分とは分けて？）
+　一般的なMeteorのトピックよりも深く見ていきます。
 
 So if you'd rather go on with building Microscope, you can safely skip it for now and come back to it later.
-　そのため、あなたがMicroscopeをどんどん作っていきたいという場合は、今は補足事項を飛ばして後で戻って読むことも可能です。
+　そのため、あなたが Microscope をどんどん作っていきたいという場合は、今は補足事項を飛ばして後で戻って読むことも可能です。
 
 <% end %>
 
@@ -45,12 +46,12 @@ So if you'd rather go on with building Microscope, you can safely skip it for no
 Deploying on a Meteor subdomain (i.e. http://myapp.meteor.com) is the easiest option, 
 and the first one we'll try. 
 This can be useful to showcase your app to others in its early days, or to quickly set up a staging server.
-Meteorサブドメイン(たとえば http://myapp.meteor.com)でデプロイすることは最も簡単な選択肢です。
-(???)
-これは（ in its early day？）にあなたのアプリを他の人に見せて　（ staging ？）すぐにサーバーを設定することに役立ちます。
+　Meteor サブドメイン(たとえば http://myapp.meteor.com )でデプロイすることは最も簡単な選択肢です。
+　そのため、この最初のデプロイ方法を試していきましょう。
+　これは（ in its early day？＝開発初期段階で？）あなたのアプリを他の人に見せて　（ staging ？）すぐにサーバーを設定することに役立ちます。
 
 Deploying on Meteor is pretty simple. Just open up your terminal, go to to your Meteor app's directory, and type:
-Meteorをデプロイすることは至ってシンプルです。ターミナルを開いて、Meteorアプリのディレクトリへ行って、次のようにタイピングするだけです。
+Meteorをデプロイすることは至ってシンプルです。ターミナルを開いて、Meteor アプリのディレクトリへ行って、次のようにタイピングするだけです。
 
 ~~~bash
 $ meteor deploy myapp.meteor.com
@@ -60,10 +61,10 @@ Of course, you'll have to take care to replace "myapp" with a name of your choic
 preferably one that isn't already in use.
 If this is your first time deploying an app, you'll be prompted to create a Meteor account.
 And if all goes well, after a few seconds you'll be able to access your app at http://myapp.meteor.com.
-　もちろん、"myapp"を（name of your choice？）と取り替えることに注意する必要があります。
+　もちろん、"myapp"を（name of your choice？＝好きな名前に？）変えることに注意する必要があります。
 　できれば、まだ使われていない名前を付けましょう。
-　もしこれが初めてのアプリのデプロイだとしたら、Meteorアカウントを作ることを（be prompted？）
-　すべてがうまくいくと、数秒後にhttp://myapp.meteor.comであなたのアプリにアクセスすることができるようになります。
+　もしこれが初めてのアプリのデプロイだとしたら、Meteor アカウントを作ることを（be prompted？）
+　すべてがうまくいくと、数秒後に http://myapp.meteor.com であなたのアプリにアクセスすることができるようになります。
 
 
 You can refer to the official documentation for more information 
@@ -89,35 +90,36 @@ $ meteor deploy myapp.meteor.com -p
 Modulus is a great option for deploying NodeJS apps.
 It's one of the few PaaS (platform-as-a-service) provider that officially support Meteor, 
 and there are already quite a few people running production Meteor apps on it.
-　ModulusはNode.jsアプリをデプロイする上で素晴らしいオプションです。
-　Modulusは公式でMeteorをサポートしているPaaS (platform-as-a-service)プロバイダで、
-　すでに多くの人がMeteorのアプリをModulusで動かしています。
+　Modulus は Node.js アプリをデプロイする上で素晴らしいオプションです。
+　Modulus は公式で Meteor をサポートしている PaaS (platform-as-a-service)プロバイダで、
+　すでに多くの人が Meteor のアプリを Modulus で動かしています。
 　
 <% note do %>
 
 ### Demeteorizer
 
 Modulus open-sourced a tool called demeteorizer which converts your Meteor app into a standard NodeJS app.
-　ModulusでMeteorアプリを（standard？）なNode.jsアプリに変換するオープンソースのツールに demeteorizerがあります。
+　ModulusでMeteorアプリを（standard？）なNode.jsアプリに変換するオープンソースのツールに demeteorizer があります。
 
 <% end %>
 
 Start by creating an account. To deploy our app on Modulus, we'll then need to install the Modulus command line tool:
-　アカウントを作ることから始めましょう。Modulusにアプリをデプロイするために、私たちは Modulusコマンドラインツールをインストールする必要があります。
+　アカウントを作ることから始めましょう。Modulus にアプリをデプロイするために、
+　私たちは Modulus コマンドラインツールをインストールする必要があります。
 
 ~~~bash
 $ npm install -g modulus
 ~~~
 
 And then authenticate with
-　それから証明確認をします。
+　それから認証を行います。
 
 ~~~bash
 $ modulus login
 ~~~
 
 We'll now create a Modulus project (note that you can also do this via Modulus' web dashboard):
-　今からModulusプロジェクトを作っていきます。（Modulusのウェブダッシュボードでも同じことができます。）
+　今から Modulus プロジェクトを作っていきます。（Modulus のウェブダッシュボードでも同じことができます。）
 
 ~~~bash
 $ modulus project create
@@ -126,14 +128,12 @@ $ modulus project create
 The next step will be creating a MongoDB database for our app.
 We can create a MongoDB database with Modulus itself, MongoHQ or with any other cloud MongoDB provider.
 　次はアプリのためのMongoDBのデータベースを作ります。
-  ModulusやMongoHQなどクラウドMongoDBプロバイダを使って、MongoDBデータベースを作ることができます。(???)
+  Modulus や MongoHQ などクラウド MongoDB プロバイダを使って、MongoDB データベースを作ることができます。(???)
 
 Once we've created our MongoDB database, we can get the MONGO_URL for our database from Modulus' web UI
 (got to Dashboard > Databases > Select your database > Administration),
 then use it to configure our app like so:
-　一度MongoDBデータベースを作ると、　M
-/
-odulusウェブUIから　MONGO_URLを得ることができます。
+　一度 MongoDB データベースを作ると、　ModulusウェブUIから　MONGO_URL を得ることができます。
 　(（got to？) Dashboard > Databases > Select your database > Administration)
 　それからこのように　アプリを設定をするために（use it？）します。
 
@@ -150,8 +150,8 @@ $ modulus deploy
 
 We've now successfully deployed our app to Modulus.
 Refer to the Modulus documentation for more information about accessing logs, custom domain setup, and SSL.
-　これでModulusにアプリをデプロイできました。
-　ログへのアクセスやカスタムドメインの設定やSSLといったより多くの情報はModulusドキュメンテーションを参照しましょう。　
+　これで Modulus にアプリをデプロイできました。
+　ログへのアクセスやカスタムドメインの設定や SSL といったより多くの情報は Modulus ドキュメンテーションを参照しましょう。　
 
 ### Meteor Up
 
@@ -162,34 +162,34 @@ The only thing is,
 deploying yourself is not that simple, especially if you're looking for production-quality deployment.
 　新しいクラウドソリューションは毎日のように現れていますが、
 　問題や制限も一緒に備えているものです。
-　現在、自分のサーバーにデプロイすることは（in production）なMeteorアプリケーションを置くベストな方法となっています。　
+　現在、自分のサーバーにデプロイすることは（in production）な Meteor アプリケーションを置くベストな方法となっています。　
 　唯一の問題は　自分のサーバーでデプロイすることはそれほど簡単ではないということです。
 　特に製品としてのクォリティのデプロイを（ looking for？）する場合は簡単ではありません。（？？？）
 
 Meteor Up (or mup for short) is another attempt at fixing that issue, with a command-line utility that takes care of setup and deployment for you. 
 So let's see how to deploy Microscope using Meteor Up.
 　Meteor Upはセットアップとデプロイを処理するコマンドライン（utility ？）で　この問題を修正しようとする試みです。
-　では、 Meteor Upを使ってMicroscopeをデプロイする方法を見ていきましょう。
+　では、 Meteor Up を使って Microscope をデプロイする方法を見ていきましょう。
 
 Before anything else, we'll need a server to push to.
 We recommend either Digital Ocean,which starts at $5 per month, or AWS, which provides Micro instances for free 
 (you'll quickly run into scaling problems, but if you're just looking to play around with Meteor Up it should be enough).
   何よりも先に、私たちは　（push to？）するサーバーが必要となります。
   私たちは　月に5ドルから始められるDigital Oceanか、無料でマイクロインスタンスを提供しているAWSのどちらかを推奨しています。
-  （すぐにスケーリングの問題に出くわしますが、Meteor Upで（play around with？）する場合は、これで十分です。）
+  （すぐにスケーリングの問題に出くわしますが、Meteor Up で（play around with？）する場合は、これで十分です。）
   
 
 Whichever service you choose, you should end up with three things: 
 your server's IP address,a login (usually root or ubuntu), and a password. 
 Keep those somewhere safe, we'll need them soon!
 　どのサービスを選んだとしても、（end up with three things？）です：
-　サーバーのIPアドレスとログイン（通常はroot や ubuntu）、パスワードです。
+　サーバーの IPアドレスとログイン（通常はroot や ubuntu）、パスワードです。
 　（Keep those somewhere safe？）して、すぐに必要になります！
 
 ### Initializing Meteor Up
 
 To start out, we'll need to install Meteor Up via npm as follows:
-　取り掛かるために、私たちは　次のように　npmを通じて　Meteor Upインストールする必要があります。
+　取り掛かるために、私たちは　次のように　npm を通じて　Meteor Upインストールする必要があります。
 　
 ~~~bash
 $ npm install -g mup
@@ -201,16 +201,16 @@ first, it's usually best to avoid including any private credentials in your Git 
 especially if you're working on a public codebase.
 　それから、（particular？）なデプロイのMeteor Upの設定を(hold?)する特別で分離したディレクトリを作ります。　（？？？）
 　分離したディレクトリを使う理由は2つあります：
-　１つは 特に（public codebase？）で取り組む場合に　Gitリポジトリで（private credential？）を含めることを
+　１つは 特に（public codebase？）で取り組む場合に　Git リポジトリで（private credential？）を含めることを
 　避ける上でベストです。（？？？）
 
 Second, by using multiple separate directories, we'll be able to manage multiple Meteor Up configurations in parallel.
 This will come in handy for deploying to production and staging instances, for example.
-  ２つは　（multiple separate directories？）を使うことで、同時にMeteor Upの設定を（manage multiple？）できます。
+  ２つは　（multiple separate directories？）を使うことで、同時にMeteor Up の設定を（manage multiple？）できます。
   これは　（？？？？？？）
 
 So let's create this new directory and use it to initialize a new Meteor Up project:
-　新しいディレクトリを作って、新しい Meteor Upプロジェクトを初期化するために使いましょう：
+　新しいディレクトリを作って、新しい Meteor Up プロジェクトを初期化するために使いましょう：
 
 ~~~bash
 $ mkdir ~/microscope-deploy
@@ -225,24 +225,24 @@ $ mup init
 A great way to make sure you and your team all use the same deployment settings 
 is to simply create your Meteor Up configuration folder inside your Dropbox, or any similar service.
 　あなたとあなたのチームが全く同じデプロイの設定を使う素晴らしい方法は
-　Dropboxなどのサービスの中に　 Meteor Up設定のフォルダを作ることです。
+　Dropbox などのサービスの中に　 Meteor Up 設定のフォルダを作ることです。
 
 <% end %>
 
 ### Meteor Up Configuration
 
 When initializing a new project, Meteor Up will create two files for you: mup.json and settings.json.
-　新しいプロジェクトを初期化する時、Meteor Upは２つのファイルを作ります：mup.json と settings.jsonです。
+　新しいプロジェクトを初期化する時、Meteor Upは２つのファイルを作ります：mup.json と settings.json です。
 
 mup.json will hold all our deployment-related settings,
 while settings.json will contain all app-related settings (OAuth tokens, analytics tokens, etc.).
 　mup.jsonは　デプロイに関連するすべての設定を（ hold？）します。
-　一方で、settings.jsonは　アプリに関連するすべての設定（(OAuthトークンや analyticsトークンなど）を含みます。
+　一方で、settings.json は　アプリに関連するすべての設定（(OAuthトークンや analyticsトークンなど）を含みます。
 
 The next step is to configure your mup.json file.
 Here is the default mup.json file generated by mup init, and all you have to do is fill in the blanks:
-　次のステップは mup.jsonファイルを設定することです。
-　これはmup initによって作られた初期設定のmup.jsonファイルで、やるべきことは空欄を埋めるだけです。
+　次のステップは mup.json ファイルを設定することです。
+　これはmup init によって作られた初期設定の mup.json ファイルで、やるべきことは空欄を埋めるだけです。
 
 ~~~js
 {
@@ -276,13 +276,13 @@ Let's walk through each of these settings.
 
 You'll notice that Meteor Up supports password based and private key (PEM) based authentication, 
 so it can be used with almost any cloud provider.
-　Meteor Upは　パスワードとプライベートキー（PEM）に基づいた認証であることに気づくことでしょう。
+　Meteor Up はパスワードとプライベートキー（PEM）に基づいた認証です。
 　そのため、これはどのようなクラウドプロバイダでも使うことができます。
 
 Important note: if you choose to use password-based authentication,
 make sure you've installed sshpass first (refer to this guide).
 　重要なポイント：もしパスワードベースの認証を使うとしたら、
-　まずは sshpassを最初にインストールしましょう。（このガイドを参照）
+　まずは sshpass を最初にインストールしましょう。（このガイドを参照）
 　
 
 **MongoDB Configuration**
@@ -291,14 +291,14 @@ The next step is to configure a MongoDB database for your app.
 We recommend using MongoHQ or any other cloud MongoDB provider,
 since they offer professional support and better management tools.
 　次のステップはアプリにMongoDBの設定をすることです。
-　私たちは　 MongoHQやそのほかのクラウドMongoDBプロバイダを使うことを推奨しています。
+　私たちは　 MongoHQ やそのほかのクラウド MongoDB プロバイダを使うことを推奨しています。
 　というのも、そうしたサービスはプロフェッショナルサポートなどより良いマネジメントツールを提供しているからです。
 
 If you've decided to use MongoHQ, set setupMongo as false and add the MONGO_URL environmental
 variable in mup.json's env block. 
 If you decided to host MongoDB with Meteor Up, just set setupMongo as true and Meteor Up will take care of the rest.
-　MongoHQを使うとしたら、setupMongoをfalsesとセットして、mup.jsonの envブロックに　MONGO_URL　環境変数　を（add？）します。
-　Meteor UpでMongoDBをホスティングするとしたら、setupMongoをtrueとセットして、 Meteor Up が残りを引き受けます。（？？？）
+　MongoHQ を使うとしたら、setupMongo を falses とセットして、mup.json の envブロックに　MONGO_URL　環境変数を（add？）します。
+　Meteor Up で MongoDB をホスティングするとしたら、setupMongo を true とセットして、 Meteor Up が残りを引き受けます。（？？？）
 
 **Meteor App Path**
 
@@ -307,8 +307,8 @@ we'll need to point Meteor Up back to our app using the app property.
 Just input your full local path,which you can get using the pwd command from the terminal 
 when located inside your app's directory.
 　 Meteor Upの設定は別々のディレクトリに（live in）しているので、
-　 私たちは　appプロバティを使って、　Meteor Upをアプリに　　（point  back to？）する必要があります。
-　 アプリディレクトリ内に置いた時に　ターミナルでpwdコマンドを使って（get？）する　（full local path？）を（input？）します。　
+　 私たちは　appプロバティを使って、　Meteor Up をアプリに　　（point  back to？）する必要があります。
+　 アプリディレクトリ内に置いた時に　ターミナルで pwdコマンドを使って（get？）する　（full local path？）を（input？）します。　
 
 **Environment Variables**
 
@@ -320,8 +320,8 @@ You can specify all of your app's environment variables
 
 Before we can deploy, we'll need to set up the server so it's ready to host Meteor apps.
 The magic of Meteor Up encapsulates this complex process in a single command!
-　デプロイの前に　Meteorのアプリを(ready to host?)なので 私たちは　サーバーをセットアップする必要があります。
-　Meteor Upの（magic？）はこの複雑なプロセスを１つのコマンドでカプセル化することです。
+　デプロイの前に　Meteor のアプリを(ready to host?)なので 私たちは　サーバーをセットアップする必要があります。
+　Meteor Up が魔法的なことは、この複雑なプロセスを１つのコマンドでカプセル化することです。
 
 ~~~bash
 $ mup setup
@@ -329,7 +329,7 @@ $ mup setup
 
 This will take few minutes depending on the server's performance and the network connectivity.
 After the setup is successful, we can finally deploy our app with:
-　これは　サーバーのパフォーマンスやネットワークの接続　によっては数分かかることがあります。
+　これはサーバーのパフォーマンスやネットワークの接続　によっては数分かかることがあります。
 　セットアップに成功すると、私たちはこのようにしてアプリをデプロイすることができます。
 
 ~~~bash
@@ -343,7 +343,7 @@ This will bundle the meteor app, and deploy to the server we just set up.
 
 Logs are pretty important and Meteor Up provides a very easy way to handle them 
 by emulating the tail -f command. Just type:
-　ログは　とても重要です　　Meteor Upは　tail -fコマンドをエミュレートすることで　ログを扱うためのとても簡単な方法を提供しています　
+　ログは　とても重要です。Meteor Upは　tail -fコマンドをエミュレートすることで　ログを扱うためのとても簡単な方法を提供しています　
 　このようにタイピングするだけです。
 　
 ~~~bash
@@ -352,12 +352,12 @@ $ mup logs -f
 
 This wraps up our overview of what Meteor Up can do.
 For more infomation, we suggest visiting Meteor Up's GitHub repository.
-　これは　Meteor Upができることを要約です。
-　より多くの情報に関しては、Meteor Upの GitHub リポジトリにアクセスすると良いでしょう。
+　これは Meteor Up ができることを要約です。
+　より多くの情報に関しては、Meteor Up の GitHub リポジトリにアクセスすると良いでしょう。
 
 These three ways of deploying Meteor apps should be enough for most use cases.
 Of course, we know some of you would prefer to be in complete control and set up their Meteor server from scratch.
 But that's a topic for another day… or maybe another book!
 　Meteorアプリをデプロイする３つの方法は　ほとんどのユースケースで十分役立つでしょう。
 　もちろん、　ゼロからMeteorサーバーを立ち上げて、（complete control？）を好む人もいると思いますが、
-　それは別の日に…、（or？）別の本のトピックにします！
+　それは別の日に…、（or？＝もしくは？）別の本のトピックにします！
