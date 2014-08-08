@@ -12,39 +12,39 @@ GitHub is a social repository for open-source projects based around the Git vers
 and its primary function is to make it easy to share code and collaborate on projects. 
 But it's also a great learning tool. 
 In this sidebar,we'll quickly go over a few ways you can use GitHub to follow along with Discover Meteor.
-　GitHubはGitというバージョン管理システムを基にした、オープンソースプロジェクト向けのソーシャルレポジトリです。（？？？）
-　GitHubの基本的な機能は、コードを共有してプロジェクトのコラボレーションをしやすくすることです。
-　また、GitHubは素晴らしい学習ツールでもあります。
-　この補足事項では、Discover Meteorを理解する上でのGitHubの使い方を学びます。
+　GitHub は Git というバージョン管理システムを基にした、オープンソースプロジェクト向けのソーシャルリポジトリです。（？？？）
+　GitHub の基本的な機能は、コードを共有してプロジェクトのコラボレーションをしやすくすることです。
+　また、GitHub は素晴らしい学習ツールでもあります。
+　この補足事項では、Discover Meteor を理解する上での GitHub の使い方を学びます。
 
 This sidebar assumes you're not that familiar with Git and GitHub.
 If you're already comfortable with both, feel free to skip on to the next chapter!
-　この補足事項では、GitやGitHubについて知らない読者の方を想定しています。
+　この補足事項では、Git や GitHub について知らない読者の方を想定しています。
 　もしあなたがどちらも使いこなせるのなら、この章まで飛ばしても大丈夫です。
 
 ### コミットをする
 
 The basic working block of a git repository is a commit. 
 You can think of a commit as a snapshot of your codebase's state at a given moment in time.
-　gitレポジトリの基本的なワーキングブロック（？？？）は、コミットです。
-　コミットとは、定められた時間内のコード（？？？）の状態のスナップショットと考えることができます。
+　git リポジトリの基本的なワーキングブロック（？？？）は、コミットです。
+　コミットとは、一定時間のコード（？？？）の状態のスナップショットと考えることができます。
 
 Instead of simply giving you the finished code for Microscope, we've taken these snapshots every step of the way,
 and you can see all of them online on GitHub.
-　Microscopeの完成したコードを（give？）　の代わりに
-　あらゆる面でスナップショットを撮って、オンラインのGitHub上で見ることができます。（？？？）
+　Microscope の完成したコードを（give？）　の代わりに
+　あらゆる面でスナップショットを撮って、オンラインの GitHub 上で見ることができます。（？？？）
 
 For example, this is what the last commit of the previous chapter looks like:
  たとえば、前章でのコミットは次のようになります：
 
-<%= screenshot "s3-1", "GitHubで表示されるGitコミット" %>
+<%= screenshot "s3-1", "GitHub で表示される Git コミット" %>
 
 What you see here is the “diff” (for “difference”) of the post_item.js file,
 in other words the changes introduced by this commit. 
 In this case, we created the post_item.js file from scratch, so all its contents are highlighted in green.
- ここで見ているのは、post_item.jsファイルの“diff”(“difference”)です。
+ ここで見ているのは、post_item.js ファイルの “diff”(“difference”) です。
  これはコミットによって取り込まれた変化です。
- この場合、ゼロからpost_item.jsファイルを作ったため、背景が緑色に表示されています。
+ この場合、ゼロから post_item.js ファイルを作ったため、背景が緑色に表示されています。
 
 Let's compare with an example from later on in the book:
  後々本書で出てくる例を見比べてみましょう
@@ -60,20 +60,20 @@ And of course, sometimes you're not adding or modifying lines of code, but delet
 <%= screenshot "s3-3", "コードの削除" %>
 
 So we've seen the first use of GitHub: seeing what's changed at a glance.
-　これがGitHubの最初の使い方です。何か変更されたのか、一目瞭然でしょう。
+　これが GitHub の最初の使い方です。何か変更されたのか、一目瞭然です。
 
 ### コミットされたコードを見る
 
 Git's commit view shows us the changes included in this commit,
 but sometimes you might want to look at files that haven't changed, 
 just to make sure what their code is supposed to look like at this stage of the process.
-　Gitのコミット表示は　このコミットに（include？）された変化を表示していますが、
+　Git のコミット表示は　このコミットに（include？）された変化を表示していますが、
 　変化していないファイルを見たいという時は、
 　コードが（at this stage of the process？）で（？？？）
 　
 Once again GitHub comes through for us. When you're on a commit page, click the Browse code button:
-　またしてもGitHubが（comes through？）します。
-　コミットページで、Browse codeボタンをクリックしましょう。
+　またしても GitHub が（comes through？）します。
+　コミットページで、Browse code ボタンをクリックしましょう。
 
 <%= screenshot "s3-5", "Browse codeボタン" %>
 
@@ -92,18 +92,19 @@ but you can compare with the “normal” master view and see at a glance that t
 ### Accessing A Commit Locally
 
 We've just seen how to browse a commit's entire code online on GitHub. 
-But what if you want to do the same thing locally? For example, you might want to run the app locally 
+But what if you want to do the same thing locally? 
+For example, you might want to run the app locally 
 at a specific commit to see how it's supposed to behave at this point in the process.
-　これまでオンラインのGitHubでは、どのようにコミットされたコードを見るのかを学習しました。
+　これまでオンラインの GitHub で、どのようにコミットされたコードを見るのか学習しました。
 　一方で、ローカル環境で同じことしたいときはどうしたらよいのでしょうか？
 　たとえば、ローカル環境でアプリを動かす　現時点で　その過程で　（？？？）
 
 To do this, we'll take our first steps (well, in this book at least) with the git command line utility.
 For starters, make sure you have Git installed. 
 Then clone (in other words, download a copy locally) the Microscope repository with:
-　これをするために、gitコマンドライン（utility？）を使って最初の一歩（そう、少なくとも本書では）を進みましょう。　
-　まず第一に、Gitがインストールされているか確認します。
-　それから次のようにしてMicroscopeリポジトリをクローン（言い換えると、ローカルにコピーをダウンロード）します。
+　これをするために、git コマンドライン（utility？）を使って本書での最初の一歩を進みましょう。　
+　まず第一に、Git がインストールされているか確認します。
+　それから次のようにして Microscope リポジトリをクローン（言い換えると、ローカルにコピーをダウンロード）します。
 　
 ~~~bash
 $ git clone git@github.com:DiscoverMeteor/Microscope.git github_microscope
@@ -112,12 +113,12 @@ $ git clone git@github.com:DiscoverMeteor/Microscope.git github_microscope
 That github_microscope at the end is simply the name of the local directory you'll be cloning the app into.
 Assuming you already have a pre-existing microscope directory,
 just pick any different name (it doesn't need to have the same name as the GitHub repo).
-　このgithub_microscopeは（at the end？）では、アプリをクローンして入れておくローカルディレクトリの名前です。　
-　すでにmicroscopeディレクトリが存在している（Assuming？＝場合は？）、
-　他の名前を（pick？＝選びます？）（GitHubリポジトリと同じ名前を使う必要はありません）。
+　この github_microscope は（at the end？）では、アプリをクローンして入れておくローカルディレクトリの名前です。　
+　すでに microscope ディレクトリが存在している（Assuming？＝場合は？）、
+　他の名前を（pick？＝選びます？）（GitHub リポジトリと同じ名前を使う必要はありません）。
 　
 Let's cd into the repository so that we can start using the git command line utility:
-　　gitコマンドライン（utility？）を使い始めるために、リポジトリ（into？）cdしましょう。
+　　git コマンドライン（utility？）を使い始めるために、リポジトリ（into？）cd しましょう。
 
 ~~~bash
 $ cd github_microscope
@@ -125,7 +126,7 @@ $ cd github_microscope
 
 Now when we cloned the repository from GitHub,
 we downloaded all the code of the app, which means we're looking at the code for the last ever commit.
-　私たちは　GitHubからリポジトリをクローンしたので、
+　私たちは　GitHub からリポジトリをクローンしたので、
 　アプリのすべてのコードをダウンロードしました。つまり、私たちは（ last ever？＝最後に？）コミットされたコードを見ています。
 
 Thankfully, there is a way to go back in time and “check out” a specific commit 
@@ -137,12 +138,20 @@ without affecting the other ones. Let's try it out:
 $ git checkout chapter3-1
 Note: checking out 'chapter3-1'.
 
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by performing another checkout.
-
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -b with the checkout command again. Example:
+You are in 'detached HEAD' state. 
+You can look around, make experimental changes and commit them, 
+and you can discard any commits you make in this state 
+without impacting any branches by performing another checkout.
+　あなたは'detached HEAD'状態になっています。
+　周りを見渡して、実験的に変化させて、（them？）をコミットします。
+　すると、この状態でどのようなコミットも
+　他の checkout をすることで、どのようなブランチにも 影響を与えずに、
+　捨てることができます。
+　
+If you want to create a new branch to retain commits you create, 
+you may do so (now or later) by using -b with the checkout command again. Example:
+　コミットを保持するために新しいブランチoこを作りたいという場合、
+　再び checkout コマンドで -b を使って行います。
 
   git checkout -b new_branch_name
 
@@ -152,14 +161,14 @@ HEAD is now at a004b56... Added basic posts list template and static data.
 Git informs us that we are in “detached HEAD” state, 
 which means that as far as Git is concerned, we can observe past commits but we can't modify them. 
 You can think of it as a wizard inspecting the past through a crystal ball.
-　私たちは　Gitによって（“detached HEAD”？）状態を知ることができます。
+　私たちは　Git によって（“detached HEAD”？）状態を知ることができます。
 　Gitが関係する限り、私たちは過去のコミットを見れるだけで、修正することはできません。
 　これは水晶の玉で過去を調べる魔法使いのようなものだと考えることができます。
 
 (Note that Git also has commands that let you change past commits. 
 This would be more like a time traveller going back in time and possibly stepping on a butterfly, 
 but it's outside the scope of this brief introduction.)
-　（Gitには　過去のコミットを変えるコマンドがあります。
+　（Git には　過去のコミットを変えるコマンドがあります。
 　　これは時間の流れをさかのぼって、蝶を踏みつけるタイムトラベラーのようなものです。
 　　しかし、この点はこの短い紹介の範囲を超えてしまいます。）
 
@@ -167,7 +176,7 @@ The reason why you were able to simply type chapter3-1 is
 that we've pre-tagged all of Microscope's commits with the correct chapter marker. 
 If this weren't the case, you'd need to first find out the commit's hash, or unique identifier.
 　なぜ（chapter3-1？）をタイピングできるのかというと、
-　私たちは（correct chapter marker？）でMicroscopeのすべてのコミットを（ pre-tagged？）したからです。
+　私たちは（correct chapter marker？）で Microscope のすべてのコミットを（ pre-tagged？）したからです。
 　（this weren't the case？）、最初にコミットのハッシュか（unique identifier？）を見つける必要があります。　
 
 Once again, GitHub makes our life easier.
@@ -189,8 +198,8 @@ HEAD is now at c7af59e... Augmented the postsList route to take a limit
 
 And finally, what if we want to stop looking into our magic crystal ball and come back to the present? 
 We tell Git that we want to check out the master branch:
-　最後に、水晶の玉を　見るのをやめたくなって、現在に戻っりたくなったらどうするのでしょうか？
-　私たちはGitに（master branch？）をチェックしたいと伝えます。
+　最後に、水晶の玉を見ることをやめたくなって、現在に戻りたくなったらどうするのでしょうか？
+　私たちは Git に（master branch？）をチェックしたいと伝えます。
 
 ~~~bash
 $ git checkout master
@@ -200,9 +209,9 @@ Note that you can also run the app with the meteor command at any point in the p
 even when in “detached HEAD” state.
 You might need to run a quick mrt update first if Meteor complains about missing packages,
 since package code is not included in Microscope's Git repo.
-　（“detached HEAD” ？）状態の時でも　どの時点でも　そのプロセスで　Meteorコマンドで　アプリを動かすこともできます。（？？？）
-　　Meteorが　（missing？）パッケージに文句を言ってきたら　mrt updateを動かす必要があるかもしれません。　
-　　というのも、パッケージコードは　 MicroscopeのGit repo に入っていないからです。
+　（“detached HEAD” ？）状態の時でも、そのプロセスで Meteor コマンドでアプリを動かすこともできます。（？？？）
+　　Meteorが　（missing？）パッケージに文句を言ってきたら　mrt update を動かす必要があるかもしれません。　
+　　というのも、パッケージコードは Microscope の Git repo に入っていないからです。
 
 ### Historical Perspective
 
@@ -212,23 +221,23 @@ You could just look at each commit one by one until you find the right one,
 but there's an easier way thanks to GitHub's History feature.
 　これはもうひとつのよくある状況です：　あなたがファイルを見ていると、今まで見たことのない変化に気づきました。
 　（The thing is,？＝要するに？）、あなたはいつファイルを変更させたか覚えていません。
-　（right one？）を見つけるまで、　一つ一つコミットを見ていく　（？？？）
-　しかし、　GitHubのHistory機能でもっと簡単に　する方法があります。
+　（right one？）を見つけるまで、一つ一つコミットを見ていく　（？？？）
+　しかし、　GitHub の History 機能でもっと簡単にする方法があります。
 
 First, access one of your repository's files on GitHub, then locate the “History” button:
-　最初に、GitHubでリポジトリの　ファイルにアクセスして、　“History”ボタンを見つけます。
+　最初に、GitHub でリポジトリの　ファイルにアクセスして、“History” ボタンを見つけます。
 
 <%= screenshot "s3-8", "GitHubの History ボタン." %>
 
 You now have a neat list of all the commits that affected this particular file:
 　このファイルに影響を与えたすべてのコミットを整ったリストで（have？）します。
 
-<%= screenshot "s3-9", "ファイルの historyを表示する。" %>
+<%= screenshot "s3-9", "ファイルの history を表示する。" %>
 
 ### The Blame Game
 
 To wrap things up, let's take a look at Blame:
-　締めくくりに、Blameを見ていきましょう。
+　締めくくりに、Blame を見ていきましょう。
 　
 <%= screenshot "s3-10", "GitHub's Blame button." %>
 
@@ -242,7 +251,7 @@ and in which commit (in other words, who's to blame when things aren't working a
 
 Now Git is a fairly complex tool – and so is GitHub –, so we can't hope to cover everything in a single chapter. 
 In fact, we've barely scratched the surface of what is possible with these tools.
-But hopefully, even that tiny bit will prove helpful as you follow along the rest of the book.
-　GitとGitHubはかなり複雑なツールです。そのため、１つの章ですべてのことをカバーすることは見込めません。
+But hope fully, even that tiny bit will prove helpful as you follow along the rest of the book.
+　Git と GitHub はかなり複雑なツールです。そのため、１つの章ですべてのことをカバーすることは見込めません。
 　実際に　（？？？）
-　しかし、本書の残りを理解していく上で　ほんのすこしでも　役立つとわかるでしょう。（？？？）
+　しかし、本書の残りを理解していく上で、ほんのすこしでも　役立つとわかるでしょう。（？？？）
