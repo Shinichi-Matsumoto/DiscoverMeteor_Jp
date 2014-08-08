@@ -3,22 +3,22 @@ title: Templates
 slug: templates
 date: 0003/01/01
 number: 3
-contents: Meteorのテンプレート言語、Spacebarsについて学びます。|３つのテンプレートを作ります。|Meteorマネージャーがどのように機能するのか学びます。|静的データで基本的な試作品を動かしてみます。
+contents: Meteor のテンプレート言語、Spacebars について学びます。|３つのテンプレートを作ります。|Meteor マネージャーがどのように機能するのか学びます。|静的データで基本的な試作品を動かしてみます。
 paragraphs: 46
 ---
 
 To ease into Meteor development, we'll adopt an outside-in approach. 
 In other words we'll build a "dumb" HTML/JavaScript outer shell first, 
 and then hook it up to our app's inner workings later on.
-　Meteorでの開発を簡単にするため、私たちはアウトサイドインアプローチを用いることになります。
-　要するに、私たちは最初に（"dumb"？）なHTMLとJavaScriptで外側の骨組みを作り、
+　Meteor での開発を簡単にするため、私たちはアウトサイドインアプローチを用いることになります。
+　要するに、私たちは最初に（"dumb"？）な HTML と JavaScript で外側の骨組みを作り、
 　それから後でアプリが内側で動くように繋いでいきます。
 
 This means that in this chapter we'll only concern ourselves with what's happening inside the /client directory.
-　つまり、この章では /clientディレクトリの内側で何が起きるのか懸念するだけとなります。
+　つまり、この章では /client ディレクトリの内側で何が起きるのかに関心を払うだけとなります。
 
 Let's create a new file named main.html inside our /client directory, and fill it with the following code:
-　では、/clientディレクトリの中に main.htmlという新しいファイルを作って、次のようなコードを書き込みましょう：
+　では、/client ディレクトリの中に main.html という新しいファイルを作って、次のようなコードを書き込みましょう：
 
 ~~~html
 <head>
@@ -44,23 +44,23 @@ As you can see it's all HTML except for a single {{> postsList}} tag,
 which is an insertion point for the postsList template as we'll soon see. 
 For now, let's create a couple more templates.
 　これは（main app template？）となります。
-　ご覧のように、{{> postsList}}タグ以外はすべてHTMLです。
-　{{> postsList}}タグは、これから見ていくpostsListテンプレートの挿入場所となります。
+　ご覧のように、{{> postsList}} タグ以外はすべて HTML です。
+　{{> postsList}} タグは、これから見ていく postsList テンプレートの挿入場所となります。
 　では、いくつかテンプレートを作っていきましょう。
 
-### Meteorテンプレート
+### Meteor テンプレート
 
 At its core, a social news site is composed of posts organized in lists,
 and that's exactly how we'll organize our templates.
-　根本的には、ソーシャルニュースサイトは一覧表となった投稿によって構成されています。
-　私たちはまさにそうなるようにテンプレートを作っていきす。
+　基本的に、ソーシャルニュースサイトは一覧表となった投稿によって構成されています。
+　私たちはまさにそのようにテンプレートを作っていきます。
 
 Let's create a /views directory inside /client. 
 This will be where we put all our templates, 
 and to keep things tidy we'll also create /posts inside /views just for our post-related templates.
-　では、/clientの中に/viewsディレクトリを作りましょう。
-　私たちは/viewsディレクトリの中にすべてのテンプレートを置くことになります。
-　/viewsディレクトリ内を整理したいので、投稿に関連したテンプレートのために、/views内に/postsを作ります。（？？？）
+　では、/client の中に /views ディレクトリを作りましょう。
+　私たちは /views ディレクトリの中にすべてのテンプレートを置くことになります。
+　/views ディレクトリ内を整理したいので、投稿に関連したテンプレートのために、/views 内に /posts を作ります。（？？？）
  
 
 <% note do %>
@@ -70,9 +70,9 @@ and to keep things tidy we'll also create /posts inside /views just for our post
 Meteor is great at finding files.
 No matter where you put your code in the /client directory, Meteor will find it and compile it properly.
 This means you never need to manually write include paths for JavaScript or CSS files.
-　Meteorはファイルを見つけることが得意です。
-　/clientディレクトリ内のどこにコードを入れようと、Meteorはコードを見つけてきて正確にコンパイルします。
-　つまり、JavaScriptやCSSへのインクルードパスを手で書く必要がありません。
+　Meteor はファイルを見つけることに優れています
+　/client ディレクトリ内のどこにコードを入れようと、Meteor はコードを見つけてきて正確にコンパイルします。
+　つまり、JavaScript や CSS へのインクルードパスを手で書く必要がありません。
 
 It also means you could very well put all your files in the same directory, 
 or even all your code in the same file.
@@ -80,7 +80,7 @@ But since Meteor will compile everything to a single minified file anyway,
 we'd rather keep things well-organized and use a cleaner file structure.
 　また、同じディレクトリにすべてのファイルを置くことができるということでもあります。
 　さらには、同じファイルにすべてのコードを置くこともできます。
-　しかし、Meteorはすべてのコードを小さくした１つのファイルにコンパイルしてしまうので、
+　しかし、Meteor はすべてのコードを小さくした１つのファイルにコンパイルしてしまうので、
 　ファイル内をきちんと整理して、きれいなファイル構造にすると良いでしょう。
 
 <% end %>
@@ -88,7 +88,7 @@ we'd rather keep things well-organized and use a cleaner file structure.
 We're finally ready to create our second template.
 Inside client/views/posts, create posts_list.html:
 　これから２つのテンプレートを作っていきます。
-　client/views/postsの中にposts_list.htmlを作ります。
+　client/views/posts の中に posts_list.html を作ります。
 
 ~~~html
 <template name="postsList">
@@ -102,7 +102,7 @@ Inside client/views/posts, create posts_list.html:
 <%= caption "client/views/posts/posts_list.html" %>
 
 And post_item.html:
-　次にpost_item.htmlを作ります。
+　次に post_item.html を作ります。
 
 ~~~html
 <template name="postItem">
@@ -117,36 +117,35 @@ And post_item.html:
 
 Note the name="postsList" attribute of the template element.
 This is the name that will be used by Meteor to keep track of what template goes where.
-　テンプレート要素の name="postsList"属性を書き込みます。
+　テンプレート要素の name="postsList" 属性を書き込みます。
 　これはどのテンプレートがどこに行くのか　（ keep track of？）するために、Meteorで使われている（ name？）です。
 
 It's time to introduce Meteor's templating system, Spacebars. 
 Spacebars is simply HTML, with the addition of three things: partials, expressions and block helpers.
-　ここでMeteorのテンプレートシステム、Spacebarsについて紹介します。
-　SpacebarsではHTMLに３つのものを付け加えます：partialsとexpressionsとblock helpersです。
+　ここで Meteor のテンプレートシステム、Spacebars について紹介します。
+　Spacebars では HTML に３つのものを付け加えます：partials と expressions とblock helpers です。（？？？）
 
 Partials use the {{> templateName}} syntax, 
 and simply tell Meteor to replace the partial with the template of the same name (in our case postItem).
-　Partialsでは{{> templateName}}構文を使い、
-　partialを同じ名前（ここではpostItem）のテンプレートに置き換えるようMeteorに命令します。
-　
+　Partials では {{> templateName}} 構文を使い、
+　partial を同じ名前（ここでは postItem ）のテンプレートに置き換えるよう Meteor に命令します。
 
 Expressions such as {{title}} either call a property of the current object, 
 or the return value of a template helper as defined in the current template's manager (more on this later).
-　{{title}}のようなExpressionsは、カレントオブジェクトのプロパティを呼び出すか、
+　{{title}} のような Expressions は、カレントオブジェクトのプロパティを呼び出すか、
 　テンプレートマージャーで定義されている　テンプレートヘルパーの値を返します。（そのことについては後で述べます。）
 
 Finally, block helpers are special tags that control the flow of the template, 
 such as {{#each}}…{{/each}} or {{#if}}…{{/if}}.
-　最後に、block helpersはテンプレートのフローを制御する特別なタグで、
-　たとえば、{{#each}}…{{/each}} や {{#if}}…{{/if}}があります。
+　最後に、block helpers はテンプレートのフローを制御する特別なタグで、
+　たとえば、{{#each}}…{{/each}} や {{#if}}…{{/if}} があります。
 
 <% note do %>
 
 ### Going Further
 
 You can refer to the Spacebars documentation if you'd like to learn more about Spacebars.
-　Spacebarsについてさらに学びたいという場合は、Spacebarsドキュメンテーションを参照できます。
+　Spacebars についてさらに学びたいという場合は、Spacebars ドキュメンテーションを参照できます。
 
 <% end %>
 
@@ -155,18 +154,18 @@ Armed with this knowledge, we can easily understand what's going on here.
 
 First, in the postsList template, we're iterating over a posts object with the {{#each}}…{{/each}} block helper.
 Then, for each iteration we're including the postItem template.
-　最初にpostsListテンプレートの中で、{{#each}}…{{/each}} block helperを使ってpostsオブジェクトに繰り返し処理を行っています。
-　eachイテレーションで、私たちはpostItemテンプレートを（including ？＝インクルード？）しています。
+　最初に postsList テンプレートの中で、{{#each}}…{{/each}} block helper を使ってposts オブジェクトに繰り返し処理を行っています。
+　each イテレーションで、私たちは postItem テンプレートを（ including ？＝インクルード？）しています。
 
 Where is this posts object coming from? Good question. 
 It's actually a template helper, and we'll define it when we look at template managers.
-　postsオブジェクトがどこからやって来たのでしょうか？　（Good question.？＝いいところに気がつきましたね。）
-　それは実際のところ、テンプレートヘルパーからで、私たちはテンプレートマネージャーを見ているときにpostsオブジェクトを定義しました。
+　posts オブジェクトがどこからやって来たのでしょうか？　（Good question.？＝いいところに気がつきましたね。）
+　それは実際のところ、テンプレートヘルパーからで、私たちはテンプレートマネージャーを見ているときに posts オブジェクトを定義しました。
 
 The postItem template itself is fairly straightforward. It only uses three expressions: 
 {{url}} and {{title}} both return the document's properties, and {{domain}} calls a template helper.
-　postItemテンプレート自体はかなり単純で、３つのexpressionしか使っていません：
-　{{url}} と {{title}}は両方ともドキュメントのプロパティを返して、{{domain}}はテンプレートヘルパーを呼び出します。
+　postItem テンプレート自体はかなり単純で、３つの expression しか使っていません：
+　{{url}} と {{title}} は両方ともドキュメントのプロパティを返して、{{domain}} はテンプレートヘルパーを呼び出します。
 
 We've mentioned "template helpers" a lot throughout this chapter without really explaining what they do. 
 But in order to fix this, we must first talk about managers.
@@ -179,10 +178,10 @@ Up to now we've been dealing with Spacebars,
 which is little more than HTML with a few tags sprinkled in. 
 Unlike other languages like PHP (or even regular HTML pages, which can include JavaScript),
 Meteor keeps templates and their logic separated, and these templates don't do much by themselves.
-　ここまで私たちはSpacebarsについて取り組んできました。
-　Spacebarsはいくつかのタグを散りばめたHTMLです。
-　PHPのような他の言語と違って（あるいは、JavaScriptが含まれた通常のHTMLページでさえ）、
-　Meteorはテンプレートと他のロジックを分離した状態にします。
+　ここまで私たちは Spacebars について取り組んできました。
+　Spacebars はいくつかのタグを散りばめられた HTML です。
+　PHP のような他の言語と違って（あるいは、JavaScript が含まれた通常の HTML ページでさえ）、
+　Meteor はテンプレートと他のロジックを分離した状態にします。
 　テンプレートそれ自体が分離させるわけではありません。（？？？）
 
 In order to come to life, a template needs a manager.
@@ -194,7 +193,7 @@ before handing out the finished dish to the waiter (the template) who then prese
 
 In other words, while the template's role is limited to displaying or looping over variables, 
 the manager is the one who actually does the heavy lifting by assigning a value to each variable.
-　言い換えれると、テンプレートの役割は表示をすることと変数をループすることに限定されまが、（？？？）
+　言い換えると、テンプレートの役割は変数を表示をすることや変数をループすることに限定されますが、（？？？）
 　マネージャーは　それぞれの変数に値を割り当てることで、重労働をしています。（？？？）　
 
 <% note do %>
@@ -203,21 +202,22 @@ the manager is the one who actually does the heavy lifting by assigning a value 
 
 When we asked around to see what other Meteor developers called template managers, half said "controllers",
 and half said "those files where I put my JavaScript code".
-　私たちがMeteor開発者たちにテンプレートマネージャーを何と呼んでいるのか聞いて回ったところ、
-　半分の人は「コントローラー」だと言い、もう半分の人は「JavaScriptのコードを置くファイル」だと言いました。
+　私たちが Meteor 開発者たちにテンプレートマネージャーを何と呼んでいるのか聞いて回ったところ、
+　半分の人は「コントローラー」だと言い、あとの半分の人は
+　「JavaScript のコードを置くファイル("those files where I put my JavaScript code")」だと言いました。
 
 Managers aren't really controllers (at least, not in the sense of MVC controllers) 
 and "TFWIPMJSC" isn't really that catchy, so we rejected both propositions.
 　実際のところ、マネージャーはコントローラーではありません。
 　（少なくとも、MVCでの意味のコントローラーではありません。）
-　「JavaScriptのコードを置くファイル」と呼ぶのも受けが良さそうではありません。
+　「JavaScriptのコードを置くファイル("TFWIPMJSC")」と呼ぶのも受けが良さそうではありません。
 　そのため、どちらの意見も却下しました。
 
 Since we still wanted a way to indicate what we were talking about, 
 we came up with the term "manager" as a handy shortcut 
 that didn't have any pre-existing meaning as far as web frameworks are concerned.
-　私たちは何と呼べばよいのかを決めたかったため、「マネージャー」という言葉を思いつきました。
-　また、マネージャーという言葉はwebフレームワークに関係したこと以前から存在する意味がありませんでした。
+　私たちは何と呼べばよいのか決めたかったため、「マネージャー」という言葉を思いつきました。
+　また、マネージャーという言葉は web フレームワークに関係したことで、以前から存在する意味はありませんでした。
 
 <% end %>
 
@@ -226,7 +226,7 @@ except with a .js extension.
 So let's create posts_list.js inside /client/views/posts right away and start building our first manager:
   シンプルにするために、私たちはテンプレートに（after？＝ちなんだ？）マネージャーという名前の　（convention？）を採用しました。
   ただし、.js拡張子を省いています。（？？？）
-  では早速、/client/views/postsの中にposts_list.jsを作って、最初のマネージャーを作っていきましょう。
+  では早速、/client/views/posts の中に posts_list.js を作って、最初のマネージャーを作っていきましょう。
 
 ~~~js
 var postsData = [
@@ -256,7 +256,7 @@ If you've done it right, you should now be seeing something similar to this in y
 　正しくできたら、ブラウザでは次のように表示されているでしょう。
 
 Our first templates with static data
-<%= screenshot "3-1", "静的データでの最初のテンプレート" %>
+<%= screenshot "3-1", "静的データで作った最初のテンプレート" %>
 
 Added basic posts list template and static data
 <%= commit "3-1", "基本的な（posts list template？）と静的なデータを（Added？＝組み込みました？）" %>
@@ -265,14 +265,14 @@ We're doing two things here. First we're setting up some dummy prototype data in
 That data would normally come from the database, 
 but since we haven't seen how to do that yet (wait for the next chapter) we're "cheating" by using static data.
 　私たちはここで２つのことをしています。
-　まず１つめに　postsData配列の中でダミープロトタイプデータを構成しています。
+　まず１つめに　postsData 配列の中でダミープロトタイプデータを構成しています。
 　通常、データはデータベースからやって来ます。
-　この点は次の章で学びますので、静的データを使って「ごまかして」います。
+　この点は次の章で学びますので、今は静的データを使って「ごまかして」います。
 
 Second, we're using Meteor's Template.myTemplate.helpers() function 
 to define a template helper called posts that simply returns our postsData array.
-　２つめに、私たちMeteorの Template.myTemplate.helpers()関数を使っています。
-　 こうすることで、postsData配列を返すだけのpostsを（called？＝呼び出す？）テンプレートヘルパーに定義しています。
+　２つめに、私たち Meteo rの Template.myTemplate.helpers()関数を使っています。
+　 こうすることで、postsData 配列を返すだけの posts を（called？＝呼び出す？）テンプレートヘルパーに定義しています。
 
 Defining the posts helper means it is now available for our template to use:
 　postsヘルパーを定義することで、テンプレートでも使えるようになります。
@@ -291,12 +291,12 @@ Defining the posts helper means it is now available for our template to use:
 So our template will be able to iterate over our postsData array, 
 and send each object contained within to the postItem template.
 　そのため、このテンプレートではpostsData配列を繰り返し処理ができて、
-　（contained？）それぞれのオブジェクトを postItemテンプレート内に送ります
+　（contained？）それぞれのオブジェクトを postItem テンプレート内に送ります
 
 ### "this"の値
 
 We'll now create the post_item.js manager:
-　これで私たちはpost_item.jsマネージャーを作りました。
+　これで私たちは post_item.js マネージャーを作りました。
 
 ~~~js
 Template.postItem.helpers({
@@ -345,7 +345,7 @@ Meteor knows that we mean this.title and this.url and returns the correct values
 
 <% note do %>
 
-### JavaScriptマジック
+### JavaScript マジック
 
 Although this is not specific to Meteor, here's a quick explanation of the above bit of “JavaScript magic”. 
 First, we're creating an empty anchor (a) HTML element and storing it in memory.
@@ -366,8 +366,8 @@ to get back the link's domain name without the rest of the URL.
 If you've followed along correctly, you should be seeing a list of posts in your browser.
 That list is just static data, so it doesn't take advantage of Meteor's real-time features just yet.
 We'll show you how to change that in the next chapter!
-　ここまで理解ができたら、ブラウザでpostのリストを見ることができるでしょう。
-　このリストは単なる静的データなので、まだMeteorのリアルタイムに関する機能を使っていません。
+　ここまで理解ができたら、ブラウザで post のリストを見ることができるでしょう。
+　このリストは単なる静的データなので、まだ Meteor のリアルタイムに関する機能を使っていません。
 　次の章ではデータを変化させる方法を見て行きましょう！
 
 <% note do %>
@@ -379,10 +379,10 @@ You might have noticed that you didn't even need to manually reload your browser
 
 This is because Meteor tracks all the files within your project directory, 
 and automatically refreshes your browser for you whenever it detects a modification to one of them.
-　これはMeteorがプロジェクトディレクトリ内ですべてのファイルを読み込んで、
+　これは Meteor がプロジェクトディレクトリ内のすべてのファイルを読み込んで、
 　変更点を見つけると自動的にブラウザの（refresh？＝再読み込み？）をするためです。
 
 Meteor's hot code reload is pretty smart, even preserving the state of your app in between two refreshes!
-　Meteorのホットコードリロードはとてもスマートで、（in between two refreshes？）アプリの状態でさえを保存します！
+　Meteor のホットコードリロードはとてもスマートで、（in between two refreshes？）アプリの状態でさえを保存します！
 
 <% end %>
