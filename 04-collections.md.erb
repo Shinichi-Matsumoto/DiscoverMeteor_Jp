@@ -7,19 +7,37 @@ contents: Meteorの基本的な特徴であるリアルタイムコレクショ�
 paragraphs: 72
 ---
 
-１章では、クライアントとサーバー間のデータを自動同期させるMeteorの特徴についてお話しました。
+In chapter one, we spoke about the core feature of Meteor, 
+the automatic synchronisation of data between client and server.
+　１章では、クライアントとサーバー間のデータを自動同期させる Meteor の特徴についてお話しました。
 
-この章では、これがどのように動いているのかもう少し詳しく見ていき、データの自動同期を実現させる鍵であるMeteorコレクションについて見ていきます。
+In this chapter, we'll take a closer look at how that works, 
+and observe the operation of the key piece of technology that enables this, the Meteor Collection.
+　この章では、これがどのように動いているのかもう少し詳しく見ていき、
+　データの自動同期を実現させる上で鍵となる Meteor コレクションについて見ていきます。
 
-私たちはソーシャルニュースアプリを作っているので、最初にやりたいことは投稿されたリンクの一覧表を作ることです。
-投稿されたリンクのことは"post"と呼ぶことにしましょう。（？？？）
+We are building a social news app, 
+so the first thing we want to do is make a list of links that people have posted. 
+We'll call each of these items a "post."
+　私たちはソーシャルニュースアプリを作っているので、最初にやりたいことは投稿されたリンクの一覧表を作ることです。
+　投稿されたリンクのことは "post" と呼ぶことにしましょう。（？？？）
 
-当然ながら、投稿をどこかに保存（？？？）しなければなりません。
-MeteorはMongoDBとセットになっています。（？？？）
-MongoDBはサーバー上で動き、永続的データを保存します。（？？？）
+Naturally, we need to store these posts somewhere.
+Meteor comes bundled with a Mongo database which runs on your server 
+and is your persistent data store.
+　当然ながら、投稿をどこかに格納しなければなりません。
+　Meteor は MongoDB とセットになっています。（？？？）
+　MongoDB はサーバー上で動き、永続的データを保存します。（？？？）
 
-ユーザーのブラウザがどのようなページを開いているのか、ユーザーが現在どんなを打ち込んでいるのかコメントについて状態
-（？？？）
+So, although a user's browser may contain some kind of state 
+(for instance which page they are on, or the comment they are currently typing), 
+the server, and specifically Mongo, contains the permanent, 
+canonical data source. By canonical, we mean that it is the same for all users:
+each user might be on a different page, 
+but the master list of posts is the same for all.
+　ユーザーのブラウザがどのようなページを開いているのか、
+　ユーザーが現在どんなを打ち込んでいるのかコメントについて状態
+　（？？？）
 
 このデータはMeteorのコレクションの中に保存されています。
 
