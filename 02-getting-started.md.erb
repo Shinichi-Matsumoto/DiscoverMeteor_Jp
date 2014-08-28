@@ -43,125 +43,21 @@ and then follow along with the book again starting from the "Creating a Simple A
 
 <% end %>
  
-### Meteorite
+### Bye Bye Meteorite
+There was a time where Meteor relied on an external package manager called Meteorite. Since Meteor version 0.9.0, Meteorite is not needed anymore since its features have been assimilated into Meteor itself.
+	かつて Meteor は Meteorite と呼ばれる外部のパッケージマネージャーが使われていました。Meteor のバージョン 0.9.0 から、Meteorite の機能が Meteor 自体に取り入れられたため Meteorite は必要がなくなりました。
 
-Due to the fact that Meteor doesn't yet support third-party packages out of the box,
-Tom Coleman (one of this book's authors) and some members of the community have created Meteorite, a wrapper for Meteor. 
-Meteorite also takes care of installing Meteor for you and hooking it together with any packages you might find.
-　Meteorはまだ（out of the box？＝そのままの状態では？）サードパーティーのパッケージをサポートしていないため、
-　本書の著者の一人であるトム・コールマンとコミュニティの数人のメンバーは Meteor のためのラッパーである Meteorite を作りました。
-　Meteorite は Meteor をインストールしてどのようなパッケージにも Meteor とつなぎ合わせる処理をします。
+So if you encounter any references to Meteorite's mrt command line utility throughout this book or while browsing Meteor-related material, you can safely replace them by the usual meteor.
+	そのため、もし本書や Meteor に関係する資料で Meteorite の mrt コマンドラインユーティリティに出くわすことがあったら、通常の meteor と読み替えるようにしてください。
 
-Since we'll be relying on third-party packages for some of Microscope's features, let's install Meteorite.
-　Microscope のいくつかの機能はサードパーティーのパッケージに依存しているため、Meteorite をインストールしましょう。
-
-### Installing Meteorite　Meteoriteをインストールする
-
-You'll need to ensure node and git are installed on your machine.
-Install them in the standard way for your OS, or try these links:
-　まず、あなたのPCに node.js と git をインストールする必要があります。
-　スタンダードな方法でインストールするには、こちらのリンクをクリックしてください。
- 
-- [Node download site](http://nodejs.org/download/)
-- [Git download site](http://git-scm.com/downloads)
-
-Second, let's install Meteorite. 
-As it's a npm executable (Node Packaged Module, Node's standard module format), we install it with:
-　次に Meteorite をインストールしましょう。
-　Meteorite は npm（Node Packaged Module）の実行ファイルなので、次のようにしてインストールします。
-
-~~~bash
-$ npm install -g meteorite
-~~~
-
-<% note do %>
-
-### Permission errors?　パーミッションエラー？
-
-On some machines you may need root permission to install Meteorite. To avoid problems, make sure you use sudo -H:
-　あるPCでは Meteorite をインストールするために root 権限が必要かもしれません。
-　この問題を回避するために、sudo -H を使いましょう。
-
-~~~bash
-$ sudo -H npm install -g meteorite
-~~~
-
-You can read more about this issue in the Meteorite documentation.
-　Meteorite documentation でこの問題について読むことができます。
-
-<% end %>
-
-That's it! Meteorite will handle things from here.
-　その調子です！これで Meteorite は物事を処理できるようになりました。
-
-Note: there is no Windows support for Meteorite yet, but you can take a look at our windows tutorial instead.
-　メモ：Meteorite はまだ Windows へのサポートがありませんが、その代わりに windows tutorial を読むことができます。
-
-<% note do %>
-
-  ### `mrt` vs `meteor`　
- 
-Meteorite installs the mrt executable, which we'll use to install packages into our application.
-When we want to run our server, however, we use the meteor executable.
-　Meteorite は mrt 実行ファイルをインストールします。これはパッケージをアプリにインストールするために使います。
-　しかしサーバーを動かしたい時は、meteor 実行ファイルを使います。
-
-<% end %>
-
-### Creating a Simple App
-
-Now that we have installed Meteorite, let's create an app. To do this, we use Meteorite's command line tool mrt:
-　これで Meteorite をインストールしたので、アプリを作りましょう。
-　そのためには Meteorite のコマンドラインツール mrt を使います。
-
-~~~bash
-$ mrt create microscope
-~~~
-
-This command will download Meteor, and set up a basic, ready to use Meteor project for you.
-When it's done, you should see a directory, microscope/, containing the following:
-　このコマンドで Meteor をダウンロードして、（set up a basic？＝基本設定？）をして、Meteor プロジェクトを使えるようにします。
-　これが終わると、下記のものが入っている microscope/ ディレクトリが見つかるはずです。　
-
-~~~bash
-microscope.css  
-microscope.html 
-microscope.js   
-smart.json 
-~~~
-
-The app that Meteor has created for you is a simple boilerplate application demonstrating a few simple patterns.
-　Meteor で作られたこのアプリはいくつかのパターンを実際に行っているシンプルな（boilerplate？）なアプリケーションです。
-
-Even though our app doesn't do much, we can still run it. To run the app, go back to your terminal and type:
-　このアプリは多くのことはできませんが、動かすことならできます。ターミナルに戻って、このようにタイピングしましょう。
-
-~~~bash
-$ cd microscope
-$ meteor
-~~~
-
-Now point your browser to http://localhost:3000/ 
-(or the equivalent http://0.0.0.0:3000/) and you should see something like this:
-　では、ブラウザーにhttp://localhost:3000/(もしくは同等なhttp://0.0.0.0:3000/) に（point ？）すると
-　このように表示されるはずです。
-
-<%= screenshot "2-1", "Meteor's Hello World." %>
-
-<%= commit "2-1", "基本的な Microscope プロジェクトを作りました。" %>
-
-Congratulations! You've got your first Meteor app running. 
-By the way, to stop the app all you need to do is bring up the terminal tab where the app is running, and press ctrl+c.
-　おめでとう！初めての Meteor アプリを動かすことができました。
-　ちなみに、アプリを停止するにはアプリが動いているターミナルのタブで、ctrl+c を入力する必要があります。
 
 ### Adding a Package　パッケージを入れる
 
 We will now use Meteorite to add a smart package that will let us include Bootstrap in our project:
-　私たちはこのプロジェクトで Bootstrap などの（smart package？＝スマートパッケージ）を入れるために Meteorite を使いましょう。　　 
+　私たちはこのプロジェクトで Bootstrap などの（smart package？＝スマートパッケージ）を入れるために Meteorite を使いましょう。
 
 ~~~bash
-$ mrt add bootstrap
+$ meteor add bootstrap
 ~~~
 
 <%= commit "2-2", "bootstrap パッケージを入れる。" %>
