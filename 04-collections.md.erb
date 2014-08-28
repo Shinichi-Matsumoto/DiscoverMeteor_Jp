@@ -27,26 +27,37 @@ Meteor comes bundled with a Mongo database which runs on your server
 and is your persistent data store.
 　当然ながら、投稿をどこかに格納しなければなりません。
 　Meteor は MongoDB とセットになっています。（？？？）
-　MongoDB はサーバー上で動き、永続的データを保存します。（？？？）
+　MongoDB はサーバー上で動き、永続的にデータを保存します。（？？？）
 
 So, although a user's browser may contain some kind of state 
 (for instance which page they are on, or the comment they are currently typing), 
 the server, and specifically Mongo, contains the permanent, 
-canonical data source. By canonical, we mean that it is the same for all users:
+canonical data source.
+ By canonical, we mean that it is the same for all users:
 each user might be on a different page, 
 but the master list of posts is the same for all.
 　ユーザーのブラウザがどのようなページを開いているのか、
-　ユーザーが現在どんなを打ち込んでいるのかコメントについて状態
-　（？？？）
-
-このデータはMeteorのコレクションの中に保存されています。
-
-コレクションは　特別なデータ構造です。　　　 MongoDB内に　（？？？？？？）
-パブリケーションとサブスクリプションを使った　　　同期しているリアルタイムデータ　　　　つながったユーザーのブラウザから
+　現在コメントを書いているかといったさまざまな状態がありますが、
+　特に Mongo のサーバーは永続的で標準的なデータソースを保存します。
+（？？？）
+　
+This data is stored in Meteor in the Collection. 
+A collection is a special data structure that, 
+through publications and subscriptions, 
+takes care of synchronising real-time data to and from each connected user's browser and into the Mongo database.
+Let's see how.
+　データはMeteorのコレクションの中に保存されます。
+　コレクションは特別なデータ構造で、　　　
+　パブリケーションとサブスクリプションを使って同期しているリアルタイムデータつながったユーザーのブラウザから    MongoDB内に　（？？？？？？）
 どうなるのか見て行きましょう。
 
-////　　私たちは投稿データを永続的にしてユーザー間と共有したいので、投稿データを格納するPostsコレクションを作るところから始めます。
-まだ　アプリのrootで（？？？）　　collections/フォルダーを作っていないなら、　　posts.jsファイルを　その中に入れます。
+We want our posts to be permanent and shared between users, 
+so we'll start by creating a collection called Posts to store them in. 
+If you haven't done so already create a collections/ folder 
+at the root of your app, and then a posts.js file inside it. 
+Then add:
+　　私たちは投稿データを永続化してユーザー間と共有したいので、投稿データを格納するPostsコレクションを作るところから始めます。
+まだ　アプリのrootで（？？？）　　collections/ フォルダーに posts.js ファイルを入れます。
 そして次のように書き込みます。
 
 ~~~js
@@ -56,75 +67,117 @@ Posts = new Meteor.Collection('posts');
 
 <%= commit "4-1", "postsコレクションを加える" %>
 
- client/でもserver/でもないフォルダのコードは、クライアントとサーバーの両方で動きます。
-そのため、 Postsコレクションはクライアントとサーバーで動きます。
-しかし、コレクションはクライアントとサーバーで全く違うことを行います。
+Code inside folders that are not client/ or server/ will run in both contexts. 
+So the Posts collection is available to both client and server. 
+However, what the collection does in each environment is very different.
+ client/ でも server/ でもないフォルダのコードは、クライアントとサーバーの両方で動きます。
+　そのため、 Postsコレクションはクライアントとサーバーで動きます。
+　しかし、コレクションはクライアントとサーバーで行うことが大きく異なります。
 
 <% note do %>
 
-### Varを使うか使わない？　（？？？）
+### Varを使うか使わないか？　（？？？）
 
-Meteorでは、　varというキーワードは現在のファイルで（？？？）オブジェクトのスコープを限定します。
-ここで私たちはアプリ全体で使えるPostsコレクションを作りたいので、varという用語を使っていないというわけです。
+In Meteor, the var keyword limits the scope of an object to the current file. 
+Here, we want to make the Posts collection available to our whole app, 
+which is why we're not using the var keyword.
+　Meteorでは、var というキーワードは現在のファイルで（？？？）オブジェクトのスコープを限定します。
+　ここで私たちはアプリ全体で使える Posts コレクションを作りたいので、var という用　語を使っていないというわけです。
 
 <% end %>
 
-サーバーでは、　コレクションは　MongoDBと通信して どんな変化でも読み込んで書き込む役目を果たします。（？？？）
-この意味で　通常のデータベースライブラリと比較できます。（？？？）
-しかし、クライアントにおいて　コレクションは　正確なコピー　（？？？）
-クライアントサイドのコレクションは 絶えず　ユーザーが気づくことなく（？？？）　　 リアルタイムで最新情報を
+On the server, the collection has the job of talking to the Mongo database, 
+and reading and writing any changes. 
+In this sense, it can be compared to a standard database library. 
+On the client however, 
+the collection is a secure copy of a subset of the real, canonical collection. 
+The client-side collection is constantly 
+and (mostly) transparently kept up to date with that subset in real-time.
+ サーバーでのコレクションは MongoDB と通信して、あらゆる変化を読み込んで書き込む役目を果たします。（？？？）
+　この意味で通常のデータベースライブラリと比較できます。（？？？）
+　一方で、クライアントでのコレクションは　（  subset of the real？）の正確なコピーで、標準的なコレクションです。
+　クライアントサイドのコレクションはユーザーが意識することなく 絶えずリアルタイムで最新情報を処理します。
 
 <% note do %>
 
 ### Console vs Console vs Console
 
-この章では、ブラウザーのコンソールを使っていきます。
-ターミナルやMongoDBのシェルとは違います。（？？？）
-ここでは、そのあたりについてざっくりと解説していきます。（？？？）
+In this chapter, we'll start making use of the browser console, 
+which is not to be confused with the terminal or the Mongo shell. 
+Here's a quick primer on each of them.
+　この章では、ブラウザーのコンソールを使っていきます。
+　これはターミナルや Mongo シェルとは違います。
+　ここでは、そのあたりについてざっくりと解説していきます。（？？？）
 
 #### ターミナル
 
 <%= screenshot "terminal", "The Terminal" %>
 
-- オペレーティングシステムから呼び出される。
-- サーバーサイドのconsole.log()は、ここに出力されます。
-- プロンプト：$
-- 別名：Shell、Bash
+Called from your operating system.
+Server-side console.log() calls output here.
+Prompt: $.
+Also known as: Shell, Bash
+　- オペレーティングシステムから呼び出される。
+　- サーバーサイドのconsole.log()は、ここに出力される。
+　- プロンプト：$
+　- 別名：Shell、Bash
 
 #### ブラウザーコンソール
 
 <%= screenshot "browser-console", "The Browser Console" %>
 
-- ブラウザーでJavaScriptのコードを実行する。
-- クライアントサイドのconsole.log()をここに出力する。
-- プロンプト： ❯
-- 別名：JavaScript Console、DevTools Console
+Called from inside the browser, executes JavaScript code.
+Client-side console.log() calls output here.
+Prompt: ❯.
+Also known as: JavaScript Console, DevTools Console
+　- ブラウザーで JavaScript のコードを実行する。
+　- クライアントサイドの console.log() をここに出力する。
+　- プロンプト： ❯
+　- 別名：JavaScript Console、DevTools Console
 
 #### Mongoシェル
 
 <%= screenshot "mongo-shell", "The Mongo Shell" %>
 
-- meteor mongo か mrt mongo を使って、ターミナルから呼び出される。
-- 自作アプリのデータベースに直接アクセスできるようになる。（？？？）
-- プロンプト：>
-- 別名：Mongoコンソール
+Called from the Terminal with meteor mongo.
+Gives you direct access to your app's database.
+Prompt: >.
+Also know as: Mongo Console
+　- meteor mongo か mrt mongo を使って、ターミナルから呼び出される。
+　- 自作アプリのデータベースに直接アクセスできるようになる。（？？？）
+　- プロンプト：>
+　- 別名：Mongoコンソール
 
-ここで留意すべきことは、$・❯・>といったプロンプト文字をコマンドで入力しなくて良いということです。
-プロンプトより先の文字は、それより先に行ってたコマンドが出力したものと見なすことができます（？？？）
+Note that in each case, 
+you're not supposed to type the prompt character ($, ❯, or >) 
+as part of the command. 
+And you can assume that any line not beginning with the prompt is the output of the preceding command.
+　ここで留意すべきことは、$・❯・>といったプロンプト文字をコマンドで入力しなくて良いということです。
+　プロンプトより先の文字で始まっていないものは、それより先に行ってたコマンドが出力したものと見なすことができます。
 
 <% end %>
 
 ###サーバーサイドのコレクション
 
-サーバーでは、　コレクションは　MongoDB （？？？） APIとしての役割を果たします。
-サーバーサイドのコードで　Posts.insert() や Posts.update() のようなMongoコマンドを書くことができます。
-（？？？）　MongoDB内に格納されているpostsコレクションが変化します
+On the server, the collection acts as an API into your Mongo database. 
+In your server-side code, 
+this allows you to write Mongo commands like Posts.insert() or Posts.update(), and they will make changes to the posts collection stored inside Mongo.
+　サーバーでのコレクションは MongoDB の API のような役割を果たします。
+　サーバーサイドのコードで　Posts.insert() や Posts.update() のようなMongoコマンドを書くことができます。
+　すると、MongoDB 内に格納されている posts コレクションは変化します。
 
-MongoDB内を見るために、２つ目のターミナルウィンドウをを開きます。（１つ目のターミナルではまだmeteorが動いています。）
-そうしたら、アプリのディレクトリへ行きましょう。
-　 Mongoコマンドを入力する　Mongoシェルを起動
-では、新しい投稿を書き込みましょう。　 
-　 
+To look inside the Mongo database,
+ open up a second terminal window (while meteor is still running in your first), and go to your app's directory. 
+Then, run the command meteor mongo to initiate a Mongo shell,
+ into which you can type standard Mongo commands 
+(and as usual, you can quit it with the ctrl+c keyboard shortcut). 
+For example, let's insert a new post:
+　MongoDB 内を見るために、２つ目のターミナルウィンドウをを開きます。（１つ目のターミナルではまだ meteor が動いている状態です。）
+　そうしたら、アプリのディレクトリへ行きましょう。
+　そして、Mongo シェルを起動するために meteor mongo コマンドを実行します。
+　Mongo シェルでは、通常の Mongo コマンドを入力することができます。
+　（また、いつものように ctrl+c で停止することができます。）
+　例として、新しい投稿を挿入しましょう。
 
 ~~~bash
 > db.posts.insert({title: "A new post"});
@@ -138,14 +191,20 @@ MongoDB内を見るために、２つ目のターミナルウィンドウをを�
 
 ### Mongo on Meteor.com　（？？？）
 
-meteor.comにアプリをホスティングする際は、meteor mongo myAppと入力して（？？？）デプロイされたアプリのMongoシェルにアクセスできることに
+Note that when hosting your app on *.meteor.com, you can also access your deployed app's Mongo shell with meteor mongo myApp.
+　meteor.com にアプリをホスティングする際は、meteor mongo myAppと入力することでデプロイされたアプリのMongoシェルにアクセスすることができます。
 
-（？？？）、meteor logs myAppと入力することで、アプリのログを見ることができます。
+And while we're at it, you can also get your app's logs by typing meteor logs myApp.
+　さらに、その状態で meteor logs myApp と入力すること、アプリのログを見ることができます。
 
 <% end %>
 
-MongoDBの構文は、JavaScriptインターフェースを使っているため、親しみやすくなっています。
- 私たちは　Mongoシェルで　データ操作をしませんが　（？？？）、　そこに（？？？）何があるのか確認するために　時々のぞき見するかもしれません。
+Mongo's syntax is familiar, as it uses a JavaScript interface. 
+We won't be doing any further data manipulation in the Mongo shell, 
+but we might take a peek inside from time to time 
+just to make sure what's in there.
+　MongoDB の構文は、JavaScript インターフェースを使っているため、親しみやすくなっています。
+　私たちはこれ以上 Mongoシェルでデータ操作をしませんが、　（there=MongoDB内？）に何があるのか確認するために時々のぞき見をするかもしれません。
 
 ### クライアントサイドのコレクション
 
