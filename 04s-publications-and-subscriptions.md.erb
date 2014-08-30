@@ -4,25 +4,24 @@ slug: publications-and-subscriptions
 date: 0004/01/02
 number: 4.5
 sidebar: true
-contents: どのように publications と subscriptions （？？？）が動くのか理解します。|デフォルトでの Autopublish パッケージがどんなことをするのか学びます|パターンの例をいくつか見ていきます。
+contents: どのようにパブリケーションサブスクリプションが動くのか理解します。|デフォルトでの Autopublish パッケージがどんなことをするのか学びます|パターンの例をいくつか見ていきます。
 paragraphs: 52
 ---
 
 Publications and subscriptions are one of the most fundamental and important concepts in Meteor, 
 but can be hard to wrap your head around when you're just getting started
-　Publications と subscriptions はMeteorにおいて、最も基本的で重要なコンセプトの１つです。（？？？）
-　しかし、 まだ始めたばかりのころは理解することは難しいものです。
+　パブリケーションとサブスクリプションは Meteor において、最も基本的で重要なコンセプトの１つです。
+　しかし、 まだ始めたばかりでは理解することが難しいものです。
 
 This has led to a lot of misunderstandings, such as the belief that Meteor is insecure, 
 or that Meteor apps can't deal with large amount of data.
-　そのため多くの誤解の原因ともなっています。  その誤解の中には Meteorは安全でないといったものや
-　Meteorのアプリは大量のデータを扱えないといたものがあります。
+　そのため多くの誤解の原因ともなっています。その誤解の中には Meteor は安全でないといったものや Meteor のアプリは大量のデータを扱えないといたものがあります。
 
 A big part of the reason people find these concepts a bit confusing initially is the "magic" that Meteor does for us.
 Although this magic is ultimately very useful, it can obscure what's really going on behind the scenes (as magic tends to do). 
 So let's strip away the layers of magic to try and understand what's happening.
-　最初にこうしたコンセプトに困惑してしまう理由の多くは、Meteorがもたらす「マジック」によるものです。
-　Meteorのマジックは最終的にはとても役立つものですが、裏側で何をしているのかわかりません。（マジックってそういうものですからね）
+　最初にこうしたコンセプトに困惑してしまう理由の多くは、Meteor がもたらす「マジック」によるものです。
+　Meteor のマジックは最終的にはとても役立つものですが、裏側で何をしているのかわかりません。（マジックってそういうものですからね）
 　何か起きているのか理解するために、化けの皮を剥ぎ取りましょう。（？？？）
 
 ### The Olden Days　昔々
@@ -30,44 +29,44 @@ So let's strip away the layers of magic to try and understand what's happening.
 But first, let's take a look back at the good old days of 2011 when Meteor wasn't yet around. 
 Let's say you're building a simple Rails app.
 When a user hits your site, the client (i.e. your browser) sends a request to your app, which is living on the server.
-　しかしはじめに（？？？）、 Meteorが存在しなかった2011年の古き良き時代を振り返ってみましょう。
-　例えば、あなたがRailsでアプリを作っていたとしましょう。
+　しかしはじめに、 Meteor が存在しなかった2011年の古き良き時代を振り返ってみましょう。
+　例えば、あなたが Rails でアプリを作っていたとしましょう。
 　ユーザーがサイトにやってくると、クライアントでは（つまり、あなたのブラウザーでは）、リクエストをサーバーにあるアプリに送ります。
 
 The app's first job is to figure out what data the user needs to see. 
 This could be page 12 of search results, Mary's user profile information, Bob's 20 latest tweets, and so on.
 You can basically think of it as a bookstore clerk browsing through the aisles for the book you asked for.
 　このアプリの最初の仕事はユーザーが見る必要のあるデータが何であるか理解することです。
-　これは検索結果の１２ページであったり、メアリーのユーザープロフィール情報や、ボブの最近の20個の（？？？）ツイートといったものかもしれません。
+　これは検索結果の12ページであったり、メアリーのユーザープロフィール情報や、ボブの最近の20個のツイートといったものかもしれません。
 　これは基本的にあなた要求した本を探すために、本屋の店員さんが通路を歩いて見て回ることのように考えることができます。
 
 Once the right data has been selected, the app's second job is translating that data into nice,
 human-readable HTML (or JSON in the case of an API).
 　正しいデータを選び出したら、アプリの２つ目の仕事はデータを　
-　（nice？＝素晴らしく？）人間が読むことのできるHTMLに（translate？＝変換する？）ことです。
+　（nice？＝素晴らしく？）人間が読むことのできる HTML に（translate？＝変換する？）ことです。
 　（APIの場合はJSONに変換します。）
 
 In the bookstore metaphor, that would be wrapping up the book you just bought and putting it in a nice bag. 
 This is the "View" part of the famous Model-View-Controller model.
-　本屋でたとえると、購入した本を本をラッピングしてバックの中にしまうでしょう。（？？？）
-　これが有名なModel-View-Controllerモデルでの"View"の部分です。
+　本屋でたとえると、これは購入した本を本をラッピングしてバックの中にしまうことです。
+　これが有名な Model-View-Controller モデルでの"View"の部分です。
 
 Finally, the app takes that HTML code and sends it over to the browser.
 The app's job is done
 , and now that the whole thing is out of its virtual hands 
 it can just kick back with a beer while waiting for the next request.
-　最終的に、アプリはHTMLコードを取ってブラウザーへ送信します。
-　これでRailsで作られたアプリの仕事は終わってすべてのことが手から離れたので、
-　次のリクエストが来るまで待っている間にビールを飲んでくつろぐことができます。（？？？）
+　最終的に、アプリは HTML コードを取ってブラウザーへ送信します。
+　これで Rails で作られたアプリの仕事は終わって、すべてのことが手元から離れました。
+そのため、Rails で作られたアプリは次のリクエストが来るまで待っている間にビールを飲んでくつろぐことができます。（？？？）
 
-### The Meteor Way　　Meteorのやり方
+### The Meteor Way　　Meteor のやり方
 
 Let's review what makes Meteor so special in comparison.
 As we've seen, the key innovation of Meteor is that where a Rails app only lives on the server,
 a Meteor app also includes a client-side  that will run on the client (the browser).
-　Meteorがなぜ特別なのか比較して おさらいをしましょう（？？？）
-　これまで見てきたように、Meteorの鍵となるイノベーションはRailsのアプリがサーバーでのみ動いているのに対して、
-　Meteorアプリはクライアント（ブラウザー）でも動くクライアントサイドのコンポーネント（？？？）があります。　
+　Meteor がなぜ特別なのか比較して おさらいをしましょう（？？？）
+　これまで見てきたように、Meteor の鍵となるイノベーションは Rails のアプリがサーバーでのみ動いているのに対して、
+　Meteor アプリはクライアント（ブラウザー）でも動くクライアントサイドのコンポーネント（？？？）があります。　
 
 <%= diagram "client-server", "クライアントにデータベースの一部を（Push？＝プッシュ？）する。", "pull-right" %>
 
@@ -79,30 +78,33 @@ but also follows you home to read it to you at night (which we'll admit does sou
 
 This architecture lets Meteor do many cool things, chief among them what Meteor calls database everywhere. 
 Simply put, Meteor will take a subset of your database and copy it to the client.
-　この構造はMeteorをクールなものにしています。Meteorがデータベースをどこからでも呼び出すという（chief among them？）
-　簡単に言うと、 Meteorは　あなたのデータベースの一部を取ってきて（？？？）、クライアントにコピーをします。
+　この構造は Meteor をクールなものにしています。Meteor がデータベースをどこからでも呼び出すという（chief among them？）
+　簡単に言うと、 Meteorはあなたのデータベースから一部分を取ってきて、それをクライアントにコピーをします。
 
-This has two big implications: first, instead of sending HTML code to the client, 
-a Meteor app will send the actual, raw data and let the client deal with it (data on the wire). 
+This has two big implications: 
+first, instead of sending HTML code to the client, 
+a Meteor app will send the actual, 
+raw data and let the client deal with it (data on the wire). 
 Second, you'll be able to access that data instantaneously without having to wait for a round-trip to the server 
 (latency compensation).
-An app's database can contain tens of thousands of documents, some of which might even be private or sensitive. 
-So we obviously shouldn't just mirror our whole database on the client, for security and scalability reasons.
-　アプリのデータベースはプライベートや機密データに至る何万ものドキュメントが入
-　これには２つの大きな意味合いがあります。１つ目は、クライントにHTMLコードを送る代わりに、
-　Meteorアプリが 実際の生データを送って、クライアントが対処するようにします。（data on the wire）？？？
+　これには２つの大きな意味合いがあります。
+１つ目は、クライントに HTML コードを送る代わりに、
+　Meteor アプリが 実際の生データを送って、クライアントが対処するようにします。（data on the wire）
 　２つ目は　サーバーへの往復を待つ必要がなく、すぐにデータにアクセスできます。(latency compensation)
 
 ### Publishing
-っています。　
+
+An app's database can contain tens of thousands of documents, some of which might even be private or sensitive. 
+So we obviously shouldn't just mirror our whole database on the client, for security and scalability reasons.
+　アプリのデータベースはプライベートから機密データに至る何万ものドキュメントを入れることができます。　
 　そのため、セキュリティやスケーラビリティの観点からもクライント上でデータベースのすべてを映し出すわけにはいきません。（？？？）
 
 So we'll need a way to tell Meteor which subset of data can be sent to the client, 
 and we'll accomplish this through a publication.
-　どのデータをクライントに送るかMeteorに命令する方法が必要で、publicationがこの役目を果たします。（？？？）
+　どのデータをクライントに送るか Meteor に命令する方法が必要で、publication がこの役目を果たします。（？？？）
 
 Let's go back to Microscope. Here are all of our app's posts sitting in the database:
-　Microscopeにもどりましょう。　これがデータベースに入っているアプリの投稿のすべてです。（？？？）
+　Microscope にもどりましょう。　これがデータベースに入っているアプリの投稿のすべてです。（？？？）
 
 <%= diagram "collections-1", "データベースに保存されている全ての投稿。", "pull-center" %>
 
