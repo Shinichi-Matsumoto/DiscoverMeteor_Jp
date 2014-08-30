@@ -567,25 +567,45 @@ and when they have been left alone.
 
 ### コレクションをつなげる: Publications と Subscriptions
 
-今のところ、実際のアプリには向いていないautopublishパッケージが有効となっていました。（？？？）
-名前が意味しているように、このパッケージは単純に　それぞれつながったクライアントと　コレクションが共有されます（？？？）
-私たちはこうしたことをしたくないので、autopublishを停止させましょう。
+So far, we've had the autopublish package enabled, 
+which is not intended for production applications. 
+As its name indicates, 
+this package simply says that each collection should be shared 
+in its entirety to each connected client. 
+This isn't what we really want, so let's turn it off.
+　今までは、実際のアプリには向いていない autopublish パッケージが有効となっていました。
+名前が意味しているように、autopublish パッケージはコレクションの中のすべてがそれぞれつながったクライアントと共有するように命令を行います。（？？？）
+ 私たちはこうしたことをしたくないので、autopublish を停止させましょう。
 
-新しいターミナルを開いて、次のように打ち込みます（？？？）
+Open a new terminal window, and type:
+　新しいターミナルを開いて、次のように打ち込みます：
 
 ~~~bash
 $ meteor remove autopublish
 ~~~
 
-これはすぐに有効化されます。今ブラウザーを見ると、全ての投稿が消えているのがわかるはずです！（？？？）
+This has an instant effect. 
+If you look in your browser now, 
+you'll see that all our posts have disappeared! 
+This is because we were relying on autopublish 
+to make sure our client-side collection of posts was a mirror 
+of all the posts in the database.
+　これはすぐに有効化されます。
+　今ブラウザーを見ると、すべての投稿が消えているのがわかります！
+　autopublish は投稿に関するクライアントサイドのコレクションはデータベースのすべての投稿を反映します。
+　私たちは autopublish に依存
 
-　クライアントサイドの投稿は（？？？）　　データベースにある投稿を　反映した　（？？？）　　　autopublishに依存していたからです。
+Eventually we'll need to make sure 
+we're only transferring the posts 
+that the user actually needs to see 
+(taking into account things like pagination). 
+But for now, we'll just setup Posts to be published in its entirety.
+　最終的には、（ページネーションなどを考慮して）ユーザーが見る必要のある投稿だけに変換する必要があります。
+　しかし、今は Posts の全体に publish されるように設定します。
 
-最終的には、　ユーザーが見る必要のある投稿だけに変換する必要があります。
-（ページネーションのようなものを考慮して）　（？？？）
-しかし、今はPostsが全体にpublishされるように（？？？）設定します。
-
-そうするために、全ての投稿を参照するカーソルを返すpublish()関数を作ります。
+To do so, 
+we create a simple publish() function that returns a cursor referencing all posts:
+そうするために、 publish() 関数を作ります。publish() 関数はすべての投稿を参照するカーソルを返します。
 
 ~~~js
 Meteor.publish('posts', function() {
@@ -594,8 +614,10 @@ Meteor.publish('posts', function() {
 ~~~
 <%= caption "server/publications.js" %>
 
-クライアントでは、publicationにsubscribe（？？？）する必要があります。
-main.jsに次のようなコードを加えましょう。
+In the client, we need to subscribe to the publication. 
+We'll just add the following line to main.js:
+　クライアントでは、publication に subscribe（？？？）する必要があります。
+main.js に次のようにコードを追加しましょう。
 
 ~~~js
 Meteor.subscribe('posts');
@@ -604,12 +626,19 @@ Meteor.subscribe('posts');
 
 <%= commit "4-4", "`autopublish`を削除して、基本的なpublicationをセットアップする。" %>
 
+If we check the browser again, our posts are back. Phew!
 再びブラウザーをチェックすると、投稿が元に戻っています。ふぅ！
 
 ### 結論
 
-　何を達成した　（？？？）　？
-　まだユーザーインターフェースはありませんが、　私たちが行ったことは関数型のWebアプリケーションです。
+So what have we achieved? 
+Well, although we don't have a user interface yet, 
+what we have now is a functional web application. 
+We could deploy this application to the Internet, 
+and (using the browser console) start posting new stories 
+and see them appear in other user's browsers all over the world.
+　それで、私たちは何を達成したのでしょうか？
+　ええと、まだユーザーインターフェースはありませんが、私たちが作ったものは（functional＝実用的な？）ウェブアプリケーションです。
 　私たちはこのアプリケーションをインターネットにデプロイすることができます。
-　また、ブラウザーコンソールを使って新しい投稿をして　　　世界中のユーザーのブラウザーで見ることができます。
+　また、ブラウザーコンソールを使って新しい投稿をして世界中のユーザーのブラウザーに見せることができます。
 　
