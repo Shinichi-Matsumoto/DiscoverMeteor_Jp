@@ -256,7 +256,7 @@ The key piece of all this is how the client-side collection synchronizes its dat
 　ここで重要な点は、どのようにクライアントサイドのコレクションが同じ名前のサーバーサイドのコレクションと同期するのかということです。（この場合では、'posts'）
 
 Rather than explaining this in detail, let's just watch what happens.
-　この点を詳細に説明するよりも、実際に何が起こるのか見て行きましょう。
+　この点は詳細に説明するよりも、実際に何が起こるのか見る方が良いでしょう。
 
 Start by opening up two browser windows, 
 and accessing the browser console in each one. 
@@ -338,44 +338,61 @@ What happened is that our server-side collection was informed
 by a client collection of a new post, 
 and took on the task of distributing that post into 
 the Mongo database and back out to all the other connected post collections.
-実際に何が起こったのか　サーバーサイドのコレクションが　新しい投稿のあった　クライアントのコレクションを　　知らせた （？？？）
+ここで何が起こったかというと、サーバーサイドのコレクションが新しい投稿のクライアントのコレクションに　 （was informed ？）され、MongoDBの投稿を（distributing？）する役割を引き受けて、関係するすべての post コレクションに送り返しています。
 
 Fetching posts on the browser console isn't that useful. 
 We will learn how to wire this data into our templates, 
 and in the process turn our simple HTML prototype 
 into a functioning realtime web application.
-
+　ブラウザーコンソールで投稿を取ってくることはそれほど役立ちません。
+　私たちはこのデータをテンプレートとつなげる方法を学んでいきます。
+　その過程で、シンプルで（prototype＝原始的な？） HTML を機能的なリアルタイムウェブアプリケーションにする方法を学びます。
 
 ### Keeping it Real-time
 
-ブラウザーコンソールで　コレクションの中には　１つの（？？？）　がありますが、
-ここでやりたいことは、スクリーン上でデータを表示したり、データを変更することです。
-そのようにするため、　静的データを表示している単なるWebページのアプリ（？？？）を、
-　動的にデータを変更する（？？？）リアルタイムWebアプリにしていきます。（？？？）
+Looking at the contents of our Collections on the browser console is one thing, but what we'd really like to do is display the data, and the changes to that data, on the screen.
+In doing so we'll turn our app from a simple web page displaying static data, to a realtime web application with dynamic, changing data.
+　ブラウザーコンソールで　コレクションの中には　１つの（？？？）　がありますが、
+　ここでやりたいことはスクリーン上でデータを表示して、そのデータの変化を表示することです。
+　そのようにするため、私たちが作ってきた静的データを表示する単純なウェブページのアプリを、動的にデータを変更するリアルタイムウェブアプリにしていきます。
 
-どうやるのか、見ていきましょう。
+Let's find out how.
+　どうやるのか、見ていきましょう。
 
-### Populating the Database
+### Populating the Database 　データベースにデータを追加する
 
-最初にやることは、　データベースにデータを入れることです。（？？？）
-　　
-最初に（？？？）　サーバーを立ち上げる時に　構造化データにPostsコレクションを入れる 固定データ を　処理します。（？？？）
+The first thing we'll do is put some data into the database. 
+We'll do so with a fixture file that loads a set of structured data into the Posts collection when the server first starts up.
+　最初にデータベースにデータを入れます。
+　サーバーを立ち上げる時に　Posts コレクションに構造化データを読み込む固定ファイルを処理します。
 
-まず、データベースの中が何もないようにしましょう。
-meteor resetを使うことで、　データベースを削除してプロジェクトをリセットします。
-当然のことながら、あなたが実際のプロジェクトに取り組み始めたら、このコマンドに対して十分注意が必要です。
+First, let's make sure there's nothing in the database. 
+We'll use meteor reset, which erases your database and resets your project. 
+Of course, you'll want to be very careful with this command 
+once you start working on real-world projects.
+　まず、データベースの中が何もないようにしましょう。
+　meteor resetを使うことで、　データベースを削除してプロジェクトをリセットします。
+　当然のことながら、あなたが実際のプロジェクトに取り組み始めたら、このコマンドに対して十分注意が必要です。
 
- ctrl-cを押してMeteorのサーバーを止めてから、コマンドラインを走らせます。（？？？）
+Stop the Meteor server (by pressing ctrl-c) and then, on the command line, run:
+　ctrl-cを押してMeteorのサーバーを止めてから、コマンドラインを走らせます。（？？？）
 
 ~~~bash
 $ meteor reset
 ~~~
 
-リセットコマンドはMongoDBを完全に空にします。
-これはデータベースが一貫性のない状態に陥る可能性が高い開発では便利なコマンドです。（？？？）
+The reset command completely clears out the Mongo database. 
+It's a useful command in development, 
+where there's a strong possibility 
+of our database falling into an inconsistent state.
+　リセットコマンドは MongoDB を完全に空っぽにします。
+　これはデータベースが一貫性のない状態に陥る可能性が高い開発では便利なコマンドです。（？？？）
 
-データベースが空になりましたので、次のコードを書き込みましょう。
-そうすることで、サーバーが起動して空のPostsコレクションを見つけたときは３つの投稿読み込みます。（？？？）
+Now that the database is empty, 
+we can add the following code that will load up three posts 
+whenever the server starts and finds the Posts collection empty:
+　データベースが空になったので、次のコードを書き込みましょう。
+　そうすることで、サーバーが起動して空のPostsコレクションを見つけたときは３つの投稿読み込みます。（？？？）
 
 ~~~js
 if (Posts.find().count() === 0) {
@@ -402,28 +419,49 @@ if (Posts.find().count() === 0) {
 
 <%= commit "4-2", "Added data to the posts collection." %>
 
-私たちは　server/ディレクトリにこのファイルを入れたので、ユーザーのブラウザーで読み込まれることはありません。
-このコードは、サーバーが起動するとすぐに実行され、 insertで　データベースに　Postsコレクション内に３つの投稿を加えます（？？？）　　 　データベースを呼び出す
-今のところ、データセキュリティの対策をしていないので、サーバー上のファイル内でこれを行うのと、ブラウザーで行うのとで実質的な違いはありません。（？？？）
+We've placed this file in the server/ directory, 
+so it will never get loaded on any user's browser. 
+The code will run immediately when the server starts, 
+and make insert calls on the database 
+to add three simple posts in our Posts collection. 
+As we haven't built any data security yet, 
+there's no real difference between doing this
+ in a file run on the server or in the browser.
+　このファイルは server/ ディレクトリにあるので、ユーザーのブラウザーで読み込まれることはありません。
+　このコードは、サーバーが起動するとすぐに実行され、Posts コレクション内に３つの投稿を加えるために insert でデータベースを呼び出すようにします。（？？？）
+　まだデータセキュリティの対策をしていないので、サーバー上のファイル内でこれを行うのと、ブラウザーで行うのとで実質的な違いはありません。（？？？）
 
- 再びmeteorでサーバーを起動すると、この３つの投稿はデータベースに読み込まれます。（？？？）
+Now run your server again with meteor, 
+and these three posts will get loaded into the database.
+　再び meteor でサーバーを起動すると、この３つの投稿はデータベースで読み込まれます。
 
 ### ヘルパーを使ってHTMLにデータをつなげる
 
-ブラウザーコンソールを開いたら、MiniMongo内に（？？？）読み込まれた３つの投稿が（？？？）
+Now, if we open up a browser console, 
+we see all three posts loaded up into MiniMongo:
+　これでブラウザーコンソールを開くと、MiniMongo 内で読み込まれた３つの投稿を見ることができます。
 
 ~~~js
 ❯ Posts.find().fetch();
 ~~~
 <%= caption "Browser console" %>
 
-この投稿をレンダリングしたHTMLにするため、テンプレートヘルパーを使います。
-３章では、どのようにMeteorがデータコンテキストをシンプルなデータ構造のHTML表示を作り出すSpacebarsテンプレートと結合するのかを見てきました。（？？？）
-　私たちは（？？？）まさに同じような方法でコレクションデータを結びつけることができます。
- 私たちは（？？？）静的なJavaScriptのpostsDataオブジェクトを動的なコレクションに置き換えます。
+To get these posts into rendered HTML, 
+we can use a template helper. 
+In Chapter 3 we saw how Meteor allows us to bind a data context
+ to our Spacebars templates to build HTML views of simple data structures. 
+We can bind in our collection data in the exact same way. 
+We'll just replace our static postsData JavaScript object 
+by a dynamic collection.
+　この投稿をレンダリングした HTML にするためにテンプレートヘルパーを使います。
+　３章では、どのように Meteor がデータコンテキストを Spacebars テンプレートと結合するのかを見てきました。 Spacebars テンプレートはシンプルなデータ構造の HTML 表示を作り出します。
+　私たちはまさに同じような方法でコレクションデータを結びつけます。
+ 私たちは静的な JavaScript の postsData オブジェクトを動的なコレクションに置き換えていきます。
 
-そういえば、現在のところ　postsDataコードを削除　（？？？）
-現在のposts_list.jsは、このようになっています。
+Speaking of which, feel free to delete the postsData code at this point. 
+Here's what posts_list.js should now look like:
+　そういえば、この時点で postsData コードは削除しましょう。
+　現在の posts_list.js は、このようにします。
 
 ~~~js
 Template.postsList.helpers({
@@ -441,26 +479,44 @@ Template.postsList.helpers({
 
 ### Find と Fetch
 
-Meteor　find()は、リアクティブデータ・ソースの（？？？）カーソルを返します。
-その（？？？）中身の記録を取り出したい時は、　 fetch()を使います。　カーソルでは、（？？？）を配列に変えます。
+In Meteor, find() returns a cursor, which is a reactive data source. 
+When we want to log its contents, 
+we can then use fetch() on that cursor to transform it into an array .
+　Meteor での find() は、リアクティブデータソース（？？？）のカーソルを返します。
+その中身の記録を取り出したい場合は、（ it ？）を配列に変換する fetch() を使います。　
 
-アプリ内では、Meteor　　配列に変換しないで（？？？）　カーソルを繰り返し処理することもできます。　
-そのような理由で、実際のMeteorコードでfetch()を見る機会はそれほど多くないでしょう。
-（また、そのような理由から上記の例でfetch()を使いませんでした。）
+Within an app, Meteor is smart enough to know 
+how to iterate over cursors 
+without having to explicitly convert them into arrays first. 
+This is why you won't see fetch() that often 
+in actual Meteor code (and why we didn't use it in the above example).
+　アプリ内の Meteor は明示的に配列に変換することなく、カーソルを繰り返し処理することができます。　
+　そのような理由で、実際の Meteor コードで fetch() を見る機会はそれほど多くないでしょう。（また、そのような理由から上記の例で fetch() を使いませんでした。）
 　
 <% end %>
 
-ここでは、静的配列の投稿リストを変数から呼び出すのではなく、カーソルをpostsヘルパーに返しています。
-しかし、何がこれをしているのでしょうか。（？？？）
-ブラウザーに戻って、　（？？？）
+Now, rather than pulling a list of posts as a static array from a variable, 
+we return a cursor to our posts helper. 
+But what does this do? 
+If we go back to our browser, we see:
+　ここでは、変数から静的な配列の投稿リストを呼び出すのではなく、カーソルをposts ヘルパーに返しています。
+　しかし、何がこれをしているのでしょうか。（？？？）
+ブラウザーに戻ると、このように表示されています：
 
 <%= screenshot "4-3", "Using live data（？？？）　" %>
 
-{{#each}}ヘルパーが　 全てのPostsを繰り返し処理して、スクリーン上で表示していることがはっきりとわかります。
-サーバーサイド　コレクション　MongoDBから投稿を呼び出して、  　クライアントサイド　コレクションに引き渡します。
-それから、 Spacebarsヘルパーがそれらを（？？？）テンプレートに引渡ます。
+So we can clearly see 
+that our {{#each}} helper has iterated over all of our Posts, 
+and displayed them on the screen. 
+The server-side collection pulled the posts from Mongo, 
+passed them over the wire to our client-side collection, 
+and our Spacebars helper passed them into the template.
+　{{#each}} ヘルパーがすべての Posts を繰り返し処理して、スクリーン上で表示していることがはっきりとわかります。
+ サーバーサイドコレクション　MongoDBから投稿を呼び出して、クライアントサイドのコレクションに引き渡します。
+それから、 Spacebarsヘルパーがそれらをテンプレートに引き渡します。
 
-（？？？）、さらにもう一歩踏み込みます。；コンソールから投稿を加えましょう。
+Now, we'll take this one step further; let's add another post via the console:
+さらに、もう一歩踏み込みます；コンソールからもう一つ投稿を加えましょう。
 
 ~~~js
 ❯ Posts.insert({
@@ -471,22 +527,42 @@ Meteor　find()は、リアクティブデータ・ソースの（？？？）�
 ~~~
 <%= caption "Browser console" %>
 
+Look back at the browser -- you should see this:
 ブラウザーを見てみると、このようになっているはずです。
 
 <%= screenshot "4-4", "コンソールから投稿を加える" %>
 
-たった今、あなたは初めて実行中の反応性（？？？）を見ました（？？？）
-Posts.find()を繰り返し処理する Spacebars について話していた時、カーソルでの変化を観察する方法を知っていました（？？？）
- スクリーン上で正しいデータを表示するために、とてもシンプルな方法で　　 HTMLを（？？？）つなぎあわせます。
+You have just seen reactivity in action for the first time. 
+When we told Spacebars to iterate over the Posts.find() cursor, 
+it knew how to observe that cursor for changes, 
+and patch the HTML in the simplest way to display the correct data on screen.
+　たった今、あなたは初めて作動中のリアクティビリティを目撃しました。
+　Posts.find() カーソルを繰り返し処理する Spacebars について話していた時、（it？＝Spacebars？）はそのカーソルの変化を見つける方法をわかっており、
+　 スクリーン上で正しいデータを表示するために、とてもシンプルな方法で HTMLをつなぎあわせます。
 
 <% note do %>
 
 ### Inspecting DOM Changes
 
-////（？？？）
+In this case, 
+the simplest change possible was to add another <div class="post">...</div>. 
+If you want to make sure this is really what happened, 
+open the DOM inspector 
+and select the <div> corresponding to one of the existing posts.
+　この場合、最も簡単な変化の可能性は　もう一つ <div class="post">...</div> を追加することでした。
+　これが本当に起こったことだと確かめたい場合は、DOM inspector を開いて <div> に対応する投稿の一つを選択します。
 
-////（？？？）
-
+Now, in the JavaScript console, insert another post. 
+When you tab back to the inspector, you'll see an extra <div>, 
+corresponding to the new post, 
+but you will still have the same existing <div> selected. 
+This is a useful way to tell when elements have been re-rendered 
+and when they have been left alone.
+　JavaScript コンソールで、もう一つの投稿を挿入します。
+　DOM inspector に戻ると、<div> に対応する新しい投稿が見つかりますが、
+　まだ同じ <div> を選択しました。（？？？）
+　これはいつ要素が再レンダリングしたか、いつ（they ？）が（left alone？）になったのか（ tell？）する便利な方法です。　
+　
 <% end %>
 
 ### コレクションをつなげる: Publications と Subscriptions
