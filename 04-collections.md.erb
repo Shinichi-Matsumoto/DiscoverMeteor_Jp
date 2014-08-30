@@ -537,8 +537,7 @@ When we told Spacebars to iterate over the Posts.find() cursor,
 it knew how to observe that cursor for changes, 
 and patch the HTML in the simplest way to display the correct data on screen.
 　たった今、あなたは初めて作動中のリアクティビリティを目撃しました。
-　Posts.find() カーソルを繰り返し処理する Spacebars について話していた時、（it？＝Spacebars？）はそのカーソルの変化を見つける方法をわかっており、
-　 スクリーン上で正しいデータを表示するために、とてもシンプルな方法で HTMLをつなぎあわせます。
+　 Spacebars に Posts.find() カーソルを繰り返し処理する命令をすると、 Spacebars はそのカーソルの変化を見つけて、スクリーン上で正しいデータを表示するために、とてもシンプルな方法で HTMLをつなぎあわせます。
 
 <% note do %>
 
@@ -592,8 +591,7 @@ to make sure our client-side collection of posts was a mirror
 of all the posts in the database.
 　これはすぐに有効化されます。
 　今ブラウザーを見ると、すべての投稿が消えているのがわかります！
-　autopublish は投稿に関するクライアントサイドのコレクションはデータベースのすべての投稿を反映します。
-　私たちは autopublish に依存
+　それは私たちが autopublish に依存していたからであり、autopublish は投稿に関するクライアントサイドのコレクションがデータベース内のすべての投稿に反映させるようにします。（？？？）
 
 Eventually we'll need to make sure 
 we're only transferring the posts 
@@ -624,7 +622,7 @@ Meteor.subscribe('posts');
 ~~~
 <%= caption "client/main.js" %>
 
-<%= commit "4-4", "`autopublish`を削除して、基本的なpublicationをセットアップする。" %>
+<%= commit "4-4", "`autopublish`を削除して、基本的な publication をセットアップする。" %>
 
 If we check the browser again, our posts are back. Phew!
 再びブラウザーをチェックすると、投稿が元に戻っています。ふぅ！
