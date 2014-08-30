@@ -371,11 +371,11 @@ We'll use meteor reset, which erases your database and resets your project.
 Of course, you'll want to be very careful with this command 
 once you start working on real-world projects.
 　まず、データベースの中が何もないようにしましょう。
-　meteor resetを使うことで、　データベースを削除してプロジェクトをリセットします。
+　meteor reset を使うことで、データベースを削除してプロジェクトをリセットします。
 　当然のことながら、あなたが実際のプロジェクトに取り組み始めたら、このコマンドに対して十分注意が必要です。
 
 Stop the Meteor server (by pressing ctrl-c) and then, on the command line, run:
-　ctrl-cを押してMeteorのサーバーを止めてから、コマンドラインを走らせます。（？？？）
+　ctrl-c を押して Meteor のサーバーを止めてから、コマンドラインで動かします。
 
 ~~~bash
 $ meteor reset
@@ -599,7 +599,7 @@ that the user actually needs to see
 (taking into account things like pagination). 
 But for now, we'll just setup Posts to be published in its entirety.
 　最終的には、（ページネーションなどを考慮して）ユーザーが見る必要のある投稿だけに変換する必要があります。
-　しかし、今は Posts の全体に publish されるように設定します。
+　しかし、今は Posts の全体にパブリッシュされるように設定します。
 
 To do so, 
 we create a simple publish() function that returns a cursor referencing all posts:
@@ -614,7 +614,7 @@ Meteor.publish('posts', function() {
 
 In the client, we need to subscribe to the publication. 
 We'll just add the following line to main.js:
-　クライアントでは、publication に subscribe（？？？）する必要があります。
+　クライアントでは、パブリケーションにサブスクライブする必要があります。
 main.js に次のようにコードを追加しましょう。
 
 ~~~js
@@ -622,7 +622,7 @@ Meteor.subscribe('posts');
 ~~~
 <%= caption "client/main.js" %>
 
-<%= commit "4-4", "`autopublish`を削除して、基本的な publication をセットアップする。" %>
+<%= commit "4-4", "`autopublish`を削除して、基本的なパブリケーションをセットアップする。" %>
 
 If we check the browser again, our posts are back. Phew!
 再びブラウザーをチェックすると、投稿が元に戻っています。ふぅ！
