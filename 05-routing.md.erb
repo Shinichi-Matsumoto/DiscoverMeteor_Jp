@@ -14,12 +14,12 @@ we need an individual post page where our users will be able to discuss each pos
 
 We'd like these pages to be accessible via a permalink, 
 a URL of the form http://myapp.com/posts/xyz (where xyz is a MongoDB _id identifier) that is unique to each post.
-このページをパーマリンクを通じて、アクセスできるようにしたい　
-パーマリンクとは http://myapp.com/posts/xyz の形をした URL で、 それぞれの投稿を独自のものにします（？？？）　　（ xyz の部分は MongoDB の _id 識別子です）
+ このページをパーマリンクを通じて、アクセスできるようにしたいと思います。　
+ パーマリンクとは http://myapp.com/posts/xyz の形をした URL で、 それぞれの投稿は独自のものです。　　（ xyz の部分は MongoDB の _id 識別子です）
 
 This means we'll need some kind of routing to look at what's inside the browser's URL bar
 and display the right content accordingly.
-これは　ブラウザーのURLバーの中に何があるのか調べてそれに応じて正しい中身を表示する何らかのルーティングが必要であるということです
+　これはブラウザーの URL バーの中に何があるのか調べてそれに応じて正しい中身を表示する何らかのルーティングが必要であるということです
 
 ### Iron Routerパッケージを入れる
 
@@ -46,8 +46,8 @@ $ meteor add iron:router
 This command downloads and installs the iron-router package into our app, ready to use. 
 Note that you might sometimes need to restart your Meteor app 
 (with ctrl+c to kill the process, then meteor to start it again) before a package can be used.
-このコマンドで iron-router パッケージをアプリにダウンロードしてインストールをするので、すぐに使える状態となります。
-パッケージを使う前に Meteor アプリを再起動する必要があるかもしれません。
+　このコマンドで iron-router パッケージをアプリにダウンロードしてインストールをしたので、すぐに使える状態となります。
+　パッケージを使う前に Meteor アプリを再起動する必要があるかもしれません。
 （ctrl+c でプロセスを中止して、再び起動するために meteor を入力します。）
 
 <% note do %>
@@ -90,7 +90,7 @@ you can let all these routes inherit from a single routing controller which will
 - ルートテンプレート： 各ルートはテンプレートを指し示します。
 　　　　　　　　　　　　（？？？）、デフォルトでのルーターは、ルートとしての同じ名前のテンプレートを探します。（？？？）
 - レイアウト：レイアウトとは、デジタルフォトフレームのようなものだと捉えることができます。
-　　　　　　　レイアウトは　　現在のテンプレートをラップする（？？？）　全てのHTMLコードのことで、テンプレートが変化しても同じ状態を保ちます。　　
+　　　　　　　レイアウトは　　現在のテンプレートをラップする（？？？）　すべての HTML コードのことで、テンプレートが変化しても同じ状態を保ちます。　　
 - コントローラー：時々、　多くのテンプレートが同じパラメーターで（？？？）再利用できることに気づくでしょう。
 　　　　　　　　　コードを繰り返すよりも（？？？）、　　１つのルーティングコントローラーで　ルートを継承することができます。（？？？）
 
@@ -106,14 +106,14 @@ So although the content of our app can change,the page's basic structure is alwa
  a header, with a list of posts below it.
 今まで、{{>postsList}}のようにハードコードされたテンプレートのインクードを使ってレイアウトを作ってきました。（？？？）
 そのため、アプリの内容は変化しましたが、ページの基本的な構造は常に同じです。
-ヘッダーと投稿の一覧表です。（？？？）
+つまり、ヘッダーと投稿の一覧表です。（？？？）
 
 The Iron Router lets us break out of this mold by taking over what renders inside the HTML <body> tag.
 So we won't define that tag's content ourselves, as we would with a regular HTML page. 
 Instead, we will point the router to a special layout template that contains a {{> yield}} template helper.
-Iron Router は HTML の <body> タグの中をレンダリングしたものを（？？？）引き継ぐことで、この型から抜け出します。（？？？）
-そのため、通常の HTML ページのようにタグの中を定義しません。（？？？）
-その代わりに、　{{> yield}} テンプレートヘルパーを含んだ特別なレイアウトテンプレートをルーターに指定します（？？？）
+　Iron Router は HTML の <body> タグの中をレンダリングしたものを引き継ぐことで、この型から抜け出します。（？？？）
+　そのため、通常の HTML ページのようにタグの中を定義しません。（？？？）
+その代わりに、{{> yield}} テンプレートヘルパーを含んだ特別なレイアウトテンプレートをルーターに指定します（？？？）
 
 This {{> yield}} helper will define a special dynamic zone that
 will automatically render whichever template corresponds to the current route
@@ -159,14 +159,14 @@ While the newly created layout.html will now contain the app's outer layout:
 You'll notice we've replaced the inclusion of the postsList template with a call to yield helper. 
 You'll notice that after this change, we see nothing on the screen. 
 This is because we haven't told the router what to do with the / URL yet, so it simply serves up an empty template.
-postsList テンプレートを yield ヘルパーの呼び出しに交換したことに　（？？？）
+postsList テンプレートを yield ヘルパーの呼び出しに交換したことに気づいたことでしょう。
 また、その変化の後にスクリーン上になにもないことにお気づきかと思います。
 これはまだ　ルーターに/ URLで何を処理するか命令していないためです。
 そのため空のテンプレートを出しています。
 
 To begin, we can regain our old behavior by mapping the root / URL to the postsList template.
 We'll create a /lib directory at our project's root, and inside it create router.js :
-はじめに、postsList テンプレートに/ URL ルートを割り当てて、（？？？）を
+　はじめに、postsList テンプレートに/ URL ルートを割り当てることで、（ regain our old behavior？）
 　ルートのプロジェクトで /lib directory を作って、その中に router.js を作ります。
 
 ~~~js
@@ -183,9 +183,9 @@ Router.map(function() {
 We've done two important things. 
 First, we've told the router to use the layout we just created as the default layout for all routes.
 Second, we've defined a new route called postsList and mapped it to the / path.
-これで２つの大事なことが終わりました。
-１つめは、ルーターに　（？？？）　　レイアウトを使うことを命令しました。
-２つめは、postsListという名前の新しいルートを定義して、/ パスを割り当てました。
+　これで２つの大事なことを行いました。
+　１つめは、ルーターに　（？？？）　　レイアウトを使うことを命令しました。
+　２つめは、postsList という名前の新しいルートを定義して、/ パスを割り当てました。
 
 <% note do %>
 
@@ -194,8 +194,8 @@ Second, we've defined a new route called postsList and mapped it to the / path.
 Anything you put inside the /lib folder is guaranteed to load first before anything else in your app
 (with the possible exception of smart packages).
 This makes it a great place to put any helper code that needs to be available at all times.
- /lib フォルダ内に置いたものは、　何よりも前に最初に読み込まれることを保証します。（？？？）
-（スマートパッケージは例外ですが）。
+ /lib フォルダ内に置いたものは、何よりも前に最初に読み込まれることを保証します。（？？？）
+（スマートパッケージは例外です）。
 そのため、/lib フォルダはいつも利用する必要のあるヘルパーコードを置く最適な場所となります。
 
 A bit of warning though: note that since the /lib folder is neither inside /client or /server,
@@ -209,15 +209,15 @@ this means its contents will be available to both environments.
 
 Let's clear up a bit of ambiguity here. 
 We named our route postsList, but we also have a template called postsList. So what's going on here?
-ここで少しあいまいな点をクリアにしましょう。
-私たちはルートに postsList と名付けましたが、postsList という名前のテンプレートもあります。
+　ここで少しあいまいな点をクリアにしましょう。
+　私たちはルートに postsList と名付けましたが、postsList という名前のテンプレートもあります。
 すると、ここではどんなことが起こるのでしょうか。
 
 By default, Iron Router will look for a template with the same name as the route. 
 In fact, it will even look for a path based on the route name, 
 meaning that if we hadn't defined a custom path (which we did by providing a path option in our route definition), 
 our template would've been accessible at URL /postsList by default.
-デフォルトの状態だと、 Iron Router はルートで同じ名前のテンプレートを探します。（？？？）
+　デフォルトの状態だと、 Iron Router はルートで同じ名前のテンプレートを探します。（？？？）
 実際には、カスタムパス（？？？）を定義していなくても　ルートの名前に基づいたパスを探します。
 （つまり、　ルートの定義にパスの選択肢を与えました。）（？？？）
 テンプレートはデフォルト状態では　/postsList の URL でアクセスできます。（？？？）
