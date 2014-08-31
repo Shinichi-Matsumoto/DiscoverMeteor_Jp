@@ -8,66 +8,60 @@ paragraphs: 72
 ---
 
 Now that we have a list of posts (which will eventually be user-submitted),
-今のところ、投稿の一覧表があります（最終的にはユーザーが投稿するようにします）
+今のところ、投稿の一覧表があるので、（最終的にはユーザーが投稿するようにします）
 we need an individual post page where our users will be able to discuss each post.
-　ユーザーがお互いの投稿を議論できるように個別の投稿ページが必要です。（？？？）
+　ユーザー同士で投稿を議論できるように個別の投稿ページがほしいところです。（？？？）
 
 We'd like these pages to be accessible via a permalink, 
-このページをパーマリンクを通じて、　アクセスできるようにしたい　
 a URL of the form http://myapp.com/posts/xyz (where xyz is a MongoDB _id identifier) that is unique to each post.
-パーマリンクとはhttp://myapp.com/posts/xyz の形をしたURLで、 それぞれの投稿を独自のものにします（？？？）　　（xyzの部分はMongoDBの_id識別子です）
+このページをパーマリンクを通じて、アクセスできるようにしたい　
+パーマリンクとは http://myapp.com/posts/xyz の形をした URL で、 それぞれの投稿を独自のものにします（？？？）　　（ xyz の部分は MongoDB の _id 識別子です）
 
 This means we'll need some kind of routing to look at what's inside the browser's URL bar
-これは　　ブラウザーのURLバーの中に何があるのか調べてそれに応じて正しい中身を表示する何らかのルーティングが必要であるということです
 and display the right content accordingly.
-
+これは　ブラウザーのURLバーの中に何があるのか調べてそれに応じて正しい中身を表示する何らかのルーティングが必要であるということです
 
 ### Iron Routerパッケージを入れる
 
 Iron Router is a routing package that was conceived specifically for Meteor apps.
-Iron Router 特にMeteorアプリでのルーティングのパッケージです。
+Iron Router は Meteor アプリでのルーティングに特化したパッケージです。
 
 Not only does it help with routing (setting up paths), 
-Iron Routerはルーティング（パスの設定）に役立つだけではなく、
-but it can also take care of filters (assigning actions to some of these paths) 
-パスに処理を割り当てるフィルターも処理します。
+but it can also take care of filters (assigning actions to some of these paths) ]
 and even manage subscriptions (control which path has access to what data).
-また、どのパスがどんなデータにアクセスするのか制御するサブスクリプションも　操ります（？？？）　
+　Iron Router はルーティング（パスの設定）に役立つだけではなく、
+　パスに処理を割り当てるフィルターも処理します。
+　また、どのパスがどんなデータにアクセスするのか制御するサブスクリプションも　操ります（？？？）　
 
 (Note: Iron Router was developed in part by Discover Meteor co-author Tom Coleman.)
 
 First, let's install the package from Atmosphere:
-最初に、Atmosphereからパッケージをインストールしましょう。
+最初に、Atmosphere からパッケージをインストールしましょう。
 
 ~~~bash
-$ mrt add iron-router
+$ meteor add iron:router
 ~~~
 <%= caption "Terminal" %>
 
 This command downloads and installs the iron-router package into our app, ready to use. 
-このコマンドでiron-routerパッケージをアプリにインストールします。　すぐ使える（？？？）
 Note that you might sometimes need to restart your Meteor app 
-パッケージを使う前にMeteorアプリを再起動する必要があるかもしれません　（？？？）
 (with ctrl+c to kill the process, then meteor to start it again) before a package can be used.
-（ctrl+cでプロセスを中止して、再び起動するためにmeteorを入力します。）
-
-Note that the Iron Router is a third-party package,
-Iron Routerはサードパーティのパッケージですので、
-meaning that you'll need Meteorite to install it (meteor add iron-router won't work).
-インストールするにはMeteoriteが必要です。(meteor add iron-router ではインストールできません).
+このコマンドで iron-router パッケージをアプリにダウンロードしてインストールをするので、すぐに使える状態となります。
+パッケージを使う前に Meteor アプリを再起動する必要があるかもしれません。
+（ctrl+c でプロセスを中止して、再び起動するために meteor を入力します。）
 
 <% note do %>
 
 ### Router Vocabulary　ルーティング用語集
 
 We'll be touching on a lot of different features of the router in this chapter. 
-この章では、ルーティングに関する様々な特徴に触れることになります。
 If you have some experience with a framework such as Rails, 
-もしあなたがRailsなどのフレームワークの経験があるなら、
 you'll already be familiar with most of these concepts.
-このコンセプトについてすでに知っていることでしょう。
 But if not, here's a quick glossary to bring you up to speed
-もしそうでなければ、ここでちょっとした用語集を用意しました。
+　この章では、ルーティングに関する様々な特徴に触れることになります。
+　もしあなたが Rails などのフレームワークの経験があるなら、
+　このコンセプトについてすでに知っていることでしょう。
+　もしそうでなければ、ここでちょっとした用語集を用意しました。
 
 Routes: A route is the basic building block of routing.
 It's basically the set of instructions that tell the app where to go and what to do when it encounters a URL.
@@ -87,8 +81,8 @@ Rather than duplicate your code,
 you can let all these routes inherit from a single routing controller which will contain all the routing logic.
 
 - ルート：ルートとは、ルーティングの基本的な構成要素です。
-　　　　アプリがURLと遭遇した際に（？？？）どこに行ったらよいか、何をしたらよいかといった基本的な命令のセットがルートです。
-- パス：パスとはアプリ内でのURLのことです。　パスは静的な(/terms_of_service) や動的な(/posts/xyz)、質問パラメーターでもあります。
+　　　　アプリが URL と遭遇した際に（？？？）どこに行ったらよいか、何をしたらよいかといった基本的な命令のセットがルートです。
+- パス：パスとはアプリ内での URL のことです。　パスは静的な(/terms_of_service) や動的な(/posts/xyz)、質問パラメーターでもあります。
 - セグメント：パスの様々なパーツのことで、前のスラッシュ（/）で区切れています。
 - フック：フックとは、　（？？？）
 　　　　　代表的な例は、　ユーザーがページを表示する前に適切な権利を持っているか調べます。（？？？）
@@ -101,7 +95,7 @@ you can let all these routes inherit from a single routing controller which will
 　　　　　　　　　コードを繰り返すよりも（？？？）、　　１つのルーティングコントローラーで　ルートを継承することができます。（？？？）
 
 For more information about Iron Router, check out the full documentation on GitHub.
-Iron Routerに関する情報は、GitHub上でドキュメンテーションの全文を見ることができます。
+Iron Routerに関する情報は、GitHub 上でドキュメンテーションの全文を見ることができます。
 
 <% end %>
 
@@ -117,24 +111,24 @@ So although the content of our app can change,the page's basic structure is alwa
 The Iron Router lets us break out of this mold by taking over what renders inside the HTML <body> tag.
 So we won't define that tag's content ourselves, as we would with a regular HTML page. 
 Instead, we will point the router to a special layout template that contains a {{> yield}} template helper.
-Iron Routerは　HTMLの<body>タグの中をレンダリングしたものを（？？？）引き継ぐことで、この型から抜け出します。（？？？）
-そのため、通常のHTMLページのようにタグの中を定義しません。（？？？）
-その代わりに、　{{> yield}}テンプレートヘルパーを含んだ特別なレイアウトテンプレートをルーターに指定します（？？？）
+Iron Router は HTML の <body> タグの中をレンダリングしたものを（？？？）引き継ぐことで、この型から抜け出します。（？？？）
+そのため、通常の HTML ページのようにタグの中を定義しません。（？？？）
+その代わりに、　{{> yield}} テンプレートヘルパーを含んだ特別なレイアウトテンプレートをルーターに指定します（？？？）
 
 This {{> yield}} helper will define a special dynamic zone that
 will automatically render whichever template corresponds to the current route
 (as a convention, we'll designate this special template as the “route template” from now on):
-この{{> yield}}ヘルパーは　現在のルートに対応するどんなテンプレートでも自動的にレンダリングする特別な動的な区間を定義します（？？？）
+この {{> yield}} ヘルパーは　現在のルートに対応するどんなテンプレートでも自動的にレンダリングする特別な動的な区間を定義します（？？？）
 
 <%= diagram "router-diagram", "レイアウトとテンプレート.", "pull-center" %>
 
 We'll start by creating our layout and adding the {{> yield}} helper. 
 First, we'll remove our HTML <body> tag from main.html, and move its contents to their own template, layout.html.
-ではレイアウトを作って{{> yield}}ヘルパーを追加してみましょう。
-はじめに、main.htmlからHTMLの<body>タグを削除して、その中身をlayout.htmlの中のテンプレートに移動させます。（？？？）
+ではレイアウトを作って {{> yield} }ヘルパーを追加してみましょう。
+はじめに、main.html から HTML の <body> タグを削除して、その中身を layout.htmlの中のテンプレートに移動させます。（？？？）
 
 So our slimmed down main.html now looks like this:
-すると、スリムになったmain.htmlは現在このようになっています。
+すると、スリムになった main.html は現在このようになっています。
 
 ~~~html
 <head>
@@ -144,7 +138,7 @@ So our slimmed down main.html now looks like this:
 <%= caption "client/main.html" %>
 
 While the newly created layout.html will now contain the app's outer layout:
-新しく作ったlayout.htmlは現在、アプリの外側のレイアウトを含んでいます。（？？？）
+新しく作った layout.html は現在、アプリの外側のレイアウトを含んでいます。（？？？）
 
 ~~~html
 <template name="layout">
@@ -165,15 +159,15 @@ While the newly created layout.html will now contain the app's outer layout:
 You'll notice we've replaced the inclusion of the postsList template with a call to yield helper. 
 You'll notice that after this change, we see nothing on the screen. 
 This is because we haven't told the router what to do with the / URL yet, so it simply serves up an empty template.
-postsListテンプレートをyield ヘルパーの呼び出しに交換したことに　（？？？）
+postsList テンプレートを yield ヘルパーの呼び出しに交換したことに　（？？？）
 また、その変化の後にスクリーン上になにもないことにお気づきかと思います。
 これはまだ　ルーターに/ URLで何を処理するか命令していないためです。
 そのため空のテンプレートを出しています。
 
 To begin, we can regain our old behavior by mapping the root / URL to the postsList template.
 We'll create a /lib directory at our project's root, and inside it create router.js :
-はじめに、　　postsListテンプレートに/ URLルートを割り当てて、（？？？）を
-　ルートのプロジェクトで/lib directoryを作って、その中にrouter.jsを作ります。
+はじめに、postsList テンプレートに/ URL ルートを割り当てて、（？？？）を
+　ルートのプロジェクトで /lib directory を作って、その中に router.js を作ります。
 
 ~~~js
 Router.configure({
@@ -200,14 +194,14 @@ Second, we've defined a new route called postsList and mapped it to the / path.
 Anything you put inside the /lib folder is guaranteed to load first before anything else in your app
 (with the possible exception of smart packages).
 This makes it a great place to put any helper code that needs to be available at all times.
- /libフォルダ内に置いたものは、　何よりも前に最初に読み込まれることを保証します。（？？？）
+ /lib フォルダ内に置いたものは、　何よりも前に最初に読み込まれることを保証します。（？？？）
 （スマートパッケージは例外ですが）。
-そのため、/libフォルダはいつも利用する必要のあるヘルパーコードを置く最適な場所となります。
+そのため、/lib フォルダはいつも利用する必要のあるヘルパーコードを置く最適な場所となります。
 
 A bit of warning though: note that since the /lib folder is neither inside /client or /server,
 this means its contents will be available to both environments.
-しかし、注意点が１つあります。 /libフォルダは/client 、/server内のどちらにもないので、（？？？）
-/libフォルダの内容がどちらの環境でも有効化されるということに気をつけます。
+しかし、注意点が１つあります。 /lib フォルダは /client 、/server 内のどちらにもないので、（？？？）
+/lib フォルダの内容がどちらの環境でも有効化されるということに気をつけます。
 
 <% end %>
 
@@ -216,7 +210,7 @@ this means its contents will be available to both environments.
 Let's clear up a bit of ambiguity here. 
 We named our route postsList, but we also have a template called postsList. So what's going on here?
 ここで少しあいまいな点をクリアにしましょう。
-私たちはルートにpostsListと名付けましたが、postsListという名前のテンプレートもあります。
+私たちはルートに postsList と名付けましたが、postsList という名前のテンプレートもあります。
 すると、ここではどんなことが起こるのでしょうか。
 
 By default, Iron Router will look for a template with the same name as the route. 
@@ -226,14 +220,14 @@ our template would've been accessible at URL /postsList by default.
 デフォルトの状態だと、 Iron Router はルートで同じ名前のテンプレートを探します。（？？？）
 実際には、カスタムパス（？？？）を定義していなくても　ルートの名前に基づいたパスを探します。
 （つまり、　ルートの定義にパスの選択肢を与えました。）（？？？）
-テンプレートはデフォルト状態では　/postsListのURLでアクセスできます。（？？？）
+テンプレートはデフォルト状態では　/postsList の URL でアクセスできます。（？？？）
 
 You may be wondering why we even need to name our routes in the first place.
 Naming routes lets us use a few Iron Router features that make it easier to build links inside our app.
 The most useful one is the {{pathFor}} Spacebars helper, which returns the URL path component of any route.
 なぜ最初の段階でルートに名前をつける必要があるのか不思議に思う読者の方もいるかもしれません。
-ルートを名付けることでアプリ内で簡単にリンクを作るIron Router の特徴を使うことができます。　
-最も役立つ特徴は{{pathFor}}というSpacebarsヘルパーです。これはどんなルートでもURLパスの構成要素を返します。（？？？）
+ルートを名付けることでアプリ内で簡単にリンクを作る Iron Router の特徴を使うことができます。　
+最も役立つ特徴は {{pathFor}} という Spacebars ヘルパーです。これはどんなルートでも URL パスの構成要素を返します。（？？？）
 
 We want our main home link to point us back to the posts list, 
 so instead of specifying a static / URL, we can also use the Spacebars helper.
@@ -241,8 +235,8 @@ The end result will be the same,
 but this gives us more flexibility since the helper will always output the right URL even if 
 we change the route's path in the router.
 メインのホームのリンクが（？？？）投稿の一覧を返すようにしたいので、（？？？）
-静的な / URL を指定する代わりに、Spacebarsヘルパを使います。
-最終的な結果は同じとなりますが、ルーターでルートのパスを変えたとしてもヘルパーは常に正しいURLを出力するため、
+静的な / URL を指定する代わりに、Spacebars ヘルパーを使います。
+最終的な結果は同じとなりますが、ルーターでルートのパスを変えたとしてもヘルパーは常に正しい URL を出力するため、
 私たちはフレキシビリティを得ることができます。
 
 ~~~html
@@ -265,17 +259,17 @@ If you deploy the current version of the app (or launch the instance using the l
 you'll notice that the list appears empty for a few moments before the posts appear. 
 This is because when the page first loads, 
 there are no posts to display until the posts subscription is done grabbing the post data from the server.
-もし現在の状態のアプリをデプロイしたら、（あるいは上記のリンクを使ってインスタンスをローンチしたら）
-投稿が現れる前のわずかな間はリストの中身がないことに気づくことだと思います。
-これはページが最初に読み込まれるときはpostsサブスクリプションがサーバーから投稿データを取ってくるまで表示する投稿がないからです。（？？？）
+　もし現在の状態のアプリをデプロイしたら、（あるいは上記のリンクを使ってインスタンスをローンチしたら）
+　投稿が現れる前のわずかな間はリストの中身がないことに気づくことだと思います。
+　これはページが最初に読み込まれるときはpostsサブスクリプションがサーバーから投稿データを取ってくるまで表示する投稿がないからです。（？？？）
 
 It would be a much better user experience to provide some visual feedback that something is happening, 
 and that the user should wait a moment.
-何が起きているのかという視覚的なフィードバックを与えるので（？？？）　よりよいユーザーエクスペリエンスとなります。
+　何が起きているのかという視覚的なフィードバックを与えるので（？？？）　よりよいユーザーエクスペリエンスとなります。
 そのためユーザーは少しの間待ってくれるでしょう。（？？？）
 
 Luckily, Iron Router gives us an easy way to do that -- we'll waitOn the subscription:
-幸運なことに、Iron Routerにはそうするための簡単な方法があります。　waitOnサブスクリプションです。
+幸運なことに、Iron Router にはそうするための簡単な方法があります。　waitOn サブスクリプションです。
 
 ~~~js
 Router.configure({
@@ -295,7 +289,7 @@ Let's break things down. First, we've modified the Router.configure() block to p
 with the name of a loading template (which we'll create soon) 
 to redirect to while our app is waiting for data.
 ひとつひとつ見ていきましょう。
-最初に、私たちはRouter.configure()ブロックを修正しました。
+最初に、私たちは Router.configure() ブロックを修正しました。
 ルーターに 読み込まれるテンプレート（これからすぐに作ります。）の名前を与えるために
 アプリがデータを待っている間にリダイレクトする　　　（？？？？？？）
 
@@ -303,21 +297,21 @@ Second, we've also added a waitOn function, which returns our posts subscription
 Finally, we enabled a built in loading hook. 
 What this means is that the router will ensure that the posts subscription is loaded 
 before sending the user through to the route they requested.
-次に、waitOn関数を加えました。waitOn関数はpostsサブスクリプションを返します。
+次に、waitOn関数を加えました。waitOn関数は posts サブスクリプションを返します。
 最後に、ローディングする（？？？）フックを作ることができました。
-これは　ルーターは　ルートを通じてユーザーに送る前に　postsサブスクリプションが読み込まれることを確かにします。（？？？）
+これは　ルーターは　ルートを通じてユーザーに送る前に　posts サブスクリプションが読み込まれることを確かにします。（？？？）
 
 Note that since we're defining our waitOn function globally at the router level,
 this sequence will only happen once when a user first accesses your app. 
 After that, the data will already be loaded in the browser's memory and the router won't need to wait for it again.
-私たちはwaitOn関数をルーターレベルでグローバルに定義しているため、
+私たちは waitOn関数をルーターレベルでグローバルに定義しているため、
 この（？？？）は、ユーザーが初めてアプリにアクセスした際に一度だけ起こります。（？？？）
 その後、データは　ブラウザーのメモリにすでに読み込まれ、ルータはは再び待つ必要がなくなります。
 
 And since we are now letting the router handle our subscription, 
 you can now safely remove it from main.js (which should now be empty).
 これでルーターがサブスクリプションを処理するようにしたので、
-main.jsから（？？？）を安全に削除することができます。
+main.js から（？？？）を安全に削除することができます。
 
 It's usually a good idea to wait on your subscriptions, not just for the user experience, 
 but also because it means you can safely assume that data will always be available from within a template. 
@@ -330,15 +324,15 @@ which often requires tricky workarounds.
 
 We'll also add an onBeforeAction filter to trigger Iron Router's built-in loading hook 
 and make sure we're showing the loading template while we wait.
- また、onBeforeActionフィルターを加えます。Iron Routerに組み込まれたloadingフックを動作させます。
+ また、onBeforeAction フィルターを加えます。Iron Router に組み込まれた loading フックを動作させます。
  そして、読み込まれるテンプレートを表示しています。（？？？）
 
 The final piece of the puzzle is the actual loading template. 
 We'll use the spin package to create a nice animated loading spinner.
 Add it with mrt add spin, and then create the loading template as follows:
 パズルの最後のピースは実際の読み込むテンプレートです。（？？？）
-ナイスなローディングスピナーのアニメーションを作ってspinパッケージを使います。（？？？）
-mrt add spinでspinを入れて（？？？）、loadingテンプレートを次のように作ります。
+ナイスなローディングスピナーのアニメーションを作って spin パッケージを使います。（？？？）
+mrt add spin で spin を入れて（？？？）、loading テンプレートを次のように作ります。
 
 ~~~html
 <template name="loading">
@@ -349,7 +343,7 @@ mrt add spinでspinを入れて（？？？）、loadingテンプレートを次
 
 Note that {{>spinner}} is a partial contained in the spin package.
 Even though this partial comes from “outside” our app, we can include it just like any other template.
-{{>spinner}}　spinパッケージに含まれている部分です（？？？）。
+{{>spinner}}　spin パッケージに含まれている部分です（？？？）。
 この部分はプリの「外側」から来ているわけですが（？？？）、　普通のテンプレートと同様にインクルードすることができます。
 
 <%= commit "5-2", "Wait on the post subscription." %>
@@ -369,7 +363,7 @@ But don't worry, you'll learn more about it very soon!
 
 ### A First Glance At Reactivity
 
-リアクティビリティはMeteorの根幹をなす部分ですが、ここまで触れてきませんでした。（？？？）
+リアクティビリティは Meteor の根幹をなす部分ですが、ここまで触れてきませんでした。（？？？）
 ローディングテンプレートは（？？？）このコンセプトについて少しだけ見せてくれることになりました。（？？？）
 
 データがロードされていないかどうか　ローディングテンプレートにリダイレクトすることは良いことですが、
@@ -384,7 +378,7 @@ But don't worry, you'll learn more about it very soon!
 
 Now that we've seen how to route to the postsList template,
 let's set up a route to display the details of a single post.
-ここまでで、どのようにpostsListテンプレートにルーティングするのか見てきました。
+ここまでで、どのように postsList テンプレートにルーティングするのか見てきました。
 ここでは１つ１つの投稿の詳細を表示するためのルートをセットアップしましょう。　（？？？）
 
 There's just one catch: we can't go ahead and define one route per post, since there might be hundreds of them.
@@ -406,12 +400,12 @@ that we used earlier in the list of posts.
 
 We'll add more elements to this template later on (such as comments),
 but for now it'll simply serve as a shell for our {{> postItem}} include.
-後でこのテンプレートにはコメントなどの要素を入れていきますが、今のところ{{> postItem}}インクルードのシェルのような役目を果たしています。
+後でこのテンプレートにはコメントなどの要素を入れていきますが、今のところ {{> postItem}} インクルードのシェルのような役目を果たしています。
 
 We are going to create another named route,
 this time mapping URL paths of the form /posts/<ID> to the postPage template:
 また違う名前でルートを作っていきましょう。
-今回は、/posts/<ID>の形の（？？？） URLパスをpostPageテンプレートに割り当てます。
+今回は、/posts/<ID> の形の（？？？） URL パスを postPage テンプレートに割り当てます。
 
 ~~~js
 Router.map(function() {
@@ -430,19 +424,19 @@ The special :_id syntax tells the router two things:
 first, to match any route of the form /posts/xyz/, where “xyz” can be anything at all.
 Second, to put whatever it finds in this “xyz” spot inside an _id property in the router's params array.
 特別な:_id構文はルーターに２つのことを命令しています：
-１つは、　/posts/xyz/の形のルートをマッチさせて、　“xyz”は何にもなりません。（？？？）
-２つは、　ルーターのparams配列で_idプロパティ内の “xyz”地点を見つけたものはなんでも中に入れます。（？？？）
+１つは、　/posts/xyz/ の形のルートをマッチさせて、　“xyz” は何にもなりません。（？？？）
+２つは、　ルーターの params配列で _id プロパティ内の “xyz” 地点を見つけたものはなんでも中に入れます。（？？？）
 
 Note that we're only using _id for convenience's sake here. 
 The router has no way of knowing if you're passing it an actual _id, or just some random string of characters.
- ここでは便宜上のために_idだけを使っていることに
- このルーター　あなたが実際の_idを押しているのか（？？？）、ランダムの文字列なのかは識別することはできません。（？？？）
+ ここでは便宜上のために _id だけを使っていることに
+ このルーター　あなたが実際の _id を押しているのか（？？？）、ランダムの文字列なのかは識別することはできません。（？？？）
 
 We're now routing to the correct template, but we're still missing something: 
 the router knows the _id of the post we'd like to display,
 but the template still has no clue. So how do we bridge that gap?
 私たちは今、正しいテンプレートにルーティングしていますが、まだ何かミスをしています：
-ルーターは私たちが表示したい投稿の_idを識別します。
+ルーターは私たちが表示したい投稿の _id を識別します。
 しかし、そのテンプレートはまだ何もわからない状態です。では、どのようにしてこのギャップを埋めるのでしょうか。
 
 Thankfully, the router has a clever built-in solution: 
@@ -457,7 +451,7 @@ Simply put, it's what you fill up your template with:
 <%= diagram "router-diagram-2", "データコンテキスト", "pull-center" %>
 
 In our case, we can get the proper data context by looking for our post based on the _id we got from the URL:
-この場合、私たちはURLから得た_idを基にした投稿を探して正しいデータコンテキストを得ています
+この場合、私たちは URL から得た _id を基にした投稿を探して正しいデータコンテキストを得ています
 
 ~~~js
 Router.map(function() {
@@ -479,27 +473,27 @@ Remember that findOne returns a single post that matches a query,
 and that providing just an id as an argument is a shorthand for {_id: id}.
 そのため、ユーザーがこのルートにアクセスするたびに、
 私たちは　適切な投稿を見つけて その情報テンプレートに引き渡しています。（？？？）
-findOneがクエリにマッチした１つの投稿を返して、
-　　idが{_id: id}を略した表現であることに（？？？）
+findOne がクエリにマッチした１つの投稿を返して、
+　　id が {_id: id} を略した表現であることに（？？？）
 
 
 Within the data function for a route, this corresponds to the currently matched route, 
 and we can use this.params to access the named parts of the route 
 (which we indicated by prefixing them with : inside our path).
-ルートのdata関数内で、thisは現在マッチしたルートに対応しています。
-私たちは名前がついたルートの部分にアクセスするためにthis.paramsを使うことができます。
-（そのことを、私たちはpathの中で：を前に置くことで表現しています。）（？？？）
+ルートの data 関数内で、this は現在マッチしたルートに対応しています。
+私たちは名前がついたルートの部分にアクセスするために this.params を使うことができます。
+（そのことを、私たちは path の中で：を前に置くことで表現しています。）（？？？）
 
 <% note do %>
 
 ### More About Data Contexts
 
 By setting a template's data context, you can control the value of this inside template helpers.
-テンプレートのデータコンテキストを設定することで、テンプレートヘルパー内でのthisの値をコントロールすることができます。
+テンプレートのデータコンテキストを設定することで、テンプレートヘルパー内での this の値をコントロールすることができます。
 
 This is usually done implicitly with the {{#each}} iterator, 
 which automatically sets the data context of each iteration to the item currently being iterated on:
-これは{{#each}}イテレータで間接的に処理されます。
+これは {{#each}} イテレータで間接的に処理されます。
 こうして　自動的に　それぞれの繰り返し処理の データコンテキストを　（？？？）に設定します。 　（？？？？？？）
 
 ~~~html
@@ -511,7 +505,7 @@ which automatically sets the data context of each iteration to the item currentl
 But we can also do it explicitly using {{#with}}, 
 which simply says "take this object, and apply the following template to it". 
 For example, we can write:
-しかし、　{{#with}}を使うことでも間接的に同じことができます。（？？？）
+しかし、{{#with}} を使うことでも間接的に同じことができます。（？？？）
 これは単純に「このオブジェクトを取ってきて、次のテンプレートにそれを適用しろ」と命令しています。
 例えば、このように書くことができます。
 
@@ -537,10 +531,10 @@ So the previous block of code can be rewritten as:
 Finally, we need to make sure that we're pointing to the right place whenever we want to link to an individual post.
 Again, we could do something like <a href="/posts/{{_id}}">, but using a route helper is just more reliable.
 最終的に、私たちは個別の投稿にリンクをしたい時はいつでも正しい場所を指し示す必要があります。（？？？）
-再び、私たちは　<a href="/posts/{{_id}}">のようにしてすることができますが（？？？）、ルートヘルパーを使った方がより確実です。
+再び、私たちは　<a href="/posts/{{_id}}"> のようにしてすることができますが（？？？）、ルートヘルパーを使った方がより確実です。
 
 We've named the post route postPage, so we can use a {{pathFor 'postPage'}} helper:
-私たちは投稿ルートをpostPageと名付けました。そのため、{{pathFor 'postPage'}}ヘルパーを使います。
+私たちは投稿ルートを postPage と名付けました。そのため、{{pathFor 'postPage'}}ヘルパーを使います。
 
 ~~~html
 <template name="postItem">
