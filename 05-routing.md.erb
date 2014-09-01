@@ -521,15 +521,15 @@ So the previous block of code can be rewritten as:
 
 <% end %>
 
-### Using a Dynamic Named Route Helper
+### Using a Dynamic Named Route Helper　動的に指定したルートヘルパーを使う
 
 Finally, we need to make sure that we're pointing to the right place whenever we want to link to an individual post.
 Again, we could do something like <a href="/posts/{{_id}}">, but using a route helper is just more reliable.
-最終的に、私たちは個別の投稿にリンクをしたい時はいつでも正しい場所を指し示す必要があります。（？？？）
-再び、私たちは　<a href="/posts/{{_id}}"> のようにしてすることができますが（？？？）、ルートヘルパーを使った方がより確実です。
+最終的に、私たちは個別の投稿にリンクをしたい時は常に正しい場所を指し示す必要があります。（？？？）
+再び、私たちは　<a href="/posts/{{_id}}"> のようにすることができますが、ルートヘルパーを使った方がより確実です。
 
 We've named the post route postPage, so we can use a {{pathFor 'postPage'}} helper:
-私たちは投稿ルートを postPage と名付けました。そのため、{{pathFor 'postPage'}}ヘルパーを使います。
+私たちは投稿ルートを postPage と指定したので、{{pathFor 'postPage'}} ヘルパーを使います。
 
 ~~~html
 <template name="postItem">
@@ -547,34 +547,34 @@ We've named the post route postPage, so we can use a {{pathFor 'postPage'}} help
 
 But wait, how exactly does the router know where to get the xyz part in /posts/xyz?
 After all, we're not passing it any _id.
-でも待ってください。　/posts/xyzの中のどこでxyz部分を得るのか（？？？）ルーターはどれだけ正確に識別するのでしょうか。
-結局、私たちは_idを引き渡していません。（？？？）
+でも待ってください。　/posts/xyz の中のどこで xyz 部分を得るのか（？？？）ルーターはどれだけ正確に判断するのでしょうか。
+結局、私たちはルーターに全く _id を引き渡していません。
 
 It turns out that Iron Router is smart enough to figure it out by itself. 
 We're telling the router to use the postPage route,
 and the router knows that this route requires an _id of some kind (since that's how we defined our path) .
-Iron Routerは自分自身でそれを判断できるほど頭が良いことがわかりました。
-私たちはルーターに　postPageルートを使うように命令しています。　
-ルーターはルートがどこの_idを要求するのか識別します。　（そのため、私たちはpathを適宜しました。）
+結局のところ、Iron Router は自分自身でそれを判断できるほどスマートだということです。
+私たちはルーターに　postPage ルートを使うように命令しています。　
+ルーターはルートがどこの_id を要求するのか識別します。　（そのため、私たちはpath を定義しました。）
 
 So the router will look for this _id in the most logical place available: 
 the data context of the {{pathFor 'postPage'}} helper, in other words this. 
 And it so happens that our this corresponds to a post, which (surprise!) does possess an _id property.
-そのため、ルーターは最もロジカルな場所で利用できる_idを探します：（？？？）
-{{pathFor 'postPage'}} ヘルパーのデータコンテキスト、つまりはthisです。
-thisは投稿に対応するため、（驚くことに！）_idプロパティも内包しているのです。（？？？）
+そのため、ルーターは最もロジカルな場所で利用できる _id を探します：
+{{pathFor 'postPage'}} ヘルパーのデータコンテキスト、つまりは this です。
+this は投稿に対応するため、（驚くことに！） _id プロパティを（possess＝内包しています？）。
 
 Alternatively, you can also explicitely tell the router where you'd like it to look for the _id property, 
 by passing a second argument to the helper (i.e. {{pathFor 'postPage' someOtherPost}}).
 A practical use of this pattern would be getting the link to the previous or next posts in a list, for example.
 その代わりに、ヘルパーに２つの引数を渡すことで（つまり、 {{pathFor 'postPage' someOtherPost}}として）
-ルーターがどこで_idプロパティを探したいかを間接的に命令することもできます。（？？？）
-たとえば、このパターンの実践的な使い方は 前や次の投稿へのリンクを一覧表として得ています。（？？？）
+ルーターがどこで_idプ ロパティを探したいかを間接的に命令することもできます。（？？？）
+たとえば、このパターンの実践的な使い方は 一覧表の投稿の前や次のリンクをと取得することでしょう。
 
 To see if it works correctly,
 browse to the post list and click on one of the 'Discuss' links. You should see something like this:
-正しく動作しているか確かめるために、
-　投稿リストを（？？？）して、'Discuss' ボタンをクリックしてみます。
+　正しく動作しているか確かめるために、
+　投稿リストをブラウザで開いてて、'Discuss' ボタンをクリックしましょう。
 　きっとこのように表示されるはずです。
 
 <%= screenshot "5-2", "A single post page." %>
@@ -584,20 +584,21 @@ browse to the post list and click on one of the 'Discuss' links. You should see 
 ### HTML5 pushState
 
 One thing to realise is that these URL changes are happening using HTML5 pushState.
-（？？？）は、URLの変化はHTML5のpushStateを使うことで起こっています。（？？？）
+（realise ？）するための１つは、URL の変化は HTML5 の pushState を使うことで起こっています。
 
 The Router picks up clicks on URLs that are internal to the site,
 and prevents the browser from browsing away from the app, 
 instead just making the necessary changes to the app's state.
-ルーターは　サイト内のURL　クリックを取得します。（？？？）
-そして、ブラウザーがアプリから（？？？）することを防ぎます。
-その代わりに、　アプリの状態の変化　　必要性　（？？？）
+ルーターは　サイト内のURL　クリックを取得して、
+ブラウザーがアプリから（browsing away ？）することを防ぎます。
+その代わりに、アプリの状態の変化　　必要性　（？？？）
 
 If everything is working correctly the page should change instantaneously. 
 In fact, sometimes things change so fast that some kind of page transition might be needed. 
 This is outside of the scope of this chapter, but an interesting topic nonetheless.
 もしすべてが正しく動いているなら、ページは瞬時に変化します。
-実際には、変化するのが早過ぎるため、ある種のページ推移が必要になります。（？？？）
+実際には、変化するのが早過ぎるため、ある種のページ移行が必要になります。
 これはこの章の範囲外のことですが、面白いトピックです。
 
 <% end %>
+　
