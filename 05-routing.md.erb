@@ -200,14 +200,14 @@ Second, we've defined a new route called postsList and mapped it to the / path.
 Anything you put inside the /lib folder is guaranteed to load first before anything else in your app
 (with the possible exception of smart packages).
 This makes it a great place to put any helper code that needs to be available at all times.
- /lib フォルダ内に置いたものは、何よりも前に最初に読み込まれることが保証されます。
+ /lib フォルダ内に置いたものは、何よりも前に最初に読み込まれることが保証されています。
 （スマートパッケージは例外です）。
 そのため、/lib フォルダはヘルパーコードを置く最適な場所となります。ヘルパーコードは常に有効とする必要があるためです。
 
 A bit of warning though: note that since the /lib folder is neither inside /client or /server,
 this means its contents will be available to both environments.
 しかし、注意点が１つあります。 /lib フォルダは /client 、/server 内のどちらにもないので、
-/lib フォルダの内容がどちらの環境でも有効化されるということに気をつけます。
+/lib フォルダの内容がどちらの環境でも有効化されるということに気をつけましょう。
 
 <% end %>
 
@@ -225,7 +225,7 @@ meaning that if we hadn't defined a custom path (which we did by providing a pat
 our template would've been accessible at URL /postsList by default.
 　デフォルト状態だと、 Iron Router はルートで同じ名前のテンプレートを探します。
 実際には、ルートの名前に基づいてパスを探します。
-ルートの定義にパスの選択肢を与えたカスタムパスを定義していない場合、
+ルートの定義にパスの選択肢を与えるカスタムパスを定義していない場合、
 テンプレートはデフォルト状態で /postsList の URL でアクセスできるということです。
 
 You may be wondering why we even need to name our routes in the first place.
@@ -266,12 +266,11 @@ This is because when the page first loads,
 there are no posts to display until the posts subscription is done grabbing the post data from the server.
 　もし現在の状態のアプリをデプロイしたら（あるいは上記のリンクを使ってインスタンスをローンチしたら）、
 　投稿が現れる前のわずかな間はリストの中身がないことに気づくことだと思います。
-　これはページが最初に読み込まれるときは posts サブスクリプションがサーバーから投稿データを取ってくるまで表示する投稿がないためです。（？？？）
+　これはページが最初に読み込まれるときは posts サブスクリプションがサーバーから投稿データを取ってくるまで表示する投稿がないためです。
 
 It would be a much better user experience to provide some visual feedback that something is happening, 
 and that the user should wait a moment.
-　これはユーザーに何が起きているのかという視覚的なフィードバックを与えるのでよりよいユーザーエクスペリエンスとなります。
-そのためユーザーは少しの間待ってくれるでしょう。
+　ユーザーに何が起きているのかという視覚的なフィードバックを与えることができれば、よりよいユーザーエクスペリエンスとなって、ユーザーは少しの間待ってくれることでしょう。
 
 Luckily, Iron Router gives us an easy way to do that -- we'll waitOn the subscription:
 幸運なことに、Iron Router にはそうするための簡単な方法があります。　waitOn サブスクリプションです。
@@ -290,54 +289,54 @@ Router.map(function() {
 <%= caption "lib/router.js" %>
 <%= highlight "3,4" %>
 
-Let's break things down. First, we've modified the Router.configure() block to provide the router
+Let's break things down. 
+First, we've modified the Router.configure() block to provide the router
 with the name of a loading template (which we'll create soon) 
 to redirect to while our app is waiting for data.
 ひとつひとつ見ていきましょう。
-最初に、私たちは Router.configure() ブロックを修正しました。
-ルーターに 読み込まれるテンプレート（これからすぐに作ります。）の名前を与えるために
-アプリがデータを待っている間にリダイレクトする　　　（？？？？？？）
+最初に、loading template（これからすぐに作ります。）の名前をルーターに与えるために、私たちは Router.configure() ブロックを修正しました。
+loading template はアプリがデータを待っている間にリダイレクトを行います。
 
 Second, we've also added a waitOn function, which returns our posts subscription.
 Finally, we enabled a built in loading hook. 
-What this means is that the router will ensure that the posts subscription is loaded 
+What this means is that the router will ensure 
+that the posts subscription is loaded 
 before sending the user through to the route they requested.
 次に、waitOn関数を加えました。waitOn関数は posts サブスクリプションを返します。
-最後に、ローディングする（？？？）フックを作ることができました。
-これは　ルーターは　ルートを通じてユーザーに送る前に　posts サブスクリプションが読み込まれることを確かにします。（？？？）
+最後に、私たちはローディングフックを作ることができました。
+これは　ルーターは　ルートを通じてユーザーに送る前に　posts サブスクリプションが読み込まれるようにします。
 
 Note that since we're defining our waitOn function globally at the router level,
 this sequence will only happen once when a user first accesses your app. 
 After that, the data will already be loaded in the browser's memory and the router won't need to wait for it again.
-私たちは waitOn関数をルーターレベルでグローバルに定義しているため、
-この（？？？）は、ユーザーが初めてアプリにアクセスした際に一度だけ起こります。（？？？）
+私たちは waitOn関数をルーターレベルでグローバルに定義しているので、
+この（ sequence？）は、ユーザーが初めてアプリにアクセスした際に一度だけ起こります。
 その後、データは　ブラウザーのメモリにすでに読み込まれ、ルータはは再び待つ必要がなくなります。
 
 And since we are now letting the router handle our subscription, 
 you can now safely remove it from main.js (which should now be empty).
 これでルーターがサブスクリプションを処理するようにしたので、
-main.js から（？？？）を安全に削除することができます。
+main.js を安全に削除することができます。（main.js は現在何も入っていない状態です。）
 
 It's usually a good idea to wait on your subscriptions, not just for the user experience, 
 but also because it means you can safely assume that data will always be available from within a template. 
 This eliminates the need to deal with templates being rendered before their underlying data is available,
 which often requires tricky workarounds.
-サブスクリプションを待つことはユーザーエクスペリエンスのためだけではなく、良いアイデアです　（？？？）
-その理由は、データは常にテンプレート内から利用できるようにするためです。
-基礎的な情報が利用できる前にレンダリングしたテンプレートを処理する必要がなくなります。（？？？）
-扱いにくい回避方法が必要です。（？？？）
+サブスクリプションを待つことは良いアイデアです。それは単にユーザーエクスペリエンスのためだけではなく、データが常にテンプレート内から利用できることが安全に（assume？）できるからです。
+基礎的な情報が利用できる前にレンダリングしたテンプレートを処理する必要がなくなります。
+そうするにはたいて巧妙な回避方法が必要です。（？？？）
 
 We'll also add an onBeforeAction filter to trigger Iron Router's built-in loading hook 
 and make sure we're showing the loading template while we wait.
- また、onBeforeAction フィルターを加えます。Iron Router に組み込まれた loading フックを動作させます。
- そして、読み込まれるテンプレートを表示しています。（？？？）
+ また、onBeforeAction フィルターを加えて、Iron Router に組み込まれた loading フックを動作させます。
+ そして、データを待っている間に読み込まれるテンプレートを表示するようにします。
 
 The final piece of the puzzle is the actual loading template. 
-We'll use the spin package to create a nice animated loading spinner.
-Add it with mrt add spin, and then create the loading template as follows:
-パズルの最後のピースは実際の読み込むテンプレートです。（？？？）
-ナイスなローディングスピナーのアニメーションを作って spin パッケージを使います。（？？？）
-mrt add spin で spin を入れて（？？？）、loading テンプレートを次のように作ります。
+We'll use the spin package to create a nice animated loading spinner. 
+Add it with meteor add sachag:spin, and then create the loading template as follows:
+パズルの最後のピースは実際に読み込むテンプレートです。
+ナイスなローディングスピナーのアニメーションを作って spin パッケージを使います。
+meteor add sacha:spin で spin を追加して、loading テンプレートを次のように作ります。
 
 ~~~html
 <template name="loading">
@@ -348,34 +347,27 @@ mrt add spin で spin を入れて（？？？）、loading テンプレート�
 
 Note that {{>spinner}} is a partial contained in the spin package.
 Even though this partial comes from “outside” our app, we can include it just like any other template.
-{{>spinner}}　spin パッケージに含まれている部分です（？？？）。
-この部分はプリの「外側」から来ているわけですが（？？？）、　普通のテンプレートと同様にインクルードすることができます。
+{{>spinner}} は spin パッケージに含まれている部分です。
+この部分はアプリの「外側」から来ているわけですが、通常のテンプレートと同様にインクルードすることができます。
 
 <%= commit "5-2", "Wait on the post subscription." %>
 
 <% note do %>
 
-A First Glance At Reactivity
+### A First Glance At Reactivity
 
 Reactivity is a core part of Meteor, and although we've yet to really touch on it,
 our loading template gives us a first glance at this concept.
+　リアクティビリティは Meteor の根幹をなす部分ですが、これまで触れてきませんでした。ローディングテンプレートでこのコンセプトを垣間見ることができます。
 
 Redirecting to a loading template if data isn't loaded yet is all well and good, 
 but how does the router know when to redirect the user back to the right page once the data comes through?
+　データがロードされていないかどうかローディングテンプレートにリダイレクトすることは良いことですが、ユーザーが正しいページをリダイレクトする時をルーターはどうして分かるのでしょうか。（？？？）　
 
 For now, let's just say that this is exactly where reactivity comes in, and leave it at this.
 But don't worry, you'll learn more about it very soon!
-
-### A First Glance At Reactivity
-
-リアクティビリティは Meteor の根幹をなす部分ですが、ここまで触れてきませんでした。（？？？）
-ローディングテンプレートは（？？？）このコンセプトについて少しだけ見せてくれることになりました。（？？？）
-
-データがロードされていないかどうか　ローディングテンプレートにリダイレクトすることは良いことですが、
-いつ ユーザーが正しいページに リダイレクトするのか　ルーターはどのように知ることになるのでしょうか。（？？？）　
-
-今のところはとりあえず　リアクティビリティがその役割をしている　　とだけ言っておきましょう。
-このことについてはこの後すぐに学びますので、心配は無用ですよ！（？？？）
+今のところはとりあえずリアクティビリティがその役割をしているとだけ言っておきましょう。
+このことについてはこの後すぐに学びますので、心配は無用です！
 
 <% end %>
 
@@ -388,13 +380,13 @@ let's set up a route to display the details of a single post.
 
 There's just one catch: we can't go ahead and define one route per post, since there might be hundreds of them.
 So we'll need to set up a single dynamic route, and make that route display any post we want.
-（？？？）：　　１つの投稿ごとにルートの定義をするとなると、数百の投稿に対して同じことをすることになり、先に進めなくなってしまいます。
+（There's just one catch？）：１つの投稿ごとにルートの定義をするとなると、数百の投稿に対して同じことをすることになり、先に進めなくなってしまいます。
 そのため、１つの動的なルートをセットアップして、ルートに私たちが見たい投稿を表示させる必要があります。
 
 To start with, 
 we'll create a new template that simply renders the same post template 
 that we used earlier in the list of posts.
-まず初めに、。私たちが以前使った同じ投稿テンプレートを（？？？）　投稿のリスト内でレンダリングする　　新しいテンプレートを作ります。
+まず初めに、同じ投稿テンプレートを単純にレンダリングする新しいテンプレートを作ります。これは私たちが投稿をリストにする時に以前使ったテンプレートです。
 
 ~~~html
 <template name="postPage">
@@ -410,7 +402,7 @@ but for now it'll simply serve as a shell for our {{> postItem}} include.
 We are going to create another named route,
 this time mapping URL paths of the form /posts/<ID> to the postPage template:
 また違う名前でルートを作っていきましょう。
-今回は、/posts/<ID> の形の（？？？） URL パスを postPage テンプレートに割り当てます。
+今回は、/posts/<ID> の形で URL パスを postPage テンプレートに割り当てます。
 
 ~~~js
 Router.map(function() {
@@ -428,19 +420,19 @@ Router.map(function() {
 The special :_id syntax tells the router two things:
 first, to match any route of the form /posts/xyz/, where “xyz” can be anything at all.
 Second, to put whatever it finds in this “xyz” spot inside an _id property in the router's params array.
-特別な:_id構文はルーターに２つのことを命令しています：
-１つは、　/posts/xyz/ の形のルートをマッチさせて、　“xyz” は何にもなりません。（？？？）
-２つは、　ルーターの params配列で _id プロパティ内の “xyz” 地点を見つけたものはなんでも中に入れます。（？？？）
+この特別な :_id 構文はルーターに２つのことを命令しています：
+１つは、/posts/xyz/ の形のルートをマッチさせます。/posts/xyz/ の “xyz” はどんなものでも問題ありません。
+２つは、ルーターの params配列で _id プロパティ内の “xyz” 地点を見つけたものはどんなものでも中に入れます。
 
 Note that we're only using _id for convenience's sake here. 
 The router has no way of knowing if you're passing it an actual _id, or just some random string of characters.
- ここでは便宜上のために _id だけを使っていることに
- このルーター　あなたが実際の _id を押しているのか（？？？）、ランダムの文字列なのかは識別することはできません。（？？？）
+ ここでは便宜上のために _id だけを使っていることに留意してください。
+ このルーターはあなたが実際の _id を渡しているのか、ランダムの文字列を渡しているのか判断することはできません。
 
 We're now routing to the correct template, but we're still missing something: 
 the router knows the _id of the post we'd like to display,
 but the template still has no clue. So how do we bridge that gap?
-私たちは今、正しいテンプレートにルーティングしていますが、まだ何かミスをしています：
+私たちは今、正しいテンプレートにルーティングしていますが、まだ何か見逃しています：
 ルーターは私たちが表示したい投稿の _id を識別します。
 しかし、そのテンプレートはまだ何もわからない状態です。では、どのようにしてこのギャップを埋めるのでしょうか。
 
@@ -449,14 +441,14 @@ it lets you specify a template's data context.
 You can think of the data context as the filling inside a delicious cake made of templates and layouts. 
 Simply put, it's what you fill up your template with:
 ありがたいことに、このルーターには組み込まれた解決策があります：
-（？？？）は、テンプレートのデータ内容を特定できます。
+（it？）は、テンプレートのデータ内容を特定できます。
 このデータコンテキストはテンプレートとレイアウトで作られたおいしいケーキの中を満たしているものようなものだと考えることができます。（？？？）
-簡単に言いますと、 テンプレートの中をいっぱいに満たしているものがデータコンテキストです。（？？？）
+簡単に言うと、 テンプレートの中をいっぱいに満たしているものがデータコンテキストです。（？？？）
 
 <%= diagram "router-diagram-2", "データコンテキスト", "pull-center" %>
 
 In our case, we can get the proper data context by looking for our post based on the _id we got from the URL:
-この場合、私たちは URL から得た _id を基にした投稿を探して正しいデータコンテキストを得ています
+この場合、私たちは URL から得た _id を基にした投稿を探して正しいデータコンテキストを取得しています。
 
 ~~~js
 Router.map(function() {
@@ -477,15 +469,14 @@ we'll find the appropriate post and pass it to the template.
 Remember that findOne returns a single post that matches a query, 
 and that providing just an id as an argument is a shorthand for {_id: id}.
 そのため、ユーザーがこのルートにアクセスするたびに、
-私たちは　適切な投稿を見つけて その情報テンプレートに引き渡しています。（？？？）
-findOne がクエリにマッチした１つの投稿を返して、
-　　id が {_id: id} を略した表現であることに（？？？）
+私たちは適切な投稿を見つけて,その情報をテンプレートに引き渡しています。
+findOne がクエリにマッチした１つの投稿を返して、id が {_id: id} を略した表現であることを思い出しましょう。
 
 
 Within the data function for a route, this corresponds to the currently matched route, 
 and we can use this.params to access the named parts of the route 
 (which we indicated by prefixing them with : inside our path).
-ルートの data 関数内で、this は現在マッチしたルートに対応しています。
+ルートの data関数内で、this は現在マッチしているルートに対応しています。
 私たちは名前がついたルートの部分にアクセスするために this.params を使うことができます。
 （そのことを、私たちは path の中で：を前に置くことで表現しています。）（？？？）
 
@@ -494,13 +485,12 @@ and we can use this.params to access the named parts of the route
 ### More About Data Contexts
 
 By setting a template's data context, you can control the value of this inside template helpers.
-テンプレートのデータコンテキストを設定することで、テンプレートヘルパー内での this の値をコントロールすることができます。
+テンプレートのデータコンテキストを設定することで、テンプレートヘルパー内の this の値をコントロールすることができます。
 
 This is usually done implicitly with the {{#each}} iterator, 
 which automatically sets the data context of each iteration to the item currently being iterated on:
-これは {{#each}} イテレータで間接的に処理されます。
-こうして　自動的に　それぞれの繰り返し処理の データコンテキストを　（？？？）に設定します。 　（？？？？？？）
-
+これは {{#each}} イテレータで非明示的に処理されます。
+ {{#each}} イテレータは　自動的に現在繰り返し処理されている（item？）それぞれに繰り返し処理のデータコンテキストを設定します。 　
 ~~~html
 {{#each widgets}}
   {{> widgetItem}}
@@ -510,8 +500,8 @@ which automatically sets the data context of each iteration to the item currentl
 But we can also do it explicitly using {{#with}}, 
 which simply says "take this object, and apply the following template to it". 
 For example, we can write:
-しかし、{{#with}} を使うことでも間接的に同じことができます。（？？？）
-これは単純に「このオブジェクトを取ってきて、次のテンプレートにそれを適用しろ」と命令しています。
+しかし、{{#with}} を使うことで同じことを明示的に行うことができます。
+{{#with}} は単純に「このオブジェクトを取ってきて、次のテンプレートにそれを適用しろ」と命令しています。
 例えば、このように書くことができます。
 
 ~~~html
@@ -522,8 +512,8 @@ For example, we can write:
 
 It turns out you can achieve the same result by passing the context as an argument to the template call. 
 So the previous block of code can be rewritten as:
-テンプレート（？？？）に、コンテキストを引数として引き渡すことで　同じ結果を得ることができることがわかりました。　
-そのため以前のコードのブロックはこのように書きなおすことができます：
+テンプレートの（ call＝呼び出し？）に、コンテキストを引数として引き渡すことで　同じ結果を得ることができることがわかります。　
+そのため先ほどのコードのブロックはこのように書きなおすことができます：
 
 ~~~js
 {{> widgetPage myWidget}}
@@ -557,15 +547,15 @@ We've named the post route postPage, so we can use a {{pathFor 'postPage'}} help
 
 But wait, how exactly does the router know where to get the xyz part in /posts/xyz?
 After all, we're not passing it any _id.
-でも待ってください。　　/posts/xyzの中のどこでxyz部分を得るのか（？？？）ルーターはどれだけ正確に識別するのでしょうか。
+でも待ってください。　/posts/xyzの中のどこでxyz部分を得るのか（？？？）ルーターはどれだけ正確に識別するのでしょうか。
 結局、私たちは_idを引き渡していません。（？？？）
 
 It turns out that Iron Router is smart enough to figure it out by itself. 
 We're telling the router to use the postPage route,
 and the router knows that this route requires an _id of some kind (since that's how we defined our path) .
 Iron Routerは自分自身でそれを判断できるほど頭が良いことがわかりました。
-私たちは　ルーターに　postPageルートを使うように命令しています。　
-ルーターはルートがどこの_idを要求するのか　識別します。　（そのため、私たちはpathを適宜しました。）
+私たちはルーターに　postPageルートを使うように命令しています。　
+ルーターはルートがどこの_idを要求するのか識別します。　（そのため、私たちはpathを適宜しました。）
 
 So the router will look for this _id in the most logical place available: 
 the data context of the {{pathFor 'postPage'}} helper, in other words this. 
