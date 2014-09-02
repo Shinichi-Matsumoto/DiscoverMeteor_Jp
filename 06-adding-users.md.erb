@@ -14,8 +14,9 @@ and wire it together into a simple prototype.
 
 We've even seen how our UI is responsive to changes in the data, and inserted or changed data appears immediately.
 Still, our site is hamstrung by the fact that we can't enter data. In fact, we don't even have users yet!
-また、どのようにUIがデータの変化に反応するのかを見て、（？？？）
-しかし、　このサイトは　　データを入力できないことに　落胆してしまいます。　実はまだユーザーもいないのです。
+どのように UI がデータが変化に反応するのかを見てきました。
+さらに、挿入されたり、変化したデータが瞬時に現れるのか見てきました。
+しかし、このサイトはデータを入力できないことに落胆してしまいます。実はまだユーザーもいないのです！
 
 Let's see how we can fix that.
 では、どのようにこの点を修正していくのか見ていきましょう。
@@ -28,8 +29,8 @@ but it's never as easy as it could be.
 What's more, as soon as you have to deal with OAuth or other 3rd party authentication schemes, 
 things tend to get ugly fast.
 ほとんどのウェブフレームワークでは、ユーザーアカウントを付け加えることは（familiar drag？）です。
-たしかに、全てのプロジェクトでやらなければなりませんが、簡単なことではありません。
-さらには、OAuthやサードパーティの認証スキームを出来る限り早く使えるようにならなくてはなりません。
+たしかに、すべてのプロジェクトでやらなければなりませんが、簡単なことではありません。
+さらには、OAuth やサードパーティの認証スキームを出来る限り早く使えるようにならなくてはなりません。
 物事は煩わしいほど速く進む傾向があります。（？？？）
 
 Luckily, Meteor has you covered. 
@@ -37,23 +38,24 @@ Thanks to the way Meteor packages can contribute code on both the server (JavaSc
 (JavaScript, HTML, and CSS) side, 
 we can get an accounts system almost for free.
 幸運なことに、Meteorは（has you covered？）
-Meteor packageが　コードがサーバー（JavaScript）とクライアント（JavaScriptとHTMLとCSS）の両方で（contribute code）できるおかげで、
+Meteor package が　コードがサーバー（ JavaScript ）とクライアント（ JavaScript と HTML と CSS ）の両方で（ contribute code ）できるおかげで、
 私たちはほぼ無料でアカウントシステムを使うことができます。（？？？）
 
-We could just use Meteor's built-in UI for accounts (with mrt add accounts-ui) 
+We could just use Meteor's built-in UI for accounts 
+(with meteor add accounts-ui) 
 but since we've built our whole app with Bootstrap, 
 we'll use the accounts-ui-bootstrap-dropdown package instead
 (don't worry, the only difference is the styling). 
 On the command line, we type:
-私たちはmrt add accounts-uiでMeteorに組み込まれたアカウントのUIを使うことができますが、
-Bootstrapを使ってアプリを作るので、
-accounts-ui-bootstrap-dropdownを使います。
+私たちは meteor add accounts-ui で Meteor に組み込まれたアカウントの UI を使うことができますが、
+Bootstrap を使ってアプリを作るので、
+accounts-ui-bootstrap-dropdown を使います。
 （違いはスタイリングだけなのでご心配なく）
 コマンドライン上で、このようにタイピングしてください。
 
 ~~~bash
-$ mrt add accounts-ui-bootstrap-dropdown
-$ mrt add accounts-password
+$ meteor add mrt:accounts-ui-bootstrap-dropdown
+$ meteor add accounts-password
 ~~~
 <%= caption "Terminal" %>
 
@@ -61,16 +63,16 @@ Those two commands make the special accounts templates available to us;
 we can include them in our site using the {{> loginButtons}} helper. 
 A handy tip: you can control on which side your log-in dropdown shows up using the align attribute 
 (for example: {{> loginButtons align="right"}}).
-この２つのコマンドで私たちは特別な（？？？）アカウントテンプレートを使うことができます；
-{{> loginButtons}}ヘルパーを使うことで、サイト（？？？）にインクルードすることができます。
-（A handy tip？）：　　align属性を使うことでログインのドロップダウンの表示をコントロールすることができます。
+この２つのコマンドで私たちは特別なアカウントテンプレートを使うことができます；
+{{> loginButtons}} ヘルパーを使うことで、サイトに（ them？）をインクルードすることができます。
+（A handy tip？）：align 属性を使うことでログインのドロップダウンの表示をコントロールすることができます。
 
 We'll add the buttons to our header.
 And since that header is starting to grow larger,
 let's give it more room in its own template (we'll put it in client/views/includes/).
 We're also using some extra markup and Bootstrap classes to make sure everything looks nice:
-では、ヘッダーにボタンを付け加えるましょう。
-ヘッダーが　大きくなってきているので、　
+では、ヘッダーにボタンを追加しましょう。
+ヘッダーが大きくなってきているので、　
 テンプレート内に（give it more room？）しましょう。（client/views/includes/の中に入れます。）
 私たちは（extra？）マークアップや Bootstrap クラスをサイトの外観を良くするために使っていきます。
 
@@ -116,7 +118,7 @@ Now, when we browse to our app, we see the accounts login buttons in the top rig
 We can use these to sign up, log in, request a change of password, 
 and everything else that a simple site needs for password-based accounts.
 これでサインアップやログイン、パスワード変更のリクエストなどパスワードをベースにした
-アカウントが必要なサイトの全てを使うことができます。
+アカウントが必要なサイトのすべてを使うことができます。
 
 To tell our accounts system that we want users to log-in via a username, 
 we simply add an Accounts.ui config block in a new config.js file inside client/helpers/:
@@ -158,13 +160,13 @@ The console should return an object representing your user object;
 if you take a look, you can see that your username is in there, as well as an _id that uniquely identifies you. 
 Note that you can also get the currently logged-in user with Meteor.user().
 コンソールはユーザーオブジェクトに（representing？）しているオブジェクトを返すことでしょう。
-見てみると、　ユーザーネームとあなただけを識別する_id　がそこにあるのがわかります。　
-また、Meteor.user()を使って、現在ログインしているユーザー情報を得ることができます。
+見てみると、　ユーザーネームとあなただけを識別する _id がそこにあるのがわかります。　
+また、Meteor.user() を使って、現在ログインしているユーザー情報を得ることができます。
 
 Now log out and sign up again with a different username. 
 Meteor.user() should now return a second user. But wait, let's run:
 それではログアウトをして次は違うユーザーネームでサインアップしてみます。
-Meteor.user()は現在では２人のユーザーを返すことでしょう。
+Meteor.user() は現在では２人のユーザーを返すことでしょう。
 実行してみます：
 
 ~~~js
@@ -182,8 +184,8 @@ If you try logging in as that first user again, you'll see that's not the case.
 
 Let's make sure and check in the canonical data-store, the Mongo database.
 We'll log into Mongo (meteor mongo in your terminal) and check:
-（canonical？）なデータストア、MongoDBの中をチェックしていきましょう。
-ターミナルでmeteor mongoと入力してMongoDBにログインして、チェックしましょう。
+（canonical？）なデータストア、MongoDB の中をチェックしていきましょう。
+ターミナルでmeteor mongo と入力して MongoDB にログインして、チェックしましょう。
 
 ~~~bash
 > db.users.count()
@@ -200,13 +202,13 @@ If you think back to Chapter 4, you might remember that by turning off autopubli
 we stopped collections from automatically sending all the data
 from the server into each connected client's local version of the collection.
 We needed to create a publication and subscription pair to channel the data across.
-４章を振り返ると、 autopublishを停止させたことを思えているでしょう。
-コレクションが　クライアントの（local version of the collection？）とつながって
-サーバーから　自動的に全てのデータを送信することを阻止しました。
+４章を振り返ると、 autopublish を停止させたことを思えているでしょう。
+コレクションがクライアントの（local version of the collection？）とつながって
+サーバーから自動的にすべてのデータを送信することを阻止しました。
 私たちは　（pair to channel the data across？）するパブリケーションとサブスクリプションを　作る必要がありました。（？？？）　　
 
 Yet we never set up any kind of user publication. So how come we can even see any user data at all?
-私たちはまだユーザーパブリケーションについて何も設定していません。ではどうして私たちは　ユーザーデータ　を見ることができるのでしょうか。
+私たちはまだユーザーパブリケーションについて何も設定していません。ではどうして私たちはユーザーデータを見ることができるのでしょうか。
 
 The answer is that the accounts package 
 actually does "auto-publish" the currently logged in user's basic account details no matter what. 
@@ -220,13 +222,13 @@ This explains why one user can't see another's account details.
 これが　あるユーザーがほかのアカウントの詳細を見ることができない理由です。（？？？）
 
 So the publication is only publishing one user object per logged-in user (and none when you are not logged in).
-　パブリケーションは　ログインユーザーごとに　一人のユーザーオブジェクトをパブリッシュしています。
+　パブリケーションはログインユーザーごとに一人のユーザーオブジェクトをパブリッシュしています。
 　（ログインしていない時はこれをしません。）（？？？）
 
 What's more, documents in our user collection don't seem to contain the same fields on the server and on the client.
 In Mongo, a user has a lot of data in it. To see it, just go back to your Mongo terminal and type:
-さらには　ユーザーコレクション内のドキュメントは　　サーバーとクライアントで　同じフィールドを　含んでいないようです。　
-MongoDBでは、ユーザーは多くのデータを（has？）します。それを見るために、Mongoターミナルに戻って、このように入力します：
+さらには　ユーザーコレクション内のドキュメントはサーバーとクライアントで同じフィールドを　含んでいないようです。　
+MongoDB では、ユーザーは多くのデータを（has？）します。それを見るために、Mongo ターミナルに戻って、このように入力します：
 
 ~~~bash
 > db.users.findOne()
@@ -276,5 +278,5 @@ This is a useful pattern to learn from, as you'll see later on.
 That doesn't mean you can't make more user data public if you want to. 
 You can refer to the Meteor docs to see how to optionally publish more fields in the Meteor.users collection.
 これは　あなたが　さらにユーザーデータを　パブリック（？？？）にできないという意味ではありません。
-どのようにして　Meteor.usersコレクション内で　フィールドを選択してパブリッシュするのかを見るのかを見る場合、
-Meteor docsを参照すると良いでしょう。
+どのようにして Meteor.users コレクション内で　フィールドを選択してパブリッシュするのかを見るのかを見る場合、
+Meteor docs を参照すると良いでしょう。
