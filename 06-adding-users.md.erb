@@ -9,14 +9,14 @@ paragraphs: 27
 
 So far, we've managed to create and display some static fixture data in a sensible fashion
 and wire it together into a simple prototype. 
-ここまでで、私たちは（sensible fashion？）　で静的な固定データを作って表示しました。
+ここまでで、私たちは（sensible fashion＝実用的な方法？）で静的な固定データを作って表示しました。
 そして、（ simple prototype？）に結びつけました。（？？？）
 
 We've even seen how our UI is responsive to changes in the data, and inserted or changed data appears immediately.
 Still, our site is hamstrung by the fact that we can't enter data. In fact, we don't even have users yet!
-どのように UI がデータが変化に反応するのかを見てきました。
-さらに、挿入されたり、変化したデータが瞬時に現れるのか見てきました。
-しかし、このサイトはデータを入力できないことに落胆してしまいます。実はまだユーザーもいないのです！
+さらに、どのように UI がデータが変化に反応するのかを見てきました。
+、挿入されたり、変化したデータが瞬時に現れるのか見てきました。
+しかし、このサイトはデータを入力できないので骨抜きとなっています。実はまだユーザーもいないのです！
 
 Let's see how we can fix that.
 では、どのようにこの点を修正していくのか見ていきましょう。
@@ -31,13 +31,13 @@ things tend to get ugly fast.
 ほとんどのウェブフレームワークでは、ユーザーアカウントを付け加えることは（familiar drag？）です。
 たしかに、すべてのプロジェクトでやらなければなりませんが、簡単なことではありません。
 さらには、OAuth やサードパーティの認証スキームを出来る限り早く使えるようにならなくてはなりません。
-物事は煩わしいほど速く進む傾向があります。（？？？）
+世の中は嫌になるほど速く進みます。
 
 Luckily, Meteor has you covered. 
 Thanks to the way Meteor packages can contribute code on both the server (JavaScript) and client 
 (JavaScript, HTML, and CSS) side, 
 we can get an accounts system almost for free.
-幸運なことに、Meteorは（has you covered？）
+幸運なことに、Meteorはこの点も肩代わりしてくれます。
 Meteor package が　コードがサーバー（ JavaScript ）とクライアント（ JavaScript と HTML と CSS ）の両方で（ contribute code？ ）できるおかげで、
 私たちはほぼ無料でアカウントシステムを使うことができます。
 
@@ -48,7 +48,7 @@ we'll use the accounts-ui-bootstrap-dropdown package instead
 (don't worry, the only difference is the styling). 
 On the command line, we type:
  meteor add accounts-ui で Meteor に組み込まれたアカウントの UI を使うことができますが、
-私たちは Bootstrap を使ってアプリを作るので、
+ここでは Bootstrap を使ってアプリを作るので、
 accounts-ui-bootstrap-dropdown を使います。
 （違いはスタイリングだけなのでご心配なく）
 コマンドライン上で、このようにタイピングしてください。
@@ -65,7 +65,7 @@ A handy tip: you can control on which side your log-in dropdown shows up using t
 (for example: {{> loginButtons align="right"}}).
 この２つのコマンドで私たちは特別なアカウントテンプレートを使うことができます；
 {{> loginButtons}} ヘルパーを使うことで、サイトに（ them？）をインクルードすることができます。
-（A handy tip？）：align 属性を使うことでログインのドロップダウンの表示をコントロールすることができます。
+ちょっとしたヒント：align 属性を使うことでログインのドロップダウンの表示をコントロールすることができます。
 (たとえば: {{> loginButtons align="right"}}).
 
 We'll add the buttons to our header.
@@ -118,9 +118,8 @@ Now, when we browse to our app, we see the accounts login buttons in the top rig
 
 We can use these to sign up, log in, request a change of password, 
 and everything else that a simple site needs for password-based accounts.
-これでサインアップやログイン、パスワード変更のリクエストなど
-を使うことができます。
-シンプルなサイトでパスワードを元にしたアカウントが必要となるすべてを使うことができます。（？？？）
+これでサインアップやログイン、パスワード変更のリクエスト、その他すべてのことを使うことができます。
+シンプルなサイトで必要となるパスワードを元にしたアカウント（？？？）
 
 To tell our accounts system that we want users to log-in via a username, 
 we simply add an Accounts.ui config block in a new config.js file inside client/helpers/:
@@ -181,12 +180,12 @@ Has the first user been deleted?
 If you try logging in as that first user again, you'll see that's not the case.
 コンソールは１を返しました。ちょっと待って、２じゃないの？（？？？）
 最初のユーザーは削除されたのでしょうか？
-再び最初のユーザーでログインしてみると、事実と異なることがわかるでしょう。
+再び最初のユーザーでログインしてみると、ユーザーが削除されていないことがわかるでしょう。
 
 Let's make sure and check in the canonical data-store, the Mongo database.
 We'll log into Mongo (meteor mongo in your terminal) and check:
-（canonical？）なデータストア、MongoDB の中をチェックしていきましょう。
-ターミナルでmeteor mongo と入力して MongoDB にログインして、チェックしましょう。
+（canonical＝標準的な？）なデータストア、MongoDB の中をチェックしていきましょう。
+ターミナルで meteor mongo と入力して MongoDB にログインして、チェックしましょう。
 
 ~~~bash
 > db.users.count()
@@ -228,8 +227,8 @@ So the publication is only publishing one user object per logged-in user (and no
 
 What's more, documents in our user collection don't seem to contain the same fields on the server and on the client.
 In Mongo, a user has a lot of data in it. To see it, just go back to your Mongo terminal and type:
-さらには　ユーザーコレクション内のドキュメントはサーバーとクライアントで同じフィールドを　含んでいないようです。　
-MongoDB では、ユーザーは多くのデータを（has？）します。それを見るために、Mongo ターミナルに戻って、このように入力します：
+さらには、ユーザーコレクション内のドキュメントはサーバーとクライアントで同じフィールドを含んでいないようです。　
+MongoDB では、ユーザーは多くのデータを（has＝保存して？）います。それを見るために、Mongo ターミナルに戻って、このように入力します：
 
 ~~~bash
 > db.users.findOne()
@@ -272,8 +271,8 @@ Object {_id: "kYdBd9hr3fWPGPcii", username: "tmeasday"}
 This example shows us how a local collection can be a secure subset of the real database. 
 The logged-in user only sees enough of the real dataset to get the job done (in this case, signing in).
 This is a useful pattern to learn from, as you'll see later on.
-この例では　どのように　ローカルのコレクションが 実際のデータベースの（secure subset？）になるのかを表しています。（？？？）
-ログインユーザーは　サインインをするためには十分な実際のデータベースだけを見ています。
+この例では、どのようにローカルのコレクションが実際のデータベースの（secure subset？）になるのかを表しています。
+ログインユーザーはサインインをするためには十分な実際のデータベースだけを見ています。
 これは今後見ていくことを学ぶ上で役に立つパターンです、　
 
 That doesn't mean you can't make more user data public if you want to. 
