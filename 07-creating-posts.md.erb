@@ -10,16 +10,16 @@ paragraphs: 60
 We've seen how easy it is to create posts via the console, 
 using the Posts.insert database call,
 but we can't expect our users to open the console to create a new post.
-私たちはコンソール経由でデータベースを呼び出すPosts.insertを使うことで、いかに簡単に投稿を作るのか見てきました。
-しかし私たちはユーザーがコンソールを開いて新しい投稿をすることを見込むことはできません。
+これまでで、私たちはコンソールでデータベースを呼び出す Posts.insert を使うことで、簡単に投稿を作る方法を見てきました。
+しかし、ユーザーがコンソールを開いて新しい投稿をすることはないでしょう。
 
 Eventually, we'll need to build some kind of user interface to let our users post new stories to our app.
-最終的に、私たちは　ユーザーがアプリに新しい（ stories？）を投稿できるように　ある種のユーザーインターフェースを作る必要があります。
+最終的に、私たちはユーザーがアプリに新しい記事を投稿できるように、ちょっとしたユーザーインターフェースを作る必要があります。
 
-### Building The New Post Page
+### Building The New Post Page　　新たに投稿ページを作る
 
 We begin by defining a route for our new page:
-新しいページにルートを定義する（？？？）ことから始めていきます。
+新しいページにルートを定義することから始めます。
 
 ~~~js
 Router.configure({
@@ -46,13 +46,14 @@ Router.map(function() {
 
 We're using the router's data function to set the postPage template's data context. 
 Remember that whatever we put into the data context will be available as this inside the template helpers.
-私たちはpostPageテンプレートのデータコンテキストを設定するために　ルーターのdata関数を使っています。
-私たちがデータコンテキストに入れるものは　テンプレートヘルパー内で　使うことができることを覚えておきましょう。（？？？）　
+私たちは postPage テンプレートのデータコンテキストを設定するためにルーターのdata関数を使っています。
+私たちがデータコンテキストに入れるものはテンプレートヘルパー内で使うことができることを思い出しましょう。（？？？）　
+→というか、ここのパラグラフは無くなったかな？
 
-### Adding A Link To The Header
+### Adding A Link To The Header　　ヘッダーへのリンクを追加する
 
 With that route defined, we can now add a link to our submit page in our header:
-ルートが定義されると、私たちは　ヘッダーにページを（submit？）するための　リンクを入れることができます。
+　このルートが定義されると、私たちはヘッダーに投稿するページのリンクを入れることができます。
 
 ~~~html
 <template name="header">
@@ -81,8 +82,8 @@ With that route defined, we can now add a link to our submit page in our header:
 
 Setting up our route means that if a user browses to the /submit URL,
 Meteor will display the postSubmit template. So let's write that template:
-ルートを設定するということは　ユーザーが　 /submit URLのウェブページを見るなら
-Meteorが　postSubmitテンプレートを表示するということを意味しています。では、テンプレートを書いていきましょう。
+ルートを設定するということは、ユーザーが  /submit URLのウェブページを見るなら
+Meteorが postSubmit テンプレートを表示するということを意味しています。では、テンプレートを書いていきましょう。
 
 ~~~html
 <template name="postSubmit">
@@ -122,9 +123,8 @@ Meteorが　postSubmitテンプレートを表示するということを意味�
 Note: that’s a lot of markup, but it simply comes from using Twitter Bootstrap. 
 While only the form elements are essential, 
 the extra markup will help make our app look a little bit nicer. It should now look similar to this:
-注意：かなりマークアップしましたが、　これはTwitter Bootstrapによるものです。
-form要素だけは必要ですが、
-残りのマークアップは　アプリの見た目を若干良くするために行っています。今はこのようになっているはずです。
+注釈：かなりマークアップしましたが、これは Twitter Bootstrap を使っているからです。
+form 要素だけは必要ですが、残りのマークアップはアプリの見た目を若干良くするために行っています。今はこのようになっているはずです。
 
 <%= screenshot "7-1", "The post submit form" %>
 
@@ -132,19 +132,19 @@ This is a simple form. We don't need to worry about an action for it,
 as we'll be intercepting submit events on the form and updating data via JavaScript. 
 (It doesn't make sense to provide a non-JS fallback when you consider 
 that a Meteor app is completely non-functional with JavaScript disabled).
-これはシンプルなフォームです。私たちは　（action for it？）について心配する必要はありません。
-これは（form？）で（submit events ？）を（intercepting？）して、JavaScriptでデータを更新するためです。
+これでシンプルなフォームができました。私たちがこのフォームが動作するか心配する必要はありません。
+これはフォームで（submit events？）を（intercepting＝傍受する？）して、JavaScriptでデータを更新するためです。
 （？？？？？？？）
 
-### Creating Posts
+### Creating Posts　　投稿を作る
 
 Let's bind an event handler to the form submit event.
 It's best to use the submit event (rather than say a click event on the button),
 as that will cover all possible ways of submitting (such as hitting enter in URL field for instance).
-formのsubmit イベントに　イベントハンドラをバインドしていきましょう。
-clickイベント（on the button？）よりもsubmitイベントを使うのがベストです。
-それはsubmitイベントは　どのような投稿方法でもカバーするためです。
-（たとえば、URLフィールドに（ hitting enter？）するようなものでも）
+form の submit イベントにイベントハンドラをバインドしていきましょう。
+ボタンでの click イベントではなく、submit イベントを使うのがベストです。
+それは submit イベントはどのような投稿方法でもカバーするためです。
+（たとえば、URL フィールドに（ hitting enter？）するようなものでも）
 
 ~~~js
 Template.postSubmit.events({
@@ -170,30 +170,30 @@ This function uses jQuery to parse out the values of our various form fields,
 and populate a new post object from the results. 
 We need to ensure we preventDefault on the event argument to our handler
 to make sure the browser doesn't go ahead and try to submit the form.
-この関数はさまざまな（form?）フィールドの値をはっきりさせるために　jQueryを使っています。　
-また、その結果から新しい投稿オブジェクトを追加します（populate？）。
-私たちは　ブラウザが　（doesn't go ahead and try to submit the form？）ための
-イベントハンドラへの（event argument？）でpreventDefault　する必要があります。
+この関数はさまざまなフォームフィールドの値をはっきりさせるために jQuery を使っています。　
+また、その結果から新しい投稿オブジェクトを追加します。
+私たちはブラウザが（doesn't go ahead and try to submit the form＝先に進めず、フォームから投稿できない？）ための
+イベントハンドラへの（event argument＝イベント引数？）で preventDefault する必要があります。
 
 Finally, we can route to our new post's page. 
 The insert() function on a collection returns the generated id for the object that has been inserted into the database,
 which the Router's go() function will use to construct a URL for us to browse to.
 最終的に、私たちは新しい投稿ページにルーティングすることができました。
-コレクションの　insert()関数 データベースに挿入されたオブジェクトに　生成されたidを返します。
-（,which？）　ルーターの　go()関数は　　私たちがウェブで見るためのURLを構築します。（？？？）
+コレクションの insert()関数はデータベースに挿入されたオブジェクトに id を返します。
+（,which？）でルーターの go()関数は私たちがウェブで見るための URL を作り出します。
 
 The net result is the user hits submit, a post is created,
 and the user is instantly taken to the discussion page for that new post.
-その結果、　ユーザーは(submit？)にヒットして、投稿が作られて、
-ユーザーは瞬時に　新しい投稿の　ディスカッションページ　に連れていきます。
+その結果、ユーザーは(submit？)にヒットして、投稿が作られて、
+ユーザーは瞬時に新しい投稿のディスカッションページに連れていきます。
 
-### Adding Some Security
+### Adding Some Security　　セキュリティを強化する
 
 Creating posts is all very well, but we don't want to let any random visitor do it:
 we want them to have to be logged in to do so. Of course, we can start by hiding the new post form from logged out users.
 Still, a user could conceivably create a post in the browser console without being logged in, and we can't have that.
-投稿を作るのは良いのですが、どんな人でも投稿を作れるようにしたくありません：
-ユーザーがログインをした上で投稿を行うようにします。　もちろん、私たちはログアウトしたユーザーから　新しい投稿を見えなくするところから始めていきます。
+投稿を作るのは良いのですが、私たちはどんな人でも投稿を作れるようにしたくありません：ユーザーがログインをした上で投稿を行うようにしたいものです。　
+もちろん、私たちはログアウトしたユーザーから新しい投稿を見えなくするところから始めていきます。
 もしかしたら、まだユーザーはブラウザーコンソールから　ログインすることなく　投稿を作ることができるかもしれません。　（and we can't have that？）　
 
 Thankfully data security is baked right into Meteor collections;
