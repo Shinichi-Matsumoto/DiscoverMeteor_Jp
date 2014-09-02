@@ -190,21 +190,22 @@ and the user is instantly taken to the discussion page for that new post.
 ### Adding Some Security　　セキュリティを強化する
 
 Creating posts is all very well, but we don't want to let any random visitor do it:
-we want them to have to be logged in to do so. Of course, we can start by hiding the new post form from logged out users.
+we want them to have to be logged in to do so. 
+Of course, we can start by hiding the new post form from logged out users.
 Still, a user could conceivably create a post in the browser console without being logged in, and we can't have that.
 投稿を作るのは良いのですが、私たちはどんな人でも投稿を作れるようにしたくありません：ユーザーがログインをした上で投稿を行うようにしたいものです。　
 もちろん、私たちはログアウトしたユーザーから新しい投稿を見えなくするところから始めていきます。
-もしかしたら、まだユーザーはブラウザーコンソールから　ログインすることなく　投稿を作ることができるかもしれません。　（and we can't have that？）　
+もしかしたら、まだユーザーはブラウザーコンソールからログインせずに投稿を作ることができるかもしれません。　（and we can't have that？）　
 
 Thankfully data security is baked right into Meteor collections;
 it's just that it's turned off by default when you create a new project. 
 This enables you to get started easily and start building out your app while leaving the boring stuff for later.
-ありがたいことに、データセキュリティは　　Meteorコレクションに　（is baked right ？）
-あなたが新しいプロジェクトを作るとき、（it？）は　初期設定では　止まっています。
-（This？）で　簡単に　アプリを作り始める ことができるようになります。 退屈なことは後でやることになります。
+ありがたいことに、データセキュリティは Meteor コレクションに正しく　（is baked？）されています；
+あなたが新しいプロジェクトを作るとき、（it＝データセキュリティ？）は初期設定では停止しています。
+そのようになっているのは、Meteor で簡単にアプリを作り始めることができるようにするためで、退屈なことは後でやることになります。
 
 Our app no longer needs these training wheels, so let's take them off! We'll remove the insecure package:
-私たちが作ってきたアプリは　もうこうした補助輪が必要でなくなりましたので、補助輪をしていきましょう！insecureパッケージを削除します。
+私たちが作ってきたアプリは、もうこうした補助輪が必要なくなったので、補助輪を外していきましょう！insecure パッケージを削除します：
 
 ~~~bash
 $ meteor remove insecure
@@ -215,19 +216,18 @@ After doing so, you'll notice that the post form no longer works.
 This is because without the insecure package, client-side inserts into the posts collection are no longer allowed.
 We need to either give some explicit rules telling Meteor when it's OK for a client to insert posts, 
 or else do our post insertions server-side.
-そうした後で、　投稿フォームがもう（ works？）しないこと　　に気づくことでしょう。
-これはinsecureパッケージがないと、クライアントサイドが（ allow？）されていない（ posts？）コレクションに挿入するからです。（？？？）（）
-私たちは　Meteorに明確なルールを命令する必要があります。　クライアントが投稿を挿入して良いか　サーバーサイドで投稿を挿入するか
-（？？？）
+そうした後で、投稿フォームがもう動作しないことに気づくことでしょう。
+これは insecure パッケージがないと、クライアントサイドが（posts?）コレクションに挿入することが（ allow？）されないためです。
+私たちはどのような時にクライアントが投稿を挿入して良いか、あるいは投稿の挿入をサーバーサイドでするか Meteor に明確なルールを与える必要があります。
 
-### Allowing Post Inserts
+### Allowing Post Inserts　　　投稿の挿入を許可する
 
 To begin with, we'll show how to allow client-side post inserts in order to get our form working again.
 As it turns out, we'll eventually settle on a different technique, 
 but for now, the following will get things working again easily enough:
-フォームがまた　動くようにするために、私たちはクライアントの投稿の挿入を　許可するか示していきます。（？？？）
-（As it turns out？）、私たちは　結局違った方法を　決めます。（？？？）
-しかし今のところ、次のようにすることで　（ easily enough？）に　もう一度　動くようにでます。
+フォームがまた動くようにするために、私たちはクライアントの投稿の挿入を許可するか示していきます。
+最終的に、私たちは違った方法を決めるのですが、
+今のところは次のようにすることで簡単にもう一度動くようにします。
 
 ~~~js
 Posts = new Meteor.Collection('posts');
@@ -247,20 +247,21 @@ Posts.allow({
 We call Posts.allow, which tells Meteor
 "this is a set of circumstances under which clients are allowed to do things to the Posts collection".
 In this case, we are saying "clients are allowed to insert posts as long as they have a userId".
-私たちPosts.allowを呼び出します。
-Posts.allowは「これはクライアントが　Postsコレクションに　（do things？）しても良い状況だ。」と　Meteorに命令しています。（？？？）
-この場合、私たちは「ユーザーが userIdを持つ人に限ってクライアントは投稿を挿入することを許可する」と言っています。
+私たちは Posts.allow を呼び出して
+「クライアントがPostsコレクションに（do things？＝投稿を挿入）しても良い状況だ。」と Meteor に命令します。
+今回は、私たちは「ユーザーが userId を持つ人に限ってクライアントは投稿を挿入することを許可する」と言っています。
 
 The userId of the user doing the modification is passed to the allow and deny calls
 (or returns null if no user is logged in), which is almost always useful.
 And as user accounts are tied into the core of Meteor, we can rely on userId always being correct.
-ユーザーが　変更する　userIdは、　　 allowとdenyコールに引き渡されます。（？？？）
-（ユーザーが誰もログインしていない場合はnullを返します。）これはほとんどの場合で役立ちます。
-ユーザーアカウントは　Meteorの（core？）と結びついているので、　私たちは常に正しいuserIdであると確信が持てます。
+ユーザーが変更する userId は、allow コールとdeny コールに引き渡されます。（？？？）
+（ユーザーが誰もログインしていない場合は null を返します。）これはほとんどの場合で役立ちます。
+ユーザーアカウントは Meteor のコアと結びついているので、userId が常に正しいと確信が持つことができます。
 
 We've managed to ensure that you need to be logged in to create a post.
 Try logging out and creating a post; you should see this in your console:
-私たちはなんとか　ユーザーが投稿を作るためにログインを必要とするように　できました。　
+私たちはなんとかユーザーが投稿を作るためにはログインが必要となるようにできました。　
+ためしにログアウトをして、投稿を作ってみましょう；コンソールでこのように表示されるはずです。
 
 <%= screenshot "7-2", "Insert failed: Access denied " %>
 
@@ -270,31 +271,31 @@ However, we still have to deal with a couple of issues:
 Logged out users can still reach the create post form.
 The post is not tied to the user in any way (and there's no code on the server to enforce this).
 Multiple posts can be created that point to the same URL.
- - ログアウトしたユーザーは　まだ　（ the create post form？）に（ reach？）できます。
+ - ログアウトしたユーザーは　まだ　投稿を作るフォームにアクセスできます。
  - 投稿は（in any way？）　ユーザーに紐づけられていません。（またサーバーにこれを実行するためのコードがありません。）
- - 同じURLを（point to？）する（Multiple posts？）を作ることができます。　
+ - 同じ URL を提示して、投稿を重複させることができます。　
 
 Let's fix these problems.
 では、こうした問題を修正していきましょう。
 
-### Securing Access To The New Post Form
+### Securing Access To The New Post Form　新しい投稿フォームへのアクセスをセキュアにする
 
 Let's start by preventing logged out users from seeing the post submit form.
 We'll do that at the router level, by defining a route hook.
-ログアウトしたユーザーが　（post submit form？）を見れなくするところから始めていきましょう。
-私たちはルーターレベルでこれを行うために、ルートフックを定義します。
+では、ログアウトしたユーザーが投稿フォームを見れないようにするところから始めていきましょう。
+私たちはこれをルーターレベルで行うために、ルートフックを定義します。
 
 A hook intercepts the routing process and potentially changes the action that the router takes. 
 You can think of it as a security guard that checks your credentials before letting you in (or turning you away).
-フックは　ルーティングプロセスを（intercept？）して、（potentially？）に　ルーターが（take？）する行動を　変えます。
-これはあなたが入る前にや出る時に　あなたの認証情報をチェックする　警備員　のようなものだと捉えることができます。　
+フックは　ルーティングプロセスを（intercept＝妨害？）して、（potentially＝潜在的に？）にルーターの行動を変えます。
+これはあなたが入る前や出る時に、あなたの認証情報をチェックする警備員のようなものだと捉えることができます。　
 
 What we need to do is check if the user is logged in,
 and if they're not render the accessDenied template instead of the expected postSubmit template
 (we then stop the router from doing anything else). So let's modify router.js like so:
-私たちが必要なことは、　ユーザーがログインしているかどうかチェックして、　
-（expected？）されたpostSubmitテンプレートの代わりに　accessDeniedテンプレートにレンダリングしないかをチェックします。（？？？）　
-（この時、私たちは　ルーターが　何もしないようにします。）では、そのようにrouter.jsを修正していきましょう。
+私たちはユーザーがログインしているかどうかチェックして、　
+予定通りの postSubmit テンプレートではなくて、accessDenied テンプレートにレンダリングしてしまわないかをチェックする必要があります。（？？？）　
+（この時はルーターを停止します。）では、そのように router.js を修正していきましょう。
 
 ~~~js
 Router.configure({
@@ -327,7 +328,7 @@ Router.before(requireLogin, {only: 'postSubmit'});
 <%= highlight "18~25" %>
 
 We also create the template for the access denied page:
-私たちは　アクセスが拒否されたページのための　テンプレートも作る必要があります。
+さらに、アクセスが拒否されたページのためのテンプレートも作ります。
 
 ~~~html
 <template name="accessDenied">
@@ -339,7 +340,7 @@ We also create the template for the access denied page:
 <%= commit "7-3", "Denied access to new posts page when not logged in." %>
 
 If you now head to http://localhost:3000/submit/ without being logged in, you should see this:
-今　ログインせずにhttp://localhost:3000/submit/　に（head to ？）すると、このようになっています。
+ログインせずに http://localhost:3000/submit/ にアクセスすると、このようになります。
 
 <%= screenshot "7-3", "The access denied template" %>
 
@@ -348,10 +349,10 @@ This means we can be declarative and we don't need to think about callbacks, or 
 When the log-in state of the user changes, 
 the Router's page template instantly changes from accessDenied to postSubmit 
 without us having to write any explicit code to handle it.
-ルーティングフックの素晴らしいところは、リアクティブなところです。
-つまり、私たちは　宣言型に（ be？）できて、コールバックについて考える必要がないということです。ユーザーがログインする時も同様です。
-ユーザーのログイン状態が変化するときに、私たちがそれを処理する明示的なコードを　書く必要がなく　
-ルーターのページテンプレートは accessDeniedから　postSubmit に　瞬時に変化します。　
+ルーティングフックが素晴らしいのは、リアクティブだからです。
+つまり、私たちは宣言型のままで（？？？）、コールバックについて考える必要がないということです。ユーザーがログインする時も同様です。
+ユーザーのログイン状態が変化するときに、ルーターのページテンプレートは accessDenied から postSubmit に瞬時に変化します。
+私たちはこの処理のために明示的なコードを書く必要が全くありません。　
 
 Log in, then try refreshing the page.
 You might sometimes see the access denied template flash up for a brief moment
@@ -359,27 +360,23 @@ before the post submission page appears.
 The reason for this is that Meteor begins rendering templates
 as soon as possible, before it has talked to the server
 and checked if the user currently (stored in the browser's local storage) even exists.
-ログインした時にページを再読み込みします。
-拒否されたテンプレートが　（post submission？）ページが現れる前のほんのつかの間に　（flash up？）する
-アクセスを見かけるかもしれません。　（？？？）
-この理由は　サーバーと通信して、ブラウザーのローカルストレージに保存されユーザーが現在もいるのかチェックする前に
-Meteorがすぐにテンプレートをレンダリングを始めるからです。（？？？）
+ログインした時にページを再読み込みするようにします。
+アクセスの拒否されたテンプレートが（post submission＝投稿？）ページが現れる前のほんのつかの間に　（flash up＝表示される？）ところ見かけるかもしれません。
+この理由は　サーバーと通信して、ブラウザーのローカルストレージに保存されユーザーが現在もいるのかチェックする前に、Meteor がすぐにテンプレートのレンダリングを始めるからです。（？？？）
 
 To avoid this problem 
 (which is a common class of problem that you'll see more of as you deal with the intricacies of latency 
 between client and server), 
 we'll just display a loading screen for the brief moment that we are waiting to see if the user has access or not.
-この問題を回避するために、
-（これはクライアントとサーバー間の（intricacies of latency ？）を処理する問題の共通（class？）です。）
-私たちはユーザーがアクセスしているのかを見るために待つ短い間に　ロードするスクリーンを表示します。
+これはクライアントとサーバー間の込み入ったレイテンシを処理する上での一般的な問題です。
+この問題を避けるために、私たちはユーザーがアクセスしているのか確かめて、待っている短い間にロードスクリーンを表示します。（？？？）
 
 After all at this stage we don't know if the user has the correct log-in credentials,
 and we can't show either the accessDenied or the postSubmit template until we do.
-結局、現在のところ私たちは　ユーザーが正しいログイン認証情報 の状態になっている　かどうかわかりません。
-　私たちは　私たちが(do？)する限り　accessDenied　や postSubmitテンプレートを　表示することはできません。
+結局、現段階で私たちはユーザーが正しいログイン認証情報 の状態になっているかどうかわからないので、私たちが(do？)する限り accessDenied や postSubmit テンプレートを表示することはできません。
 
 So we modify our hook to use our loading template whilst Meteor.loggingIn() is true:
-　私たちは　Meteor.loggingIn()がtrueの間はロードするテンプレートを使うために　フックを修正します。　
+　私たちは　Meteor.loggingIn() が true の間はロードするテンプレートを使うために　フックを修正します。　
 　
 ~~~js
 Router.map(function() {
@@ -413,7 +410,7 @@ Router.before(requireLogin, {only: 'postSubmit'});
 
 <%= commit "7-4", "Show a loading screen while waiting to login." %>
 
-### Hiding the Link
+### Hiding the Link　　リンクを隠す
 
 The easiest way to prevent users from trying to reach this page by mistake 
 when they are logged out is to hide the link from them.
