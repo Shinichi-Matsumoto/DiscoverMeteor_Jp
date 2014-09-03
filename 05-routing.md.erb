@@ -165,10 +165,10 @@ While the newly created layout.html will now contain the app's outer layout:
 You'll notice we've replaced the inclusion of the postsList template with a call to yield helper. 
 You'll notice that after this change, we see nothing on the screen. 
 This is because we haven't told the router what to do with the / URL yet, so it simply serves up an empty template.
-postsList テンプレートを yield ヘルパーの呼び出しに交換したことに気づいたことでしょう。
+postsList テンプレートを yield ヘルパーの呼び出しに差し替えたことに気づいたことでしょう。
 また、その変更後はスクリーン上になにもないことにお気づきかと思います。
 これはまだルーターに / URL で何を処理するか命令していないためです。
-（it？）そのため空っぽのテンプレートを出しています。
+そのため、（it＝ルーター？）は空っぽのテンプレートを出力しています。
 
 To begin, we can regain our old behavior by mapping the root / URL to the postsList template.
 We'll create a /lib directory at our project's root, and inside it create router.js :
