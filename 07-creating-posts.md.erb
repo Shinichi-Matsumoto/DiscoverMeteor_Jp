@@ -44,12 +44,6 @@ Router.map(function() {
 <%= caption "lib/router.js" %>
 <%= highlight "13~15" %>
 
-We're using the router's data function to set the postPage template's data context. 
-Remember that whatever we put into the data context will be available as this inside the template helpers.
-私たちは postPage テンプレートのデータコンテキストを設定するためにルーターのdata関数を使っています。
-私たちがデータコンテキストに入れるものはテンプレートヘルパー内で使うことができることを思い出しましょう。（？？？）　
-→というか、ここのパラグラフは無くなったかな？
-
 ### Adding A Link To The Header　　ヘッダーへのリンクを追加する
 
 With that route defined, we can now add a link to our submit page in our header:
@@ -82,8 +76,8 @@ With that route defined, we can now add a link to our submit page in our header:
 
 Setting up our route means that if a user browses to the /submit URL,
 Meteor will display the postSubmit template. So let's write that template:
-ルートを設定するということは、ユーザーが  /submit URLのウェブページを見るなら
-Meteorが postSubmit テンプレートを表示するということを意味しています。では、テンプレートを書いていきましょう。
+ルートを設定するということは、ユーザーが  /submit URLのウェブページを見ると
+Meteorが postSubmit テンプレートを表示するということです。では、テンプレートを書いていきましょう。
 
 ~~~html
 <template name="postSubmit">
@@ -123,7 +117,7 @@ Meteorが postSubmit テンプレートを表示するということを意味�
 Note: that’s a lot of markup, but it simply comes from using Twitter Bootstrap. 
 While only the form elements are essential, 
 the extra markup will help make our app look a little bit nicer. It should now look similar to this:
-注釈：かなりマークアップしましたが、これは Twitter Bootstrap を使っているからです。
+注釈：かなりマークアップしましたが、これは Twitter Bootstrap を使っているためです。
 form 要素だけは必要ですが、残りのマークアップはアプリの見た目を若干良くするために行っています。今はこのようになっているはずです。
 
 <%= screenshot "7-1", "The post submit form" %>
@@ -170,9 +164,9 @@ This function uses jQuery to parse out the values of our various form fields,
 and populate a new post object from the results. 
 We need to ensure we preventDefault on the event argument to our handler
 to make sure the browser doesn't go ahead and try to submit the form.
-この関数はさまざまなフォームフィールドの値をはっきりさせるために jQuery を使っています。　
+この関数はさまざまなフォームフィールドの値を明確にするため、jQuery を使っています。　
 また、その結果から新しい投稿オブジェクトを追加します。
-私たちはブラウザが（doesn't go ahead and try to submit the form＝先に進めず、フォームから投稿できない？）ための
+私たちはブラウザが（doesn't go ahead and try to submit the form＝先に進ませず、フォームから投稿できない？）ための
 イベントハンドラへの（event argument＝イベント引数？）で preventDefault する必要があります。
 
 Finally, we can route to our new post's page. 
@@ -194,7 +188,7 @@ we want them to have to be logged in to do so.
 Of course, we can start by hiding the new post form from logged out users.
 Still, a user could conceivably create a post in the browser console without being logged in, and we can't have that.
 投稿を作るのは良いのですが、私たちはどんな人でも投稿を作れるようにしたくありません：ユーザーがログインをした上で投稿を行うようにしたいものです。　
-もちろん、私たちはログアウトしたユーザーから新しい投稿を見えなくするところから始めていきます。
+もちろん、私たちはログアウトしたユーザーから新しい投稿フォームを見えなくするところから始めていきます。
 もしかしたら、まだユーザーはブラウザーコンソールからログインせずに投稿を作ることができるかもしれません。　（and we can't have that？）　
 
 Thankfully data security is baked right into Meteor collections;
@@ -376,7 +370,7 @@ and we can't show either the accessDenied or the postSubmit template until we do
 結局、現段階で私たちはユーザーが正しいログイン認証情報 の状態になっているかどうかわからないので、私たちが(do？)する限り accessDenied や postSubmit テンプレートを表示することはできません。
 
 So we modify our hook to use our loading template whilst Meteor.loggingIn() is true:
-　私たちは　Meteor.loggingIn() が true の間はロードするテンプレートを使うために　フックを修正します。　
+　私たちは Meteor.loggingIn() が true の間はロードするテンプレートを使うために　フックを修正します。　
 　
 ~~~js
 Router.map(function() {
@@ -415,10 +409,8 @@ Router.before(requireLogin, {only: 'postSubmit'});
 The easiest way to prevent users from trying to reach this page by mistake 
 when they are logged out is to hide the link from them.
 We can do this pretty easily:
-ユーザーがログアウトしたした時に誤ってこのページに（reach ？）しないようにする最も簡単な方法は、
-リンクを非表示にすることです。
-このようにするには簡単にすることができます。（？？？）
-
+ユーザーがログアウトしたした時に誤ってこのページにアクセスしないようにする最も簡単な方法は、リンクを非表示にすることです。
+このようにすることは簡単です。
 
 ~~~html
 <ul class="nav">
@@ -431,45 +423,44 @@ We can do this pretty easily:
 
 The currentUser helper is provided to us by the accounts package and is the Spacebars equivalent of Meteor.user(). 
 Since it's reactive, the link will appear or disappear as you log in and out of the app.
-currentUserヘルパーは　アカウントパッケージで（provide？）されていて、　Meteor.user()の　Spacebarsの（ equivalent？）です。
-(it?)はリアクティブなので、リンクは（ appear or disappear ？）です。（？？？）
+currentUser ヘルパーはアカウントパッケージによって提供されており、 Meteor.user()  と同じ Spacebars です。（？？？）
+(it＝currentUserヘルパー?)はリアクティブなので、ログインをするとリンクが現れ、ログアウトをするとリンクが消えます。
 
-### Meteor Method: Better Abstraction and Security
+### Meteor Method: Better Abstraction and Security　
 
 We've managed to secure access to the new post page for logged out users, 
 and deny such users from creating posts even if they cheat and use the console.
 Yet there are still a few more things we need to take care of:
-私たちは　ログアウトしたユーザーのために　新しい投稿ページへのアクセスを（secure ？）にしたので、
-たとえユーザーがずるをしてコンソールを使うとしても　投稿を作れないようにします。
-まだ、対処するすべきことがいくつかあります。
+私たちは　ログアウトしたユーザーのために　新しい投稿ページへのアクセスを（secure＝セキュア ？）にしたので、
+仮にユーザーがずるをしてコンソールを使って投稿しようとしても、投稿を作れないようにします。
+まだまだ、対処すべきことがいくつかあります。
 
 Timestamping the posts.
 Ensuring that the same URL can't be posted more than once.
 Adding details about the post author (ID, username, etc.).
-- 投稿へのタイムスタンプを（？？？）
-- 同じURLが投稿できないようにする
-- 投稿作成者についての詳細(ID, usernameなど)を付け足す。
+- 投稿へのタイムスタンプする。
+- 同じ URL が投稿できないようにする。
+- 投稿作成者についての詳細 （ID, username など） を追加する。
 
 You may be thinking we can do all of that in our submit event handler. 
 Realistically, however, we would quickly run into a range of problems.
-こうしたことは（submit？）したイベントハンドラでできると考えることができます。
-しかし、現実的には　すぐに　幅広い問題に　（run into？）します。
+こうしたことは submit イベントハンドラでできると考えることができます。
+しかし、現実的にはすぐに大きな問題に直面します。
 
 For the timestamp, we'd have to rely on the user's computer's time being correct, 
 which is not always going to be the case.
+- タイムスタンプでは、私たちはユーザーのコンピュータの時間が正しいとみなす必要がありますが、
+　（which is not always going to be the case.＝常に時間が正しいとは限りません？）　
 
 Clients won't know about all of the URLs ever posted to the site. 
 They'll only know about the posts that they can currently see (we'll see how exactly this works later), 
 so there's no way to enforce URL uniqueness client-side.
+- クライアントはこれまでサイトに投稿されたすべての URL を知りません。
+　クライアントは現在見ている投稿だけを知っています。（これがいかに正確なのかは後々見ていきます）
+　そのため、URL （uniqueness＝独自の？）クライアントサイドを（enforce＝実施？）することはできません。
 
 Finally, although we could add the user details client-side, we wouldn't be enforcing its accuracy, 
 which could open our app up to exploitation by people using the browser console.
-
-- タイムスタンプでは、私たちは　ユーザーのコンピュータの時間が正しいとみなす必要があります。
-　（which is not always going to be the case.？）　
-- クライアントは今まで　サイトに投稿されたすべてのURL　について知りません。
-　クライアントは　現在見ている投稿　についてだけ知っています。（これがいかに正確なのかは後々見ていきます）
-　そのため、　URL　（uniqueness？）　クライアントサイドを（enforce？）することはできません。
 - 最後に　私たちは　クライアントサイドに　ユーザーの詳細を追加しましたが、
 　私たちは正確にそれを　（enforce?）できないので、
 　ブラウザーコンソールを使うことで、（ up to exploitation？）、アプリを開くことができます。
@@ -477,7 +468,7 @@ which could open our app up to exploitation by people using the browser console.
 For all these reasons, it's better to keep our event handlers simple and,
 if we are doing more than the most basic inserts or updates to collections, use a Method.
 以上のような理由から、イベントハンドラをシンプルに保つことが良いということになります。
-もし　最も基本的な　コレクションへの挿入や更新以上のことをするとしたら、メソッドを使います。
+もし、最も基本的なコレクションへの挿入や更新以上のことをするとしたら、メソッドを使います。
 
 A Meteor Method is a server-side function that is called client-side. 
 We aren't totally unfamiliar with them -- in fact, behind the scenes,
