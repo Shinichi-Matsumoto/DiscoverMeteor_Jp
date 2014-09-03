@@ -472,16 +472,17 @@ if we are doing more than the most basic inserts or updates to collections, use 
 
 A Meteor Method is a server-side function that is called client-side. 
 We aren't totally unfamiliar with them -- in fact, behind the scenes,
-the Collection's insert, update and remove functions are all Methods. Let's see how to create our own.
-Meteor のメソッドは　クライアントサイドで（ is call？）される　サーバーサイドの関数です。
-私たちはこのことについてよく慣れ親しでいますす。
-（？？？）、裏側でCollectionの insertや update、 remove関数はすべてメソッドです。
-どのように（our own？）を　作るのか　見ていきましょう。
+the Collection's insert, update and remove functions are all Methods. 
+Let's see how to create our own.
+Meteor のメソッドは　クライアントサイドで呼び出されるサーバーサイドの関数です。
+私たちはこのことについてよく慣れ親しんでいます。
+実のところ、裏側でCollectionの insertや update、 remove関数はすべてメソッドなのです。
+どのように（our own＝自分でメソッド？）を作るのか見ていきましょう。
 
 Let's go back to post_submit.js.
 Rather than inserting directly into the Posts collection, we'll call a Method named post:
-まず、post_submit.jsに戻りましょう。
-Postsコレクションに直接挿入するよりも、 postというメソッドを呼び出しましょう。
+まず、post_submit.js に戻ります。
+Posts コレクションに直接挿入するのではなく、post というメソッドを呼び出します。
 
 ~~~js
 Template.postSubmit.events({
@@ -510,17 +511,17 @@ You can provide arguments to the call (in this case, the post object we construc
 and finally attach a callback, which will execute when the server-side Method is done.
 Here we simply alert the user if there's a problem,
 or redirect the user to the freshly created post's discussion page if not.
-Meteor.call関数は　（ by its first argument？＝第一引数によって？）指定したメソッドを呼び出します。
-　（ the call ？）に引数を与えることができます。（この場合は、（ form？）から作られたpostオブジェクト）
+　Meteor.call関数は　（ by its first argument？＝第一引数によって？）指定したメソッドを呼び出します。
+　（ the call ？）に引数を与えることができます。（この場合は、（ form？）から作られた post オブジェクト）
 最後に、サーバーサイドのメソッドが行われた時に実行する　コールバックを（attach？）します。　
-ここで私たちは　　問題があった場合にユーザーに警告を出します。
-もし問題がない場合は　ユーザーを　最新の投稿ディスカッションページにリダイレクトします。
+ここで私たちは問題があった場合にユーザーに警告を出します。
+もし問題がない場合は、ユーザーを最新の投稿ディスカッションページにリダイレクトします。
 
 We then define the Method in our collections/posts.js file.
 We'll remove the allow() block from posts.js since Meteor Methods bypass them anyway.
 Remember that Methods are executed on the server, so Meteor assumes they can be trusted.
-それから、私たちはcollections/posts.jsファイルでメソッドを定義します。
-とにかく、Meteorメソッドは（bypass them？）するので、　私たちはposts.jsからallow()ブロックを削除します。
+それから、私たちは collections/posts.js ファイルでメソッドを定義します。
+とにかく、Meteor メソッドは（bypass them？）するので、私たちは posts.js からallow() ブロックを削除します。
 メソッドはサーバーで実行されるため、Meteorは（they ？）が信頼に値すると見なします。
 
 ~~~js
@@ -570,14 +571,14 @@ First, we define our user variable and check if a post with the same link alread
 Then, we check to see that the user is logged in, throwing an error 
 (which will eventually be alert-ed by the browser) if not.
 We also do some simple validation of the post object to make sure that our posts have titles.
-最初に、私たちはuser変数を定義して、同じリンクがすでに存在しているかどうかチェックします。
-それから、　ユーザーがログインしているかチェックして、ログインしてない場合はエラーを（throw？）します。
-（最終的にブラウザーでalertされます。）
+最初に、私たちは user 変数を定義して、同じリンクがすでに存在しているかどうかチェックします。
+それから、　ユーザーがログインしているかチェックして、ログインしてない場合はエラーを投げます。
+（最終的にブラウザーで alert されます。）
 私たちは　投稿にタイトルがあるか確認する（the post？）オブジェクトの妥当性を検証します。　
 
 Next, if there's another post with the same URL, we throw a 302 error
 (which means redirect) telling the user that they should just go and look at that previously created post.
-次に、同じURLの投稿があった場合に、302 errorを（throw？）します。（これはリダイレクトするという意味です。）
+次に、同じ URL の投稿があった場合に、302 error を投げます。（これはリダイレクトするという意味です。）
 ユーザーに　以前作られた投稿に（should just go and look？）するように伝えます。
 
 Meteor's Error class takes three arguments. 
@@ -602,7 +603,7 @@ and include some information about the submitting user -- as well as the current
 投稿に（submit？）ユーザーについての情報と現在の時間を（include ？）します。
 
 Finally, we insert the post, and return the new post's id to the user.
-最後に、私たちは投稿を挿入して、ユーザーに新しい投稿のidを返します。
+最後に、私たちは投稿を挿入して、ユーザーに新しい投稿の id を返します。
 
 ### Sorting Posts
 
@@ -610,9 +611,9 @@ Now that we have a submitted date on all our posts,
 it makes sense to ensure that they are sorted using this attribute.
 To do so, we can just use Mongo's sort operator, which expects an object consisting of the keys to sort by,
 and a sign indicating whether they are ascending or descending.
-これで私たちは　すべての投稿に（submitted？）した日時があるので、
+これで私たちはすべての投稿に（submitted＝投稿した？）した日時があるので、
 　この属性を使うことで（？？？？？？）。
-そうするために、私たちはソートするためのキーを構成するオブジェクトを（expect？）するMongoDBの sort演算子を使うことができます。　
+そうするために、私たちはソートするためのキーを構成するオブジェクトを（expect？）する MongoDB の sort 演算子を使うことができます。　
 （and a sign indicating whether they are ascending or descending？？？）
 
 ~~~js
@@ -628,9 +629,9 @@ Template.postsList.helpers({
 <%= commit "7-7", "Sort posts by submitted timestamp." %>
 
 It took a bit of work, but we finally have a user interface to let users securely enter content in our app!
-ちょっとした労力がいりましたが、私たちは最終的に　アプリ内でユーザーが安全に内容を入力できるユーザーインターフェースを（have？）　　　
+ちょっとした労力がいりましたが、私たちは最終的にアプリ内でユーザーが安全に内容を入力できるユーザーインターフェースを作りました。　　
 
 But any app that lets users create content also needs to give them a way to edit or delete it.
 That's what the Editing Posts chapter will be all about.
-しかし　ユーザーが　内容を作ることができるすべてのアプリは　編集したり削除する方法を（ give？）する必要があります。
+しかし　ユーザーが　内容を作ることができるすべてのアプリは編集したり削除する方法をユーザーに提供する必要があります。
 この点は　 Editing Postsの章で学ぶことになります。
