@@ -9,15 +9,15 @@ paragraphs: 29
 
 Now that we can create posts, the next step is being able to edit and delete them. 
 While the UI code to do so is fairly simple, this is a good time to talk about how Meteor manages user permissions.
-　私たちは投稿を作ることができるので、次のステップは投稿の編集と削除をできるようにすることです。
+　これまでで投稿を作ることができたので、次のステップは投稿の編集と削除をできるようにすることです。
 　そうするための UI コードはとてもシンプルですが、
-　ここで Meteor がユーザーパーミッションを管理する方法を話すのも良い時期でしょう。
+　そろそろ Meteor でユーザーパーミッションを管理する方法を話す良い時期でしょう。
 
 
 Let's first hook up our router.
 We'll add a route to access the post edit page and set its data context:
-　はじめに、ルーターを（hook up？＝つなぎ？）ましょう。
-　私たちは投稿編集ページアクセスするためにルートを加えて、（set its data context？＝データコンテキストを設定します？）：
+　はじめに、ルーターをつなぎましょう。
+　私たちは投稿編集ページアクセスするためのルートを加えて、データコンテキストを設定します：
 
 ~~~js
 Router.configure({
@@ -137,31 +137,31 @@ Template.postEdit.events({
 <%= caption "client/views/posts/post_edit.js" %>
 
 By now most of that code should be familiar to you.
-　（By now？＝そろそろ？）ほとんどのコードは　（should be familiar to？＝なじみのあるようにすべき？）です。
+　そろそろ、このコードのほとんどはおなじみになってきたことでしょう。
 
 We have two template event callbacks: 
 one for the form's submit event, and one for the delete link's click event.
-　私たちは２つのテンプレート（event callbacks？＝イベントコールバック？）があります：
-　ひとつはフォームのsubmitイベントで、もうひとつはリンクを削除するclickイベントです。
+　私たちは２つのテンプレートのイベントコールバックがあります：
+　ひとつはフォームの submit イベントで、もうひとつはリンクを削除する click イベントです。
 
 The delete callback is extremely simple: 
 suppress the default click event, then ask for confirmation.
 If you get it, obtain the current post ID from the Template's data context, delete it, and finally redirect the user to the homepage.
-　（delete callback？＝デリートコールバック？）は、かなりシンプルです：
-　デフォルトクリックイベントを（suppress？＝抑制？）して、（ask for confirmation？＝確認を求め？）ます。
-　（get it？＝これを理解すると）、テンプレートデータコンテキストから　（current？＝現在の？）投稿IDを取得して、
-　（ it？）を削除して、最終的にユーザーをホームページにリダイレクトしましょう。
+　delete コールバックは、かなりシンプルです：
+　デフォルトクリックイベントを抑制して、確認を求めます。
+　（get it？＝これを終えると？）、テンプレートデータコンテキストから現在の投稿 ID を取得して、
+　（ it？）を削除して、最終的にユーザーをホームページにリダイレクトします。
 
 The update callback is a little longer, but not much more complicated.
 After suppressing the default event and getting the current post,
 we get the new form field values from the page and store them in a postProperties object.
-　（update？）コールバックは少し長いですが、（ not much more？＝たいして？）複雑ではありません。
-　デフォルトイベントを（suppress？＝抑制？）して、現在の投稿を（get？）した後で、
-　私たちは　ページから新しい（form field value？）を（get？）して、postPropertiesオブジェクトに（them？）を格納します。
+　（update？）コールバックは少し長いですが、それほど複雑ではありません。
+　デフォルトイベントを抑制して、現在の投稿を取得した後で、
+　私たちはページから新しいformフィールドの値を取得して、postProperties オブジェクトに（them？）を格納します。
 
 We then pass this object to Meteor's Collection.update() Method, and use a callback that either displays an error if the update failed,
 or sends the user back to the post's page if the update succeeded.
-　これで私たちは　オブジェクトを　MeteorのCollection.update()メソッドに渡して、もしアップデートが失敗したら、（ either？＝どちらかの？）エラーを表示するコールバックを使います。
+　これで私たちはオブジェクトを Meteor の Collection.update() メソッドに渡して、もしアップデートが失敗したら、（ either？＝どちらかの？）エラーを表示するコールバックを使います。
 　あるいは、アップデートに成功するとユーザーを投稿ページに送ります。
 
 ### Adding Links
