@@ -319,25 +319,24 @@ This pattern is much more common (and more useful) compared to our previous simp
 
 The domain helper takes a URL and returns its domain via a bit of JavaScript magic. 
 But where does it take that url from in the first place?
-　domain ヘルパーは URL を取ってきて、ちょっとした JavaScript のマジックによって URL ドメインを返します。
-　ですが、そもそも URL はどこから取ってきたのでしょうか？
+　domain ヘルパーは URL を取得して、ちょっとした JavaScript のマジックによって URL ドメインを返します。
+　ですが、そもそも URL はどこから取得してきたのでしょうか？
 
 To answer that question we need to go back to our posts_list.html template.
 The {{#each}} block helper not only iterates over our array,
 it also sets the value of this inside the block to the iterated object.
 　この疑問に答えるには、posts_list.html テンプレートまで戻る必要があります。
 　{{#each}} ブロックヘルパーは配列を繰り返し処理するだけではなく、
-　繰り返し処理されたオブジェクトにブロックの中の this の値を設定しています。
+　繰り返し処理されたオブジェクトにブロック内の this の値を設定しています。
 
 This means that between both {{#each}} tags, each post is assigned to this successively,
 and that extends all the way inside the included template's manager (post_item.js).
-　つまり、 （between both？）　{{#each}} タグと（each post？）は this にうまく割り当て、
-　　（included？ ＝インクルードされた？）テンプレートマネージャー（post_item.js）の中に（all the way？）（ extend？）します。
+　つまり、 {{#each}} タグと各 post の２つは this にうまく割り当てられ、インクルードされたテンプレートマネージャ（post_item.js）の中に幅広く（extend＝拡大適用）します。
 
 We now understand why this.url returns the current post's URL.
 And moreover,if we use {{title}} and {{url}} inside our post_item.html template,
 Meteor knows that we mean this.title and this.url and returns the correct values.
-　ここまでで、なぜ this.url が（current？＝現在の？）postのURLを返すのか理解できるでしょう。
+　ここまでで、なぜ this.url が 現在の post の URL を返すのか理解できるでしょう。
 　さらに、post_item.html テンプレートの中で {{title}} と {{url}} を使う場合、　
 　Meteor はそれが this.title と this.url であることを認識し、正しい値を返します。
 
@@ -352,12 +351,12 @@ First, we're creating an empty anchor (a) HTML element and storing it in memory.
 
 We then set its href attribute to be equal to the current post's URL
 (as we've just seen, in a helper this is the object currently being acted upon).
-　その時に、私たちはpostの（current？＝現在の？）URLと等しくなるように href 属性を設定します。
-　（このように、ヘルパー内で　this は現在（acted upon？＝動作している？）オブジェクトのことです。）
+　その時に、私たちは現在の post のURL と等しくなるように href 属性を設定します。
+　（このように、ヘルパー内の this は現在の影響下となっているオブジェクトのことです。）
 
 Finally, we take advantage of that a element's special hostname property 
 to get back the link's domain name without the rest of the URL.
-　最後に、残りのURLがなくてもリンクのドメイン名を返すために、私たちは a要素のhostname プロパティを使います。
+　最後に、URL の続きがなくてもリンクのドメイン名を返すために、私たちは a要素の特殊な hostname プロパティを使います。
 
 <% end %>
 
@@ -378,7 +377,7 @@ You might have noticed that you didn't even need to manually reload your browser
 This is because Meteor tracks all the files within your project directory, 
 and automatically refreshes your browser for you whenever it detects a modification to one of them.
 　これは Meteor がプロジェクトディレクトリ内のすべてのファイルを読み込んで、
-　変更点を見つけると自動的にブラウザの（refresh？＝再読み込み？）をするためです。
+　変更点を見つけると自動的にブラウザを再読み込みするためです。
 
 Meteor's hot code reload is pretty smart, even preserving the state of your app in between two refreshes!
 　Meteor のホットコードリロードはとてもスマートで、（in between two refreshes？）アプリの状態でさえも保存します！
