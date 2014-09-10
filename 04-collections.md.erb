@@ -9,7 +9,7 @@ paragraphs: 72
 
 In chapter one, we spoke about the core feature of Meteor, 
 the automatic synchronisation of data between client and server.
-　１章では、クライアントとサーバー間のデータを自動同期させる Meteor の特徴についてお話しました。
+　１章では、クライアントとサーバー間のデータを自動的に同期させる Meteor の特徴についてお話しました。
 
 In this chapter, we'll take a closer look at how that works, 
 and observe the operation of the key piece of technology that enables this, the Meteor Collection.
@@ -20,14 +20,14 @@ We are building a social news app,
 so the first thing we want to do is make a list of links that people have posted. 
 We'll call each of these items a "post."
 　私たちはソーシャルニュースアプリを作っているので、最初にやりたいことは投稿されたリンクの一覧表を作ることです。
-　投稿されたリンクのことは "post" と呼ぶことにしましょう。（？？？）
+　投稿されたリンクのことは "post" と呼ぶことにしましょう。
 
 Naturally, we need to store these posts somewhere.
 Meteor comes bundled with a Mongo database which runs on your server 
 and is your persistent data store.
 　当然ながら、投稿をどこかに格納しなければなりません。
-　Meteor は MongoDB とセットになっています。（？？？）
-　MongoDB はサーバー上で動き、永続的にデータを保存します。（？？？）
+　Meteor は MongoDB とセットになっています。
+　MongoDB はサーバー上で動き、永続的にデータを保存します。
 
 So, although a user's browser may contain some kind of state 
 (for instance which page they are on, or the comment they are currently typing), 
@@ -46,7 +46,7 @@ A collection is a special data structure that,
 through publications and subscriptions, 
 takes care of synchronising real-time data to and from each connected user's browser and into the Mongo database.
 Let's see how.
-　データはMeteorのコレクションの中に保存されます。
+　データは Meteor のコレクションの中に保存されます。
 　コレクションは特別なデータ構造で、　　　
 　パブリケーションとサブスクリプションを使って同期しているリアルタイムデータつながったユーザーのブラウザから    MongoDB内に　（？？？？？？）
 どうなるのか見て行きましょう。
@@ -56,8 +56,8 @@ so we'll start by creating a collection called Posts to store them in.
 If you haven't done so already create a collections/ folder 
 at the root of your app, and then a posts.js file inside it. 
 Then add:
-　　私たちは投稿データを永続化してユーザー間と共有したいので、投稿データを格納するPostsコレクションを作るところから始めます。
-まだ　アプリのrootで（？？？）　　collections/ フォルダーに posts.js ファイルを入れます。
+　　私たちは投稿データを永続化してユーザー間と共有したいので、投稿データを格納する Posts コレクションを作るところから始めます。
+まだ　アプリの root で collections/ フォルダーに posts.js ファイルを入れます。
 そして次のように書き込みます。
 
 ~~~js
@@ -72,7 +72,7 @@ So the Posts collection is available to both client and server.
 However, what the collection does in each environment is very different.
  client/ でも server/ でもないフォルダのコードは、クライアントとサーバーの両方で動きます。
 　そのため、 Postsコレクションはクライアントとサーバーで動きます。
-　しかし、コレクションはクライアントとサーバーで行うことが大きく異なります。
+　しかし、コレクションがクライアントとサーバーで行うことは大きく異なります。
 
 <% note do %>
 
@@ -81,7 +81,7 @@ However, what the collection does in each environment is very different.
 In Meteor, the var keyword limits the scope of an object to the current file. 
 Here, we want to make the Posts collection available to our whole app, 
 which is why we're not using the var keyword.
-　Meteorでは、var というキーワードは現在のファイルで（？？？）オブジェクトのスコープを限定します。
+　Meteorでは、var というキーワードは現在のファイルでオブジェクトのスコープを限定します。
 　ここで私たちはアプリ全体で使える Posts コレクションを作りたいので、var という用　語を使っていないというわけです。
 
 <% end %>
@@ -93,7 +93,7 @@ On the client however,
 the collection is a secure copy of a subset of the real, canonical collection. 
 The client-side collection is constantly 
 and (mostly) transparently kept up to date with that subset in real-time.
- サーバーでのコレクションは MongoDB と通信して、あらゆる変化を読み込んで書き込む役目を果たします。（？？？）
+ サーバーでのコレクションは MongoDB と通信して、あらゆる変化を読み書きする役目を果たします。（？？？）
 　この意味で通常のデータベースライブラリと比較できます。（？？？）
 　一方で、クライアントでのコレクションは　（  subset of the real？）の正確なコピーで、標準的なコレクションです。
 　クライアントサイドのコレクションはユーザーが意識することなく 絶えずリアルタイムで最新情報を処理します。
@@ -105,7 +105,7 @@ and (mostly) transparently kept up to date with that subset in real-time.
 In this chapter, we'll start making use of the browser console, 
 which is not to be confused with the terminal or the Mongo shell. 
 Here's a quick primer on each of them.
-　この章では、ブラウザーのコンソールを使っていきます。
+　この章では、ブラウザのコンソールを使っていきます。
 　これはターミナルや Mongo シェルとは違います。
 　ここでは、そのあたりについてざっくりと解説していきます。（？？？）
 
@@ -122,7 +122,7 @@ Also known as: Shell, Bash
 　- プロンプト：$
 　- 別名：Shell、Bash
 
-#### ブラウザーコンソール
+#### ブラウザコンソール
 
 <%= screenshot "browser-console", "The Browser Console" %>
 
@@ -130,7 +130,7 @@ Called from inside the browser, executes JavaScript code.
 Client-side console.log() calls output here.
 Prompt: ❯.
 Also known as: JavaScript Console, DevTools Console
-　- ブラウザーで JavaScript のコードを実行する。
+　- ブラウザで JavaScript のコードを実行する。
 　- クライアントサイドの console.log() をここに出力する。
 　- プロンプト： ❯
 　- 別名：JavaScript Console、DevTools Console
@@ -143,8 +143,8 @@ Called from the Terminal with meteor mongo.
 Gives you direct access to your app's database.
 Prompt: >.
 Also know as: Mongo Console
-　- meteor mongo か mrt mongo を使って、ターミナルから呼び出される。
-　- 自作アプリのデータベースに直接アクセスできるようになる。（？？？）
+　- meteor mongo を使って、ターミナルから呼び出される。
+　- 作っているアプリのデータベースに直接アクセスできる。
 　- プロンプト：>
 　- 別名：Mongoコンソール
 
@@ -204,7 +204,7 @@ We won't be doing any further data manipulation in the Mongo shell,
 but we might take a peek inside from time to time 
 just to make sure what's in there.
 　MongoDB の構文は、JavaScript インターフェースを使っているため、親しみやすくなっています。
-　私たちはこれ以上 Mongoシェルでデータ操作をしませんが、　（there=MongoDB内？）に何があるのか確認するために時々のぞき見をするかもしれません。
+　私たちはこれ以上 Mongoシェルでデータ操作をしませんが、MongoDB内に何があるのか確認するために時々のぞき見をするかもしれません。
 
 ### クライアントサイドのコレクション
 
