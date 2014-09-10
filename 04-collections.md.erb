@@ -548,8 +548,8 @@ the simplest change possible was to add another <div class="post">...</div>.
 If you want to make sure this is really what happened, 
 open the DOM inspector 
 and select the <div> corresponding to one of the existing posts.
-　この場合、最も簡単な変化の可能性は　もう一つ <div class="post">...</div> を追加することでした。
-　これが本当に起こったことだと確かめたい場合は、DOM inspector を開いて、投稿に対応する<div>の一つのオブジェクトを選択します。
+　この場合、最も簡単な変化の可能性はもう一つ <div class="post">...</div> を追加することでした。
+　これが本当に起こったことだと確かめたい場合は、DOM inspector を開いて、投稿に対応する<div>要素を選択します。
 
 Now, in the JavaScript console, insert another post. 
 When you tab back to the inspector, you'll see an extra <div>, 
@@ -559,8 +559,8 @@ This is a useful way to tell when elements have been re-rendered
 and when they have been left alone.
 　ここで、JavaScript コンソールで、もう一つの投稿を挿入します。
 　DOM inspector に戻ると、新しい投稿に対応する <div> が見つかりますが、
-　まだ選択されたままの同じ <div> をしました。
-　これはいつ要素が再レンダリングしたか、いつ投稿が（left alone？）になったのか（ tell？）する便利な方法です。　
+　まだ選択されたままの同じ <div> も存在しています。
+　これはいつ要素が再レンダリングしたか、いつ要素が（left alone＝そのまま？）なのか（ tell＝見分ける？）便利な方法です。
 　
 <% end %>
 
@@ -572,8 +572,8 @@ As its name indicates,
 this package simply says that each collection should be shared 
 in its entirety to each connected client. 
 This isn't what we really want, so let's turn it off.
-　今までは、実際のアプリには向いていない autopublish パッケージが有効となっていました。
-名前が意味しているように、autopublish パッケージはコレクションの中のすべてがそれぞれつながったクライアントと共有するように命令を行います。（？？？）
+　今までは、製品としてのアプリには向いていない autopublish パッケージが有効となっていました。
+名前が意味しているように、autopublish パッケージは各コレクションの中のすべてをそれぞれつながったクライアントと共有させます。
  私たちはこうしたことをしたくないので、autopublish を停止させましょう。
 
 Open a new terminal window, and type:
@@ -590,16 +590,16 @@ This is because we were relying on autopublish
 to make sure our client-side collection of posts was a mirror 
 of all the posts in the database.
 　これはすぐに有効化されます。
-　今ブラウザーを見ると、すべての投稿が消えているのがわかります！
-　それは私たちが autopublish に依存していたからであり、autopublish は投稿に関するクライアントサイドのコレクションがデータベース内のすべての投稿に反映させるようにします。（？？？）
+　今ブラウザーを見ると、すべての投稿が消えています！
+　それは私たちが autopublish に依存していたからであり、autopublish は投稿に関するクライアントサイドのコレクションがデータベース内のすべての投稿に反映させていたからです。
 
 Eventually we'll need to make sure 
 we're only transferring the posts 
 that the user actually needs to see 
 (taking into account things like pagination). 
 But for now, we'll just setup Posts to be published in its entirety.
-　最終的には、（ページネーションなどを考慮して）ユーザーが見る必要のある投稿だけに変換する必要があります。
-　しかし、今は Posts の全体にパブリッシュされるように設定します。
+　最終的には、ページネーションなどを考慮して、ユーザーが見る必要のある投稿だけを送る必要があります。
+　とはいえ、今のところは Posts の全体にパブリッシュされるように設定します。
 
 To do so, 
 we create a simple publish() function that returns a cursor referencing all posts:
@@ -636,7 +636,7 @@ We could deploy this application to the Internet,
 and (using the browser console) start posting new stories 
 and see them appear in other user's browsers all over the world.
 　それで、私たちは何を達成したのでしょうか？
-　ええと、まだユーザーインターフェースはありませんが、私たちが作ったものは（functional＝実用的な？）ウェブアプリケーションです。
+　ええと、まだユーザーインターフェースはありませんが、私たちが作ったものは実用的なウェブアプリケーションです。
 　私たちはこのアプリケーションをインターネットにデプロイすることができます。
-　また、ブラウザーコンソールを使って新しい投稿をして世界中のユーザーのブラウザーに見せることができます。
+　また、ブラウザコンソールを使って新しい投稿をして、世界中のユーザーのブラウザに投稿を表示することができます。
 　
