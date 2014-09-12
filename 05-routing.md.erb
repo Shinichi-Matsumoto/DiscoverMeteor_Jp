@@ -244,7 +244,7 @@ We want our main home link to point us back to the posts list,
 so instead of specifying a static / URL, we can also use the Spacebars helper.
 The end result will be the same,
 but this gives us more flexibility since the helper will always output the right URL even if we change the route's path in the router.
-メインのホームのリンクが投稿のリストを指定するようにしたいので、
+メインホームリンクが投稿のリストを返すようにしたいので、
 静的な / URL を指定する代わりに、Spacebars ヘルパーを使います。
 最終的な結果は同じとなりますが、ルーターでルートのパスを変えたとしてもヘルパーは常に正しい URL を出力するため、
 私たちはフレキシビリティを得ることができます。
@@ -271,7 +271,7 @@ This is because when the page first loads,
 there are no posts to display until the posts subscription is done grabbing the post data from the server.
 　もし現在の状態のアプリをデプロイしたら（あるいは上記のリンクを使ってインスタンスをローンチしたら）、
 　投稿が現れる前のわずかな間はリストの中身がないことに気づくことだと思います。
-　これはページが最初に読み込まれるときは posts サブスクリプションがサーバーから投稿データを取ってくるまで表示する投稿がないためです。
+　これはページが最初に読み込まれるときは posts サブスクリプションがサーバーから投稿データを取ってくるまでの間に表示する投稿がないためです。
 
 It would be a much better user experience to provide some visual feedback that something is happening, 
 and that the user should wait a moment.
@@ -307,40 +307,41 @@ Finally, we enabled a built in loading hook.
 What this means is that the router will ensure 
 that the posts subscription is loaded 
 before sending the user through to the route they requested.
-次に、waitOn関数を加えました。waitOn関数は posts サブスクリプションを返します。
-最後に、私たちはローディングフックを作ることができました。
-これは　ルーターは　ルートを通じてユーザーに送る前に　posts サブスクリプションが読み込まれるようにします。
+次に、posts サブスクリプションを返す waitOn関数を加えました。
+最後に、私たちはローディングフックを作りました。
+これはユーザーがリクエストしたルートにユーザーを送る前に、
+ルーターが posts サブスクリプションを読み込むようにします。
 
 Note that since we're defining our waitOn function globally at the router level,
 this sequence will only happen once when a user first accesses your app. 
 After that, the data will already be loaded in the browser's memory and the router won't need to wait for it again.
 私たちは waitOn関数をルーターレベルでグローバルに定義しているので、
-この（ sequence？）は、ユーザーが初めてアプリにアクセスした際に一度だけ起こります。
-その後、データは　ブラウザーのメモリにすでに読み込まれ、ルータはは再び待つ必要がなくなります。
+このシーケンスはユーザーが初めてアプリにアクセスした際に一度だけ起こります。
+その後、このデータはブラウザーのメモリにすでに読み込まれ、ルーターは再び待つ必要がなくなります。
 
 And since we are now letting the router handle our subscription, 
 you can now safely remove it from main.js (which should now be empty).
 これでルーターがサブスクリプションを処理するようにしたので、
-main.js を安全に削除することができます。（main.js は現在何も入っていない状態です。）
+main.js のコードを安全に削除することができます。（main.js は現在何も入っていない状態です。）
 
 It's usually a good idea to wait on your subscriptions, not just for the user experience, 
 but also because it means you can safely assume that data will always be available from within a template. 
 This eliminates the need to deal with templates being rendered before their underlying data is available,
 which often requires tricky workarounds.
-サブスクリプションを待つことは良いアイデアです。それは単にユーザーエクスペリエンスのためだけではなく、データが常にテンプレート内から利用できることが安全に（assume？）できるからです。
-基礎的な情報が利用できる前にレンダリングしたテンプレートを処理する必要がなくなります。
-そうするにはたいて巧妙な回避方法が必要です。（？？？）
+サブスクリプションを待つことは良いアイデアです。それは単にユーザーエクスペリエンスのためだけではなく、データが常にテンプレート内から利用できると問題なく想定できるからです。
+基礎的な情報を利用する前に、レンダリングしたテンプレートを処理する必要がなくなります。
+そうするにはたいて巧妙な回避方法が必要です。
 
 We'll also add an onBeforeAction filter to trigger Iron Router's built-in loading hook 
 and make sure we're showing the loading template while we wait.
  また、onBeforeAction フィルターを加えて、Iron Router に組み込まれた loading フックを動作させます。
- そして、データを待っている間に読み込まれるテンプレートを表示するようにします。
+ そして、データを待っている間に loading テンプレートを表示するようにします。
 
 The final piece of the puzzle is the actual loading template. 
 We'll use the spin package to create a nice animated loading spinner. 
 Add it with meteor add sachag:spin, and then create the loading template as follows:
 パズルの最後のピースは実際に読み込むテンプレートです。
-ナイスなローディングスピナーのアニメーションを作って spin パッケージを使います。
+ナイスなローディングスピナーのアニメーションを作るために、spin パッケージを使います。
 meteor add sacha:spin で spin を追加して、loading テンプレートを次のように作ります。
 
 ~~~html
@@ -367,12 +368,12 @@ our loading template gives us a first glance at this concept.
 
 Redirecting to a loading template if data isn't loaded yet is all well and good, 
 but how does the router know when to redirect the user back to the right page once the data comes through?
-　データがロードされていないかどうかローディングテンプレートにリダイレクトすることは良いことですが、ユーザーが正しいページをリダイレクトする時をルーターはどうして分かるのでしょうか。（？？？）　
+　データがロードされていないかどうかローディングテンプレートにリダイレクトすることは良いことですが、ユーザーを正しいページにリダイレクトする時をルーターはどうして分かるのでしょうか。（？？？）　
 
 For now, let's just say that this is exactly where reactivity comes in, and leave it at this.
 But don't worry, you'll learn more about it very soon!
 今のところはとりあえずリアクティビリティがその役割をしているとだけ言っておきましょう。
-このことについてはこの後すぐに学びますので、心配は無用です！
+このことについてはこの後すぐに学びますので、心配ご無用です！
 
 <% end %>
 
@@ -381,7 +382,7 @@ But don't worry, you'll learn more about it very soon!
 Now that we've seen how to route to the postsList template,
 let's set up a route to display the details of a single post.
 ここまでで、どのように postsList テンプレートにルーティングするのか見てきました。
-ここでは１つ１つの投稿の詳細を表示するためのルートをセットアップしましょう。　（？？？）
+ここでは１つ１つの投稿の詳細を表示するためのルートをセットアップしましょう。
 
 There's just one catch: we can't go ahead and define one route per post, since there might be hundreds of them.
 So we'll need to set up a single dynamic route, and make that route display any post we want.
@@ -391,7 +392,7 @@ So we'll need to set up a single dynamic route, and make that route display any 
 To start with, 
 we'll create a new template that simply renders the same post template 
 that we used earlier in the list of posts.
-まず初めに、同じ投稿テンプレートを単純にレンダリングする新しいテンプレートを作ります。これは私たちが投稿をリストにする時に以前使ったテンプレートです。
+まず初めに、同じ投稿テンプレートを単純にレンダリングするだけの新しいテンプレートを作ります。これは私たちが投稿をリストにする時に以前使ったテンプレートです。
 
 ~~~html
 <template name="postPage">
@@ -438,17 +439,17 @@ We're now routing to the correct template, but we're still missing something:
 the router knows the _id of the post we'd like to display,
 but the template still has no clue. So how do we bridge that gap?
 私たちは今、正しいテンプレートにルーティングしていますが、まだ何か見逃しています：
-ルーターは私たちが表示したい投稿の _id を識別します。
-しかし、そのテンプレートはまだ何もわからない状態です。では、どのようにしてこのギャップを埋めるのでしょうか。
+ルーターは私たちが表示したい投稿の _id を識別しますが、テンプレートはまだ何もわからない状態です。
+では、どのようにしてこのギャップを埋めるのでしょうか。
 
 Thankfully, the router has a clever built-in solution: 
 it lets you specify a template's data context. 
 You can think of the data context as the filling inside a delicious cake made of templates and layouts. 
 Simply put, it's what you fill up your template with:
 ありがたいことに、このルーターには組み込まれた解決策があります：
-（it？）は、テンプレートのデータ内容を特定できます。
-このデータコンテキストはテンプレートとレイアウトで作られたおいしいケーキの中を満たしているものようなものだと考えることができます。（？？？）
-簡単に言うと、 テンプレートの中をいっぱいに満たしているものがデータコンテキストです。（？？？）
+ルーターは、テンプレートのデータ内容を特定できます。
+これはテンプレートとレイアウトで作られたおいしいケーキの中をデータコンテキストが満たしていると考えることができます。
+簡単に言うと、 テンプレートの中をいっぱいに満たしているものがデータコンテキストです。
 
 <%= diagram "router-diagram-2", "データコンテキスト", "pull-center" %>
 
