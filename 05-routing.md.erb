@@ -392,7 +392,7 @@ So we'll need to set up a single dynamic route, and make that route display any 
 To start with, 
 we'll create a new template that simply renders the same post template 
 that we used earlier in the list of posts.
-まず初めに、同じ投稿テンプレートを単純にレンダリングするだけの新しいテンプレートを作ります。これは私たちが投稿をリストにする時に以前使ったテンプレートです。
+まず初めに、テンプレートを単純にレンダリングするだけの新しいテンプレートを作ります。これは以前、私たちが投稿リストで使ったテンプレートと同じです。
 
 ~~~html
 <template name="postPage">
@@ -407,7 +407,7 @@ but for now it'll simply serve as a shell for our {{> postItem}} include.
 
 We are going to create another named route,
 this time mapping URL paths of the form /posts/<ID> to the postPage template:
-また違う名前でルートを作っていきましょう。
+もう一つ指定したルートを作っていきましょう。
 今回は、/posts/<ID> の形で URL パスを postPage テンプレートに割り当てます。
 
 ~~~js
@@ -426,9 +426,9 @@ Router.map(function() {
 The special :_id syntax tells the router two things:
 first, to match any route of the form /posts/xyz/, where “xyz” can be anything at all.
 Second, to put whatever it finds in this “xyz” spot inside an _id property in the router's params array.
-この特別な :_id 構文はルーターに２つのことを命令しています：
-１つは、/posts/xyz/ の形のルートをマッチさせます。/posts/xyz/ の “xyz” はどんなものでも問題ありません。
-２つは、ルーターの params配列で _id プロパティ内の “xyz” 地点を見つけたものはどんなものでも中に入れます。
+この特別な :_id 構文はルーターに２つのことを指定します：
+１つ目は、/posts/xyz/ の形のルートをマッチさせます。/posts/xyz/ の “xyz” はどんなものでも問題ありません。
+２つ目は、ルーターの params配列で _id プロパティ内の “xyz” 地点を見つけたものはどんなものでも中に入れます。
 
 Note that we're only using _id for convenience's sake here. 
 The router has no way of knowing if you're passing it an actual _id, or just some random string of characters.
@@ -446,8 +446,8 @@ Thankfully, the router has a clever built-in solution:
 it lets you specify a template's data context. 
 You can think of the data context as the filling inside a delicious cake made of templates and layouts. 
 Simply put, it's what you fill up your template with:
-ありがたいことに、このルーターには組み込まれた解決策があります：
-ルーターは、テンプレートのデータ内容を特定できます。
+ありがたいことに、Iron Router には解決策が組み込まれています：
+Iron Router は、テンプレートのデータコンテキストを指定するのです。
 これはテンプレートとレイアウトで作られたおいしいケーキの中をデータコンテキストが満たしていると考えることができます。
 簡単に言うと、 テンプレートの中をいっぱいに満たしているものがデータコンテキストです。
 
@@ -475,15 +475,15 @@ we'll find the appropriate post and pass it to the template.
 Remember that findOne returns a single post that matches a query, 
 and that providing just an id as an argument is a shorthand for {_id: id}.
 そのため、ユーザーがこのルートにアクセスするたびに、
-私たちは適切な投稿を見つけて,その情報をテンプレートに引き渡しています。
-findOne がクエリにマッチした１つの投稿を返して、id が {_id: id} を略した表現であることを思い出しましょう。
+私たちは適切な投稿を見つけて、その情報をテンプレートに引き渡します。
+findOne がクエリにマッチした１つの投稿を返して、引数としての id を {_id: id} と略した表現であることを覚えておきましょう。
 
 
 Within the data function for a route, this corresponds to the currently matched route, 
 and we can use this.params to access the named parts of the route 
 (which we indicated by prefixing them with : inside our path).
 ルートの data関数内で、this は現在マッチしているルートに対応しています。
-私たちは名前がついたルートの部分にアクセスするために this.params を使うことができます。
+私たちは指定したルート部分にアクセスするために this.params を使うことができます。
 （そのことを、私たちは path の中で：を前に置くことで表現しています。）（？？？）
 
 <% note do %>
@@ -496,7 +496,7 @@ By setting a template's data context, you can control the value of this inside t
 This is usually done implicitly with the {{#each}} iterator, 
 which automatically sets the data context of each iteration to the item currently being iterated on:
 これは {{#each}} イテレータで非明示的に処理されます。
- {{#each}} イテレータは　自動的に現在繰り返し処理されている（item？）それぞれに繰り返し処理のデータコンテキストを設定します。 　
+ {{#each}} イテレータは　自動的に現在繰り返し処理されるアイテムそれぞれに繰り返し処理のデータコンテキストを設定します。 　
 ~~~html
 {{#each widgets}}
   {{> widgetItem}}
@@ -507,7 +507,7 @@ But we can also do it explicitly using {{#with}},
 which simply says "take this object, and apply the following template to it". 
 For example, we can write:
 しかし、{{#with}} を使うことで同じことを明示的に行うことができます。
-{{#with}} は単純に「このオブジェクトを取ってきて、次のテンプレートにそれを適用しろ」と命令しています。
+{{#with}} は単純に「このオブジェクトを取ってきて、次のテンプレートにそれを適用しろ」と示しています。
 例えば、このように書くことができます。
 
 ~~~html
@@ -518,7 +518,7 @@ For example, we can write:
 
 It turns out you can achieve the same result by passing the context as an argument to the template call. 
 So the previous block of code can be rewritten as:
-テンプレートの（ call＝呼び出し？）に、コンテキストを引数として引き渡すことで　同じ結果を得ることができることがわかります。　
+テンプレートの呼び出しに、コンテキストを引数として引き渡すことで　同じ結果を得ることができることがわかります。　
 そのため先ほどのコードのブロックはこのように書きなおすことができます：
 
 ~~~js
@@ -531,8 +531,8 @@ So the previous block of code can be rewritten as:
 
 Finally, we need to make sure that we're pointing to the right place whenever we want to link to an individual post.
 Again, we could do something like <a href="/posts/{{_id}}">, but using a route helper is just more reliable.
-最終的に、私たちは個別の投稿にリンクをしたい時は常に正しい場所を指し示す必要があります。（？？？）
-再び、私たちは　<a href="/posts/{{_id}}"> のようにすることができますが、ルートヘルパーを使った方がより確実です。
+最終的に、私たちは個別の投稿にリンクをしたい時は常に正しい場所を指し示す必要があります。
+再び、私たちは <a href="/posts/{{_id}}"> とすることができますが、ルートヘルパーを使った方がより確実です。
 
 We've named the post route postPage, so we can use a {{pathFor 'postPage'}} helper:
 私たちは投稿ルートを postPage と指定したので、{{pathFor 'postPage'}} ヘルパーを使います。
@@ -553,29 +553,29 @@ We've named the post route postPage, so we can use a {{pathFor 'postPage'}} help
 
 But wait, how exactly does the router know where to get the xyz part in /posts/xyz?
 After all, we're not passing it any _id.
-でも待ってください。　/posts/xyz の中のどこで xyz 部分を得るのか（？？？）ルーターはどれだけ正確に判断するのでしょうか。
-結局、私たちはルーターに全く _id を引き渡していません。
+でも待ってください。　/posts/xyz の中の xyz 部分をどこでルーターが取得するのかどれだけ正確に判断するのでしょうか。
+結局、私たちはルーターに一つも _id を引き渡していません。
 
 It turns out that Iron Router is smart enough to figure it out by itself. 
 We're telling the router to use the postPage route,
 and the router knows that this route requires an _id of some kind (since that's how we defined our path) .
-結局のところ、Iron Router は自分自身でそれを判断できるほどスマートだということです。
-私たちはルーターに　postPage ルートを使うように命令しています。　
-ルーターはルートがどこの_id を要求するのか識別します。　（そのため、私たちはpath を定義しました。）
+結局のところ、Iron Router は自分自身で _id を判断できるほどスマートだということです。
+Iron Router に postPage ルートを使うように指示すると、
+Iron Router はルートがどの_id を要求するのか識別します。　（こういった理由で私たちはpath を定義しました。）
 
 So the router will look for this _id in the most logical place available: 
 the data context of the {{pathFor 'postPage'}} helper, in other words this. 
 And it so happens that our this corresponds to a post, which (surprise!) does possess an _id property.
 そのため、ルーターは最もロジカルな場所で利用できる _id を探します：
 {{pathFor 'postPage'}} ヘルパーのデータコンテキスト、つまりは this です。
-this は投稿に対応するため、（驚くことに！） _id プロパティを（possess＝内包しています？）。
+図らずも this は個別の投稿に対応するので、（驚くことに！） _id プロパティを内包しています。
 
 Alternatively, you can also explicitely tell the router where you'd like it to look for the _id property, 
 by passing a second argument to the helper (i.e. {{pathFor 'postPage' someOtherPost}}).
 A practical use of this pattern would be getting the link to the previous or next posts in a list, for example.
-その代わりに、ヘルパーに２つの引数を渡すことで（つまり、 {{pathFor 'postPage' someOtherPost}}として）
-ルーターがどこで_idプ ロパティを探したいかを間接的に命令することもできます。（？？？）
-たとえば、このパターンの実践的な使い方は 一覧表の投稿の前や次のリンクをと取得することでしょう。
+この代わりに、ヘルパーに２つの引数を渡すことで（つまり、 {{pathFor 'postPage' someOtherPost}}として）、
+ルーターがどこで _id プ ロパティを探したいかを明示的に指定することもできます。
+たとえば、このパターンの実用的な使い方は一覧表の投稿の前や次のリンクを取得することでしょう。
 
 To see if it works correctly,
 browse to the post list and click on one of the 'Discuss' links. You should see something like this:
