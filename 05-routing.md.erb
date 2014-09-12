@@ -518,7 +518,7 @@ For example, we can write:
 
 It turns out you can achieve the same result by passing the context as an argument to the template call. 
 So the previous block of code can be rewritten as:
-テンプレートの呼び出しに、コンテキストを引数として引き渡すことで　同じ結果を得ることができることがわかります。　
+テンプレートの呼び出しに、コンテキストを引数として引き渡すことで同じ結果を得ることができることがわかります。　
 そのため先ほどのコードのブロックはこのように書きなおすことができます：
 
 ~~~js
@@ -561,7 +561,7 @@ We're telling the router to use the postPage route,
 and the router knows that this route requires an _id of some kind (since that's how we defined our path) .
 結局のところ、Iron Router は自分自身で _id を判断できるほどスマートだということです。
 Iron Router に postPage ルートを使うように指示すると、
-Iron Router はルートがどの_id を要求するのか識別します。　（こういった理由で私たちはpath を定義しました。）
+Iron Router はルートがどの_id を要求するのか識別します。（こういった理由で私たちはpath を定義しました。）
 
 So the router will look for this _id in the most logical place available: 
 the data context of the {{pathFor 'postPage'}} helper, in other words this. 
@@ -573,14 +573,14 @@ And it so happens that our this corresponds to a post, which (surprise!) does po
 Alternatively, you can also explicitely tell the router where you'd like it to look for the _id property, 
 by passing a second argument to the helper (i.e. {{pathFor 'postPage' someOtherPost}}).
 A practical use of this pattern would be getting the link to the previous or next posts in a list, for example.
-この代わりに、ヘルパーに２つの引数を渡すことで（つまり、 {{pathFor 'postPage' someOtherPost}}として）、
+この代わりに、ヘルパーに２つの引数を渡すことで（つまり、{{pathFor 'postPage' someOtherPost}}として）、
 ルーターがどこで _id プ ロパティを探したいかを明示的に指定することもできます。
-たとえば、このパターンの実用的な使い方は一覧表の投稿の前や次のリンクを取得することでしょう。
+たとえば、このパターンの実用的な使い方は投稿リストの前や次のリンクを取得することでしょう。
 
 To see if it works correctly,
 browse to the post list and click on one of the 'Discuss' links. You should see something like this:
 　正しく動作しているか確かめるために、
-　投稿リストをブラウザで開いてて、'Discuss' ボタンをクリックしましょう。
+　投稿リストをブラウザで開いて、'Discuss' ボタンをクリックしましょう。
 　きっとこのように表示されるはずです。
 
 <%= screenshot "5-2", "A single post page." %>
@@ -590,21 +590,21 @@ browse to the post list and click on one of the 'Discuss' links. You should see 
 ### HTML5 pushState
 
 One thing to realise is that these URL changes are happening using HTML5 pushState.
-（realise ？）するための１つは、URL の変化は HTML5 の pushState を使うことで起こっています。
+もう一つ理解することは、URL の変化が HTML5 の pushState を使うことで起こっていということです。
 
 The Router picks up clicks on URLs that are internal to the site,
 and prevents the browser from browsing away from the app, 
 instead just making the necessary changes to the app's state.
-ルーターは　サイト内のURL　クリックを取得して、
+Iron Router はアプリの状態に必要な変化をさせるだけでなく、
+サイト内の URL クリックを取得して、
 ブラウザーがアプリから（browsing away ？）することを防ぎます。
-その代わりに、アプリの状態の変化　　必要性　（？？？）
 
 If everything is working correctly the page should change instantaneously. 
 In fact, sometimes things change so fast that some kind of page transition might be needed. 
 This is outside of the scope of this chapter, but an interesting topic nonetheless.
 もしすべてが正しく動いているなら、ページは瞬時に変化します。
 実際には、変化するのが早過ぎるため、ある種のページ移行が必要になります。
-これはこの章の範囲外のことですが、面白いトピックです。
+この点はこの章では範囲外ですが、興味深いトピックです。
 
 <% end %>
 　
