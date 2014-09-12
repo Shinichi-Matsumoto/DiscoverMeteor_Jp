@@ -9,36 +9,35 @@ paragraphs: 27
 
 So far, we've managed to create and display some static fixture data in a sensible fashion
 and wire it together into a simple prototype. 
-ここまでで、私たちは（sensible fashion＝実用的な方法？）で静的な固定データを作って表示しました。
-そして、（ simple prototype？）に結びつけました。（？？？）
+ここまで私たちは実用的な方法で静的な固定データを作って表示することでシンプルな試作品を作りました。
 
 We've even seen how our UI is responsive to changes in the data, and inserted or changed data appears immediately.
 Still, our site is hamstrung by the fact that we can't enter data. In fact, we don't even have users yet!
-さらに、どのように UI がデータが変化に反応するのかを見てきました。
-、挿入されたり、変化したデータが瞬時に現れるのか見てきました。
-しかし、このサイトはデータを入力できないので骨抜きとなっています。実はまだユーザーもいないのです！
+さらに、データを挿入して、データの変化が瞬時に現れることで、
+どのように UI がデータの変化に反応するのかを見てきました。
+しかし、このサイトはデータを入力できないので骨抜き状態です。実はまだユーザーもいないのです！
 
 Let's see how we can fix that.
-では、どのようにこの点を修正していくのか見ていきましょう。
+では、どのようにこの問題を解決するのか見ていきましょう。
 
-### Accounts: users made simple 
+### Accounts: users made simple 　　アカウント：ユーザーをシンプルに作る
 
 In most web frameworks, adding user accounts is a familiar drag. 
 Sure, you have to do it on almost every project, 
 but it's never as easy as it could be.
 What's more, as soon as you have to deal with OAuth or other 3rd party authentication schemes, 
 things tend to get ugly fast.
-ほとんどのウェブフレームワークでは、ユーザーアカウントを付け加えることは（familiar drag？）です。
-たしかに、すべてのプロジェクトでやらなければなりませんが、簡単なことではありません。
+ほとんどのウェブフレームワークでは、ユーザーアカウントを付け加えることは面倒なものとしておなじみです。
+たしかに、これはすべてのプロジェクトでやらなければなりませんが、簡単なことではありません。
 さらには、OAuth やサードパーティの認証スキームを出来る限り早く使えるようにならなくてはなりません。
-世の中は嫌になるほど速く進みます。
+世の中はうんざりするほど速く進みます。
 
 Luckily, Meteor has you covered. 
 Thanks to the way Meteor packages can contribute code on both the server (JavaScript) and client 
 (JavaScript, HTML, and CSS) side, 
 we can get an accounts system almost for free.
 幸運なことに、Meteorはこの点も肩代わりしてくれます。
-Meteor package が　コードがサーバー（ JavaScript ）とクライアント（ JavaScript と HTML と CSS ）の両方で（ contribute code？ ）できるおかげで、
+Meteor package がサーバー（ JavaScript ）とクライアント（ JavaScript と HTML と CSS ）の両方のコードに寄与するため、
 私たちはほぼ無料でアカウントシステムを使うことができます。
 
 We could just use Meteor's built-in UI for accounts 
@@ -72,10 +71,10 @@ We'll add the buttons to our header.
 And since that header is starting to grow larger,
 let's give it more room in its own template (we'll put it in client/views/includes/).
 We're also using some extra markup and Bootstrap classes to make sure everything looks nice:
-では、ヘッダーにボタンを追加しましょう。
-ヘッダーが大きくなってきているので、　
-テンプレート内に（give it more room？）しましょう。（client/views/includes/の中に入れます。）
-私たちは（extra？）マークアップや Bootstrap クラスをサイトの外観を良くするために使っていきます。
+では、ヘッダーにログインボタンを追加しましょう。
+ヘッダーのコード量がが多くなってきているので、　
+テンプレート内に書き込む余地を与えましょう。（ヘッダーのコードはclient/views/includes/の中に入れます。）
+私たちは追加のマークアップや Bootstrap クラスをサイトの外観を良くするために使っていきます。
 
 ~~~html
 <template name="layout">
@@ -118,12 +117,11 @@ Now, when we browse to our app, we see the accounts login buttons in the top rig
 
 We can use these to sign up, log in, request a change of password, 
 and everything else that a simple site needs for password-based accounts.
-これでサインアップやログイン、パスワード変更のリクエスト、その他すべてのことを使うことができます。
-シンプルなサイトで必要となるパスワードを元にしたアカウント（？？？）
+これでサインアップやログイン、パスワード変更のリクエスト、その他パスワードを元にアカウントを使うシンプルなサイトで必要となるすべてのことを使うことができます。
 
 To tell our accounts system that we want users to log-in via a username, 
 we simply add an Accounts.ui config block in a new config.js file inside client/helpers/:
-アカウントシステムに私たちがユーザーがユーザーネームを使ってログインをさせたいと命令するために、client/helpers/ の中の config.js ファイルに Accounts.ui コンフィグブロックを入れます。
+client/helpers/ の中の config.js ファイルに Accounts.ui コンフィグブロックを追加して、アカウントシステムにユーザーがユーザーネームを使ってログインをするように指定します。
 
 ~~~js
 Accounts.ui.config({
@@ -142,14 +140,14 @@ This confirms that a user account has been created for you.
 But where is that user account data coming from?
 先に進んでアカウントのサインアップをします：
 すると、「サインイン」ボタンは変化してユーザーネームを表示します。
-これであなたのユーザーアカウントが作られたことが確認できます。
+これでユーザーアカウントが作られたことが確認できます。
 しかし、ユーザーアカウントのデータはどこから来たのでしょうか。
 
 By adding the accounts package, Meteor has created a special new collection,
 which can be accessed at Meteor.users.
 To see it, open your browser console and type:
 アカウントパッケージを入れたことで、Meteor は新たに Meteor.users でアクセスできる特別なコレクションを作ります。
-これを見るために、プラウザコンソールでこのように入力しましょう。
+これを見るにはプラウザコンソールでこのように入力します。
 
 ~~~js
 ❯ Meteor.users.findOne();
@@ -180,12 +178,12 @@ Has the first user been deleted?
 If you try logging in as that first user again, you'll see that's not the case.
 コンソールは１を返しました。ちょっと待って、２じゃないの？（？？？）
 最初のユーザーは削除されたのでしょうか？
-再び最初のユーザーでログインしてみると、ユーザーが削除されていないことがわかるでしょう。
+再び最初のユーザーでログインしてみると、ユーザーが削除されていないことがわかります。
 
 Let's make sure and check in the canonical data-store, the Mongo database.
 We'll log into Mongo (meteor mongo in your terminal) and check:
-（canonical＝標準的な？）なデータストア、MongoDB の中をチェックしていきましょう。
-ターミナルで meteor mongo と入力して MongoDB にログインして、チェックしましょう。
+標準的なデータストア、MongoDB の中をチェックしていきましょう。
+ターミナルで meteor mongo と入力して MongoDB にログインして、チェックします。
 
 ~~~bash
 > db.users.count()
@@ -203,9 +201,9 @@ we stopped collections from automatically sending all the data
 from the server into each connected client's local version of the collection.
 We needed to create a publication and subscription pair to channel the data across.
 ４章を振り返ると、autopublish を停止させたことを思えているでしょう。
-コレクションがクライアントの（local version of the collection？）とつながって
+コレクションがクライアントのローカルのコレクションとつながって、
 サーバーから自動的にすべてのデータを送信することを阻止しました。
-私たちは（pair to channel the data across？）するパブリケーションとサブスクリプションを作る必要がありました。（？？？）　　
+私たちはデータを交差させるために、パブリケーションとサブスクリプションのペアを作る必要がありました。　
 
 Yet we never set up any kind of user publication. So how come we can even see any user data at all?
 私たちはまだユーザーパブリケーションについて何も設定していません。ではどうして私たちはユーザーデータを見ることができるのでしょうか。
@@ -213,13 +211,13 @@ Yet we never set up any kind of user publication. So how come we can even see an
 The answer is that the accounts package 
 actually does "auto-publish" the currently logged in user's basic account details no matter what. 
 If it didn't, then that user could never log in to the site!
-その答えはアカウントパッケージが現在ログインしているユーザーの基本的なアカウントの詳細を "auto-publish" をするからです。
+その答えはアカウントパッケージが現在ログインしているユーザーの基本的なアカウントの詳細を "auto-publish" するからです。
 そうでないとしたら、ユーザーはこのサイトにログインすることができません！
 
 The accounts package only publishes the current user though.
 This explains why one user can't see another's account details.
-しかし、アカウントパッケージは現在のユーザーだけをパブリッシュします。
-そうした理由で、ユーザーは他のユーザーのアカウントの詳細を見ることができないです。
+しかし、アカウントパッケージはカレントユーザーだけをパブリッシュします。
+そうした理由で、ユーザーは他のユーザーアカウントの詳細を見ることはできないです。
 
 So the publication is only publishing one user object per logged-in user (and none when you are not logged in).
 　パブリケーションはログインユーザーごとに一人のユーザーオブジェクトをパブリッシュしています。
@@ -227,8 +225,8 @@ So the publication is only publishing one user object per logged-in user (and no
 
 What's more, documents in our user collection don't seem to contain the same fields on the server and on the client.
 In Mongo, a user has a lot of data in it. To see it, just go back to your Mongo terminal and type:
-さらには、ユーザーコレクション内のドキュメントはサーバーとクライアントで同じフィールドを含んでいないようです。　
-MongoDB では、ユーザーは多くのデータを（has＝保存して？）います。それを見るために、Mongo ターミナルに戻って、このように入力します：
+さらに、ユーザーコレクション内のドキュメントはサーバーとクライアントで同じフィールドを保持していないようです。　
+MongoDB では、ユーザーは多くのデータを（it=ドキュメント?）に保存しています。それを見るために、Mongo ターミナルに戻って、このように入力します：
 
 ~~~bash
 > db.users.findOne()
@@ -271,11 +269,11 @@ Object {_id: "kYdBd9hr3fWPGPcii", username: "tmeasday"}
 This example shows us how a local collection can be a secure subset of the real database. 
 The logged-in user only sees enough of the real dataset to get the job done (in this case, signing in).
 This is a useful pattern to learn from, as you'll see later on.
-この例では、どのようにローカルのコレクションが実際のデータベースの（secure subset？）になるのかを表しています。
+この例では、ローカルのコレクションが実際のデータベースでどのようにしてセキュアなサブセットになるのかを表しています。
 ログインユーザーはサインインをするためには十分な実際のデータベースだけを見ています。
 これは今後見ていくことを学ぶ上で役に立つパターンです、　
 
 That doesn't mean you can't make more user data public if you want to. 
 You can refer to the Meteor docs to see how to optionally publish more fields in the Meteor.users collection.
 これはあなたがさらにユーザーデータをパブリック（？？？）にできないという意味ではありません。
-どのようにして Meteor.users コレクション内でフィールドを選択してパブリッシュするのかを見るのかを見る場合は、Meteor docs を参照すると良いでしょう。
+ Meteor.users コレクション内で、どのようにしてフィールドを選択してパブリッシュするのかを見るのかを見る場合は、Meteor docs を参照しましょう。
