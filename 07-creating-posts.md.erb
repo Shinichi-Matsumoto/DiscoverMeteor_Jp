@@ -10,11 +10,11 @@ paragraphs: 60
 We've seen how easy it is to create posts via the console, 
 using the Posts.insert database call,
 but we can't expect our users to open the console to create a new post.
-これまでで、私たちはコンソールでデータベースを呼び出す Posts.insert を使うことで、簡単に投稿を作る方法を見てきました。
+これまでで、私たちはコンソールでデータベースを呼び出す Posts.insert を使うことで、簡単に投稿を作成する方法を見てきました。
 しかし、ユーザーがコンソールを開いて新しい投稿をすることはないでしょう。
 
 Eventually, we'll need to build some kind of user interface to let our users post new stories to our app.
-最終的に、私たちはユーザーがアプリに新しい記事を投稿できるように、ちょっとしたユーザーインターフェースを作る必要があります。
+結局のところ、私たちはユーザーがアプリに新しい記事を投稿できるように、ちょっとしたユーザーインターフェースを作る必要があります。
 
 ### Building The New Post Page　　新たに投稿ページを作る
 
@@ -47,7 +47,7 @@ Router.map(function() {
 ### Adding A Link To The Header　　ヘッダーへのリンクを追加する
 
 With that route defined, we can now add a link to our submit page in our header:
-　このルートが定義されると、私たちはヘッダーに投稿するページのリンクを入れることができます。
+　このルートを定義すると、私たちはヘッダーに投稿ページのリンクを追加することができます。
 
 ~~~html
 <template name="header">
@@ -77,7 +77,7 @@ With that route defined, we can now add a link to our submit page in our header:
 Setting up our route means that if a user browses to the /submit URL,
 Meteor will display the postSubmit template. So let's write that template:
 ルートを設定するということは、ユーザーが  /submit URLのウェブページを見ると
-Meteorが postSubmit テンプレートを表示するということです。では、テンプレートを書いていきましょう。
+Meteor が postSubmit テンプレートを表示するということです。では、テンプレートを書いていきましょう。
 
 ~~~html
 <template name="postSubmit">
@@ -124,11 +124,13 @@ form 要素だけは必要ですが、残りのマークアップはアプリの
 
 This is a simple form. We don't need to worry about an action for it,
 as we'll be intercepting submit events on the form and updating data via JavaScript. 
-(It doesn't make sense to provide a non-JS fallback when you consider 
+(It doesn't make sense to provide a non-JS fallback 
+when you consider 
 that a Meteor app is completely non-functional with JavaScript disabled).
-これでシンプルなフォームができました。私たちがこのフォームが動作するか心配する必要はありません。
-これはフォームで（submit events？）を（intercepting＝傍受する？）して、JavaScriptでデータを更新するためです。
-（？？？？？？？）
+これでシンプルなフォームができました。私たちがこのフォームの動作について
+心配する必要はありません。
+フォームで submit イベントを受け取って、JavaScriptでデータを更新するためです。
+（Meteor アプリが機能しないJavaScriptを使った完全な非関数だと考えると、 （ a non-JS？）フォールバックを提供しても、意味がありません。）
 
 ### Creating Posts　　投稿を作る
 
@@ -136,8 +138,8 @@ Let's bind an event handler to the form submit event.
 It's best to use the submit event (rather than say a click event on the button),
 as that will cover all possible ways of submitting (such as hitting enter in URL field for instance).
 form の submit イベントにイベントハンドラをバインドしていきましょう。
-ボタンでの click イベントではなく、submit イベントを使うのがベストです。
-それは submit イベントはどのような投稿方法でもカバーするためです。
+ボタンでの click イベントよりも、submit イベントを使うのがベストです。
+それは submit イベントはすべての投稿方法をカバーするためです。
 （たとえば、URL フィールドに（ hitting enter？）するようなものでも）
 
 ~~~js
@@ -166,20 +168,20 @@ We need to ensure we preventDefault on the event argument to our handler
 to make sure the browser doesn't go ahead and try to submit the form.
 この関数はさまざまなフォームフィールドの値を明確にするため、jQuery を使っています。　
 また、その結果から新しい投稿オブジェクトを追加します。
-私たちはブラウザが（doesn't go ahead and try to submit the form＝先に進ませず、フォームから投稿できない？）ための
-イベントハンドラへの（event argument＝イベント引数？）で preventDefault する必要があります。
+私たちはブラウザが（doesn't go ahead and try to submit the form＝先に進まず、フォームから投稿しない？）ために、
+イベントハンドラへのイベント引数で preventDefault する必要があります。
 
 Finally, we can route to our new post's page. 
 The insert() function on a collection returns the generated id for the object that has been inserted into the database,
 which the Router's go() function will use to construct a URL for us to browse to.
 最終的に、私たちは新しい投稿ページにルーティングすることができました。
-コレクションの insert()関数はデータベースに挿入されたオブジェクトに id を返します。
+コレクションでの insert()関数はデータベースに挿入されたオブジェクトに生成された id を返します。
 （,which？）でルーターの go()関数は私たちがウェブで見るための URL を作り出します。
 
 The net result is the user hits submit, a post is created,
 and the user is instantly taken to the discussion page for that new post.
-その結果、ユーザーは(submit？)にヒットして、投稿が作られて、
-ユーザーは瞬時に新しい投稿のディスカッションページに連れていきます。
+その結果、ユーザーは(submit？)にヒットして、投稿が作られ、
+ユーザーは瞬時に新しい投稿のディスカッションページに導かれます。
 
 ### Adding Some Security　　セキュリティを強化する
 
@@ -199,7 +201,7 @@ This enables you to get started easily and start building out your app while lea
 そのようになっているのは、Meteor で簡単にアプリを作り始めることができるようにするためで、退屈なことは後でやることになります。
 
 Our app no longer needs these training wheels, so let's take them off! We'll remove the insecure package:
-私たちが作ってきたアプリは、もうこうした補助輪が必要なくなったので、補助輪を外していきましょう！insecure パッケージを削除します：
+私たちが作ってきたアプリは、こうした補助輪が必要なくなったので、補助輪を外していきましょう！insecure パッケージを削除します：
 
 ~~~bash
 $ meteor remove insecure
@@ -210,8 +212,8 @@ After doing so, you'll notice that the post form no longer works.
 This is because without the insecure package, client-side inserts into the posts collection are no longer allowed.
 We need to either give some explicit rules telling Meteor when it's OK for a client to insert posts, 
 or else do our post insertions server-side.
-そうした後で、投稿フォームがもう動作しないことに気づくことでしょう。
-これは insecure パッケージがないと、クライアントサイドが（posts?）コレクションに挿入することが（ allow？）されないためです。
+そうした後で、投稿フォームが動作しないことに気づくことでしょう。
+これは insecure パッケージがないと、クライアントサイドが投稿コレクションへの挿入が許可されないためです。
 私たちはどのような時にクライアントが投稿を挿入して良いか、あるいは投稿の挿入をサーバーサイドでするか Meteor に明確なルールを与える必要があります。
 
 ### Allowing Post Inserts　　　投稿の挿入を許可する
@@ -219,8 +221,8 @@ or else do our post insertions server-side.
 To begin with, we'll show how to allow client-side post inserts in order to get our form working again.
 As it turns out, we'll eventually settle on a different technique, 
 but for now, the following will get things working again easily enough:
-フォームがまた動くようにするために、私たちはクライアントの投稿の挿入を許可するか示していきます。
-最終的に、私たちは違った方法を決めるのですが、
+フォームがまた動くようにするために、私たちはクライアントでの投稿の挿入を許可する方法を示します。
+最終的に、私たちはまた違った（ technique＝技術or方法？）を規定するのですが、
 今のところは次のようにすることで簡単にもう一度動くようにします。
 
 ~~~js
@@ -242,7 +244,7 @@ We call Posts.allow, which tells Meteor
 "this is a set of circumstances under which clients are allowed to do things to the Posts collection".
 In this case, we are saying "clients are allowed to insert posts as long as they have a userId".
 私たちは Posts.allow を呼び出して
-「クライアントがPostsコレクションに（do things？＝投稿を挿入）しても良い状況だ。」と Meteor に命令します。
+「クライアントがPostsコレクションに投稿を挿入しても良い状況だ。」と Meteor に指定します。
 今回は、私たちは「ユーザーが userId を持つ人に限ってクライアントは投稿を挿入することを許可する」と言っています。
 
 The userId of the user doing the modification is passed to the allow and deny calls
