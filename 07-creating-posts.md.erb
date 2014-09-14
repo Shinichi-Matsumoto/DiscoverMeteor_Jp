@@ -245,18 +245,18 @@ We call Posts.allow, which tells Meteor
 In this case, we are saying "clients are allowed to insert posts as long as they have a userId".
 私たちは Posts.allow を呼び出して
 「クライアントがPostsコレクションに投稿を挿入しても良い状況だ。」と Meteor に指定します。
-今回は、私たちは「ユーザーが userId を持つ人に限ってクライアントは投稿を挿入することを許可する」と言っています。
+今回は、私たちは「 userId を持つユーザーに限ってクライアントは投稿を挿入することを許可する」と言っています。
 
 The userId of the user doing the modification is passed to the allow and deny calls
 (or returns null if no user is logged in), which is almost always useful.
 And as user accounts are tied into the core of Meteor, we can rely on userId always being correct.
-ユーザーが変更する userId は、allow コールとdeny コールに引き渡されます。（？？？）
-（ユーザーが誰もログインしていない場合は null を返します。）これはほとんどの場合で役立ちます。
+ユーザーが変更する userId は、allow コールとdeny コールに引き渡されます。
+（ユーザーが誰もログインしていない場合は null を返します。）これは必ず役立ちます。
 ユーザーアカウントは Meteor のコアと結びついているので、userId が常に正しいと確信が持つことができます。
 
 We've managed to ensure that you need to be logged in to create a post.
 Try logging out and creating a post; you should see this in your console:
-私たちはなんとかユーザーが投稿を作るためにはログインが必要となるようにできました。　
+ユーザーが投稿を作るにはログインが必要となるようにできました。　
 ためしにログアウトをして、投稿を作ってみましょう；コンソールでこのように表示されるはずです。
 
 <%= screenshot "7-2", "Insert failed: Access denied " %>
@@ -267,12 +267,12 @@ However, we still have to deal with a couple of issues:
 Logged out users can still reach the create post form.
 The post is not tied to the user in any way (and there's no code on the server to enforce this).
 Multiple posts can be created that point to the same URL.
- - ログアウトしたユーザーは　まだ　投稿を作るフォームにアクセスできます。
+ - ログアウトしたユーザーはまだ投稿の作成フォームにアクセスできます。
  - 投稿は（in any way？）　ユーザーに紐づけられていません。（またサーバーにこれを実行するためのコードがありません。）
- - 同じ URL を提示して、投稿を重複させることができます。　
+ - 同じ URL を投稿して、投稿を重複させることも可能となっています。　
 
 Let's fix these problems.
-では、こうした問題を修正していきましょう。
+では、こうした問題点を修正していきましょう。
 
 ### Securing Access To The New Post Form　新しい投稿フォームへのアクセスをセキュアにする
 
@@ -283,7 +283,7 @@ We'll do that at the router level, by defining a route hook.
 
 A hook intercepts the routing process and potentially changes the action that the router takes. 
 You can think of it as a security guard that checks your credentials before letting you in (or turning you away).
-フックは　ルーティングプロセスを（intercept＝妨害？）して、（potentially＝潜在的に？）にルーターの行動を変えます。
+フックは　ルーティングプロセスを（intercept＝受け取って？）、（potentially＝潜在的に？）にルーターの行動を変えます。
 これはあなたが入る前や出る時に、あなたの認証情報をチェックする警備員のようなものだと捉えることができます。　
 
 What we need to do is check if the user is logged in,
@@ -345,10 +345,10 @@ This means we can be declarative and we don't need to think about callbacks, or 
 When the log-in state of the user changes, 
 the Router's page template instantly changes from accessDenied to postSubmit 
 without us having to write any explicit code to handle it.
-ルーティングフックが素晴らしいのは、リアクティブだからです。
-つまり、私たちは宣言型のままで（？？？）、コールバックについて考える必要がないということです。ユーザーがログインする時も同様です。
-ユーザーのログイン状態が変化するときに、ルーターのページテンプレートは accessDenied から postSubmit に瞬時に変化します。
-私たちはこの処理のために明示的なコードを書く必要が全くありません。　
+ルーティングフックの素晴らしい点は、リアクティブであることです。
+つまり、ユーザーがログインする際に、私たちは宣言型で良く、コールバックなどについて考える必要はないということです。
+ユーザーのログイン状態が変化すると、ルーターのページテンプレートは accessDenied から postSubmit に瞬時に変化します。
+私たちはこの処理のために、明示的にコードを書く必要が全くありません。　
 
 Log in, then try refreshing the page.
 You might sometimes see the access denied template flash up for a brief moment
@@ -357,22 +357,22 @@ The reason for this is that Meteor begins rendering templates
 as soon as possible, before it has talked to the server
 and checked if the user currently (stored in the browser's local storage) even exists.
 ログインした時にページを再読み込みするようにします。
-アクセスの拒否されたテンプレートが（post submission＝投稿？）ページが現れる前のほんのつかの間に　（flash up＝表示される？）ところ見かけるかもしれません。
-この理由は　サーバーと通信して、ブラウザーのローカルストレージに保存されユーザーが現在もいるのかチェックする前に、Meteor がすぐにテンプレートのレンダリングを始めるからです。（？？？）
+投稿ページが現れる前のほんのつかの間に、アクセスの拒否されたテンプレートが表示されるところ見かけるかもしれません。
+この理由は、（it ？）がサーバーと通信して、（ブラウザのローカルストレージに保存された）ユーザーが現在いるかどうかチェックする前に、Meteor がすぐにテンプレートのレンダリングを始めるためです。
 
 To avoid this problem 
 (which is a common class of problem that you'll see more of as you deal with the intricacies of latency 
 between client and server), 
 we'll just display a loading screen for the brief moment that we are waiting to see if the user has access or not.
-これはクライアントとサーバー間の込み入ったレイテンシを処理する上での一般的な問題です。
-この問題を避けるために、私たちはユーザーがアクセスしているのか確かめて、待っている短い間にロードスクリーンを表示します。（？？？）
+これはクライアントとサーバー間の込み入ったレイテンシを処理する上で、一般的な問題です。
+この問題を避けるために、私たちはユーザーがアクセスしているのか確かめることを待っている短い間に（loading screen＝ローディングスクリーン？）を表示します。
 
 After all at this stage we don't know if the user has the correct log-in credentials,
 and we can't show either the accessDenied or the postSubmit template until we do.
-結局、現段階で私たちはユーザーが正しいログイン認証情報 の状態になっているかどうかわからないので、私たちが(do？)する限り accessDenied や postSubmit テンプレートを表示することはできません。
+結局、現段階で私たちはユーザーが正しいログイン認証情報を保持しているのかわからないので、私たちが(do？)する限り accessDenied や postSubmit テンプレートを表示することはできません。
 
 So we modify our hook to use our loading template whilst Meteor.loggingIn() is true:
-　私たちは Meteor.loggingIn() が true の間はロードするテンプレートを使うために　フックを修正します。　
+　Meteor.loggingIn() が true の間にロードディングテンプレートを使うため、フックを修正します。　
 　
 ~~~js
 Router.map(function() {
@@ -411,8 +411,8 @@ Router.before(requireLogin, {only: 'postSubmit'});
 The easiest way to prevent users from trying to reach this page by mistake 
 when they are logged out is to hide the link from them.
 We can do this pretty easily:
-ユーザーがログアウトしたした時に誤ってこのページにアクセスしないようにする最も簡単な方法は、リンクを非表示にすることです。
-このようにすることは簡単です。
+ユーザーがログアウトしたした際に、誤ってこのページにアクセスしないようにする最も簡単な方法は、リンクを非表示にすることです。
+これはかなり簡単にできます。
 
 ~~~html
 <ul class="nav">
@@ -425,52 +425,51 @@ We can do this pretty easily:
 
 The currentUser helper is provided to us by the accounts package and is the Spacebars equivalent of Meteor.user(). 
 Since it's reactive, the link will appear or disappear as you log in and out of the app.
-currentUser ヘルパーはアカウントパッケージによって提供されており、 Meteor.user()  と同じ Spacebars です。（？？？）
-(it＝currentUserヘルパー?)はリアクティブなので、ログインをするとリンクが現れ、ログアウトをするとリンクが消えます。
+currentUser ヘルパーはアカウントパッケージによって提供されており、 Meteor.user()  に相当する Spacebars です。 
+currentUser ヘルパーはリアクティブなので、ユーザーがログインをするとリンクが表示され、ログアウトをするとリンクが消えます。
 
 ### Meteor Method: Better Abstraction and Security　
 
 We've managed to secure access to the new post page for logged out users, 
 and deny such users from creating posts even if they cheat and use the console.
 Yet there are still a few more things we need to take care of:
-私たちは　ログアウトしたユーザーのために　新しい投稿ページへのアクセスを（secure＝セキュア ？）にしたので、
-仮にユーザーがずるをしてコンソールを使って投稿しようとしても、投稿を作れないようにします。
+私たちはログアウトしたユーザー用に、新しい投稿ページへのアクセスをセキュア にしたので、
+仮にログアウトしたユーザーがずるをしてコンソールを使って投稿しようとしても、投稿を作れないようにします。
 まだまだ、対処すべきことがいくつかあります。
 
 Timestamping the posts.
 Ensuring that the same URL can't be posted more than once.
 Adding details about the post author (ID, username, etc.).
-- 投稿へのタイムスタンプする。
+- 投稿にタイムスタンプする。
 - 同じ URL が投稿できないようにする。
 - 投稿作成者についての詳細 （ID, username など） を追加する。
 
 You may be thinking we can do all of that in our submit event handler. 
 Realistically, however, we would quickly run into a range of problems.
-こうしたことは submit イベントハンドラでできると考えることができます。
+こうしたことは submit イベントハンドラでできると考えられます。
 しかし、現実的にはすぐに大きな問題に直面します。
 
 For the timestamp, we'd have to rely on the user's computer's time being correct, 
 which is not always going to be the case.
-- タイムスタンプでは、私たちはユーザーのコンピュータの時間が正しいとみなす必要がありますが、
-　（which is not always going to be the case.＝常に時間が正しいとは限りません？）　
+- タイムスタンプでは、私たちはユーザーのコンピュータの時間が正しいとみなす必要がありますが、常にその時間が正しいとは限りません。
 
 Clients won't know about all of the URLs ever posted to the site. 
 They'll only know about the posts that they can currently see (we'll see how exactly this works later), 
 so there's no way to enforce URL uniqueness client-side.
-- クライアントはこれまでサイトに投稿されたすべての URL を知りません。
-　クライアントは現在見ている投稿だけを知っています。（これがいかに正確なのかは後々見ていきます）
-　そのため、URL （uniqueness＝独自の？）クライアントサイドを（enforce＝実施？）することはできません。
+- クライアントはこれまでサイトに投稿されたすべての URL についてわかりません。
+　クライアントは現在見ている投稿だけがわかります。（これがいかに正確なのかは後々見ていきます）
+　そのため、クライアントサイドで URL の重複を調べることはできません。
 
 Finally, although we could add the user details client-side, we wouldn't be enforcing its accuracy, 
 which could open our app up to exploitation by people using the browser console.
-- 最後に　私たちは　クライアントサイドに　ユーザーの詳細を追加しましたが、
+- 最後に、私たちはクライアントサイドにユーザーの詳細を追加しましたが、
 　私たちは正確にそれを　（enforce?）できないので、
 　ブラウザーコンソールを使うことで、（ up to exploitation？）、アプリを開くことができます。
 
 For all these reasons, it's better to keep our event handlers simple and,
 if we are doing more than the most basic inserts or updates to collections, use a Method.
 以上のような理由から、イベントハンドラをシンプルに保つことが良いということになります。
-もし、最も基本的なコレクションへの挿入や更新以上のことをするとしたら、メソッドを使います。
+もし、最も基本的なコレクションへの挿入や更新よりも多くのことをするとしたら、メソッドを使います。
 
 A Meteor Method is a server-side function that is called client-side. 
 We aren't totally unfamiliar with them -- in fact, behind the scenes,
@@ -478,8 +477,8 @@ the Collection's insert, update and remove functions are all Methods.
 Let's see how to create our own.
 Meteor のメソッドは　クライアントサイドで呼び出されるサーバーサイドの関数です。
 私たちはこのことについてよく慣れ親しんでいます。
-実のところ、裏側でCollectionの insertや update、 remove関数はすべてメソッドなのです。
-どのように（our own＝自分でメソッド？）を作るのか見ていきましょう。
+実のところ、Collection の insert や update、 remove 関数はすべてメソッドなのです。
+どのように自分でメソッドを作るのか見ていきましょう。
 
 Let's go back to post_submit.js.
 Rather than inserting directly into the Posts collection, we'll call a Method named post:
@@ -513,18 +512,18 @@ You can provide arguments to the call (in this case, the post object we construc
 and finally attach a callback, which will execute when the server-side Method is done.
 Here we simply alert the user if there's a problem,
 or redirect the user to the freshly created post's discussion page if not.
-　Meteor.call関数は　（ by its first argument？＝第一引数によって？）指定したメソッドを呼び出します。
-　（ the call ？）に引数を与えることができます。（この場合は、（ form？）から作られた post オブジェクト）
-最後に、サーバーサイドのメソッドが行われた時に実行する　コールバックを（attach？）します。　
-ここで私たちは問題があった場合にユーザーに警告を出します。
+　Meteor.call関数は第一引数で指定したメソッドを呼び出します。
+　コール（この場合は、フォームから作られた post オブジェクト）に引数を与えることができ、
+最後にサーバーサイドのメソッドが行われた時に実行するコールバックを加えます。　
+ここで問題があった場合にユーザーに警告を出します。
 もし問題がない場合は、ユーザーを最新の投稿ディスカッションページにリダイレクトします。
 
 We then define the Method in our collections/posts.js file.
 We'll remove the allow() block from posts.js since Meteor Methods bypass them anyway.
 Remember that Methods are executed on the server, so Meteor assumes they can be trusted.
 それから、私たちは collections/posts.js ファイルでメソッドを定義します。
-とにかく、Meteor メソッドは（bypass them？）するので、私たちは posts.js からallow() ブロックを削除します。
-メソッドはサーバーで実行されるため、Meteorは（they ？）が信頼に値すると見なします。
+とにかく、Meteor メソッドは allow() ブロックを（bypass ＝迂回？）するので、私たちは posts.js からallow() ブロックを削除します。
+メソッドはサーバーで実行されるため、Meteorは（they =メソッド？）が信頼に値すると見なします。
 
 ~~~js
 Posts = new Meteor.Collection('posts');
@@ -580,8 +579,7 @@ We also do some simple validation of the post object to make sure that our posts
 
 Next, if there's another post with the same URL, we throw a 302 error
 (which means redirect) telling the user that they should just go and look at that previously created post.
-次に、同じ URL の投稿があった場合に、302 error を投げます。（これはリダイレクトするという意味です。）
-ユーザーに　以前作られた投稿に（should just go and look？）するように伝えます。
+次に、同じ URL の投稿があった場合に、リダイレクトを意味する 302 error を投げて、ユーザーに以前作られた投稿に行って見るように伝えます。
 
 Meteor's Error class takes three arguments. 
 The first one (error) is an error code of your choice (in this case we're picking 302),
@@ -594,8 +592,8 @@ MeteorのErrorクラスは３つの引数をとります。
 
 In our case, we'll use this third argument to pass the ID of the post that we just found.
 Spoiler alert: we'll use this later on to redirect the user to the pre-existing post.
-この場合、私たちは　見つけた投稿のIDを渡すために　３つの引数を使います。
-ネタバレ注意：以前から存在している投稿にユーザーをリダイレクトするために、私たちは後でこれを使います。　
+この場合、私たちは　見つけた投稿のIDを渡すために３つの引数を使います。
+ネタバレ注意：以前から存在している投稿にユーザーをリダイレクトするために、私たちは後でこの３つの引数を使います。　
 
 If all those checks pass, we grab the fields that we want to insert 
 (to ensure a user calling this Method in browser console can't put spurious data into our database), 
