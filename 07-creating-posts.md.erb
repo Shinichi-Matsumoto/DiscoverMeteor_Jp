@@ -572,14 +572,14 @@ First, we define our user variable and check if a post with the same link alread
 Then, we check to see that the user is logged in, throwing an error 
 (which will eventually be alert-ed by the browser) if not.
 We also do some simple validation of the post object to make sure that our posts have titles.
-最初に、私たちは user 変数を定義して、同じリンクがすでに存在しているかどうかチェックします。
-それから、　ユーザーがログインしているかチェックして、ログインしてない場合はエラーを投げます。
-（最終的にブラウザーで alert されます。）
-私たちは　投稿にタイトルがあるか確認する（the post？）オブジェクトの妥当性を検証します。　
+最初に、user 変数を定義して、同じリンクがすでに存在しているかどうかチェックします。
+それから、ユーザーがログインしているかチェックして、ログインしてない場合はエラーを投げます。
+（最終的にブラウザで alert されます。）
+私たちは　投稿にタイトルがあるか確認する post オブジェクトの妥当性を検証します。　
 
 Next, if there's another post with the same URL, we throw a 302 error
 (which means redirect) telling the user that they should just go and look at that previously created post.
-次に、同じ URL の投稿があった場合に、リダイレクトを意味する 302 error を投げて、ユーザーに以前作られた投稿に行って見るように伝えます。
+次に、同じ URL の投稿があった場合に、リダイレクトを意味する 302 エラーを投げて、ユーザーに以前作られた投稿に行って見るように伝えます。
 
 Meteor's Error class takes three arguments. 
 The first one (error) is an error code of your choice (in this case we're picking 302),
@@ -588,19 +588,17 @@ and the last one (details) can be any useful additional information.
 MeteorのErrorクラスは３つの引数をとります。
 １つめのerrorは選択したエラーコードです。（この場合では302）
 ２つめのreasonは人間が読み取れるエラーの説明です。
-３つめのdetailsは、　役立つ追加情報となります。
+３つめのdetailsは、役立つ追加情報となります。
 
 In our case, we'll use this third argument to pass the ID of the post that we just found.
 Spoiler alert: we'll use this later on to redirect the user to the pre-existing post.
 この場合、私たちは　見つけた投稿のIDを渡すために３つの引数を使います。
 ネタバレ注意：以前から存在している投稿にユーザーをリダイレクトするために、私たちは後でこの３つの引数を使います。　
 
-If all those checks pass, we grab the fields that we want to insert 
-(to ensure a user calling this Method in browser console can't put spurious data into our database), 
-and include some information about the submitting user -- as well as the current time -- into the post.
-すべてのチェックが終わると、私たちは　　挿入したいフィールドを(grab?)します。
-（　ユーザーがブラウザーコンソールでこのメソッドを呼び出す（ensure？）　は（spurious？）データをデータベースに入れることができません。　）
-投稿に（submit？）ユーザーについての情報と現在の時間を（include ？）します。
+If all those checks pass, we grab the fields that we want to insert using Underscore's pick (to ensure a user calling this Method in browser console can't put spurious data into our database), and include some information about the submitting user -- as well as the current time -- into the post using extend.
+　すべてのチェックが終わると、私たちはUnderscore の pick を使って挿入したいフィールドをつかみます。
+（ユーザーがブラウザーコンソールでこのメソッドを呼び出す（ensure？）はデータをデータベースに入れることができません。）
+また、投稿したユーザーについての情報を現在の時間と同様に extend を使って投稿に含めます。
 
 Finally, we insert the post, and return the new post's id to the user.
 最後に、私たちは投稿を挿入して、ユーザーに新しい投稿の id を返します。
@@ -611,9 +609,9 @@ Now that we have a submitted date on all our posts,
 it makes sense to ensure that they are sorted using this attribute.
 To do so, we can just use Mongo's sort operator, which expects an object consisting of the keys to sort by,
 and a sign indicating whether they are ascending or descending.
-これで私たちはすべての投稿に（submitted＝投稿した？）した日時があるので、
-　この属性を使うことで（？？？？？？）。
-そうするために、私たちはソートするためのキーを構成するオブジェクトを（expect？）する MongoDB の sort 演算子を使うことができます。　
+これで私たちはすべての投稿に投稿した日付があるので、
+　日付の属性を使ってデータをソートすることは理に適っています。
+そうするために、私たちはMongoDB の sort 演算子を使います。sort 演算子はソートするためのキーを構成するオブジェクトを要求します。
 （and a sign indicating whether they are ascending or descending？？？）
 
 ~~~js
@@ -629,9 +627,9 @@ Template.postsList.helpers({
 <%= commit "7-7", "Sort posts by submitted timestamp." %>
 
 It took a bit of work, but we finally have a user interface to let users securely enter content in our app!
-ちょっとした労力がいりましたが、私たちは最終的にアプリ内でユーザーが安全に内容を入力できるユーザーインターフェースを作りました。　　
+ちょっとした労力がいりましたが、私たちは最終的にユーザーがアプリ内に内容を入力できる安全なユーザーインターフェースを作りました。　　
 
 But any app that lets users create content also needs to give them a way to edit or delete it.
 That's what the Editing Posts chapter will be all about.
-しかし　ユーザーが　内容を作ることができるすべてのアプリは編集したり削除する方法をユーザーに提供する必要があります。
-この点は　 Editing Postsの章で学ぶことになります。
+しかし　ユーザーがコンテンツを作ることができるすべてのアプリは編集や削除をする方法をユーザーに提供する必要があります。
+この点は Editing Posts の章で学ぶことになります。
