@@ -63,7 +63,7 @@ Router.before(requireLogin, {only: 'postSubmit'});
 We can now focus on the template. 
 Our postEdit template will be a fairly standard form:
 　これで私たちはテンプレートに集中することができます。
-　postEditテンプレートは　（fairly standard form？＝かなりスタンダードなフォーム？）です。
+　この postEdit テンプレートはスタンダードなフォームです：
 
 ~~~html
 <template name="postEdit">
@@ -148,26 +148,26 @@ The delete callback is extremely simple:
 suppress the default click event, then ask for confirmation.
 If you get it, obtain the current post ID from the Template's data context, delete it, and finally redirect the user to the homepage.
 　delete コールバックは、かなりシンプルです：
-　デフォルトクリックイベントを抑制して、確認を求めます。
-　（get it？＝これを終えると？）、テンプレートデータコンテキストから現在の投稿 ID を取得して、
-　（ it？）を削除して、最終的にユーザーをホームページにリダイレクトします。
+　デフォルトのクリックイベントを抑制して、確認を求めます。
+　（get it？＝これを終えると？）、テンプレートのデータコンテキストから現在の投稿 ID を取得して、
+　（ it？＝現在の投稿ID）を削除して、最終的にユーザーをホームページにリダイレクトします。
 
 The update callback is a little longer, but not much more complicated.
 After suppressing the default event and getting the current post,
 we get the new form field values from the page and store them in a postProperties object.
-　（update？）コールバックは少し長いですが、それほど複雑ではありません。
-　デフォルトイベントを抑制して、現在の投稿を取得した後で、
+　updateコールバックは少し長いですが、それほど複雑ではありません。
+　デフォルトのイベントを抑制して、現在の投稿を取得した後で、
 　私たちはページから新しいformフィールドの値を取得して、postProperties オブジェクトに（them？）を格納します。
 
 We then pass this object to Meteor's Collection.update() Method, and use a callback that either displays an error if the update failed,
 or sends the user back to the post's page if the update succeeded.
 　これで私たちはオブジェクトを Meteor の Collection.update() メソッドに渡して、もしアップデートが失敗したら、（ either？＝どちらかの？）エラーを表示するコールバックを使います。
-　あるいは、アップデートに成功するとユーザーを投稿ページに送ります。
+　あるいは、アップデートに成功したらユーザーを投稿ページに送ります。
 
 ### Adding Links
 
 We should also add edit links to our posts so that users have a way to access the post edit page:
-　ユーザーが　（ post edit page？＝編集ページの投稿？）にアクセスする方法（have？）できるように、私たちは投稿に（add edit links？＝編集リンクを加えます？）　　
+　ユーザーが投稿の編集ページにアクセスする方法ができるように、私たちは投稿にリンクを加えます。
 
 ~~~html
 <template name="postItem">
@@ -189,7 +189,7 @@ We should also add edit links to our posts so that users have a way to access th
 Of course, we don't want to show you an edit link to somebody else's form. 
 This is where the ownPost helper comes in:
 　もちろん、私たちは　（somebody else's form？＝誰かのフォーム）に編集リンクを　表示したくありません。
-　これは ownPostヘルパーが　（comes in？）する場所です。
+　これは ownPostヘルパーが中に入る場所です。
 
 ~~~js
 Template.postItem.helpers({
@@ -212,19 +212,19 @@ Template.postItem.helpers({
 
 
 Our post edit form is looking good, but you won't be able to actually edit anything right now. What's going on?
-　投稿編集フォームは　良さそうに見えますが、　今は何も編集することはできません。　（What's going on?＝どういうことでしょうか？）
+　投稿編集フォームは良さそうに見えますが、今は何も編集することはできません。　どういうことでしょうか。
 
 ### Setting Up Permissions
 
 Since we've previously removed the insecure package, all client-side modifications are currently being denied.
-　私たちは　以前にinsecureパッケージを削除したので、　すべてのクライアントサイドの（modification？＝変更？）は現在　（deny？）されます。
+　私たちは以前にinsecureパッケージを削除したので、現在クライアントサイドでのすべての変更は拒否されます。
 
 To fix this, we'll set up some permission rules. 
 First, create a new permissions.js file inside lib.
 This loads our permissions logic first (and is available in both environments):
-　これを修正するために、　私たちは　パーミッションルールを設定します。
-　最初に、lib内に　新しく　permissions.js　ファイルを作ります。
-　これは最初にパーミッションロジックを（load？＝読み込み）ます。（そして、両方の環境で使うことができます。）
+　これを修正するために、私たちはパーミッションルールを設定します。
+　最初に、lib内に新しく permissions.js ファイルを作ります。
+　これは最初にパーミッションロジックを読み込みます。（そして、両方の環境で使うことができます。）
 
 ~~~js
 // check that the userId specified owns the documents
@@ -236,12 +236,12 @@ ownsDocument = function(userId, doc) {
 
 In the Creating Posts chapter, we got rid of the allow() Methods 
 because we were only inserting new posts via a server Method (which bypasses allow() anyway).
-　投稿をつくるの章で、　allow()を回避するサーバーメソッドを使って　新しい投稿を挿入するために
-　私たちは allow()メソッドを取り除きました。
+　投稿をつくるの章で、私たちは allow()メソッドを削除しました。というのも、私たちは allow()を回避するサーバーメソッドを使って新しい投稿を挿入していたためです。
+　
 　
 But now that we're editing and deleting posts from the client, 
 let's go back to posts.js and add this allow() block:
-　しかし、今はクライアントから投稿を編集したり削除したりするので、
+　しかし、今はクライアントから投稿を編集して削除をするために、
 　posts.jsに戻って、allow() ブロックを加えましょう。
 
 ~~~js
@@ -264,8 +264,8 @@ Meteor.methods({
 
 Just because you can edit your own posts, doesn't mean you should be able to edit every property.
 For example, we don't want users to be able to create a post and then assign it to somebody else.
-　（own？＝自分が作った？）投稿を編集できるからといって、あなたがすべてのプロパティを編集できるという意味ことではありません。
-　たとえば、　私たちは　ユーザーが　投稿を作って、（somebody else？＝だれかに？）投稿を（assign？）できるようにしたくありません。
+　自分の投稿を編集できるからといって、あなたがすべてのプロパティを編集できるということではありません。
+　たとえば、私たちは　ユーザーが　投稿を作って、（somebody else？＝だれかに？）投稿を（assign？）できるようにしたくありません。
 
 We use Meteor's deny() callback to ensure users can only edit specific fields:
 　ユーザーが　特定のフィールドだけを編集できるようにするために、私たちは　Meteor's deny()コールバックを使います。　
@@ -292,7 +292,8 @@ Posts.deny({
 
 We're taking the fieldNames array that contains a list of the fields being modified, 
 and using Underscore's without() Method to return a sub-array containing the fields that are not url or title.
-　私たちは　（ modified？＝変更された）フィールドのリストを含んだ　fieldNames配列を　（take？）しています。　
+　私たちは変更されたフィールドのリストを含んだ　fieldNames配列を取得しています。　
+また、url や titleではないフィールドを含んだ（sub-array？）を返すために、Underscoreのwithout()メソッドを使います。
 
 If everything's normal, that array should be empty and its length should be 0.
 If someone is trying anything funky, that array's length will be 1 or more,
