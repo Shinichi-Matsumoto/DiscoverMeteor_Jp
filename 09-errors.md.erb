@@ -11,29 +11,27 @@ Merely using the browser's standard alert() dialog to warn the user
 when there's problem with their submission
 is a bit dissatisfying, and it certainly doesn't make for great UX. 
 We can do better.
-　（submission？）に問題がある時に、　ユーザーに警告をするために単純に　ブラウザーの標準的な　alert() ダイアログを使うことは
-　少々（dissatisfy？）で、素晴らしいUXを（make for？）するわけではありません。
-　よりよくできます。（？？？）
+　投稿に問題がある時に、ユーザーに警告をするために単純にブラウザの標準的な　alert() ダイアログを使うことは少々不愉快で、素晴らしいUXに役立つわけではありません。
+　この点をよりよくできます。
 
 
 Instead, let's build a more versatile error reporting mechanism 
 that will do a better job of telling the user what's going on without breaking up their flow.
-　その代わりに、（reporting mechanism ？＝報告するメカニズム？）（versatile？）エラーを作りましょう。
-　これは（ breaking up their flow？＝フローを壊すことなく？）ユーザーに（what's going on？＝何が起きているか？）
-　（tell？＝知らせる？）より良い役割を果たします。
+　多目的で使えるエラーを報告する仕組みを作りましょう。
+　これはユーザーのワークフローを中断することなくユーザーに何が起きているか知らせる上でより良い役割を果たします。
 
 ### Introducing Local Collections
 
 We are going to implement a simple system which keeps track of which errors a user has seen and displays the new ones
 in a "flash" area of the site.
 This UX pattern is useful when we want to inform a user that something has happened without disrupting their workflow too much.
-　サイトの（"flash"？）の部分でユーザーがどのエラーを見ているか（keeps track of？）して、
-　新しい（ones？＝エラー？）を表示するシンプルなシステムの（implement？）をしていきます。
-　このUXパターンはユーザーの（workflow？）を（disrupt？＝邪魔？）せずに、私たちがユーザーに何かが起きていると知らせたいときに、役立ちます。
+　サイトの（"flash"？）の領域でユーザーがどのエラーを見ているか把握して、
+　新たにエラーを表示するシンプルなシステムを実装していきます。
+　このUXパターンはユーザーのワークフローを邪魔せずに、私たちがユーザーに何かが起きていると知らせたいときに、役立ちます。
 
 What we will create is similar to the flash messages often found in Ruby on Rails apps,
 but is more subtle in that it's implemented client side and knows when a user has seen a message.
-　私たちが作るものは　　Ruby on Railsアプリで　よく見かける　（ flash？）メッセージに似ていますが、
+　私たちが作るものは Ruby on Rails アプリでよく見かける flash メッセージに似ていますが、
 　（more subtle？）です。　（it's implemented client side？）　ユーザーがメッセージを見ている時を　（ know？）
 
 To start off with, we create a collection to store our errors in.
