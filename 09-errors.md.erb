@@ -32,22 +32,20 @@ This UX pattern is useful when we want to inform a user that something has happe
 What we will create is similar to the flash messages often found in Ruby on Rails apps,
 but is more subtle in that it's implemented client side and knows when a user has seen a message.
 　私たちが作るものは Ruby on Rails アプリでよく見かける flash メッセージに似ていますが、
-　（more subtle？）です。　（it's implemented client side？）　ユーザーがメッセージを見ている時を　（ know？）
+　（more subtle？）です。　（it？）はクライアントサイドで実装され、ユーザーがメッセージを見ている時を　（ know？）
 
 To start off with, we create a collection to store our errors in.
 Given that the errors are only relevant to the current session and don't need to be persistent in any way, 
 we are going to do something new, and create a local collection.
 What this means is that the Errors collection will only exist in the browser, 
 and will make no attempt to synchronize with the server.
-　（ start off with？）ために、わつぃたちは　エラーを格納するコレクションを作ります。
-　エラーは　　現在のセッションに（relevant to？）するだけで、（in any way？）　（ persistent？）する必要がないことを考えると、
-　私たちは　何か新しいことをして、　ローカルコレクションを作っていきます。（？？？）
-　これが意味することは、Errorsコレクションというものはブラウザ機能にだけ存在して、　
-　サーバーと同期することはしないということです。
+　まず初めに、私たちは　エラーを格納するコレクションを作ります。
+　エラーはカレントセッションに関連するだけで、永続的である必要がないことを考えると、私たちは何か新しいことをして、ローカルコレクションを作っていくことになります。
+　これが意味することは、Errorsコレクションはブラウザだけに機能して、サーバーとは同期しないということです。
 
 To achieve this, we simply create the error in a client-only file, with the collection name set to null. 
 We create a throwError function that simply inserts an error into our new local collection:
-　このようにするために、私たちはコレクションの名前をnullに設定して、（client-only？）ファイルにエラーを作ります。
+　このようにするために、私たちはコレクションの名前をnullに設定して、クライアントだけのファイルにエラーを作ります。
 　私たちは新しいローカルコレクションにエラーを挿入するthrowError関数を作ります。
 
 ~~~js
@@ -58,8 +56,8 @@ Errors = new Meteor.Collection(null);
 
 Now that the collection has been created, we can add a throwError function which we'll call to add errors to it.
 We don't need to worry about allow or deny or anything like that, as this is a local collection and will not be saved to the Mongo database.
-　これでコレクションが作られたので、私たちは　（it？）にエラーを加えるために呼び出すthrowError関数を入れることができます。
-　私たちは　（ allow や deny？）や他のことに心配する必要はありません。というのも、これはローカルコレクションで、MongoDBに保存されていないからです。
+　これでコレクションが作られたので、私たちはこのコレクションにエラーの追加を呼び出すthrowError関数を入れることができます。
+　私たちは allow や deny などに気にする必要がありません。というのも、これはローカルコレクションで、MongoDBに保存されていないからです。
 
 ~~~js
 throwError = function(message) {
@@ -70,8 +68,8 @@ throwError = function(message) {
 
 The advantage of using a local collection to store the errors is that, like all collections, 
 it's reactive -- meaning we can declaratively display the errors in the same way we display any other collection data.
-　エラーを格納するためにローカルコレクションを　使うことの利点は、すべてのコレクションに（like？）ですが、
-　リアクティブだからです。　つまり、　私たちは　他のコレクションデータを表示するのと同じように　（declaratively？）にエラーを表示することができます。
+　エラーを格納するためにローカルコレクションを使うことの利点は、すべてのコレクションと同様に、リアクティブだからです。
+つまり、私たちは他のコレクションデータを表示するのと同じように （declaratively＝宣言的に？）エラーを表示することができます。
 
 ### Displaying errors
 
@@ -93,7 +91,7 @@ We are going to display the errors at the top of our main layout:
 <%= highlight "7" %>
 
 Let's now create the errors and error templates in errors.html:
-　errors.html内に、エラーとエラーテンプレートを作りましょう：
+　errors.html 内に、エラーとエラーテンプレートを作りましょう：
 
 ~~~html
 <template name="errors">
@@ -121,22 +119,19 @@ You'll notice we're putting two templates in a single file.
 Up to now we've tried to adhere to a "one file, one template" convention, 
 but as far as Meteor is concerned putting all our templates in a single file works just as well 
 (although it would make for a very confusing main.html!).
-　私たちは２つのテンプレートを１つのファイルに置いていることにお気づきでしょう。
-　今まで私たちは　「１つのファイルに１つのテンプレート」（convention？）を（adhere？）してきましたが、
+　私たちが２つのテンプレートを１つのファイルに置いていることにお気づきでしょう。
+　今まで私たちは　「１つのファイルに１つのテンプレート」という慣習を支持してきましたが、
 　Meteorに関する限りでは、１つのファイルにすべてのテンプレートを置くこともできます。
 
 In this case, since both error templates are fairly short, 
 we'll make an exception and put them in the same file to make our repo a bit cleaner.
-　この場合は、　両方の（ error？）テンプレートはとても少ないので、
-　私たちは　リポジトリを少しきれいにしておくために、例外を作って同じファイルにテンプレートを置きました。　
+　この場合、両方のerrorテンプレートはとても短いので、
+　私たちはリポジトリを少しきれいにしておくために、例外として同じファイルにerrorテンプレートを置きました。　
 
 We just need to integrate our template helper, and we'll be good to go!
-　私たちは　テンプレートヘルパーをまとめる必要があり、用意ができています。
-　
+　私たちはテンプレートヘルパーをまとめる必要があり、用意ができています。
 
 <% end %>
-
-
 
 ~~~js
 Template.errors.helpers({
@@ -154,18 +149,17 @@ Template.errors.helpers({
 We now know how to display errors, but we still need to create some before we'll see anything. 
 Errors are most commonly triggered by users entering new content, 
 so we'll check for errors in our post creation callback, and display a message for any errors that get raised.
-　私たちは　エラーを表示する方法を知っていますが、（anything？）を見る前に　（ some？）を作る必要があります。
-　ユーザーが新しい投稿を入れることで、エラーは最も普遍的に　（triggered ？）されるので、
-　（ post creation callback？）でエラーをチェックして、　（any errors that get raised？）メッセージを表示します。
+　私たちはエラーを表示する方法を知っていますが、（anything？）を見る前に　（ some？）を作る必要があります。
+　ユーザーが新しい投稿を入れることで、エラーは最も普遍的に引き起こされるので、（ post creation？）コールバックでエラーをチェックして、（ get raised？）されたあらゆるエラーメッセージを表示します。
 
 In addition, if we get the 302 error (which indicates that a post with the same URL already exists), 
 we'll redirect the user to the existing post. 
 We obtain the existing post's _id from error.details 
 (remember we passed that post's _id as the third details argument of our Error class in chapter 7).
-　さらに、302 error（これは　同じURLの投稿がすでに存在していることを示しています。）を（get？）したら、
-　すでに存在している投稿にユーザーを　リダイレクトします。
-　私たちはerror.details から　すでに存在している投稿の　_idを（obtain？）しています
-　（私たちが（as the third details argument of our Error class in chapter 7？）として投稿の_idを渡したことを　思い出しましょう。）
+　さらに、302 error（これは　同じURLの投稿がすでに存在していることを示しています。）を（get？＝取得？）したら、
+　すでに存在している投稿にユーザーをリダイレクトします。
+　私たちはerror.details から　すでに存在している投稿の　_idを得ています
+　（私たちが7章で（as the third  our Error class？）のdetails引数として投稿の_idを渡したことを思い出しましょう。）
 
 ~~~js
 Template.postSubmit.events({
@@ -198,34 +192,32 @@ Template.postSubmit.events({
 <%= commit "9-2", "Actually use the error reporting." %>
 
 Give it a try: try creating a post and entering the URL http://meteor.com. As this URL is already attached to a post in the fixtures, you should see:
-試してましょう：投稿を作って、http://meteor.comにURLを入力してみましょう。　このURLがすでに（in the fixtures？）に投稿が（attached）されていたら、 （you should see？）
+試してましょう：http://meteor.comのURLを入力して投稿を作ってみましょう。このURLがすでに（in the fixtures？）に投稿が（attached＝存在）していたら、 このように表示されます。
 
 <%= screenshot "9-1", "Triggering an error" %>
 
 ### Clearing Errors
 
-
 If you click the error's close button at this point, 
 you'll see the error disappear, because that close button triggers Twitter Bootstrap's embedded JavaScript.
-　（at this point？）でエラーのクローズボタンをクリックすると、エラーが消えます。
-　これはクローズボタンが　Twitter Bootstrapの（embedded）された　JavaScript　を（trigger？）するからです。
-
+　現在のところ、エラーのクローズボタンをクリックすると、エラーが消えます。
+　これはクローズボタンがTwitter Bootstrapに埋め込まれた JavaScript　を引き起こすからです。
 
 But while Bootstrap is removing the error <div> from the DOM, 
 it's not removing the error object from the Meteor collection. 
 So let's add a way to clean up our local collection once an error has done its job.
-　しかし、Bootstrapは　DOM（ from？＝で？）エラー<div>を削除しますが、
-　Meteorコレクションから　エラーオブジェクトを削除しません。
-　（once an error has done its job？＝エラーが役割を果たしたら？）、ローカルコレクションを　きれいにする方法を　（add？）しましょう。
+　しかし、Bootstrapは DOMからエラー<div>を削除しますが、
+　Meteorコレクションからエラーオブジェクトを削除しません。
+エラーが役割を果たしたら、ローカルコレクションをきれいにする方法を追加しましょう。
 
 
 First, we'll modify the throwError function to include a seen property. 
 This will be useful later on to keep track of whether an error has been actually seen by the user.
-　最初に、私たちは　（seen？）プロパティを（include？）するために　throwErrorエラー関数を修正します。
-　これは　エラーが実際にユーザーに見られたのか（ keep track of？）するために、後々役立ちます　
+　最初に、私たちは seen プロパティを（include？＝インクルード？）するために　throwErrorエラー関数を修正します。
+　これはエラーが実際にユーザーに見られたのか把握するために、後々役立ちます　
 
 Once that's done, we can code up a simple clearErrors function that clears those "seen" errors:
-　これが終わると、私たちは（"seen" ？）エラーをクリアする　clearErrors関数を（ code up ？）できます。
+　これが終わると、私たちは（"seen" ？）エラーをクリアする　clearErrors関数をコーディングします。
 
 ~~~js
 // Local (client-only) collection
@@ -244,7 +236,7 @@ clearErrors = function() {
 
 
 Next, we'll clear errors in the router so that navigating to another page will make these errors vanish forever:
-　次に、私たちは　ルーターでエラーをクリアします　（ so that？）　他のページに（navigating？）　は　エラーを永遠に消します。　
+　次に、私たちは　ルーターでエラーをクリアします　（ so that？）　他のページに（navigating？）はエラーを永遠に消去するように
 
 ~~~js
 // ...
@@ -261,29 +253,22 @@ To do this properly, there's one edge case we need to take care of:
 when we throw up an error and then redirect the user somewhere else (as we do when they try to post a duplicate link), 
 the redirection happens instantly.
 This means that the user never has the chance to actually see the error before it's cleared.
-　clearErrors() 関数に仕事をさせるために、（errors？）は（ seen？）にマークされている必要があります。
-　正しく行うために、　対処する必要のある（ one edge case ？）があります。：
-　私たちがエラーを（ throw up？）して、（somewhere else？）にユーザーをリダイレクトする時（as we do when they try to post a duplicate link？）、
-　リダイレクトは瞬時に行われます。
+　clearErrors() 関数が仕事をするために、エラーは seenにマークされている必要があります。
+　正しく行うために、対処する必要のある１つのエッジケースがあります。：
+　私たちがエラーを投げて、どこかにユーザーをリダイレクトすると、ユーザーが重複したリンク投稿した時と同様に、リダイレクトが瞬時に行われます。
 　つまり、エラーがクリアされる前に、ユーザーは実際にエラーを見るチャンスがないということです。
-
 
 This is where our seen property will come in handy.
 We need to ensure that it's only set to true if the user has actually seen the error.
-　これが　（seen？）プロパティが（ come in handy？）する場所です。（？？？）
-　私たちはユーザーが実際にエラーを見た場合に、確実にtrueとだけセットする必要があります。（？？？）　
+　これはseenプロパティが役立つところです。
+　私たちはユーザーが実際にエラーを見た場合に、確実にtrueとだけセットする必要があります。　
 
 To achieve this, we'll use Meteor.defer().
 This function tells Meteor to execute its callback "just after" whatever's going on now.
 If it helps, you can consider that defer() is like telling the browser to wait 1 millisecond before proceeding.
 　このようにするために、Meteor.defer()を使います。
-　この関数はMeteorに　（ "just after" whatever's going on now？）コールバックを実行する命令をします。
-　（If it helps？）、defer()は　ブラウザーに　（ proceeding？）する前に、（1 millisecond？）待つように命令している　と考えることができます。
-
-
-
-
-
+　この関数はMeteorに今起こっていることの「直後に」コールバックを実行する命令をします。
+　これが機能すると、defer()はブラウザが先に進む前に、1ミリ秒待つように規定していると考えることができます。
 
 Template.errors.helpers({
 
@@ -306,25 +291,21 @@ Template.error.rendered = function() {
 
 <%= commit "9-3", "Monitor which errors have been seen, and clear on routing." %>
 
-
-
 What we're doing is telling Meteor to set seen to true 1 millisecond after the errors template has been rendered.
 But remember how we said that redirection happens instantly?
 This means that the redirection will kick in before the defer callback, 
 which will never have a chance to be executed.
 　私たちがしていることは、errorsテンプレートがレンダリングされた後で
-　（set seen to true 1 millisecond ？＝seenを1秒間にtrueとセットする？）
-　ことを　Meteorに指示を出しています。
-　しかし、　私たちはどのように（redirection？）が瞬時に起こすと言ったのか（？？？）思い出して下さい。
-　これは　deferコールバックの後で（ redirection？）が（ kick in ）するということで、
-　実行されることはありません。
+　seenを1ミリ秒間にtrueとセットすることをMeteorに規定しています。
+　しかし、私たちはどのようにリダイレクションが瞬時に起きると言ったのか（？？？）思い出して下さい。
+　つまり、リダイレクションは実行されないdeferコールバックの前に作動するということです。
 
 This is exactly what we want: 
 if it's not executed our error will not be marked as seen, 
 which means it won't be cleared, 
 which means it'll appear on the page our user is redirected to just like we wanted!
  　これはまさに私たちが望んだことです。
-　（it？）が実行されない場合、エラーは（ seen？）とマークされません。
+　（it？）が実行されない場合、エラーはseenとマークされません。
 　これは（it？）がクリアされないということで、
 　ユーザーがリダイレクトされたページに現れる　　私たちが望んでいたように　（？？？）
 
@@ -332,16 +313,15 @@ which means it'll appear on the page our user is redirected to just like we want
 
 ### The `rendered` callback
 
-
 The rendered callback triggers once our template has been rendered in the browser. 
 Inside the callback, this refers to the current template instance, 
 and this.data lets us access the data of the object that is currently being rendered (in our case, an error).
 　レンダリングされたコールバックはブラウザーでレンダリングされたテンプレートを
-（ trigger？）します。
-　コールバックの中で、　this　は現在のテンプレートインスタンスを参照するので、
-　私たちは　this.data　で現在レンダリングされているオブジェクトのデータに　アクセスすることができます。　
+引き起こします。
+　コールバックの中で、this は現在のテンプレートインスタンスを参照するので、
+　私たちは　this.dataで現在レンダリングされているオブジェクトのデータにアクセスすることができます。　
 
 Whew! That was a lot of work for something users will hopefully never see!
-　ふう！　ユーザーが　見ないようにするのは　大仕事でしたね！
+　ふう！　ユーザーに見ないようにするのは大仕事でしたね！
 
 <% end %>
