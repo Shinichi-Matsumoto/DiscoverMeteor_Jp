@@ -8,7 +8,7 @@ paragraphs: 25
 ---
 
 Now that users can comment on each other's posts, it'd be good to let them know that a conversation has begun.
-　ユーザーは　お互いの投稿にコメントできるようになったので、　会話が始まったことを知らせると良いでしょう。　
+　これでユーザーはお互いの投稿にコメントできるようになったので、会話が始まったことを知らせると良いでしょう。　
 
 To do so, we'll notify the post's owner that there's been a comment on their post, and provide them with a link to view that comment.
 　そのようにするために、投稿にコメントが付いたことを投稿者に知らせて、そのコメントを見るためのリンクを提供します。
@@ -18,8 +18,8 @@ because Meteor is realtime by default, we'll be displaying those notifications i
 We don't need to wait for the user to refresh the page or check in any way, 
 we can simply pop new notifications up without ever writing any special code.
 　これは Meteor の機能がよく輝くところです：
-　Meteorはデフォルトでリアルタイムなので、そうした通知が瞬時に表示されます。
-　ユーザーがページを再読み込みしたり、多少なりともチェックしたりすることを私たちは待つ必要はありません。
+　Meteor はデフォルトでリアルタイムなので、そうした通知は瞬時に表示されます。
+　ユーザーがページを再読み込みしたり、チェックしたりすることを私たちは待つ必要はありません。
 　特別なコードを書くことなく、新しい通知をポップアップできるからです。　
 　
 ### Creating notifications
@@ -27,13 +27,13 @@ we can simply pop new notifications up without ever writing any special code.
 We'll create a notification when someone comments on your posts.
 In the future, notifications could be extended to cover many other scenarios, 
 but for now this will be enough to keep users informed of what's going on.
-　投稿に誰かがコメントをした時に、通知を作っていきます。（？？？）
-　将来的には、通知を多くのシナリオをカバーするために拡張できますが、
-　今のところは　　ユーザーに　何が起きているか知らせる状態にすることで十分でしょう。
+　投稿に誰かがコメントをした時の通知を作っていきます。
+　将来的には、通知を多くのシナリオをカバーするように拡張できますが、
+　今のところはユーザーに何が起きているか知らせることで十分でしょう。
 
 Let's create our Notifications collection, as well as a createCommentNotification function that will insert a matching notification for each new comment on one of your own posts:
-　では、Notificationsコレクションを作っていきましょう。
-　同様に、自分で作った投稿で（ for each new comment ？＝新しいコメントに？）マッチする通知を　挿入するcreateCommentNotification関数を作っていきます。
+　では、Notifications コレクションを作っていきましょう。
+　同様に、自分の投稿の新しいコメントごとにマッチする通知を挿入するcreateCommentNotification関数を作っていきます。
 
 ~~~js
 Notifications = new Meteor.Collection('notifications');
@@ -60,11 +60,11 @@ createCommentNotification = function(comment) {
 Just like posts or comments, this Notifications collection will be shared by both client and server. 
 As we need to update notifications once a user has seen them, 
 we also enable updates, ensuring as usual that we restrict update permissions to a user's own data.
-　（ posts や comments？）と同じように、Notificationsコレクションはクライアントとサーバーの両方で共有されます。
-　一度ユーザーが（them？）を見た時に、私たちは通知をアップデートする必要があるので、　アップデートをできるようにします。　いつものように、アップデート（ permission？）をユーザーの（own？）データにリダイレクトするようにします。
+　投稿やコメントと同じように、Notifications コレクションはクライアントとサーバーの両方で共有されます。
+　一度ユーザーが（them？）を見た時に、私たちは通知を更新する必要があるので、アップデートをできるようにします。　いつものように、更新許可をユーザーの（own？）データにリダイレクトするようにします。
 
 We've also created a simple function that looks at the post that the user is commenting on, discovers who should be notified from there, and inserts a new notification.
-　私たちは　ユーザーがコメントしている投稿を（looks at？＝調べる？）　シンプルな関数を作りました。　誰がそこから通知されるべきか見つけて、新しい通知を挿入します。
+　私たちはシンプルな関数を作りました。これはユーザーがコメントしている投稿に目を向け、誰がそこから通知されるか見つけて、新しい通知を挿入する関数です。
 
 We are already creating comments in a server-side Method,
 so we can just augment that Method to call our function. 
@@ -73,10 +73,10 @@ by comment._id = Comments.insert(comment)
 in order to save the _id of the newly created comment in a variable, 
 then call our createCommentNotification function:
 　私たちはすでに　サーバーサイドのメソッドでコメントを作っているので、
-　関数を呼び出すために、このメソッドを（augment？＝拡大させる？）ことができます。
-　変数で新しく作ったコメントの _id を保存するために、comment._id = Comments.insert(comment)によって、　return Comments.insert(comment)を
-（replace？＝取り替え？）ます。
-　それから、 createCommentNotification関数を呼び出します。
+　関数を呼び出すために、このメソッドを（augment？＝増やす？）ことができます。
+　新しく作ったコメントの _id を変数に保存するため、return Comments.insert(comment) を comment._id = Comments.insert(comment)に　
+取り替えます。
+　それから、 createCommentNotification 関数を呼び出します。
 
 ~~~js
 Comments = new Meteor.Collection('comments');
@@ -100,7 +100,7 @@ Meteor.methods({
 <%= highlight "8~14" %>
 
 Let's also publish the notifications, and subscribe on the client:
-　通知も publish して、クライアントに subscribe  しましょう：
+　通知もパブリッシュして、クライアントにサブスクライブしましょう：
 
 ~~~js
 // [...]
@@ -163,7 +163,7 @@ Now we can go ahead and add a list of notifications to the header.
 <%= highlight "12~19" %>
 
 And create the notifications and notification templates (they'll share a single notifications.html file):
-　そして、notificationsテンプレートとnotificationテンプレートをつくります。（この２つは１つのnotifications.htmlファイルを共同利用します。）
+　そして、notifications テンプレートと notification テンプレートをつくります。（この２つは１つの notifications.html ファイルを共同で利用します。）
 
 ~~~html
 <template name="notifications">
@@ -198,10 +198,10 @@ And create the notifications and notification templates (they'll share a single 
 We can see that the plan is for each notification to contain a link
 to the post that was commented on, 
 and the name of the user that commented on it.
-　私たちは　　コメントされた投稿へのリンクがあるそれぞれの通知のための（plan？）　とコメントされた投稿のユーザーの名前を見ることができます。（？？？？？？）
+　私たちは　コメントされた投稿へのリンクがあるそれぞれの通知のための（plan＝図面？）とコメントされた投稿のユーザーの名前を見ることができます。
 　
 Next, we need to make sure we select the right list of notifications in our manager, and update the notifications as "read" when the user clicks on the link to which they point.
-　次に、私たちはマネージャーで、通知の正しいリストを選んで、ユーザーが（point？）するリンクをクリックした時に、通知を"read"としてアップデートする必要があります。
+　次に、私たちはマネージャーで、通知の正しいリストを選んで、ユーザーがポイントしているリンクをクリックした時に、通知を"read"としてアップデートする必要があります。
 
 ~~~js
 Template.notifications.helpers({
@@ -242,7 +242,7 @@ will exist across browser refreshes and different devices.
 　私たちはクライアント-サーバー間を同期した適切なコレクションを作りました。
 　これは通知が永続的であるという意味であり、
 　私たちが同じユーザーアカウントを使う限り、
-　再読み込みするブラウザーでも違うデバイスでも（exist？＝使うことができます？）
+　再読み込みするブラウザでも違うデバイスでもこの通知は健在です。
 
 Give it a try: 
 open up a second browser (let's say Firefox), 
@@ -274,7 +274,7 @@ If you still have your second browser open, try running the following code in th
 
 This new user (the one that commented) shouldn't have any notifications. 
 The notification they can see in the Notifications collection actually belongs to our original user.
-　コメントをされたこの新しいユーザーは　どんな通知も（ have？）するべきではありません。
+　コメントをされたこの新しいユーザーはどんな通知も（ have？）するべきではありません。
 　ユーザーが　 Notifications コレクションで見ることができる通知は　（our original？）ユーザーに属しています。
 
 Aside from potential privacy issues, 
@@ -282,19 +282,19 @@ we simply can't afford to have every user's notifications loaded in every other 
 On a big enough site,
 this could overload the browser's available memory and start causing serious performance problems.
 　潜在的なプライベートの問題はさておき、
-　私たちはすべてのユーザーがブラウザーで読み込まれるすべてのユーザーの通知を（have？＝持つ？）余裕はありません。　
+　私たちはすべてのユーザーがブラウザで読み込まれるすべてのユーザーの通知を保有する余裕はありません。
 　十分に大きなサイトでは、
-　これは　ブラウザーが使用できるメモリをオーバーローンして、深刻なパフォーマンスの問題をもたらすことになります。
+　これはブラウザが使用できるメモリをオーバーロードして、深刻なパフォーマンスの問題をもたらすことになります。
 
 We solve this issue with publications. 
 We can use our publications to specify precisely which part of our collection we want to share with each browser.
-　この問題は publications で解決します。
-　各ブラウザーで共有させたいコレクションの部分を正確に規定するために、私たちはpublications を使います。
+　この問題はパブリケーションで解決します。
+　各ブラウザーで共有させたいコレクションの部分を正確に規定するために、私たちはパブリケーションを使います。
 
 To accomplish this, we need to return a different cursor in our publication than Notifications.find().
 Namely, we want to return a cursor that corresponds to the current user's notifications.
-　これをするために、私たちはNotifications.find()よりも　publication で違ったカーソルを返す必要があります。（？？？）　
-　つまり、私たちは　現在のユーザーの通知に対応するカーソルを返したいのです。　
+　これをするために、私たちはNotifications.find()よりもパブリケーションで違ったカーソルを返す必要があります。
+　つまり、私たちは現在のユーザーの通知に対応するカーソルを返したいのです。　
 
 Doing so is straightforward enough, 
 as a publish function has the current user's _id available at this.userId:
@@ -312,7 +312,7 @@ Meteor.publish('notifications', function() {
 
 Now if we check in our two browser windows, we should see two different notifications collections:
 　私たちが　２つのブラウザーウィンドウをチェックすると、
-　２つの異なる（ notifications ？）コレクションを見ることができます。　
+　２つの異なるnotifications コレクションを見ることができます。　
 
 ~~~js
 ❯ Notifications.find().count();
@@ -330,4 +330,4 @@ In fact, the list of Notifications should even change as you log in and out of t
 This is because publications automatically re-publish whenever the user account changes.
 　実際には、アプリにログインしたりログアウトした時に、通知のリストが変化するべきです。　
 
-それはユーザーアカウントが変化するたびに、 publications が自動的に再 publish  するためです。　
+それはユーザーアカウントが変化するたびに、 パブリケーションが自動的に再パブリッシュするためです。　
