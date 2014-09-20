@@ -388,8 +388,8 @@ That seems a little wasteful.
 After all, we're only actually using a small subset of this data at any given time.
 So let's improve our publication and subscription to control exactly which comments are published.
 　今のところ、私たちはすべての投稿にすべてのコメントをパブリッシュしています。
-　これは　ちょっと　無駄が多いように見えます。
-　結局、私たちはどんなときでも（ this data＝コメントデータ？）の小さな部分を使っているだけなので、どのコメントをパブリッシュさせるかコントロールするためにパブリケーションとサブスクリプションを改善していきましょう。　　
+　これは　ちょっと無駄が多いように見えます。
+　結局、私たちはどんなときでもコメントデータの小さな一部分を使うだけなので、どのコメントをパブリッシュさせるかコントロールするためにパブリケーションとサブスクリプションを改善していきましょう。　　
 
 If we think about it, the only time we need to subscribe to our comments publication is when a user accesses a post's individual page, 
 and we only need to load the subset of comments related to that particular post.
@@ -417,8 +417,7 @@ but it's an unavoidable downside unless you intend to front-load the entirety of
 　これは別の結果です：アプリを初期化する時にデータをロードするかわりに、
 　今の私たちはルートにヒットした時はいつもで　（ it？）をロードしています。
 　これはアプリ内を見ている間に（get loading times？）します、
-　しかし、これはあなたが永遠にすべてのデータセットを（front-load？）するつもりでない限り、　
-　やむを得ない（downside？＝マイナス面？）です。
+　しかし、これはあなたが永遠にすべてのデータセットを（front-load？）するつもりでない限り、避けられないマイナス面です。
 
 First, we'll stop preloading all comments in the configure block by removing Meteor.subscribe('comments'):
 　最初に、私たちは configureブロックで Meteor.subscribe('comments')を削除して
@@ -463,42 +462,41 @@ Meteor.publish('comments', function(postId) {
 
 You'll notice we're passing this.params._id as an argument to the subscription. 
 So let's use that new information to make sure we restrict our data set to comments belonging to the current post:
-　私たちは　this.params._idをサブスクリプションへの引数として渡していることにお気づきかと思います。
-　そのため、　（ to make sure we restrict our data set to comments belonging to the current post？＝現在の投稿に帰属しているコメントにセットされたデータにリダイレクトするための？）新しい情報を　使いましょう。　
+　私たちは this.params._id をサブスクリプションへの引数として渡していることにお気づきかと思います。
+　そのため、現在の投稿に帰属しているコメントへのデータセットを制限するために新しい情報を使いましょう。　
 
 <%= screenshot "10-3", "Our comments are gone!" %>
 
-### Counting Comments
-
 There's only one problem: when we return to the homepage, it claims that all our posts have 0 comments:
-　１つだけ問題があります：　ホームページに戻るときに、（it？）はすべての投稿でコメントは0だと言っています。
+　１つだけ問題があります：　（homepage＝ホーム？）に戻るときに、（it？）はすべての投稿でコメントは0だと言っています。
+
+### Counting Comments
 
 The reason for this will quickly become clear: 
 we only ever have at most one of our post's comments loaded, 
 so when we call Comments.find({postId: this._id}) in the commentsCount helper in the post_item manager, 
 Meteor can't find the necessary client-side data to provide us with a result.
-　この理由は　すぐに理解できます：
-　私たちは　（only ever have at most one of our post's comments loaded？＝
-　多くても読み込まれた投稿のコメントのひとつを持っているにすぎません？）
-　そのため、私たちは　post_itemマネージャー内のcommentsCountヘルパーで、
-　Comments.find({postId: this._id})を呼び出す時に、（？？？）
-　Meteor は結果を（provide？）するための必要なクライアントサイドデータを見つけることができません。
+　この理由はすぐに明らかになります：
+　私たちは
+　投稿のコメントのひとつをロードするだけなので、私たちはpost_itemマネージャ内のcommentsCountヘルパーで、
+　Comments.find({postId: this._id})を呼び出す時に、
+　Meteor は結果を提供するための必要なクライアントサイドのデータを見つけることができません。
 
 The best way to deal with this is to denormalize the number of comments onto the post
  (if you're not sure what that means don't worry, the next sidebar has got you covered!).
  Although as we'll see, there's a minor addition of complexity in our code, 
  the performance benefit we gain from not having to publish all the comments to display the post list is worth it.
-　この問題に対処する最も良い方法は、（onto the post？＝投稿に？）コメントの数を（denormalize＝非正規化？）することです。
-　（これが何を意味しているのか自信がなくでも、問題ありません。次の補足事項でカバーしますからね！）
-　　　（as we'll see＝これまで見てきたように？）、コードにちょっとだけ複雑なものが追加していますが、
+　この問題に対処する最も良い方法は、投稿にコメントの数を非正規化？）することです。
+　（これが何を意味しているのか自信がなくでも、問題ありません。次の補足事項でカバーします！）
+　　　これまで見てきたように、コードにちょっとだけ複雑なものを追加していますが、
 　　投稿リストを表示する上で、すべてのコメントにパブリッシュする必要がなくなったことで私たちが得るパフォーマンスベネフィットには、それだけの価値があります。
 
 We'll achieve this by adding a commentsCount property to the post data structure. 
 To begin with, we update our post fixtures
 (and meteor reset to reload them -- don't forget to recreate your user account after):
-　私たちはpostデータ構造に commentsCountを追加することで　これをやり遂げます。（？？？）
-　はじめに、私たちは（ post fixtures？）をアップデートします。
-　（さらに、（them？）をリロードするためにmeteor resetをします。
+　私たちはpostデータ構造に commentsCountを追加することで　これを実現します。
+　はじめに、私たちは投稿のテストデータをアップデートします。
+　（さらに、これをリロードするために meteor reset をします。
 　後でユーザーアカウントを作り直すことを忘れずに。）：
 
 ~~~js
@@ -523,7 +521,7 @@ Posts.insert({
 <%= caption "server/fixtures.js" %>
 
 Then, we make sure that all new posts start with 0 comments:
-　そうしたら、すべての新しい投稿が0コメントからスタートするようにします。（？？？）：　
+　次に、すべての新しい投稿が0コメントからスタートするようにします。：　
 
 ~~~js
 // pick out the whitelisted keys
@@ -540,8 +538,8 @@ var postId = Posts.insert(post);
 
 And then we update the relevant commentsCount 
 when we make a new comment using Mongo's $inc operator (which increments a numeric field by one):
-　それから、　MongoDBの $inc （operator ？＝演算子？）を使うことで新しいコメントを作る時に、
-　関係するcommentsCountアップデートします。（（ by one？）インクリメントで数値に関するフィールドです）（？？？）：　
+　それから、MongoDB の $inc 演算子を使うことで新しいコメントを作る時に、
+　関係する commentsCount を更新します。（これで数値に関するフィールドを１つずつ増加させます。）：　
 
 ~~~js
 // update the post with the number of comments
@@ -553,12 +551,13 @@ return Comments.insert(comment);
 
 Finally, we can just simply remove the commentsCount helper 
 from client/views/posts/post_item.js, as the field is now directly available on the post.
-　最後に、（ the field＝このフィールド？）は今、投稿から直接使うことができるので、
-　client/views/posts/post_item.jsから　commentsCountヘルパーを削除するだけとなります。　
+　最後に、このフィールドは今、投稿から直接使うことができるので、
+　client/views/posts/post_item.js から commentsCount ヘルパーを削除することができます。
 
 <%= commit "10-5", "Denormalized the number of comments into the post." %>
 
 Now that users can talk to each other, it would be a shame if they missed out on new comments. 
 And what do you know, the next chapter will show you how to implement notifications to prevent just this!
-　これでユーザー同士で話合えるようになったので、ユーザーが新たにコメントするチャンスを逃したら、
-　（it would be a shame？＝悔しくなることでしょう？）！
+　これでユーザー同士で話し合えるようになったので、ユーザーが新しいコメントに気づかないとしたら、残念なことです。
+　なんと驚くことに（？？？）、次の章はこれを防ぐために通知を実装する方法を説明します。
+
