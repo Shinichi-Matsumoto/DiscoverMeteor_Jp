@@ -312,11 +312,10 @@ we can safely get rid of the posts template helper inside the posts_list.js file
 And since we named our data context posts
  (the same name as the helper), 
 we don't even need to touch our postsList template!
-　ルートレベルで　データコンテキスト　　をセットしたので、
-　posts_list.jsファイル内の（posts？）テンプレートヘルパーを安全に取り除くことができます。　
-　私たちは　データコンテキスト（posts？）を（named ？＝指定した？）ので、
-　（(the same name as the helper),？）
-　私たちは　postsList テンプレートに触る必要がありません。　　
+　ルートレベルでデータコンテキストをセットしたので、
+　posts_list.js ファイル内の posts テンプレートヘルパーを安全に取り除くことができます。　
+　私たちはデータコンテキストをヘルパーと同じ名前のpostsと名づけたので、
+　私たちは postsList テンプレートを触る必要がありません。　　
 
 Let's recap. Here's what our new and improved router.js code should look like:
 　（Let's recap？）
@@ -359,9 +358,9 @@ We now have the ability to display an arbitrary number of posts
 on the homepage simply by changing the URL parameter.
 For example, try accessing http://localhost:3000/3. 
 You should now see something like this:
-　（give our brand？）　で新しいページネーションシステムを試してみましょう。
-　ホームページで　　URLの（ parameter？＝引数？）を変えることで
-　（arbitrary？）の投稿数を表示することができます。
+　（ our brand？）に新しいページネーションシステムを与えてみましょう。
+　ホームページで URL のパラメータを変えることで
+　好きなように投稿数を表示することができます。
 　例として、http://localhost:3000/3 にアクセスしてみましょう。
 　このように見えているはずです：
 　
@@ -413,18 +412,18 @@ as there are only ten posts altogether in the client-side data set.
 　先ほどの例に戻りましょう。
 　私たちは　10 から 20 の投稿を Posts コレクションから publish しています。　
 　しかし、クライアントでのこうした投稿を、あなたはどのようにして見つけるのでしょうか？（？？？）
-　クライアントサイドのデータセット（in？＝の中に？）全体で10個の投稿しかないので、あなたは10から20の投稿を（pick？）することはできません。
+　クライアントサイドのデータセット（in？＝の中に？）全体で10個の投稿しかないので、あなたは10から20の投稿を取得することはできません。
 
 One solution would simply be to publish those 10 posts on the server, 
 and then do a Posts.find() client-side to pick up all published posts.
-　１つの解決策は　サーバーで10個の投稿を publish することで、
-　そのときに　 publish されたすべての投稿を取り出すためにPosts.find() クライアントサイドを行います。（？？？）
+　１つの解決策はサーバーで10個の投稿をパブリッシュすることで、
+　そのときにパブリッシュされたすべての投稿を取り出すためにPosts.find() クライアントサイドを行います。（？？？）
 
 This works if you only have a single subscription. 
 But what if you start to have more than one post subscription, as we'll do soon?
 　もしあなたが　１つだけの subscription を（have？＝する？）としたら、
 　これはうまくいきます。　
-　しかし、（as we'll do soon？）、もし　１つの投稿 subscriptionをより多く（have？）するとしたら、どうなるのでしょうか？
+　しかし、（as we'll do soon？）、もし　１つの投稿サブスクリプションをより多く（have？）するとしたら、どうなるのでしょうか？
 
 Let's say one subscription asks for posts 10 to 20, 
 and another one for posts 30 to 40. 
@@ -437,7 +436,7 @@ with no way of knowing which ones belong to which subscription.
 　
 
 For all these reasons, traditional pagination just doesn't make much sense when working with Meteor.
-　以上のような理由から、　Meteorと連携している時に従来のページネーションはあまり意味をなさないのです。
+　以上のような理由から、Meteorと連携している時に従来のページネーションはあまり意味をなさないのです。
 
 <% end %>
 
@@ -451,17 +450,17 @@ let's see how we can refactor things a bit.
 　 var limit = parseInt(this.params.postsLimit) || 5;（ line？）を2度繰り返していることにお気づきかもしれません。
 　さらに、数字の “5” を ハードコーディングすることは　理想的ではありません。
 　これはそれほど深刻なことではありませんが、
-　　できればDRY (Don't Repeat Yourself) 原則に従うのがよいので、
-　どのように　（things？）をリファクタリングするのか少し見ていきましょう。
+　できればDRY (Don't Repeat Yourself) 原則に従うのがよいので、
+　どのようにリファクタリングするのか少し見ていきましょう。
 
 We'll introduce a new aspect of Iron Router, Route Controllers. 
 A route controller is simply a way to group routing features together 
 in a nifty reusable package that any route can inherit from. 
 Right now we'll only use it for a single route, 
 but you'll see in the next chapter how this feature will come in handy.
-　ここで、Iron Router の新しい機能、 ルートコントローラーを紹介します。
-　ルートコントローラーはルーティング機能をどんなルートでも引き継ぐ（ nifty ？）で再利用可能なパッケージにまとめるためのシンプルな方法です。
-　ここでは１つのルートにルートコントローラーを使い、
+　ここで Iron Router の新しい機能、ルートコントローラを紹介します。
+　ルートコントローラはルーティング機能をどんなルートでも引き継いで、再利用可能で素晴らしいパッケージにまとめるためのシンプルな方法です。
+　ここでは１つのルートにルートコントローラを使いますが、
 　次の章ではこの機能がいかに役立つのか見ていきます。
 
 ~~~js
@@ -498,25 +497,25 @@ First, we're creating our controller by extending RouteController.
 We then set the template property just like we did before, 
 and then a new increment property.
 　一つ一つ見ていきましょう。
-　最初に、RouteController を拡張してコントローラーを作ります。
+　最初に、RouteController を拡張してコントローラを作ります。
 　それから以前行ったように、template プロパティをセットして、
 　その次に新たに increment プロパティをセットします。
 
 We then define a new limit function which will return the current limit, 
 and a findOptions function which will return an options object. 
 This might seem like an extra step, but we'll make use of it later on.
-　新たに（current limit？）を返す limit 関数と
+　新たに現在の上限を返す limit 関数と
 　（ options ？）オブジェクトを返す findOptions 関数を定義します。
 　これは余分なステップのように見えるかもしれませんが、後々これを利用します。
 
 Next, we define our waitOn and data functions just like before, 
 except they're now making use of our new findOptions function.
-　次に以前と同じように　 waitOn関数 と data 関数を定義します。
+　次に以前と同じように waitOn関数 と data 関数を定義します。
 　ただし、（ they？）が新しく利用している findOptions 関数は除きます。
 
 The last thing to do is to tell the postsList route to route to our brand new controller, 
 with the controller property.
-　最後にすることは、　postsList ルートに（ brand ？）新しいコントローラーを送るための指示をします。
+　最後にすることは、postsList ルートに新しい区分であるコントローラをルーティングするように規定します。（？？？）
 
 <%= commit "12-3", "Refactored postsLists route into a RouteController." %>
 
@@ -526,9 +525,9 @@ We have a working pagination, and our code is looking good.
 There's just one problem: 
 there's no way to actually use that pagination except by changing the URL manually. 
 This definitely doesn't make for great user experience, so let's get to work on fixing this.
-　ページネーションを動かして、コードは良さそうに見えます。（？？？）
+　ページネーションは動作しているので、コードは良さそうに見えます。
 　１つだけ問題があります：
-　ページネーションを実際に使う方法は、URLを手動で変えるしかありません。
+　ページネーションを実際に使うには、URL を手動で変えるしかありません。
 　これではユーザーエクスペリエンスに全く役立ちません。
 　そのため、この修正に取り掛かりましょう。
 
@@ -538,21 +537,21 @@ which will increment the number of posts currently displayed by 5 every time it'
 So if I'm currently on the URL http://localhost:3000/5, 
 clicking “load more” should bring me to http://localhost:3000/10. 
 If you've made it this far in the book, we trust you can handle a little arithmetic!
-　私たちがやりたいことは　簡単なことです。
-　投稿リストの下に“load more” ボタンを追加して　
-　クリックされて（by 5 every time？）ごとに、
-　現在表示されている投稿の数値をインクリメントします。
-　　つまり、 私が現在 http://localhost:3000/5 にいるとしたら、
-　　“load more”ボタンを押すと、私は　http://localhost:3000/10 に（bring？）します。
-　　ここまで読み進めた方だったら、ちょっとした算数ができるはずです！
+　私たちがやりたいことはシンプルです。
+　投稿リストの下に “load more” ボタンを追加して　
+　クリックされるごとに、
+　現在表示されている投稿の数値を５増加させます。
+　　つまり、私が現在 http://localhost:3000/5 にいるとしたら、
+　　“load more”ボタンを押すと、私は http://localhost:3000/10 に移動します。
+　　ここまで読み進めた方だったら、このちょっとした算数ができるはずです！
 
 As before, we'll add our pagination logic in our route. 
 Remember when we explicitely named our data context rather than just use an anonymous cursor? 
 Well, there's no rule that says the data function can only pass cursors, 
 so we'll use the same technique to generate the URL of our “load more” button.
-　すでに述べたように、ルートに　ページネーションロジックを追加します。
+　すでに述べたように、ルートにページネーションロジックを追加します。
  　無名のカーソルを使うのではく、はっきりとデータコンテキストを（named？）した時（Remember when？）？
-（Well）、　　data 関数だけがカーソルを渡すことができる　（says？）するルールはないので、“load more” ボタンのURLを作るための同じ技術を使います。（？？？）
+（Well）、data 関数だけがカーソルを渡すことができる（says？）するルールはないので、“load more” ボタンのURLを作るための同じ技術を使います。（？？？）
 　
 ~~~js
 PostsListController = RouteController.extend({
@@ -595,12 +594,12 @@ So when we feed
 we're telling the postsList route 
 to build its own path using that JavaScript object as data context.
 　{postsLimit: this.limit() + this.increment} to this.route.path()を入力した時、
-　私たちは データコンテキストとしての JavaScript のオブジェクトを使って、postsList ルートに　（ its own ？）パスを作るように命令しています。
+　私たちはデータコンテキストとしての JavaScript オブジェクトを使って、postsList ルートに（ its own ？）パスを作るように命令しています。
 　
 In other words, this is exactly the same thing as using the {{pathFor 'postsList'}} Spacebars helper,
  except we're replacing the implicit this by our own custom-made data context.
- 言い換えると、（our own custom-made？）のデータコンテキスト
-よって（implicit？）な this を取り替えることを除いて、　
+ 言い換えると、（our own？）カスタムメイドのデータコンテキスト
+よって暗黙的な this を取り替えることを除いて、　
 　これはまさに {{pathFor 'postsList'}}　ヘルパーを使うことと同じことです。
 　　
 
@@ -608,7 +607,7 @@ We're taking that path and adding it to the data context for our template,
 but only if there are more posts to display. 
 The way we do that is a bit tricky.
 　私たちは　パスを取って、テンプレートで（it？＝パスを）データコンテキストに追加していますが、
-　（only if？）　表示するべき投稿がたくさんあるとしたら。（？？？）
+　（only if？）表示するべき投稿がたくさんあるとしたら。（？？？）
 　これをするための方法は少し（tricky？）です。
 
 We know that this.
@@ -617,22 +616,22 @@ which can either be the value in the current URL, or our default value (5)
 if the URL doesn't contain any parameter.
 　（We know that this？）。
 　現在のURLがどんな引数も含んでいない場合、
-　limit()　は　私たちが表示したい現在の投稿数を返します。
-　それは　現在のURLの値か、デフォルトの値(5)です。
+　limit()　は私たちが表示したい現在の投稿数を返します。
+　それは現在のURLの値か、デフォルトの値(5)です。
 　
 
 On the other hand, this.posts refers to the current cursor, 
 so this.posts.count() refers to the number of posts that are actually in the cursor.
-　他方で、this.posts は現在のカーソルを（refers to？＝参照する？）ので、
-　this.posts.count()は　実際にカーソルの中の　投稿数を　（refers to ？＝参照？）します。　
+　他方で、this.posts は現在のカーソルを参照するので、
+　this.posts.count()は　実際にカーソルの中の　投稿数を参照します。　
 
 So what we're saying here is that if we ask for n posts and we get n back, 
 we'll keep showing the “load more” button. 
 But if we ask for n and we get less than n back, 
 then it means we've hit the limit and we should stop showing that button.
-　ここで私たちが言っていることは、　もし私たちが n posts を（ask for？＝求めて？）（we get n back？）すると、
+　ここで私たちが言っていることは、もし私たちが n posts を要求して n を戻すと、
 　“load more”ボタンを表示し続けるということです。
-　（hit the limit？）するという意味で、私たちは　そのボタンの表示をストップすべきです。
+　（hit the limit？）するという意味で、私たちはそのボタンの表示をストップすべきです。
 
 That being said, our system fails in one case: 
 when the number of items in our database is exactly n. 
@@ -640,22 +639,21 @@ If that happens, the client will ask for n posts and get n posts back
 and keep showing the “load more” button, 
 unaware that there are no more items left.
 　（That being said？）、このシステムは
-　データベース内の（items？）の数がまさに n である時に　（fail？＝失敗？）します。
-　（If that happens？）、クライアントは（ ask for n posts？）て、（get n posts back？）して、
+　データベース内の（items？）の数がまさに n である時に失敗します。
+　（If that happens？）、クライアントは n 投稿を要求して、 n 投稿を戻してして、
 　“load more"ボタンを表示し続けます。
-　何も（items？）が残っていないと気づかずに、
+　何も（items？）が残っていないと気づきません。
 
 Sadly, there are no simple workarounds to this problem, 
 so for now we'll have to settle with this less-than-perfect implementation.
-　残念なことに、　この問題に単純な（ workarounds？）はないので、
-　今のところ　私たちは　この（less-than-perfect implementation？）を（settle with？）する必要があります。　
+　残念なことに、この問題に単純な次善策はないので、
+　今のところ私たちはこの完全でない実装を解決する必要があります。　
 
 All that's left to do is to add the “load more” link at the bottom of our posts list, 
 making sure to only show it 
 if we actually have more posts to load:
-　するために残されていることは　投稿リストのボタンの下に“load more”リンクを追加することです。
-　だけを　（it ？）　を表示する　　
-　もし私たちが　ロードすべき多くの投稿があるとしたら、
+　もしさらに投稿をロードさせるとしたら、
+　するために残されていることは投稿リストのボタンの下に“load more”リンクを追加して（it ？＝このリンク？）だけをを表示します。
 
 ~~~html
 <template name="postsList">
@@ -674,6 +672,8 @@ if we actually have more posts to load:
 <%= highlight "7~10" %>
 
 Here's what your post list should now look like:
+これで投稿リストは現在このようになっているはずです：
+
 
 <%= screenshot "12-3", "The “load more” button. " %>
 
@@ -681,9 +681,6 @@ Here's what your post list should now look like:
 
 <% note do %>
 
-### Count vs Length　（ない？）
-
-////
 
 <% end %>
 
@@ -702,20 +699,20 @@ It would be much, much better
 if we could stay on the same page all throughout the operation, 
 while still providing some kind of indication that new data is currently being loaded. 
 Thankfully, that's precisely what the iron-router-progress package is for.
-　（It would be much？）（much better？）です。
-　（all throughout the operation？）同じページに留まる場合、
-　（while still providing some kind of indication that new data is currently being loaded. ？）
-　ありがたいことに、これは（precisely？）、iron-router-progress package （is for？）なことです。
+　（while still providing some kind of indication  ＝新しいデータを現在読み込んでいることを示す間？）
+　操作をしている間はずっと同じページに留まれば、
+　（It？）はさらにさらに良くなるでしょう。 
+　ありがたいことに、これはまさに iron-router-progressパッケージが（is for？）なことです。
 
 Similar to iOS's Safari or sites like Medium and YouTube, 
 iron-router-progress adds a thin loading bar at the top of the screen. 
 Implementing it is as easy as adding the package to your app:
-　 iOSの Safari や Medium 、 YouTube といったサイトと同じように、
-　iron-router-progress は 　スクリーンの一番上に（thin？）ローディングバーを追加します。
-　（Implementing it ？）は　アプリにパッケージを追加するのと同じように簡単です：
+　 iOSの Safari や Medium、 YouTube といったサイトと同様に、
+　iron-router-progress は スクリーンの一番上に細いローディングバーを追加します。
+　これを実装するにはアプリにパッケージを追加するのと同じくらい簡単です：
 
 ~~~bash
-mrt add iron-router-progress
+meteor add mrt:iron-router-progress
 ~~~
 <%= caption "bash console" %>
 
@@ -724,16 +721,16 @@ our new progress indicator will work perfectly right out of the box!
 The progress bar will activate for each route, 
 and automatically complete once the route's required data is done loading.
 　スマートパッケージの魔法で、
-　新しい（progress indicator？）は（ out of the box？）で完全に正しく動いています！
+　新しい（progress indicator＝プログレスバー？）はそのままの状態で完全に正しく動きます！
 　プログレスバーは　各ルートでも有効で、
 　ルートがの要求したデータがロードを終えると、自動的に完了します。　
 
 We'll just do a single tweak. 
 Let's disable iron-router-progress for the postSubmit route 
 since it doesn't need to wait for any subscription data (after all, it's just an empty form):
-　（single tweak？）をしていきます。
+　１つだけ調整します。
 　iron-router-progress を postSubmit ルートで使えなくしましょう。
-　それは（it？）が　どんな subscription データも待つ必要がないためです。（結局は、空っぽのフォームです。）
+　というのは、（it＝iron-router-progress ？）はサブスクリプションデータを待つ必要がないためです。（結局は、空っぽの（form＝フォーム？）です。）
 
 ~~~js
 Router.map(function() {
@@ -755,8 +752,8 @@ Router.map(function() {
 
 We're currently loading the five newest post by default, 
 but what happens once someone browses to a post's individual page?
-　私たちは現在、初期設定で最新の５つの投稿をロードしていますが、
-　投稿の個別ページを見たい人がいたら（what happens？）でしょうか？
+　私たちは現在、デフォルトで最新の５つの投稿をロードしていますが、
+　投稿の個別ページを見たい人がいたらどうなるでしょうか？
 
 <%= screenshot "12-4", "An empty template." %>
 
@@ -765,27 +762,27 @@ This makes sense:
 we've told the router to subscribe to the posts publication 
 when loading the postsList route, 
 but we haven't told it what to do about the postPage route.
-　これを試すとしたら、空っぽの（ post ？）テンプレートに（ be faced with？＝出くわします？）。
+　これを試すと、空っぽの投稿テンプレートに出くわします。
 　これはこういうことです：
 　postsLis ルートをロードする時に、　
-　私たちは　ルーターが　 posts publicationに subscribe するように指示を出しています。
-　しかし、私たちは　postPage ルートに何をするのか 指示を出していません。
+　私たちはルーターが posts パブリケーションにサブスクライブするように指示を出しています。
+　しかし、私たちは postPage ルートに何をするのか指示を出しませんでした。。
 
 But so far, all we know how to do is subscribe to a list of the n latest posts. 
 How do we ask the server for a single specific post? 
 We'll let you in on a little secret here: 
 you can have more than one publication for each collection!
-　しかし、今までで私たちが　行う方法のすべては n の最新の投稿リストに subscribe することです。
+　しかし、今までで私たちが　行う方法のすべては n の最新の投稿リストにサブスクライブすることです。
 　では、サーバーに１つの特定の投稿を要求するにはどうしたら良いのでしょうか？
 　ここでちょっとした秘密を（let you in？＝教え？）ましょう：
-　あなたは　各コレクションに対して１つ以上の publication を持つことができます！　
+　あなたは　各コレクションに対して１つ以上のパブリケーションを持つことができます！　
 
 So to get our missing posts back, 
 we'll simply make a new, separate singlePost publication 
 that only publishes one post, identified by _id.
-　（missing posts？）を（get back？）するために、
-　新たに独立した singlePost publication を作ります。
-　これは_idで識別して１つの投稿だけをpublishします。
+　行方不明の投稿を取り戻すために、
+　新たに独立した singlePost パブリケーションを作ります。
+　これは_idで識別して１つの投稿だけをパブリッシュします。
 
 ~~~js
 Meteor.publish('posts', function(options) {
@@ -804,11 +801,11 @@ We were already subscribing to the comments publication on the postPage route's 
 so we can simply add the subscription to singlePost in there. 
 And let's not forget to also add our subscription to the postEdit route, 
 since it also needs the same data:
-　さあ、　（right posts？）クライアントサイドにsubscribeしましょう。
-　私たちはすでに　postPageルートの waitOn関数に　comments publication をsubscribeしています。
-　そのため、（there？）で　singlePostにsubscription を簡単に追加できます。
-　postEdit ルートへの subscription を追加することを　忘れずに。
-　というのは、（ it ？）は同じデータが必要だからです。
+　さあ、　（right posts？）クライアントサイドにサブスクライブしましょう。
+　私たちはすでに　postPageルートの waitOn関数に　comments パブリケーションをサブスクライブしています。
+　そのため、（there？）でsinglePostにサブスクリプションを簡単に追加できます。
+　postEdit ルートへの subscription を追加することを忘れずに。
+　というのは、postEdit ルートも同じデータが必要だからです。
 　
 ~~~js
 Router.map(function() {
@@ -843,26 +840,12 @@ Router.map(function() {
 
 <%= commit "12-6","Use a single post subscription to ensure that we can always see the right post." %>
 
-A Poor User Experience?
-
-
-You might notice that the list scrolls to the top 
-when you hit the load more button. 
-This isn’t the greatest user experience! 
-This bug is due to a problem with the Iron Router Progress package and Iron Router 0.7.1.
-　load more ボタンを押すと、
-　リストが（to the top？）に　スクロールするすることに　お気づきかもしれません。
-　これは　優れたユーザーエクスペリエンスではありません！
-　このバグは　Iron Router Progress と Iron Router 0.7.1 に問題があるためです。
-
-If you want to see it working better, try Iron Router version 0.7.0.
 With pagination done, our app no longer suffers from scaling problems, 
 and users are sure to contribute even more links than before. 
 So wouldn't it be nice to have a way to somehow rank those links? 
 This is precisely the topic of the next chapter, Voting.
-　これをよりよく動かしたい場合は　Iron Router version 0.7.0 をお試しください。
-　ページネーションが完了すると、　このアプリは　　もう　スケーリングの問題に苦しむことはありません。
-　また、ユーザーは　（sure to contribute even more links than before.？）
-　そのため、　こうしたリンクにどうにかしてランク付けする良い方法はないものでしょうか？
-　これは　まさに　次の章のトピック、Votingです。
+　ページネーションが完了すると、このアプリはスケーリングの問題に苦しむことはありません。
+　そのため、ユーザーは以前よりも多くのリンクを投稿することでしょう。
+　では、こうしたリンクにどうにかしてランク付けする良い方法はないものでしょうか？
+　次の章のトピックはまさに、Votingです。
 
