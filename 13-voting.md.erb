@@ -7,25 +7,65 @@ contents: Build a system where users can vote on posts.|Rank our posts by vote o
 paragraphs: 49
 ---
 
-////
-
-////
-
-////
+Now that our site is getting more popular,
+ finding the best links is quickly going to get tricky. 
+What we need is some kind of ranking system to order our posts by.
+　私たちのサイトは　だんだんと一般向けになってきました。
+　ベストのリンクを見つけることはすぐに（ get tricky？）です。
+　私たちが必要なことは、投稿を(order by？)する　ある種のランキングシステムです。
+　
+We could build a complex ranking system with karma, 
+time-based decay of points, and many other things (most of which are implemented in Telescope,
+ Microscope's big brother). 
+But for our app, we'll keep things simple and just rate posts 
+by the number of votes they've received.
+　私たちは　（ karma？＝karma？）と、時間ベースの（decay of points）と他の多くのこと
+によって、複雑なランキングシステムを作ることができます。
+　（その多くはMicroscopeの兄貴分であるTelescopeでも実装されています。）
+　しかしこのアプリでは、　シンプルにして、投票数で投稿を格付けだけをします。
+　
+Let's start by giving users a way to vote on posts.
+　ユーザーに　投稿に投票する方法を提供することから始めていきましょう。
 
 ### Data Model
 
-////
+We'll store a list of upvoters on each post 
+so we know whether to show the upvote button to users,
+as well as to prevent people from voting twice.
+　私たちは　それぞれの投稿に　（ upvoters？＝賛成者？）を　　格納します。
+　私たちが　ユーザーに賛成票ボタンを　表示するかどうか　知ります。（？？？）　
+　ユーザーが2回投票できないようにします。
 
 <% note do %>
 
 ### Data Privacy & Publications
 
-////
+We'll be publishing these lists of upvoters to all users, 
+which will also automatically make that data publicly accessible via the browser console.
+　私たちは　すべのユーザーに　（upvoters？＝賛成投票者？）のリストを　publishします。
+　これでブラウザーコンソールで　自動的にそのデータを公的にアクセスできるようにします。
 
-////
+This is the kind of data privacy problem that can arise from the way collections work. 
+For example, do we want people to be able to find out who has voted for their posts? 
+In our case making that information publicly available won't really have any consequences, 
+but it's important to at least acknowledge the issue.　
+　これはある種の　データプライバシー問題ですが、これはコレクションが（work？）する（way？）から起因しています。
+　たとえば、私たちは　ユーザーに　誰が投稿に投票したのかわかるようにしたいでしょうか？
+　この場合、　その情報を公的に　利用することは、実際のところ全く影響も及ぼしませんが、
+　この問題を少なくとも認識することは　重要です。
 
-////
+Also note that if we did want to restrict some of this information, 
+we'd have to make sure that the client can't tamper with the fields options of our publication, 
+either by removing that property server-side, 
+or by not passing the whole options object from client to server.
+We'll also denormalize the total number of upvoters on a post to make it easier to retrieve that figure.
+So we'll be adding two attributes to our posts, 
+upvoters and votes. Let's start by adding them to our fixtures file:
+　また　にも気を付けましょう。　私たちがこの情報の一部を制限したい場合に、
+　私たちは　（either？）サーバーサイドで（ that ？）プロパティを削除することで
+　クライアントが　publication のfieldsオプションに干渉しないようにする必要があります。　　
+　また私たちは　（ denormalize？）します　賛成者の
+　　その数字を（retrieve？＝読みだす？）
 
 <% end %>
 
