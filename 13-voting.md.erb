@@ -148,7 +148,11 @@ if (Posts.find().count() === 0) {
 <%= caption "server/fixtures.js" %>
 <%= highlight "22, 48, 58, 69" %>
 
-////
+As usual, stop your app, run meteor reset, restart your app, and create a new user account. 
+Let's then also make sure these two properties are initialized when posts are created:
+これまで通り、アプリを停止して、meteor resetを実行して、新しいユーザーアカウントを作ります。
+それから、投稿が作成された時に２つのプロパティが初期化されるようにします。
+
 
 ~~~js
 //...
@@ -181,7 +185,8 @@ return postId;
 
 ### Building our Voting Templates
 
-////
+First off, we'll add an upvote button to our post partial:
+最初に、（post partial）に（ upvote）ボタンを追加します：
 
 ~~~html
 <template name="postItem">
@@ -205,7 +210,9 @@ return postId;
 
 <%= screenshot "13-1", "The upvote button" %>
 
-////
+Next, we'll call a server upvote Method when the user clicks on the button:
+次に、　ユーザーがボタンをクリックしたら、サーバーの（upvote？）メソッドを呼び出します。
+
 
 ~~~js
 //...
@@ -220,7 +227,9 @@ Template.postItem.events({
 <%= caption "client/views/posts/post_item.js" %>
 <%= highlight "3~8" %>
 
-////
+Finally, we'll go back to our collections/posts.js file and add a Meteor server-side Method that will upvote posts:
+最後に、collections/posts.js ファイルに戻って、投稿を（upvote？）するMeteorのサーバーサイドメソッドを追加します：
+
 
 ~~~js
 Meteor.methods({
@@ -253,13 +262,34 @@ Meteor.methods({
 
 <%= commit "13-1", "Added basic upvoting algorithm." %>
 
-////
+This Method is fairly straightforward. 
+We do some defensive checks to ensure that the user is logged in and that the post really exists. 
+Then we double check that the user hasn't already voted for the post, 
+and if they haven't we increment the vote's total score and add the user to the set of upvoters.
+このメソッドは（fairly straightforward？）です。
+私たちは　ユーザーがログインしていて、投稿が実際に存在するか確かめるために、（defensive checks？）を行います。
+それから、ユーザーがすでに投稿に投票をしていないことをダブルチェックします。
+もしユーザーが投票の（total score？）を増やしていないとしたら、ユーザーに（set of upvoters？）を追加します。、
 
-////
+This final step is interesting, as we've used a couple of special Mongo operators. 
+There are many more to learn, but these two are extremely helpful: 
+$addToSet adds an item to an array property as long as it doesn't already exist, 
+and $inc simply increments an integer field.
+最後のステップは（interesting）です。というのも、私たちは（ a couple of？）の特別な Mongo 演算子を使ったからです。
+学ぶことはたくさんありますが、この２つは（extremely？）役立ちます：
+$addToSet は（it？）がまだ存在しない限り、（array ＝配列？）プロパティに（item？）を追加します。
+$inc は（integer ）フィールドをシンプルに増加させます。
+
 
 ### User Interface Tweaks
 
-////
+If the user is not logged in, or has already upvoted a post, 
+they won't be able to vote. To reflect this in our UI, 
+we'll use a helper to conditionally add a disabled CSS class to the upvote button.
+もしユーザーがログインしていない　（, or）すでに投稿に（upvoted）したとしたら、
+ユーザーは投票することはできません。　これをUIに反映するために、
+（ upvote ？）ボタンに（disabled）なCSSクラスを追加する（conditionally？）ヘルパーを使います。　
+
 
 ~~~html
 <template name="postItem">
@@ -301,16 +331,25 @@ Template.postItem.events({
 <%= caption "client/views/posts/post_item.js" %>
 <%= highlight "8~15, 19" %>
 
-////
+We're changing our class from .upvote to .upvotable, so don't forget to change the click event handler too.
+私たちはクラスを .upvote から.upvotable に変えたので、クリックイベントハンドラを忘れずに変更します。
+
 
 <%= screenshot "13-2", "Greying out upvote buttons." %>
 
 <%= commit "13-2", "Grey out upvote link when not logged in / already voted." %>
 
-////
+Next, you may notice that posts with a single vote are labelled "1 votes", 
+so let's take the time to pluralize those labels properly. 
+Pluralization can be a complicated process, but for now we'll do it in a fairly simplistic way. 
+We'll make a general Spacebars helper that we can use anywhere:
+次に、1回投票された投稿に"1 votes"と（labelled？）されていることがわかったので、
+（pluralize those labels properly？）するために時間を使いましょう。
+（Pluralization）は複雑なプロセスですが、どこでも使うことができます。
+
 
 ~~~js
-Handlebars.registerHelper('pluralize', function(n, thing) {
+UI.registerHelper('pluralize', function(n, thing) {
   // fairly stupid pluralizer
   if (n === 1) {
     return '1 ' + thing;
@@ -321,7 +360,13 @@ Handlebars.registerHelper('pluralize', function(n, thing) {
 ~~~
 <%= caption "client/helpers/handlebars.js" %>
 
-////
+The helpers we've created before have been tied to the manager and template that they apply to. 
+But by using UI.registerHelper, 
+we've created a global helper that can be used within any template:
+前に私たちが作ったヘルパーは（the？）マネージャとマネージャが適用するテンプレートと結びついています。
+しかし、UI.registerHelper を使うことで、
+どのようなテンプレートでも使うことができるグローバルヘルパーを作りました。
+
 
 ~~~html
 <template name="postItem">
@@ -342,19 +387,42 @@ Handlebars.registerHelper('pluralize', function(n, thing) {
 
 <%= commit "13-3", "Added pluralize helper to format text better." %>
 
-////
+We should now see "1 vote".
+これで"1 vote"となっていることがわかります。
 
 ### Smarter Voting Algorithm
 
-////
+Our upvoting code is looking good, but we can still do better. 
+In the upvote Method, we make two calls to Mongo: 
+one to grab the post, then another to update it.
+私たちの（ upvoting？）コードは良さそうに見えますが、まださらに良くすることができます。
+（ upvote ？）メソッドで、Mongoに２つのコールをします：
+まず投稿を（grab？）して、次にそれを更新します。
 
-////
+There are two issues with this. 
+Firstly, it's somewhat inefficient to go to the database twice. 
+But more importantly, it introduces a race condition. 
+We are following the following algorithm:
+これには２つの問題があります。
+まず、データベースに2回アクセスすることは（somewhat？）非効率です。
+しかし、さらに重要なことに、これは（a race condition）を引き起こします。
+私たちは次のようなアルゴリズムを（are following）しています。
 
-1. ////
-2. ////
-3. ////
 
-////
+1. Grab the post from the database.
+2. Check if the user has voted.
+3. If not, do a vote by the user.
+　テータベースから投稿を（Grab）する。
+　ユーザーが投票したかチェックする。
+　そうでない場合は、（by the user）によって、投票を行います。
+
+What if the same user voted for the post again in between steps 1 and 3? 
+Our current code opens the door to the user being able to vote for the same post twice. 
+Thankfully, Mongo allows us to be smarter and combine steps 1-3 into a single Mongo command:
+　ステップ１から３の間で、同じユーザーが再び投稿に投票したらどうなるでしょうか？
+　私たちの現在のコードは　　ユーザーが同じ投稿に2回投票することができるように　ドアが開かれています。
+　ありがたいことに、Mongo は（allows us to be smarter？）で、１つのMongoコマンドでで１から３のステップを（combine？）します。
+
 
 ~~~js
 Meteor.methods({
@@ -383,42 +451,127 @@ Meteor.methods({
 
 <%= commit "13-4", "Better upvoting algorithm." %>
 
-////
+What we are saying is "find all the posts with this id that this user hasn't yet voted for, 
+and update them in this way". 
+If the user hasn't yet voted, it will of course find the post with that id. 
+On the other hand if the user has voted, then the query will match no documents, 
+and consequently nothing will happen.
+　
 
-////
+The only downside is that now we can't tell the user that they've already voted for the post 
+(since we got rid of the database call that checked this). 
+But they should know that from the "upvote" button being disabled 
+in the user interface anyway.
+　マイナス面は　私たちは　ユーザーに　投稿に投票したことを知らせることができないという点だけです。
+　（私たちがこれをチェックするデータベースコールを削除したからです。）
+　しかし、 ユーザーインターフェースで"upvote"ボタンが（disabled ）されていることを（should know？）です
+
 
 <% note do %>
 
 ### Latency Compensation
 
-////
+Let's say you tried to cheat and send one of your posts to the top of the list 
+by tweaking its number of votes:
+　投票数を（tweaking？）することで、
+　（cheat？）を（tried to？）して、
+　リストの（top of？）に１つ投票を送りましょう。
+
 
 ~~~js
 > Posts.update(postId, {$set: {votes: 10000}});
 ~~~
 <%= caption "Browser console" %>
 
-////
+(Where postId is the id of one of your posts)
+  （postId は投稿の id の場所）　（？？？）
+  
 
-////
+This brazen attempt at gaming the system would be caught by our deny() callback
+ (in collections/posts.js, remember?) and immediately negated.
+　（This brazen attempt at gaming the system？）は collections/posts.js の中の deny()コールバック（remember?＝覚えてる？）
+　　で（be caught）されて、瞬時に（ negated？）されます。
 
-////
 
-////
+But if you look carefully, 
+you might be able to see latency compensation in action. 
+It may be quick, but the post will briefly jump to the top of the list 
+before shooting back into position.
+　しかし、よく見てみると、
+　レイテンシコンペンセイションが作動していることがわかります。
+　これは（quick？）ですが、
+　（shooting back into position）する前に、
+　投稿は（briefly ？）にリストの一番上にジャンプします。
 
-////
+What's happened? 
+In your local Posts collection, 
+the update was applied without incident. 
+This happens instantly, 
+so the post shot to the top of the list.
+Meanwhile, on the server, the update was being denied. 
+So some time later 
+(measured in the milliseconds if you are running Meteor on your own machine), 
+the server returned an error, 
+telling the local collection to revert itself.
+　何が起きたのでしょうか？
+　（local Posts？）コレクションで、（ update？）は（ incident？）なく、適用されます。
+　これは瞬時に起こるので、
+　投稿は　リストの一番上に（ shot to？）しました。
+　（Meanwhile？）、サーバーで（the update？）は拒否されました。
+　（So some time later ？）（自分のマシーンでMeteorを実行している場合、ミリ秒です）、
+　ローカルコレクションに（revert itself？）するように（tell）して、サーバーはエラーを返しました。
+
+The end result: 
+while waiting for the server to respond, 
+the user interface can't help but trust the local collection. 
+As soon as the server comes back and denies the modification, 
+the user interfaces adapts to reflect that.
+最終結果：
+サーバーからの返信を待つ間。
+ユーザーインターフェースは（ help？）できませんでしたが、ローカルコレクションを（trust）します。（？？？）
+サーバーが（comes back？）して、（modification？）を拒否したらすぐに、
+ユーザーインターフェースはそれを反映して適応します。
+
 
 <% end %>
 
 ### Ranking the Front Page Posts
 
-////
+Now that we have a score for each post based on the number of votes, 
+let's display a list of the best posts. 
+To do so, we'll see how to manage two separate subscriptions against the post collection, 
+and make our postsList template a bit more general.
+　今のところ、私たちは投票数に基づいて、投稿ごとにスコアがあるので、
+　（best？）投稿のリストを表示しましょう。
+　そうするために、私たちは　(post?)コレクションに　２つのサブスクリプションを（manage）する方法を見て、
+　postList テンプレートをさらに少しだけ（general＝一般的に？）します。
 
-////
+To start off, we'll want to have two subscriptions, 
+one for each sort order. 
+The trick here is that both subscriptions will subscribe to the same posts publication, 
+only with different arguments!
+手始めに、（one for each ）順番をソートする２つのサブスクリプションを作りたいところです。
+ここでの（trick）は、２つのサブスクリプションが　異なる引数で　同じ posts パブリケーションにサブスクライブすることです。
 
-////
+We'll also create two new routes called newPosts and bestPosts, 
+accessible at the URLs /new and /best respectively 
+(along with /new/5 and /best/5 for our pagination, of course).
+　また、それぞれ /new と /best の URL でアクセスできる newPosts と bestPosts という新しい２つのルートを作ります。
+　（もちろん、/new/5 と /best/5 のページネーションと（along with ？））
 
-////
+To do this, 
+we'll extend our PostsListController into two distinct NewPostsListController and BestPostsListController controllers. 
+This will let us re-use the exact same route options for both the home and newPosts routes, 
+by giving us a single NewPostsListController to inherit from. 
+And additionally, 
+it's just a nice illustration of how flexible Iron Router can be.
+　これをするために、
+　私たちは　PostsListController を　２つの　（distinct？）な（NewPostsListController と BestPostsListController）コントローラに
+　 （extend＝拡大適用します？）。
+　（inherit from＝継承するための？）１つの NewPostsListController を（giving us？）することで、
+　私たちは　 home と newPosts のルートで
+　まさに同じルートオプションを再利用することができます。　　
+
 
 ~~~js
 PostsListController = RouteController.extend({
@@ -480,11 +633,28 @@ Router.map(function() {
 <%= caption "lib/router.js" %>
 <%= highlight "8,16,21~34,36~49" %>
 
-////
+Note that now that we have more than one route, 
+we're taking the nextPath logic out of PostsListController and into NewPostsListController 
+and BestPostsListController, since the path will be different in either case.
+　今のところ、１つ以上のルートがあるので、
+　PostsListController からnextPath logic を（taking ？）して、
+　 NewPostsListControllerと BestPostsListControllerに　（into ？）します。
+　というのも、パスが（in either case）で異なるためです。
 
-////
+Additionally, 
+when we sort by votes, 
+we have a secondary sort by submitted timestamp to ensure that the ordering is correct.
+さらに、私たちが投票をソートする時、
+順番が正しいことを確かめるために、タイムスタンプを（submitted ？）することで、
+（secondary？）ソートを（ have？）します。
 
-////
+With our new controllers in place, 
+we can now safely get rid of the previous postsList route. 
+Just delete the following code:
+新しいコントローラ（in place？）で、
+私たちは　今　安全に　以前の postsListルートを削除することができます。
+次のコードを削除します。
+
 
 ~~~html
 <template name="header">
@@ -524,7 +694,22 @@ Router.map(function() {
 <%= caption "client/views/include/header.html" %>
 <%= highlight "9, 15~21" %>
 
-////
+
+We also need to update our post deleting event handler:
+さらに、イベントハンドラを削除して投稿を更新する必要があります：
+
+  'click .delete': function(e) {
+    e.preventDefault();
+    if (confirm("Delete this post?")) {
+      var currentPostId = this._id;
+      Posts.remove(currentPostId);
+      Router.go('home');
+    }
+  }
+client/views/posts_edit.js
+
+With all this done, we now gain a best posts list:
+これがすべて終わると、私たちは　ベスト投稿リストを得ます：
 
 <%= screenshot "13-4", "Ranking by points" %>
 
@@ -532,9 +717,24 @@ Router.map(function() {
 
 ### A Better Header
 
-////
+Now that we have two post list pages, 
+it can be hard to know just which list you're currently viewing. 
+So let's revisit our header to make it more obvious. 
+We'll create a header.js manager and create a helper that uses the current path 
+and one or more named routes to set an active class on our navigation items:
+　これで２つのリストページがあるので、
+　どちらのリストを現在見ているのか知ることは難しいかもしれません。（？？？）
+　そのため、もっとわかりやすくするために、ヘッダーを　（evisit？）しましょう。
+　私たちは　header.jsマネージャを作って、カレントパスで使うヘッダーを作って、
+　１つ以上の（ named？）ルーターに　（active class on our navigation items？）をセットします。
 
-////
+The reason why we want to support multiple named routes is 
+that both our home and newPosts routes 
+(which correspond to the / and /new URLs respectively) bring up the same template. 
+Meaning that our activeRouteClass should be smart enough to make the <li> tag active in both cases.
+　なぜ私たちが複数の（named ？）ルートをサポートしたいかというと、
+　それぞれ / と /new URLに対応するhome と newPosts ルートが同じテンプレートを（ bring up？）するためです。
+　つまり、（in both cases）で、activeRouteClass は<li> タグを（active）にするほど（smart enough ？）だということです。
 
 ~~~html
 <template name="header">
@@ -596,18 +796,57 @@ Template.header.helpers({
 
 ### Helper Arguments
 
-////
+We haven't used that specific pattern up to now, 
+but just like any other Spacebars tags, template helper tags can take arguments.
+　今のところ、私たちは　（that specific？）パターンを使いませんでしたが、
+　他の Spacebars タグと同様に、テンプレートヘルパーは引数をとることができます。
 
-////
+And while you can of course pass specific named arguments to your function, 
+you can also pass an unspecified number of anonymous parameters and retrieve them 
+by calling the arguments object inside a function.
+　もちろん、　関数に　（specific named？）引数を渡すことができる一方で、
+　関数の中で引数オブジェクトを呼び出すことで、（an unspecified number of anonymous？）の引数を
+　渡すこともできます。
 
-////
+In this last case, 
+you will probably want to convert the arguments object 
+to a regular JavaScript array 
+and then call pop() on it to get rid of the hash added at the end by Spacebars.
+
+　（In this last case, ？）
+　おそらく、あなたはSpacebarsで
+　この引数オブジェクトを通常のJavaScriptの配列に変換して、
+　（added at the end？）されたハッシュを削除するために、(it？)でpop()を呼び出したいと
+　思うことでしょう。
+
 
 <% end %>
 
-////
+For each navigation item, 
+the activeRouteClass helper takes a list of route names, 
+and then uses Underscore's any() helper to see if any of the routes pass the test 
+(i.e. their corresponding URL being equal to the current path).
+　（For each navigation item, ？）、
+　activeRouteClass ヘルパーは　ルートの名前のリストを取って、
+　（ any of ？）ルートが（the test）を渡すかどうか確かめるために、
+　 Underscore　の　any() ヘルパーを使います。
 
-////
+
+　If any of the routes do match up with the current path, any() will return true. 
+Finally, we're taking advantage of the boolean && string JavaScript pattern where false && myString returns false, 
+but true && myString returns myString.
+　ルートの（ any of ？）が　カレントパスとマッチしたら、any()は true を返します。
+　最後に、私たちは　（of the boolean && string JavaScript pattern where false && myString returns false）を利用していますが、
+　（true && myString？）は myString を返します。
 
 <%= commit "13-6", "Added active classes to the header." %>
 
-////
+Now that users can vote on posts in real-time, 
+you will see items jumping up and down the homepage as their ranking change. 
+but wouldn't it be nice 
+if there was a way to smooth out all this with a few well-timed animations?
+　これでユーザーはリアルタイムで投稿に投票することができるので、
+　ランキングが変化する（as＝ごとに？）、（items ？）が（jumping up and down the homepage ？）することがわかります。
+　しかし、
+　（wouldn't it be nice 
+　　if there was a way to smooth out all this with a few well-timed animations?）
